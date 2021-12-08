@@ -12,9 +12,7 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
-./.idea
 .idea/
 
-# system file
+# System temporary file, like cache file
 .DS_Store

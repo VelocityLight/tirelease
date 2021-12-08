@@ -74,7 +74,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 web
 ├── .git # 隐藏文件夹，会初始化第一个 Commit 记录
 ├── README.md
-├── node_modules
 ├── package.json # 依赖配置文件
 ├── .gitignore
 ├── [floder_name] # 根目录下可以建立其他文件夹，但不会被用在生产环境中

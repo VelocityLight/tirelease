@@ -70,6 +70,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 ### basic category below
+```
 web
 ├── .git # 隐藏文件夹，会初始化第一个 Commit 记录
 ├── README.md
@@ -91,3 +92,4 @@ web
     ├── index.js # JavaScript 打包入口文件
     ├── logo.svg # react的logo，在create-react-app时展示在前端的
     └── reportWebVitals.js # 提供前端性能指标，可通过浏览器插件直接获取指标数据
+```

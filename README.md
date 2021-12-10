@@ -10,5 +10,21 @@ engineering:
 
 run:
 ```
-
+├── Makefile
+├── README.md
+├── api
+├── cmd
+│   └── tirelease
+├── go.mod
+├── go.sum
+├── scripts
+│   └── run.sh
+└── web
+    ├── README.md
+    ├── build
+    ├── node_modules
+    ├── package.json
+    ├── public
+    ├── src
+    └── yarn.lock
 ```

@@ -1,6 +1,6 @@
-> This is a release platform for PingCAP
-> Author: VelocityLight
-> Url: https://github.com/VelocityLight/tirelease
+> This is a release platform for PingCAP<br>
+> Author: VelocityLight<br>
+> Url: https://github.com/VelocityLight/tirelease<br>
 
 ### Design
 [click and jump](https://pingcap.feishu.cn/docs/doccnI803yGKKKeQsh56EdNi3Cc#UeCMnT)

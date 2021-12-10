@@ -29,8 +29,8 @@
 │   └── tirelease
 ├── scripts  # scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
 │   └── run.sh
-└── web  # web components and pages. detail can jump to  web/README.MD
-    ├── package.json
+└── web  # ui components and pages. detail can jump to  web/README.MD
     ├── src
-    └── public
+    ├── public
+    └── package.json
 ```

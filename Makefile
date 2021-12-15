@@ -4,14 +4,15 @@ TIRELEASE_BINARY = ${BUILD_DIR}/tirelease
 
 build.web:
 	cd web && \
+	yarn install && \
 	yarn build
 
 build.server:
 	go build -o ${TIRELEASE_BINARY} cmd/tirelease/*.go
 
-build: build.web build.server
+all: build.web build.server
 
-run: build
+run: all
 	./${TIRELEASE_BINARY}
 
 clean:
@@ -19,8 +20,8 @@ clean:
 	rm -rf ${BUILD_DIR}
 
 help:
-	@echo "make build : build binary for tirelease"
+	@echo "make all : build all binary for tirelease"
 	@echo "make clean : clean all binary bin dictionary"
 
-.PHONY: build.web build.server build run clean help
+.PHONY: build.web build.server all run clean help
 

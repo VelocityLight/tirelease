@@ -1,0 +1,24 @@
+apiVersion: apps/v1 # API Version, Must In 'kubectl api-versions'
+kind: Deployment
+metadata:
+  name: tirelease
+spec:
+  replicas: 1 # Resource Numbers
+  selector:
+    matchLabels:
+      app: tirelease
+  template:
+    metadata:
+      labels:
+        app: tirelease # Tag Pod Labels
+    spec:
+      containers:
+        - name: tirelease
+          image: yejunchen66/tirelease
+          resources:
+            limits:
+              memory: "512Mi" # "1Gi" = "1024Mi"
+              cpu: "500m" # "1"(1 core) = "1000m"
+          ports:
+            - containerPort: 8080
+              protocol: TCP

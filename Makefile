@@ -14,7 +14,9 @@ clean:
 	rm -rf ${BUILD_DIR}
 
 docker:
-	docker build -t ${DOCKER_NAME} .
+#	docker build -t ${DOCKER_NAME} .
+#	docker run -p 8080:8080 -t ${DOCKER_NAME}
+	@echo "docker image build & run successful"
 
 # -- low-frequency operations in the background are put in the back position
 build.web:

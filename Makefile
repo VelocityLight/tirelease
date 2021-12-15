@@ -40,7 +40,7 @@ k8s: docker
 	@echo "k8s deploy project successful hahaha!"
 
 k8s.clean:
-	kubectl delete services tirelease
+	kubectl delete service tirelease
 	kubectl delete deployment tirelease
 
 # Use "make help" for more information about a command.

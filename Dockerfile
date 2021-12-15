@@ -6,6 +6,7 @@ RUN yarn install
 COPY web .
 RUN yarn build
 
+
 # -- Build Golang server
 FROM golang:alpine as serverbuilder
 ENV GO111MODULE=on \
@@ -18,6 +19,8 @@ COPY . .
 RUN go mod tidy
 RUN go build -o ./bin/tirelease cmd/tirelease/*.go
 
+
 # -- Combine & Set the default run command for the container
 COPY --from=webbuilder /webapp/build ./web/build
 CMD ["/goapp/bin/tirelease"]
+

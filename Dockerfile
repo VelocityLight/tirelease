@@ -1,12 +1,13 @@
-# -- Build react web static files using yarn
+# Only copy website/ and build React
 FROM node:14.15-alpine as webbuilder
 WORKDIR /webapp
-COPY website/package.json website/yarn.lock ./
+COPY website/ ./website/
+WORKDIR /webapp/website/
 RUN yarn install
-COPY website .
 RUN yarn build
 
-# -- Build Golang server
+
+# Copy whole project and build Golang
 FROM golang:alpine as serverbuilder
 ENV GO111MODULE=on \
     CGO_ENABLED=0 \
@@ -16,9 +17,13 @@ ENV GO111MODULE=on \
 WORKDIR /goapp
 COPY . .
 RUN go mod tidy
-RUN go build -o ./bin/tirelease cmd/tirelease/*.go
+RUN go build -o ./bin/tirelease ./cmd/tirelease/*.go
 
-# -- Combine & Set the default run command for the container
-COPY --from=webbuilder /webapp/build ./website/build
+
+# Copy whole directory website/ into goapp/bin/
+# Aggregate multiple sources into one: finally /goapp/ contains everything
+COPY --from=webbuilder /webapp/website/ ./bin/website/
+
+# Set the image's default run command
 CMD ["/goapp/bin/tirelease"]
 

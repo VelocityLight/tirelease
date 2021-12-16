@@ -1,4 +1,4 @@
-apiVersion: v1 # API Version, Must In 'kubectl api-versions'
+apiVersion: apps/v1 # API Version, Must In 'kubectl api-versions'
 kind: Deployment
 metadata:
   name: tirelease

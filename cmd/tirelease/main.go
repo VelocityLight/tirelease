@@ -8,6 +8,6 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.StaticFS("/", http.Dir("./web/build"))
+	r.StaticFS("/", http.Dir("./website/build"))
 	r.Run(":8080")
 }

@@ -1,6 +1,6 @@
 BUILD_DIR = ./bin
-WEB_DIR = ./web/build/
-K8S_DIR = ./deploy/kubernetes/
+WEB_DIR = ./website/build
+K8S_DIR = ./deploy/kubernetes
 TIRELEASE_BINARY = ${BUILD_DIR}/tirelease
 DOCKER_NAME = yejunchen66/tirelease
 
@@ -16,7 +16,7 @@ clean:
 
 # -- Low-frequency operations of this project
 build.web:
-	cd web && \
+	cd website && \
 	yarn install && \
 	yarn build
 

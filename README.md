@@ -23,13 +23,16 @@
 ├── go.sum
 ├── README.md
 ├── .gitignore
-├── Makefile  # code compilation and other instructions
-├── api  # restful api registry & http router
-├── cmd  # main applications for this project's multiple package
-│   └── tirelease
-├── scripts  # scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
-│   └── run.sh
-└── web  # ui components and pages. detail can jump to  web/README.MD
+├── Makefile # code compilation and other instructions
+├── Dockerfile # build docker image contains website and server binary
+├── config.toml # global config with key-value
+├── api/ # restful api registry & http router
+├── cmd/ # main applications for this project's multiple package
+│   └── tirelease/
+├── scripts/  # scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
+├── deploy/ # profile for deployment 
+│   └── kubernetes
+└── website/ # ui components and pages. detail can jump to  website/README.MD
     ├── src
     ├── public
     └── package.json

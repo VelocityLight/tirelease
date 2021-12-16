@@ -71,7 +71,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### basic category below
 ```
-web
+website
 ├── .git # 隐藏文件夹，会初始化第一个 Commit 记录
 ├── README.md
 ├── package.json # 依赖配置文件

@@ -4,6 +4,7 @@ K8S_DIR = ./deploy/kubernetes
 TIRELEASE_BINARY = ${BUILD_DIR}/tirelease
 DOCKER_NAME = yejunchen66/tirelease
 
+
 # -- Most-frequency operations of this project
 all: build.web build.server
 
@@ -11,17 +12,10 @@ run: all
 	./${TIRELEASE_BINARY}
 
 clean:
-	rm -rf ${WEB_DIR}
-	rm -rf ${BUILD_DIR}
+	@rm -rf ${WEB_DIR}
+	@rm -rf ${BUILD_DIR}
+	@echo "clear all temporary files and folders successful hahaha!"
 
-# -- Low-frequency operations of this project
-build.web:
-	cd website && \
-	yarn install && \
-	yarn build
-
-build.server:
-	go build -o ${TIRELEASE_BINARY} cmd/tirelease/*.go
 
 # -- Tool operations 
 docker:
@@ -42,6 +36,17 @@ k8s: docker
 k8s.clean:
 	kubectl delete service tirelease
 	kubectl delete deployment tirelease
+
+
+# -- Low-frequency operations of this project
+build.web:
+	cd website && \
+	yarn install && \
+	yarn build
+
+build.server:
+	go build -o ${TIRELEASE_BINARY} cmd/tirelease/*.go
+
 
 # Use "make help" for more information about a command.
 help:

@@ -1,36 +1,33 @@
 # Variables contain directory/file and so on
-BUILD_DIR = ${CURDIR}/bin/
-WEB_BINARY = ${BUILD_DIR}/website/
-GO_BINARY_NAME = tirelease
-GO_BINARY = ${BUILD_DIR}/${GO_BINARY_NAME}
+GO_BUILD_DIR = ./bin/
 
-WEBSITE_DIR = ${CURDIR}/website/
+GO_BINARY = ${GO_BUILD_DIR}/tirelease
+WEB_BINARY = ./website/build/
 
 DOCKER_NAME = yejunchen66/tirelease
 K8S_DEPLOY_NAME = tirelease
 K8S_SERVICE_NAME = tirelease
 
-K8S_DEPLOY_FILE = ${CURDIR}/deploy/kubernetes/tirelease-deployment.yaml
-K8S_SERVICE_FILE = ${CURDIR}/deploy/kubernetes/tirelease-service.yaml
-TIRELEASE_MAIN_FILE = ${CURDIR}/cmd/tirelease/*.go
+WEBSITE_DIR = ./website/
+K8S_DEPLOY_FILE = ./deploy/kubernetes/tirelease-deployment.yaml
+K8S_SERVICE_FILE = ./deploy/kubernetes/tirelease-service.yaml
+TIRELEASE_MAIN_FILE = ./cmd/tirelease/*.go
 
 # The following are common build commands
 all: build.web build.server
 
 clean:
-	@rm -rf ${BUILD_DIR}
+	@rm -rf ${WEB_BINARY}
+	@rm -rf ${GO_BUILD_DIR}
 	@echo "clear all temporary files and folders successful hahaha!"
 
 run: clean all
-	cd ${BUILD_DIR} && \
-	./${GO_BINARY_NAME}
+	./${GO_BINARY}
 
 build.web:
 	cd ${WEBSITE_DIR} && \
 	yarn install && \
-	yarn build && \
-	mkdir -p ${WEB_BINARY} && \
-	mv build/ ${WEB_BINARY}
+	yarn build
 
 build.server:
 	go build -o ${GO_BINARY} ${TIRELEASE_MAIN_FILE}

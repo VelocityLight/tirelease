@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 
+	"path/filepath"
+
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +12,7 @@ import (
 
 func main() {
 	// absolute path for website
-	dir, err := os.Getwd()
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		panic(err)
 	}

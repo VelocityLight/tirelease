@@ -1,15 +1,17 @@
-BUILD_DIR = ./bin
-WEB_DIR = ./website/build
-K8S_DIR = ./deploy/kubernetes
-TIRELEASE_BINARY = ${BUILD_DIR}/tirelease
-DOCKER_NAME = yejunchen66/tirelease
+WEB_DIR = ${CURDIR}/website/build
 
+BUILD_DIR = ${CURDIR}/bin
+TIRELEASE_GO = ${CURDIR}/cmd/tirelease/*.go
+
+DOCKER_NAME = yejunchen66/tirelease
+K8S_DIR = ${CURDIR}/deploy/kubernetes
 
 # -- Most-frequency operations of this project
 all: build.web build.server
 
 run: all
-	./${TIRELEASE_BINARY}
+	cd ${BUILD_DIR} && \
+	./tirelease
 
 clean:
 	@rm -rf ${WEB_DIR}
@@ -40,12 +42,12 @@ k8s.clean:
 
 # -- Low-frequency operations of this project
 build.web:
-	cd website && \
+	cd ${CURDIR}/website && \
 	yarn install && \
 	yarn build
 
 build.server:
-	go build -o ${TIRELEASE_BINARY} cmd/tirelease/*.go
+	go build -o ${BUILD_DIR}/tirelease ${TIRELEASE_GO}
 
 
 # Use "make help" for more information about a command.

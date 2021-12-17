@@ -47,7 +47,7 @@ k8s:
 
 k8s.clean:
 	kubectl delete all,ingress --all -n ${K8S_METADATA_NAME}
-	@echo "k8s clean deployment & service successful hahaha!"
+	@echo "k8s clean all resources successful hahaha!"
 
 # Help documentation for commands
 help:

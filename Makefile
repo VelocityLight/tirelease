@@ -9,8 +9,8 @@ K8S_DEPLOY_NAME = tirelease
 K8S_SERVICE_NAME = tirelease
 
 WEBSITE_DIR = ./website/
-K8S_DEPLOY_FILE = ./deploy/kubernetes/tirelease-deployment.yaml
-K8S_SERVICE_FILE = ./deploy/kubernetes/tirelease-service.yaml
+K8S_DEPLOY_FILE = ./deployments/kubernetes/tirelease-deployment.yaml
+K8S_SERVICE_FILE = ./deployments/kubernetes/tirelease-service.yaml
 TIRELEASE_MAIN_FILE = ./cmd/tirelease/*.go
 
 # The following are common build commands

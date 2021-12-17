@@ -14,6 +14,6 @@ spec:
             pathType: Prefix # 以<path>分隔的URL路径前缀匹配,匹配对大小写敏感
             backend: 
               service: # 后端service的名称及端口号
-                name: tirelease 
+                name: tirelease
                 port:
                   number: 80

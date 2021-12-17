@@ -13,7 +13,7 @@ This repository is a release platform for PingCAP, Welcome bros!
 + deployments: kubenetes
 + frontend: [create-react-app](https://github.com/facebook/create-react-app) & [material-ui/mui](https://github.com/mui-org/material-ui)
 
-## Quick Run
+## Quick Start
 ```
 git clone https://github.com/VelocityLight/tirelease.git
 cd tirelease/
@@ -21,7 +21,7 @@ make run
 ```
 After waiting a few seconds, application is available and can be visited in the browser:[localhost:8080](http://localhost:8080/)
 
-## Main Directory
+## File Structure
 ```
 .
 ├── go.mod

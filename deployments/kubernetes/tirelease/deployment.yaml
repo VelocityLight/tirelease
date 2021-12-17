@@ -2,8 +2,9 @@ apiVersion: apps/v1 # API Version, Must In 'kubectl api-versions'
 kind: Deployment
 metadata:
   name: tirelease
+  namespace: tirelease
 spec:
-  replicas: 1 # Resource Numbers
+  replicas: 2 # Resource Numbers
   selector:
     matchLabels:
       app: tirelease

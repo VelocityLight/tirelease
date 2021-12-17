@@ -1,22 +1,26 @@
-> This is a release platform for PingCAP<br>
-> Author: VelocityLight<br>
-> Url: https://github.com/VelocityLight/tirelease<br>
+# TiRelease
+[![GoDoc](https://godoc.org/github.com/kubernetes/test-infra?status.svg)](https://godoc.org/github.com/kubernetes/test-infra)
+[![Build status](https://prow.k8s.io/badge.svg?jobs=post-test-infra-bazel)](https://testgrid.k8s.io/sig-testing-misc#post-bazel)
 
-### Design
+This repository is a release platform for PingCAP, Welcome bros!
+
+## Design
 [click and jump](https://pingcap.feishu.cn/docs/doccnI803yGKKKeQsh56EdNi3Cc#UeCMnT)
 
-### Technologies
+## Technologies
 + backend: golang & gin
 + database: mysql
-+ deployment: kubenetes
++ deployments: kubenetes
 + frontend: [create-react-app](https://github.com/facebook/create-react-app) & [material-ui/mui](https://github.com/mui-org/material-ui)
 
-### Quick Run
+## Quick Run
 ```
-./scripts/run.sh
+git clone https://github.com/VelocityLight/tirelease.git
+cd tirelease/
+make run
 ```
 
-### Main Directory
+## Main Directory
 ```
 .
 ├── go.mod

@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
         - name: tirelease
-          image: yejunchen66/tirelease
+          image: yejunchen66/tirelease:latest
+          imagePullPolicy: Always # --"Always":only remote; --"IfNotPresent":local>remote --"Never":only local
           resources:
             limits:
               memory: "512Mi" # "1Gi" = "1024Mi"

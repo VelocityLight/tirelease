@@ -4,9 +4,11 @@ metadata:
   name: tirelease
   namespace: tirelease
 spec:
-  ports:
-    - name: http # 请为所有端口指定名称
-      port: 80 # 对外开放的服务端口
-      targetPort: 8080 # 后方 pod 的服务端口
+  type: NodePort # --"ClusterIp":内部虚拟IP,集群外部不可访问,"type"不设置默认是"ClusterIp"  --"NodePort":ClusterIp基础上暴露NodePort实现集群外可访问
+  ports: 
+    # 流量路径: (nodeport可选) -> port -> targetPort
+    - port: 80 # 内部集群访问Service的端口: Service将端口暴露在Cluster上, 集群内使用"ClusterIP:Port"可实现访问
+      targetPort: 8080 # 后端Pod的服务端口: Pod将端口暴露的container上, 从port或nodePort进入的流量, 最终通过targetPort进入Pod中
+      nodePort: 30750 # 外部访问Service的端口: Service将端口暴露在Node上, 集群外使用"NodeIP:NodePort"可实现访问. --此值30000-32767范围可指定(不指定时随机分配)
   selector:
     app: tirelease

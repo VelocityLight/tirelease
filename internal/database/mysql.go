@@ -35,5 +35,5 @@ func Connect() {
 	DBConn.DB = db
 
 	// Close(Delayed)
-	// defer db.Close()
+	defer db.Close()
 }

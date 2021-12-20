@@ -1,6 +1,5 @@
 # TiRelease
-[![GoDoc](https://godoc.org/github.com/kubernetes/test-infra?status.svg)](https://godoc.org/github.com/kubernetes/test-infra)
-[![Build status](https://prow.k8s.io/badge.svg?jobs=post-test-infra-bazel)](https://testgrid.k8s.io/sig-testing-misc#post-bazel)
+[![Language](https://img.shields.io/badge/Language-Go-blue.svg)](https://golang.org/)
 
 This repository is a release platform for PingCAP, Welcome bros!
 

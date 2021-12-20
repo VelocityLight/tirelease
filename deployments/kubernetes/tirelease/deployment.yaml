@@ -16,7 +16,7 @@ spec:
       containers:
         - name: tirelease
           # image: yejunchen66/tirelease:latest
-          image: 'hub.pingcap.net/yejunchen/tirelease:latest'
+          image: hub.pingcap.net/yejunchen/tirelease:latest
           imagePullPolicy: Always # --"Always":only remote; --"IfNotPresent":local>remote --"Never":only local
           resources:
             limits:

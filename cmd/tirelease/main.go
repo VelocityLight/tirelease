@@ -1,11 +1,9 @@
 package main
 
 import (
-	"net/http"
+	"tirelease/api"
 	"tirelease/configs"
 	"tirelease/internal/database"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -15,8 +13,7 @@ func main() {
 	// Connect database
 	database.Connect()
 
-	// Start gin & listen from website
-	r := gin.Default()
-	r.StaticFS("/", http.Dir("website/build/"))
-	r.Run(":8080")
+	// Start website & rest api
+	router := api.Routers("website/build/")
+	router.Run(":8080")
 }

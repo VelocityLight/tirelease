@@ -31,6 +31,8 @@ tirelease
 ├── Makefile           # Code compilation and other instructions
 ├── Dockerfile         # Build docker image contains website and server binary
 └── scripts/           # Scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
+└── api/               # Restful api registry
+    ├── routers.go
 └── configs/
     ├── config.go      # Load configuration under profiles/
     └── profiles/      # Globle configuration for whole project

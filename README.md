@@ -23,20 +23,27 @@ After waiting a few seconds, application is available and can be visited in the 
 
 ## File Structure
 ```
-.
-├── go.mod
-├── go.sum
-├── README.md
+tirelease
 ├── .gitignore
-├── Makefile # code compilation and other instructions
-├── Dockerfile # build docker image contains website and server binary
-├── cmd/ # main applications for this project's multiple package
-│   └── tirelease/
-├── scripts/  # scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
-├── deploy/ # profile for deployment 
-│   └── kubernetes
-└── website/ # ui components and pages. detail can jump to  website/README.MD
-    ├── src
-    ├── public
-    └── package.json
+├── README.md
+├── go.mod             # Golang environment configuration
+├── go.sum
+├── Makefile           # Code compilation and other instructions
+├── Dockerfile         # Build docker image contains website and server binary
+└── scripts/           # Scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
+└── configs/
+    ├── config.go      # Load configuration under profiles/
+    └── profiles/      # Globle configuration for whole project
+└── cmd/               # Main applications for this project's multiple package
+    └── tirelease/
+└── deploy/            # Profile of deployment 
+    └── kubernetes/
+└── configs/
+    └── database/      # Database connectors
+└── website/           # UI components and pages. detail can jump to  website/README.MD
+    ├── yarn.lock      # React environment configuration for machines
+    ├── package.json   # React environment configuration for people
+    └── src/           # JS/CSS...
+    └── public/        # HomePage: index.html and icons...
+
 ```

@@ -1,0 +1,8 @@
+mysql:
+  username: cicd_online
+  password: wGEXq8a4MeCw6G
+  host: 172.16.4.36
+  port: "3306"
+  database: cicd_online
+  charset: utf8
+

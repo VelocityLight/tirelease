@@ -72,23 +72,22 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### basic category below
 ```
 website
-├── .git # 隐藏文件夹，会初始化第一个 Commit 记录
 ├── README.md
-├── package.json # 依赖配置文件
+├── package.json          # 依赖配置文件
+├── yarn.lock             # 包管理器，有比配置在package.json中的依赖列表更多的信息，Yarn需要准确存储每个安装的依赖是哪个版本。
 ├── .gitignore
-├── [floder_name] # 根目录下可以建立其他文件夹，但不会被用在生产环境中
-├── public # 只有 public 下的文件才能被 public/index.html 使用
-│   ├── favicon.ico # 浏览器网页tab上的图案
-│   ├── index.html # public/index.html 页面模板
-│   └── manifest.json # 是渐进式Web应用将自身添加至桌面的功能依赖文件，也可以对图标、名称等信息进行配置。
-├── yarn.lock # 包管理器，有比配置在package.json中的依赖列表更多的信息，Yarn需要准确存储每个安装的依赖是哪个版本。
-└── src # 只有 src 下的文件才会被 Webpack 处理
+├── [floder_name]         # 根目录下可以建立其他文件夹，但不会被用在生产环境中
+└── public/               # 只有 public 下的文件才能被 public/index.html 使用
+    ├── favicon.ico       # 浏览器网页tab上的图案
+    ├── index.html        # public/index.html 页面模板
+    ├── manifest.json     # 是渐进式Web应用将自身添加至桌面的功能依赖文件，也可以对图标、名称等信息进行配置。
+└── src                   # 只有 src 下的文件才会被 Webpack 处理
     ├── App.css
     ├── App.js
     ├── App.test.js
-    ├── [floder_name] # 可以建立其他文件夹，以被 Webpack 成功导入
+    ├── [floder_name]     # 可以建立其他文件夹，以被 Webpack 成功导入
     ├── index.css
-    ├── index.js # JavaScript 打包入口文件
-    ├── logo.svg # react的logo，在create-react-app时展示在前端的
-    └── reportWebVitals.js # 提供前端性能指标，可通过浏览器插件直接获取指标数据
+    ├── index.js          # JavaScript 打包入口文件
+    ├── logo.svg          # react的logo，在create-react-app时展示在前端的
+    ├── reportWebVitals.js # 提供前端性能指标，可通过浏览器插件直接获取指标数据
 ```

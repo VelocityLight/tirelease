@@ -8,7 +8,7 @@ WEBSITE_BINARY = ${WEBSITE_DIR}/build/
 DOCKER_ADDRESS = hub.pingcap.net
 DOCKER_NAME = yejunchen/tirelease
 K8S_METADATA_NAME = tirelease
-K8S_DEPLOYMENT_FILE = ./deployments/kubernetes/tirelease/
+K8S_DEPLOYMENT_FILE = ./deployments/kubernetes/
 TIRELEASE_MAIN_FILE = ./cmd/tirelease/*.go
 
 # The following are common build commands

@@ -13,7 +13,7 @@ func main() {
 	configs.LoadConfig("configs/profiles/config.yaml")
 
 	// Connect database
-	database.Initialize()
+	database.Connect()
 
 	// Start gin & listen from website
 	r := gin.Default()

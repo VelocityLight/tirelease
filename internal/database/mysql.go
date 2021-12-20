@@ -17,7 +17,7 @@ type ConnectionInfo struct {
 
 var DBConn = &ConnectionInfo{}
 
-func Initialize() {
+func Connect() {
 	// Params
 	url := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s",
 		configs.Config.Mysql.UserName,
@@ -35,5 +35,5 @@ func Initialize() {
 	DBConn.DB = db
 
 	// Close(Delayed)
-	defer db.Close()
+	// defer db.Close()
 }

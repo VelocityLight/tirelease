@@ -5,7 +5,8 @@ WEBSITE_DIR = ./website/
 GO_BINARY = ${GO_BUILD_DIR}/tirelease
 WEBSITE_BINARY = ${WEBSITE_DIR}/build/
 
-DOCKER_NAME = yejunchen66/tirelease
+DOCKER_ADDRESS = hub.pingcap.net
+DOCKER_NAME = yejunchen/tirelease
 K8S_METADATA_NAME = tirelease
 K8S_DEPLOYMENT_FILE = ./deployments/kubernetes/tirelease/
 TIRELEASE_MAIN_FILE = ./cmd/tirelease/*.go
@@ -30,10 +31,13 @@ build.server:
 	go build -o ${GO_BINARY} ${TIRELEASE_MAIN_FILE}
 
 # The following are common deployment commands
+# for international docker hub (be annotated)
+# or for internal harbor (be used)
 docker:
 	docker build -t ${DOCKER_NAME} .
-	docker push ${DOCKER_NAME}
-	@echo "docker image build & push successful hahaha!"
+#	docker push ${DOCKER_NAME} 
+	docker tag ${DOCKER_NAME}:latest ${DOCKER_ADDRESS}/${DOCKER_NAME}:latest
+	docker push ${DOCKER_ADDRESS}/${DOCKER_NAME}:latest
 
 docker.run:
 	docker run -p 8080:8080 -t ${DOCKER_NAME}

@@ -1,6 +1,8 @@
 package api
 
 import (
+	"tirelease/internal/service"
+
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -11,17 +13,26 @@ func pong(c *gin.Context) {
 	})
 }
 
-// Rest api registry & Create gin-routers
+// Create gin-routers
 func Routers(file string) (router *gin.Engine) {
 	router = gin.New()
 
+	// Static html
 	router.Use(
 		static.Serve("/", static.LocalFile(file, true)),
 	)
 
-	v1 := router.Group("/ping")
+	// Test "ping"
+	ping := router.Group("/ping")
 	{
-		v1.GET("/", pong)
+		ping.GET("/", pong)
+	}
+
+	// REST API registry
+	ciDetail := router.Group("/cidetail")
+	{
+		ciDetail.POST("/insert", service.Insert)
+		ciDetail.POST("/batchinsert", service.BatchInsert)
 	}
 
 	return router

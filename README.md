@@ -29,9 +29,9 @@ tirelease
 ├── go.sum
 ├── config.yaml        # Global configuration
 ├── Makefile           # Code compilation and other instructions
-└── scripts/           # Scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
+└── scripts/           # Scripts to perform various operations, keep the root level Makefile small and simple
 └── cmd/               # Main application starters of Golang
-└── api/               # Restful api registry
+└── api/               # REST API registry & Static file router
     ├── api.go
 └── deployments/
     └── docker/        # Build docker image contains website and server binary
@@ -41,9 +41,13 @@ tirelease
     └── database/      # Database connectors
     └── httpclient/    # Http client utils
     └── github/        # Github client, reference: https://github.com/google/go-github
+└── internal/          # Business code & function
+    └── entity/        # Object entity
+    └── repository/    # Function operator
+    └── service/       # Http handler
 └── website/           # UI components and pages. detail can jump to  website/README.MD
     ├── yarn.lock      # React environment configuration for machines
     ├── package.json   # React environment configuration for people
     └── src/           # JavaScript/CSS...
-    └── public/        # HomePage: index.html and icons...
+    └── public/        # HomePage: index.html and icons
 ```

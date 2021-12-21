@@ -28,17 +28,16 @@ tirelease
 ├── go.mod             # Golang environment configuration
 ├── go.sum
 ├── Makefile           # Code compilation and other instructions
-├── Dockerfile         # Build docker image contains website and server binary
 └── scripts/           # Scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
+└── cmd/               # Main application starters of Golang
 └── api/               # Restful api registry
-    ├── routers.go
+    ├── api.go
 └── configs/
     ├── config.go      # Load configuration under profiles/
     └── profiles/      # Globle configuration for whole project
-└── cmd/               # Main applications for this project's multiple package
-    └── tirelease/
-└── deploy/            # Profile of deployment 
-    └── kubernetes/
+└── deployments/
+    └── docker/        # Build docker image contains website and server binary
+    └── kubernetes/    # Deployment yaml for k8s
 └── commons/           # Common utils pkg
     └── database/      # Database connectors
     └── httpclient/    # Http util
@@ -46,7 +45,7 @@ tirelease
 └── website/           # UI components and pages. detail can jump to  website/README.MD
     ├── yarn.lock      # React environment configuration for machines
     ├── package.json   # React environment configuration for people
-    └── src/           # JS/CSS...
+    └── src/           # JavaScript/CSS...
     └── public/        # HomePage: index.html and icons...
 
 ```

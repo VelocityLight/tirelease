@@ -7,11 +7,14 @@ WEBSITE_BINARY = ${WEBSITE_DIR}/build/
 
 DOCKER_ADDRESS = hub.pingcap.net
 DOCKER_NAME = yejunchen/tirelease
+DOCKER_FILE = ./deployments/docker/Dockerfile
 K8S_METADATA_NAME = tirelease
 K8S_DEPLOYMENT_FILE = ./deployments/kubernetes/
 TIRELEASE_MAIN_FILE = ./cmd/tirelease/*.go
 
+# =============================================================================
 # The following are common build commands
+# =============================================================================
 build: build.web build.server
 
 clean:
@@ -30,12 +33,11 @@ build.web:
 build.server:
 	go build -o ${GO_BINARY} ${TIRELEASE_MAIN_FILE}
 
+# =============================================================================
 # The following are common deployment commands
-# For internal: harbor (be used)
-# For international: docker hub (be annotated)
+# =============================================================================
 docker:
-	docker build -t ${DOCKER_NAME} .
-#	docker push ${DOCKER_NAME} 
+	docker build -f ${DOCKER_FILE} -t ${DOCKER_NAME} .
 	docker tag ${DOCKER_NAME}:latest ${DOCKER_ADDRESS}/${DOCKER_NAME}:latest
 	docker push ${DOCKER_ADDRESS}/${DOCKER_NAME}:latest
 
@@ -52,7 +54,9 @@ k8s.clean:
 	kubectl delete all --all -n ${K8S_METADATA_NAME}
 	@echo "k8s clean all resources successful hahaha!"
 
+# =============================================================================
 # Help documentation for commands
+# =============================================================================
 help:
 	@echo "make build : build all binaries"
 	@echo "make run : build all binaries and run"

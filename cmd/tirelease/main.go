@@ -2,8 +2,8 @@ package main
 
 import (
 	"tirelease/api"
+	"tirelease/commons/database"
 	"tirelease/configs"
-	"tirelease/internal/database"
 )
 
 func main() {

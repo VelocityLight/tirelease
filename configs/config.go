@@ -18,6 +18,7 @@ type ConfigYaml struct {
 
 var Config = &ConfigYaml{}
 
+// Load config from file into 'Config' variable
 func LoadConfig(file string) {
 	configor.Load(Config, file)
 }

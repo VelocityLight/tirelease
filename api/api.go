@@ -11,6 +11,7 @@ func pong(c *gin.Context) {
 	})
 }
 
+// Rest api registry & Create gin-routers
 func Routers(file string) (router *gin.Engine) {
 	router = gin.New()
 

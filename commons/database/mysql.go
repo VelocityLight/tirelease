@@ -3,9 +3,9 @@ package database
 import (
 	"fmt"
 
-	"database/sql"
-	"tirelease/configs"
+	"tirelease/commons/configs"
 
+	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 )
 

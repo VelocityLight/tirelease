@@ -2,13 +2,13 @@ package main
 
 import (
 	"tirelease/api"
+	"tirelease/commons/configs"
 	"tirelease/commons/database"
-	"tirelease/configs"
 )
 
 func main() {
 	// Load config
-	configs.LoadConfig("configs/profiles/config.yaml")
+	configs.LoadConfig("config.yaml")
 
 	// Connect database
 	database.Connect()

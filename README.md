@@ -27,25 +27,23 @@ tirelease
 ├── README.md
 ├── go.mod             # Golang environment configuration
 ├── go.sum
+├── config.yaml        # Global configuration
 ├── Makefile           # Code compilation and other instructions
 └── scripts/           # Scripts to perform various build, install, analysis, etc operations, keep the root level Makefile small and simple
 └── cmd/               # Main application starters of Golang
 └── api/               # Restful api registry
     ├── api.go
-└── configs/
-    ├── config.go      # Load configuration under profiles/
-    └── profiles/      # Globle configuration for whole project
 └── deployments/
     └── docker/        # Build docker image contains website and server binary
     └── kubernetes/    # Deployment yaml for k8s
-└── commons/           # Common utils pkg
+└── commons/           # Common utils for whole project
+    └── configs/       # Global configuration reader
     └── database/      # Database connectors
-    └── httpclient/    # Http util
+    └── httpclient/    # Http client utils
     └── github/        # Github client, reference: https://github.com/google/go-github
 └── website/           # UI components and pages. detail can jump to  website/README.MD
     ├── yarn.lock      # React environment configuration for machines
     ├── package.json   # React environment configuration for people
     └── src/           # JavaScript/CSS...
     └── public/        # HomePage: index.html and icons...
-
 ```

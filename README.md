@@ -42,6 +42,7 @@ tirelease
 └── commons/           # Common utils pkg
     └── database/      # Database connectors
     └── httpclient/    # Http util
+    └── github/        # Github client, reference: https://github.com/google/go-github
 └── website/           # UI components and pages. detail can jump to  website/README.MD
     ├── yarn.lock      # React environment configuration for machines
     ├── package.json   # React environment configuration for people

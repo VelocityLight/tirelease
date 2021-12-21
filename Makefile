@@ -31,8 +31,8 @@ build.server:
 	go build -o ${GO_BINARY} ${TIRELEASE_MAIN_FILE}
 
 # The following are common deployment commands
-# for international docker hub (be annotated)
-# or for internal harbor (be used)
+# For internal: harbor (be used)
+# For international: docker hub (be annotated)
 docker:
 	docker build -t ${DOCKER_NAME} .
 #	docker push ${DOCKER_NAME} 

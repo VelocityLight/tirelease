@@ -6,7 +6,7 @@ import (
 
 // Interface
 type CIDetailRepo interface {
-	Insert()
+	Insert(*entity.CIDetail)
 	BatchInsert([]*entity.CIDetail)
 }
 

@@ -19,3 +19,5 @@ View source code at: https://github.com/mui-org/material-ui/tree/master/docs/src
 View more example at: https://mui.com/zh/getting-started/templates/
 <br>
 View components example at: https://github.com/devias-io/material-kit-react/tree/1b2d179fa8fd915894db01a195728b06ccc2e909
+<br>
+Route example at: https://github.com/Julfikar-Haidar/react-ecommerce/blob/main/src/Routes.js

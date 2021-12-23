@@ -82,13 +82,12 @@ website
     ├── index.html              # public/index.html 页面模板
     ├── manifest.json           # 是渐进式Web应用将自身添加至桌面的功能依赖文件，也可以对图标、名称等信息进行配置。
 └── src                         # 只有 src 下的文件才会被 Webpack 处理
-    ├── App.css
-    ├── App.js
-    ├── App.test.js
-    ├── [floder_name]           # 可以建立其他文件夹，以被 Webpack 成功导入
     ├── index.css
     ├── index.js                # JavaScript 打包入口文件
+    ├── routes.js               # Url路由,与index.js配合可进行页面跳转
     ├── logo.svg                # react的logo，在create-react-app时展示在前端的
     ├── reportWebVitals.js      # 提供前端性能指标，可通过浏览器插件直接获取指标数据
-    └── dashboard/              # Dashboard contains common title/orders...
+    └── layout/                 # 工程的通用页面布局Layout,方便快速引用
+    └── pages/                  # 工程的页面js文件,在routes.js中被快速引用,快速跳转页面
+    └── components/             # 工程的通用js组件,在pages/中被使用
 ```

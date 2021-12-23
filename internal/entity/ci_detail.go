@@ -7,7 +7,9 @@ import (
 /**
 mysql --host 172.16.4.36 --port 3306 -u cicd_online -pwGEXq8a4MeCw6G
 
-CREATE TABLE IF NOT EXISTS ci_detail (
+// UNIQUE KEY
+
+CREATE TABLE IF NOT EXISTS test_cases (
 	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -20,12 +22,12 @@ CREATE TABLE IF NOT EXISTS ci_detail (
 	suite_name VARCHAR(255) COMMENT '组件名称',
 	case_name VARCHAR(64) NOT NULL COMMENT '用例名称',
 	case_class VARCHAR(1024) COMMENT '用例类名',
+	execution_time VARCHAR(255) COMMENT '执行时长',
 	status VARCHAR(32) NOT NULL COMMENT '用例结果',
 	error_detail TEXT COMMENT '错误信息',
 	stack_trace TEXT COMMENT '错误堆栈',
 
 	PRIMARY KEY (id),
-	// UNIQUE KEY
 	INDEX idx_createtime (create_time),
 	INDEX idx_jobname_repo_branch (job_name, repo, branch)
 )
@@ -46,6 +48,7 @@ type CIDetail struct {
 	SuiteName     string    `json:"suite_name"`
 	CaseName      string    `json:"case_name"`
 	CaseClass     string    `json:"case_class"`
+
 	Status        *Status   `json:"status"`
 	ErrorDetail   string    `json:"error_detail"`
 	StackTrace    string    `json:"stack_trace"`

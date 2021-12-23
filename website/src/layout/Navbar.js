@@ -1,26 +1,16 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const drawerWidth = 240;
 
-const AppBar = styled(MuiAppBar, {
+const NavbarStyle = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
@@ -38,12 +28,12 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
-export const DashboardNavbar = (props) => {
+export const Navbar = (props) => {
     const {open, toggleDrawer} = props;
 
     return (
         <>
-            <AppBar position="absolute" open={open}>
+            <NavbarStyle position="absolute" open={open}>
                 <Toolbar
                 sx={{
                     pr: '24px', // keep right padding when drawer closed
@@ -76,7 +66,7 @@ export const DashboardNavbar = (props) => {
                     </Badge>
                 </IconButton>
                 </Toolbar>
-            </AppBar>
+            </NavbarStyle>
         </>
     );
 };

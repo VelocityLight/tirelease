@@ -1,17 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
 import reportWebVitals from './reportWebVitals';
-// import Dashboard from './dashboard/Dashboard'
-import Dashboard from './components/dashboard-layout'
+import MyRoutes from './routes'
 
 ReactDOM.render(
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>,
   <React.StrictMode>
-    <Dashboard />
+    <MyRoutes />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -17,3 +17,5 @@ View the demo at: https://mui.com/getting-started/templates/dashboard/
 View source code at: https://github.com/mui-org/material-ui/tree/master/docs/src/pages/getting-started/templates/dashboard
 <br>
 View more example at: https://mui.com/zh/getting-started/templates/
+<br>
+View components example at: https://github.com/devias-io/material-kit-react/tree/1b2d179fa8fd915894db01a195728b06ccc2e909

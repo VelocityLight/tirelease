@@ -31,6 +31,7 @@ func Routers(file string) (router *gin.Engine) {
 	// REST API registry
 	testEntity := router.Group("/testentity")
 	{
+		testEntity.GET("/select", service.TestEntitySelect)
 		testEntity.POST("/insert", service.TestEntityInsert)
 	}
 

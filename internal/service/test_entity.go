@@ -16,3 +16,16 @@ func TestEntityInsert(c *gin.Context) {
 	}
 	c.JSON(200, gin.H{"status": "ok"})
 }
+
+func TestEntitySelect(c *gin.Context) {
+	option := entity.ListOption{}
+	c.BindJSON(&option)
+
+	testEntity, err := manage.TestEntitySelect(&option)
+	if err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+
+	c.JSON(200, gin.H{"result": testEntity})
+}

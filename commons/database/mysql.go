@@ -19,7 +19,7 @@ var DBConn = &ConnectionInfo{}
 
 func Connect() {
 	// Params
-	url := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s",
+	url := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true",
 		configs.Config.Mysql.UserName,
 		configs.Config.Mysql.PassWord,
 		configs.Config.Mysql.Host,

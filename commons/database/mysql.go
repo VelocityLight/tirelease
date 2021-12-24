@@ -5,13 +5,13 @@ import (
 
 	"tirelease/commons/configs"
 
-	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 // Connection returns infomation
 type ConnectionInfo struct {
-	DB *sql.DB
+	DB *gorm.DB
 	// Anything else...
 }
 
@@ -28,12 +28,12 @@ func Connect() {
 		configs.Config.Mysql.CharSet)
 
 	// Connect
-	db, err := sql.Open("mysql", url)
+	db, err := gorm.Open(mysql.Open(url), &gorm.Config{})
 	if err != nil {
 		panic(err.Error())
 	}
 	DBConn.DB = db
 
 	// Close(Delayed)
-	defer db.Close()
+	// defer db.Close()
 }

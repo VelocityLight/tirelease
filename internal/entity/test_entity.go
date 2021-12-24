@@ -7,8 +7,6 @@ import (
 /**
 mysql --host 172.16.4.36 --port 3306 -u cicd_online -pwGEXq8a4MeCw6G
 
-// UNIQUE KEY
-
 CREATE TABLE IF NOT EXISTS test_cases (
 	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -28,6 +26,7 @@ CREATE TABLE IF NOT EXISTS test_cases (
 	stack_trace TEXT COMMENT '错误堆栈',
 
 	PRIMARY KEY (id),
+	// UNIQUE KEY uk_xxx (xxx)
 	INDEX idx_createtime (create_time),
 	INDEX idx_jobname_repo_branch (job_name, repo, branch)
 )
@@ -35,31 +34,35 @@ ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'ci_detail任务详情表';
 **/
 
 // Struct of ci_detail
-type CIDetail struct {
-	ID            int64     `json:"id"`
-	CreateTime    time.Time `json:"create_time"`
-	UpdateTime    time.Time `json:"update_time"`
-	JobName       string    `json:"job_name"`
-	JobURL        string    `json:"job_url"`
-	Repo          string    `json:"repo"`
-	Branch        string    `json:"branch"`
-	PullRequestID string    `json:"pull_request_id"`
-	CommitID      string    `json:"commit_id"`
-	SuiteName     string    `json:"suite_name"`
-	CaseName      string    `json:"case_name"`
-	CaseClass     string    `json:"case_class"`
-
-	Status        *Status   `json:"status"`
-	ErrorDetail   string    `json:"error_detail"`
-	StackTrace    string    `json:"stack_trace"`
+type TestEntity struct {
+	ID            int64       `json:"id"`
+	CreateTime    time.Time   `json:"create_time"`
+	UpdateTime    time.Time   `json:"update_time"`
+	JobName       string      `json:"job_name"`
+	JobURL        string      `json:"job_url"`
+	Repo          string      `json:"repo"`
+	Branch        string      `json:"branch"`
+	PullRequestID string      `json:"pull_request_id"`
+	CommitID      string      `json:"commit_id"`
+	SuiteName     string      `json:"suite_name"`
+	CaseName      string      `json:"case_name"`
+	CaseClass     string      `json:"case_class"`
+	ExecutionTime string      `json:"execution_time"`
+	Status        *CaseStatus `json:"status"`
+	ErrorDetail   string      `json:"error_detail"`
+	StackTrace    string      `json:"stack_trace"`
 }
 
 // Enum type
-type Status string
+type CaseStatus string
 
 // Enum list...
 const (
-	StatusPassed = Status("passed")
-	StatusFailed = Status("failed")
-	StatusSkiped = Status("skipped")
+	CaseStatusPassed = CaseStatus("passed")
+	CaseStatusFailed = CaseStatus("failed")
+	CaseStatusSkiped = CaseStatus("skipped")
 )
+
+// List Option
+type ListOption struct {
+}

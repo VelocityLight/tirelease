@@ -29,10 +29,9 @@ func Routers(file string) (router *gin.Engine) {
 	}
 
 	// REST API registry
-	ciDetail := router.Group("/cidetail")
+	testEntity := router.Group("/testentity")
 	{
-		ciDetail.POST("/insert", service.Insert)
-		ciDetail.POST("/batchinsert", service.BatchInsert)
+		testEntity.POST("/insert", service.TestEntityInsert)
 	}
 
 	return router

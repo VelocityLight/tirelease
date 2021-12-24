@@ -48,6 +48,6 @@ tirelease
 └── website/           # UI components and pages. detail can jump to  website/README.MD
     ├── yarn.lock      # React environment configuration for machines
     ├── package.json   # React environment configuration for people
-    └── src/           # JavaScript/CSS...
+    └── src/           # Components/Pages...
     └── public/        # HomePage: index.html and icons
 ```

@@ -53,11 +53,6 @@ type TestEntity struct {
 	StackTrace    string      `json:"stack_trace"`
 }
 
-// DB-Table
-func (TestEntity) TableName() string {
-	return "test_entity"
-}
-
 // Enum type
 type CaseStatus string
 
@@ -71,4 +66,9 @@ const (
 // List Option
 type ListOption struct {
 	ID int64 `json:"id"`
+}
+
+// DB-Table
+func (TestEntity) TableName() string {
+	return "test_entity"
 }

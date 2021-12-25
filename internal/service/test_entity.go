@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Rest-API controller
 func TestEntityInsert(c *gin.Context) {
 	testEntity := entity.TestEntity{}
 	c.BindJSON(&testEntity)

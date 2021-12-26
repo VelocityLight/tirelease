@@ -26,7 +26,7 @@ func CollectTriageItemByRepo(owner string, repo string) ([]*entity.TriageItem, e
 	}
 
 	// Transform
-	triageItems := transform(issues)
+	triageItems := transform(issues, owner, repo)
 	return triageItems, nil
 }
 
@@ -40,14 +40,14 @@ func SavaTriageItems(triageItems []*entity.TriageItem) error {
 	return nil
 }
 
-func transform(issues []*github.Issue) []*entity.TriageItem {
+func transform(issues []*github.Issue, owner string, repo string) []*entity.TriageItem {
 	resp := []*entity.TriageItem{}
 	for _, issue := range issues {
 		triageItem := &entity.TriageItem{
 			CreateTime:  issue.GetCreatedAt(),
 			UpdateTime:  issue.GetUpdatedAt(),
 			ProjectName: "v4.0.16",
-			Repo:        issue.GetRepository().GetFullName(),
+			Repo:        owner + "/" + repo,
 			IssueID:     issue.GetNumber(),
 			Status:      entity.TriageItemStatusInit,
 		}

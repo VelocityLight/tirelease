@@ -22,11 +22,11 @@ func TestEntitySelect(c *gin.Context) {
 	option := entity.TestEntityOption{}
 	c.BindJSON(&option)
 
-	testEntity, err := repository.TestEntitySelect(&option)
+	testEntities, err := repository.TestEntitySelect(&option)
 	if err != nil {
 		c.JSON(500, err.Error())
 		return
 	}
 
-	c.JSON(200, gin.H{"result": testEntity})
+	c.JSON(200, gin.H{"data": testEntities})
 }

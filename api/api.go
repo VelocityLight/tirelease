@@ -34,6 +34,11 @@ func Routers(file string) (router *gin.Engine) {
 		testEntity.GET("/select", controller.TestEntitySelect)
 		testEntity.POST("/insert", controller.TestEntityInsert)
 	}
+	triageItem := router.Group("/triage")
+	{
+		triageItem.GET("/select", controller.SelectTriageItems)
+		triageItem.POST("/insert", controller.InsertTriageItems)
+	}
 
 	return router
 }

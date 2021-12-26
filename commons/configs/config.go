@@ -14,6 +14,10 @@ type ConfigYaml struct {
 		DataBase string `required:"true"`
 		CharSet  string `default:"utf8"`
 	}
+
+	Github struct {
+		AccessToken string `required:"true"`
+	}
 }
 
 var Config = &ConfigYaml{}

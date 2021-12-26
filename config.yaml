@@ -6,3 +6,5 @@ mysql:
   database: cicd_online
   charset: utf8
 
+github:
+  accesstoken: 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

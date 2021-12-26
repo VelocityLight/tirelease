@@ -9,13 +9,13 @@ import (
 	"gorm.io/gorm"
 )
 
-// Connection returns infomation
-type ConnectionInfo struct {
+// Mysql handler infomation
+type MysqlInfo struct {
 	DB *gorm.DB
 	// Anything else...
 }
 
-var DBConn = &ConnectionInfo{}
+var DBConn = &MysqlInfo{}
 
 func Connect() {
 	// Params

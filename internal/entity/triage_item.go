@@ -15,6 +15,7 @@ type TriageItem struct {
 	PullRequestID int              `json:"pull_request_id"`
 	Status        TriageItemStatus `json:"status"`
 	Comment       string           `json:"comment"`
+	IssueUrl      string           `json:"issue_url"`
 }
 
 // Enum type
@@ -52,6 +53,7 @@ CREATE TABLE IF NOT EXISTS triage_item (
 	pull_request_id INT(11) COMMENT '合入请求ID',
 	status VARCHAR(32) NOT NULL COMMENT 'Triage结果',
 	comment VARCHAR(1024) COMMENT '评论',
+	issue_url VARCHAR(1024) COMMENT '需求链接',
 
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_repo_issueid (repo, issue_id),

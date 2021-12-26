@@ -10,7 +10,7 @@ import (
 
 type TriageOption struct {
 	Owner string `json:"owner"`
-	Repo string `json:"repo"`
+	Repo  string `json:"repo"`
 }
 
 // Rest-API controller
@@ -27,7 +27,7 @@ func InsertTriageItems(c *gin.Context) {
 	}
 
 	err2 := service.SavaTriageItems(triageItems)
-	if (nil != err2) {
+	if nil != err2 {
 		c.JSON(500, err.Error())
 		return
 	}

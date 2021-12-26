@@ -50,6 +50,7 @@ func transform(issues []*github.Issue, owner string, repo string) []*entity.Tria
 			Repo:        owner + "/" + repo,
 			IssueID:     issue.GetNumber(),
 			Status:      entity.TriageItemStatusInit,
+			IssueUrl:    *issue.HTMLURL,
 		}
 		resp = append(resp, triageItem)
 	}

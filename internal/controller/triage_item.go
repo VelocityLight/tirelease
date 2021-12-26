@@ -13,6 +13,13 @@ type TriageOption struct {
 	Repo  string `json:"repo"`
 }
 
+type TriageOprate struct {
+	Owner string `json:"owner"`
+	Repo  string `json:"repo"`
+	Number int `json:"number"`
+	Lables []string `json:"labels"`
+}
+
 // Rest-API controller
 func InsertTriageItems(c *gin.Context) {
 	// Params
@@ -48,4 +55,20 @@ func SelectTriageItems(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"data": triageItems})
+}
+
+
+
+func AddLabelsToIssue(c *gin.Context) {
+	// Params
+	operate := TriageOprate{}
+	c.ShouldBind(&operate)
+
+	// Action
+	err := service.AddLabelOfAccept(operate.Owner, operate.Repo, operate.Number, operate.Lables)
+	if err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+	c.JSON(200, gin.H{"status": "ok"})
 }

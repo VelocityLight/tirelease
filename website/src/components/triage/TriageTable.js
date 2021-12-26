@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +11,43 @@ import axios from 'axios';
 
 function preventDefault(event) {
     event.preventDefault();
+}
+
+function handleClick(row) {
+    var body = JSON.stringify({
+        repo: row.repo,
+        number: row.id,
+        labels: ['cherry-pick']
+    })
+    console.log(body);
+
+    // axios.post('http://localhost:8080/triage/accept', body)
+    //  .then((res) => {console.log(res)})
+    //  .catch((err) => {console.log(err)})
+
+    axios({
+        method: 'post',
+        url: 'http://localhost:8080/triage/accept',
+        headers: {
+            "Content-Type": "application/json"
+        }, 
+        data: {
+            repo: row.repo,
+            number: row.id,
+            labels: ['cherry-pick']
+        }
+    });
+
+    // axios.post("http://localhost:8080/triage/accept", {
+    //     body
+    // }, {
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     }
+    // })
+    // .then (function (response){
+    //     console.log(response.data);
+    // }) 
 }
 
 export default function TriageTable() {
@@ -32,6 +70,7 @@ export default function TriageTable() {
                         <TableCell>PullRequestID</TableCell>
                         <TableCell>Triage Status</TableCell>
                         <TableCell align="right">Comment</TableCell>
+                        <TableCell align="right">Operate</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -39,10 +78,19 @@ export default function TriageTable() {
                     <TableRow key={row.id}>
                         <TableCell>{row.project_name}</TableCell>
                         <TableCell>{row.repo}</TableCell>
-                        <TableCell>{row.issue_id}</TableCell>
+                        <TableCell>
+                            <Link color="primary" href={row.issue_url}>
+                                {row.issue_id}
+                            </Link>
+                        </TableCell>
                         <TableCell>{row.pull_request_id}</TableCell>
                         <TableCell>{row.status}</TableCell>
                         <TableCell align="right">{row.comment}</TableCell>
+                        <TableCell align="right">
+                            <Button color="primary" onClick={()=>handleClick(row)}>
+                                Accept
+                            </Button>
+                        </TableCell>
                     </TableRow>
                 ))}
                 </TableBody>

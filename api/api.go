@@ -41,6 +41,7 @@ func Routers(file string) (router *gin.Engine) {
 	{
 		triageItem.GET("/select", controller.SelectTriageItems)
 		triageItem.POST("/insert", controller.InsertTriageItems)
+		triageItem.POST("/accept", controller.AddLabelsToIssue)
 	}
 
 	return router

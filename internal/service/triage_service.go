@@ -40,6 +40,18 @@ func SavaTriageItems(triageItems []*entity.TriageItem) error {
 	return nil
 }
 
+// Label operations
+func AddLabelOfAccept(owner string, repo string, number int, labels []string) error {
+	// Edit Labels
+	_, _, err := git.Client.Client.Issues.AddLabelsToIssue(context.Background(), "VelocityLight", "tirelease", number, labels)
+	if nil != err {
+		return err
+	}
+
+	// UpdateDB
+	return nil
+}
+
 func transform(issues []*github.Issue, owner string, repo string) []*entity.TriageItem {
 	resp := []*entity.TriageItem{}
 	for _, issue := range issues {

@@ -17,6 +17,9 @@ func pong(c *gin.Context) {
 func Routers(file string) (router *gin.Engine) {
 	router = gin.New()
 
+	// Cors
+	router.Use(Cors())
+
 	// Static html
 	router.Use(
 		static.Serve("/", static.LocalFile(file, true)),

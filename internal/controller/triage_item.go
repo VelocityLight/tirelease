@@ -38,7 +38,7 @@ func InsertTriageItems(c *gin.Context) {
 func SelectTriageItems(c *gin.Context) {
 	// Params
 	option := entity.TriageItemOption{}
-	c.BindJSON(&option)
+	c.ShouldBind(&option)
 
 	// Action
 	triageItems, err := repository.TriageItemSelect(&option)

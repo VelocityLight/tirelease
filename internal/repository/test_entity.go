@@ -1,4 +1,4 @@
-package manage
+package repository
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ func TestEntityInsert(testEntity *entity.TestEntity) error {
 	return nil
 }
 
-func TestEntitySelect(option *entity.ListOption) (*[]entity.TestEntity, error) {
+func TestEntitySelect(option *entity.TestEntityOption) (*[]entity.TestEntity, error) {
 	var testEntities []entity.TestEntity
 
 	if err := database.DBConn.DB.Find(&testEntities).Where(option).Error; err != nil {

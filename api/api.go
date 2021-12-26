@@ -1,7 +1,7 @@
 package api
 
 import (
-	"tirelease/internal/service"
+	"tirelease/internal/controller"
 
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
@@ -31,8 +31,8 @@ func Routers(file string) (router *gin.Engine) {
 	// REST API registry
 	testEntity := router.Group("/testentity")
 	{
-		testEntity.GET("/select", service.TestEntitySelect)
-		testEntity.POST("/insert", service.TestEntityInsert)
+		testEntity.GET("/select", controller.TestEntitySelect)
+		testEntity.POST("/insert", controller.TestEntityInsert)
 	}
 
 	return router

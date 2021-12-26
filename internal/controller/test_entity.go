@@ -1,8 +1,8 @@
-package service
+package controller
 
 import (
 	"tirelease/internal/entity"
-	"tirelease/internal/manage"
+	"tirelease/internal/repository"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,7 +11,7 @@ import (
 func TestEntityInsert(c *gin.Context) {
 	testEntity := entity.TestEntity{}
 	c.BindJSON(&testEntity)
-	if err := manage.TestEntityInsert(&testEntity); err != nil {
+	if err := repository.TestEntityInsert(&testEntity); err != nil {
 		c.JSON(500, err.Error())
 		return
 	}
@@ -19,10 +19,10 @@ func TestEntityInsert(c *gin.Context) {
 }
 
 func TestEntitySelect(c *gin.Context) {
-	option := entity.ListOption{}
+	option := entity.TestEntityOption{}
 	c.BindJSON(&option)
 
-	testEntity, err := manage.TestEntitySelect(&option)
+	testEntity, err := repository.TestEntitySelect(&option)
 	if err != nil {
 		c.JSON(500, err.Error())
 		return

@@ -4,6 +4,46 @@ import (
 	"time"
 )
 
+// Struct of ci_detail
+type TestEntity struct {
+	ID            int64             `json:"id"`
+	CreateTime    time.Time         `json:"create_time"`
+	UpdateTime    time.Time         `json:"update_time"`
+	JobName       string            `json:"job_name"`
+	JobURL        string            `json:"job_url"`
+	Repo          string            `json:"repo"`
+	Branch        string            `json:"branch"`
+	PullRequestID int64             `json:"pull_request_id"`
+	CommitID      string            `json:"commit_id"`
+	SuiteName     string            `json:"suite_name"`
+	CaseName      string            `json:"case_name"`
+	CaseClass     string            `json:"case_class"`
+	ExecutionTime string            `json:"execution_time"`
+	Status        *TestEntityStatus `json:"status"`
+	ErrorDetail   string            `json:"error_detail"`
+	StackTrace    string            `json:"stack_trace"`
+}
+
+// Enum type
+type TestEntityStatus string
+
+// Enum list...
+const (
+	TestEntityStatusPassed = TestEntityStatus("passed")
+	TestEntityStatusFailed = TestEntityStatus("failed")
+	TestEntityStatusSkiped = TestEntityStatus("skipped")
+)
+
+// Select Option
+type TestEntityOption struct {
+	ID int64 `json:"id"`
+}
+
+// DB-Table
+func (TestEntity) TableName() string {
+	return "test_entity"
+}
+
 /**
 mysql --host 172.16.4.36 --port 3306 -u cicd_online -pwGEXq8a4MeCw6G
 
@@ -32,43 +72,3 @@ CREATE TABLE IF NOT EXISTS test_entity (
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'test_entity测试表';
 **/
-
-// Struct of ci_detail
-type TestEntity struct {
-	ID            int64       `json:"id"`
-	CreateTime    time.Time   `json:"create_time"`
-	UpdateTime    time.Time   `json:"update_time"`
-	JobName       string      `json:"job_name"`
-	JobURL        string      `json:"job_url"`
-	Repo          string      `json:"repo"`
-	Branch        string      `json:"branch"`
-	PullRequestID int64       `json:"pull_request_id"`
-	CommitID      string      `json:"commit_id"`
-	SuiteName     string      `json:"suite_name"`
-	CaseName      string      `json:"case_name"`
-	CaseClass     string      `json:"case_class"`
-	ExecutionTime string      `json:"execution_time"`
-	Status        *CaseStatus `json:"status"`
-	ErrorDetail   string      `json:"error_detail"`
-	StackTrace    string      `json:"stack_trace"`
-}
-
-// Enum type
-type CaseStatus string
-
-// Enum list...
-const (
-	CaseStatusPassed = CaseStatus("passed")
-	CaseStatusFailed = CaseStatus("failed")
-	CaseStatusSkiped = CaseStatus("skipped")
-)
-
-// List Option
-type ListOption struct {
-	ID int64 `json:"id"`
-}
-
-// DB-Table
-func (TestEntity) TableName() string {
-	return "test_entity"
-}

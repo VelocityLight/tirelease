@@ -6,15 +6,15 @@ import (
 
 // Struct of triage_item
 type TriageItem struct {
-	ID            int64             `json:"id"`
-	CreateTime    time.Time         `json:"create_time"`
-	UpdateTime    time.Time         `json:"update_time"`
-	ProjectName   string            `json:"project_name"`
-	Repo          string            `json:"repo"`
-	IssueID       int64             `json:"issue_id"`
-	PullRequestID int64             `json:"pull_request_id"`
-	Status        *TriageItemStatus `json:"status"`
-	Comment       string            `json:"comment"`
+	ID            int64            `json:"id"`
+	CreateTime    time.Time        `json:"create_time"`
+	UpdateTime    time.Time        `json:"update_time"`
+	ProjectName   string           `json:"project_name"`
+	Repo          string           `json:"repo"`
+	IssueID       int              `json:"issue_id"`
+	PullRequestID int              `json:"pull_request_id"`
+	Status        TriageItemStatus `json:"status"`
+	Comment       string           `json:"comment"`
 }
 
 // Enum type
@@ -22,7 +22,7 @@ type TriageItemStatus string
 
 // Enum list...
 const (
-	TriageItemStatusInit = TriageItemStatus("Init")
+	TriageItemStatusInit   = TriageItemStatus("Init")
 	TriageItemStatusPassed = TriageItemStatus("Accepted")
 	TriageItemStatusFailed = TriageItemStatus("Won't Fix")
 	TriageItemStatusSkiped = TriageItemStatus("Later")

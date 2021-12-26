@@ -4,7 +4,7 @@ import (
 	"tirelease/api"
 	"tirelease/commons/configs"
 	"tirelease/commons/database"
-	"tirelease/commons/github"
+	"tirelease/commons/git"
 )
 
 func main() {
@@ -15,7 +15,7 @@ func main() {
 	database.Connect()
 
 	// Github Client
-	github.Connect(configs.Config.Github.AccessToken)
+	git.Connect(configs.Config.Github.AccessToken)
 
 	// Start website & rest api
 	router := api.Routers("website/build/")

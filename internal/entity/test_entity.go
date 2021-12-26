@@ -6,22 +6,22 @@ import (
 
 // Struct of ci_detail
 type TestEntity struct {
-	ID            int64             `json:"id"`
-	CreateTime    time.Time         `json:"create_time"`
-	UpdateTime    time.Time         `json:"update_time"`
-	JobName       string            `json:"job_name"`
-	JobURL        string            `json:"job_url"`
-	Repo          string            `json:"repo"`
-	Branch        string            `json:"branch"`
-	PullRequestID int64             `json:"pull_request_id"`
-	CommitID      string            `json:"commit_id"`
-	SuiteName     string            `json:"suite_name"`
-	CaseName      string            `json:"case_name"`
-	CaseClass     string            `json:"case_class"`
-	ExecutionTime string            `json:"execution_time"`
-	Status        *TestEntityStatus `json:"status"`
-	ErrorDetail   string            `json:"error_detail"`
-	StackTrace    string            `json:"stack_trace"`
+	ID            int64            `json:"id"`
+	CreateTime    time.Time        `json:"create_time"`
+	UpdateTime    time.Time        `json:"update_time"`
+	JobName       string           `json:"job_name"`
+	JobURL        string           `json:"job_url"`
+	Repo          string           `json:"repo"`
+	Branch        string           `json:"branch"`
+	PullRequestID int64            `json:"pull_request_id"`
+	CommitID      string           `json:"commit_id"`
+	SuiteName     string           `json:"suite_name"`
+	CaseName      string           `json:"case_name"`
+	CaseClass     string           `json:"case_class"`
+	ExecutionTime string           `json:"execution_time"`
+	Status        TestEntityStatus `json:"status"`
+	ErrorDetail   string           `json:"error_detail"`
+	StackTrace    string           `json:"stack_trace"`
 }
 
 // Enum type

@@ -31,13 +31,6 @@ function refresh() {
 }
 
 function handleClick(row) {
-    var body = JSON.stringify({
-        repo: row.repo,
-        number: row.id,
-        labels: ['cherry-pick']
-    })
-    console.log(body);
-
     axios({
         method: 'post',
         url: 'http://localhost:8080/triage/accept',
@@ -46,7 +39,7 @@ function handleClick(row) {
         }, 
         data: {
             repo: row.repo,
-            number: row.id,
+            number: row.issue_id,
             labels: ['cherry-pick']
         }
     })

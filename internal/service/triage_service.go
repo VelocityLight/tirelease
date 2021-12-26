@@ -34,7 +34,6 @@ func CollectTriageItemByRepo(owner string, repo string) ([]*entity.TriageItem, e
 func SavaTriageItems(triageItems []*entity.TriageItem) error {
 	for _, triageItem := range triageItems {
 		if err := repository.TriageItemInsert(triageItem); err != nil {
-			return err
 		}
 	}
 	return nil

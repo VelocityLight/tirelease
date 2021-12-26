@@ -13,6 +13,23 @@ function preventDefault(event) {
     event.preventDefault();
 }
 
+function refresh() {
+    axios({
+        method: 'post',
+        url: 'http://localhost:8080/triage/insert',
+        headers: {
+            "Content-Type": "application/json"
+        }, 
+        data: {
+            owner: 'VelocityLight',
+            repo: 'tirelease'
+        }
+    })
+    .then (function (response){
+        console.log(response.data);
+    });
+}
+
 function handleClick(row) {
     var body = JSON.stringify({
         repo: row.repo,
@@ -20,10 +37,6 @@ function handleClick(row) {
         labels: ['cherry-pick']
     })
     console.log(body);
-
-    // axios.post('http://localhost:8080/triage/accept', body)
-    //  .then((res) => {console.log(res)})
-    //  .catch((err) => {console.log(err)})
 
     axios({
         method: 'post',
@@ -36,18 +49,10 @@ function handleClick(row) {
             number: row.id,
             labels: ['cherry-pick']
         }
+    })
+    .then (function (response){
+        console.log(response.data);
     });
-
-    // axios.post("http://localhost:8080/triage/accept", {
-    //     body
-    // }, {
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     }
-    // })
-    // .then (function (response){
-    //     console.log(response.data);
-    // }) 
 }
 
 export default function TriageTable() {
@@ -98,6 +103,9 @@ export default function TriageTable() {
             <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
                 See more
             </Link>
+            <Button color="primary" align="left" onClick={()=>refresh()}>
+                Refresh
+            </Button>
         </React.Fragment>
     );
 }

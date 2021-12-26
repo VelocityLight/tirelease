@@ -26,7 +26,7 @@ func TestLabel(t *testing.T) {
 
 	labels := []string{"jc_test"}
 	err := AddLabelOfAccept("VelocityLight", "tirelease", 1, labels)
-	
+
 	// Assert
 	assert.Equal(t, true, err == nil)
 }

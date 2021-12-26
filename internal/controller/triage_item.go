@@ -14,9 +14,9 @@ type TriageOption struct {
 }
 
 type TriageOprate struct {
-	Owner string `json:"owner"`
-	Repo  string `json:"repo"`
-	Number int `json:"number"`
+	Owner  string   `json:"owner"`
+	Repo   string   `json:"repo"`
+	Number int      `json:"number"`
 	Lables []string `json:"labels"`
 }
 
@@ -56,8 +56,6 @@ func SelectTriageItems(c *gin.Context) {
 
 	c.JSON(200, gin.H{"data": triageItems})
 }
-
-
 
 func AddLabelsToIssue(c *gin.Context) {
 	// Params

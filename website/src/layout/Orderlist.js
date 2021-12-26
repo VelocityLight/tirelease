@@ -12,12 +12,12 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 
 export const mainListItems = (
   <div>
-    <ListSubheader inset>Versions</ListSubheader>
+    <ListSubheader inset>Project Management</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Project" />
     </ListItem>
     {/* <ListItem button>
       <ListItemIcon>
@@ -48,12 +48,12 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Reports</ListSubheader>
+    <ListSubheader inset>Process Management</ListSubheader>
     <ListItem button>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="Issue Triage" />
     </ListItem>
     {/* <ListItem button>
       <ListItemIcon>
@@ -67,5 +67,23 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Year-end sale" />
     </ListItem> */}
+  </div>
+);
+
+export const thirdListItems = (
+  <div>
+    <ListSubheader inset>Data View</ListSubheader>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Project Data" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Triage Data" />
+    </ListItem>
   </div>
 );

@@ -7,10 +7,11 @@ This repository is a release platform for PingCAP, Welcome bros!
 [click and jump](https://pingcap.feishu.cn/docs/doccnI803yGKKKeQsh56EdNi3Cc#UeCMnT)
 
 ## Technologies
-+ backend: golang & gin
-+ database: mysql
-+ deployments: kubenetes
-+ frontend: [create-react-app](https://github.com/facebook/create-react-app) & [material-ui/mui](https://github.com/mui-org/material-ui)
++ Backend: Golang & [Gin](https://github.com/gin-gonic/gin)
++ Database: [Mysql of Gorm](https://github.com/go-gorm/gorm)
++ Common Utils: [Github](https://github.com/google/go-github) & [Config](https://github.com/jinzhu/configor)
++ Deployments: Docker & Kubernetes
++ Frontend: [Create-React-App for framework](https://github.com/facebook/create-react-app) & [Material-UI/MUI for components](https://github.com/mui-org/material-ui) & [Axios for remote procedure call](https://github.com/axios/axios)
 
 ## Quick Start
 ```
@@ -31,7 +32,7 @@ tirelease
 ├── Makefile           # Code compilation and other instructions
 └── scripts/           # Scripts to perform various operations, keep the root level Makefile small and simple
 └── cmd/               # Main application starters of Golang
-└── api/               # REST API registry & Static file router
+└── api/               # REST API registry & Static file router, reference: https://github.com/gin-gonic/gin
     ├── api.go
 └── deployments/
     └── docker/        # Build docker image contains website and server binary
@@ -39,8 +40,8 @@ tirelease
 └── commons/           # Common utils for whole project
     └── configs/       # Global configuration reader
     └── database/      # Database connectors
+    └── git/           # Github client, reference: https://github.com/google/go-github
     └── httpclient/    # Http client utils
-    └── github/        # Github client, reference: https://github.com/google/go-github
 └── internal/          # Business code & function
     └── entity/        # Object entity
     └── repository/    # Function operator

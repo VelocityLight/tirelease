@@ -3,7 +3,7 @@ package api
 import (
 	"tirelease/internal/controller"
 
-	"github.com/gin-gonic/contrib/static"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,14 +15,14 @@ func pong(c *gin.Context) {
 
 // Create gin-routers
 func Routers(file string) (router *gin.Engine) {
-	router = gin.New()
+	router = gin.Default()
 
 	// Cors
 	router.Use(Cors())
 
-	// Static html
+	// Static fronted file 
 	router.Use(
-		static.Serve("/", static.LocalFile(file, true)),
+		static.Serve("/page", static.LocalFile(file, true)),
 	)
 
 	// Test "ping"

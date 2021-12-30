@@ -16,7 +16,7 @@ function preventDefault(event) {
 function refresh() {
     axios({
         method: 'post',
-        url: 'http://localhost:8080/triage/insert',
+        url: '/triage/insert',
         headers: {
             "Content-Type": "application/json"
         }, 
@@ -33,7 +33,7 @@ function refresh() {
 function handleClick(row) {
     axios({
         method: 'post',
-        url: 'http://localhost:8080/triage/accept',
+        url: '/triage/accept',
         headers: {
             "Content-Type": "application/json"
         }, 
@@ -53,7 +53,7 @@ export default function TriageTable() {
     // make the fetch the first time your component mounts
     const [data, setData] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:8080/triage/select').then(response => setData(response.data.data));
+        axios.get('/triage/select').then(response => setData(response.data.data));
     }, []);
 
     return (

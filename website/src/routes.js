@@ -8,9 +8,11 @@ const MyRoutes = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path = "/page/example" element = {<Example/>} />
-                <Route path = "/page/databoard" element = {<DataBoard/>} />
-                <Route path = "/page/triage" element = {<Triage/>} />
+                <Route path = "/" element = {<Example/>} />
+                <Route path = "/home" element = {<Example/>} />
+                <Route path = "/home/example" element = {<Example/>} />
+                <Route path = "/home/databoard" element = {<DataBoard/>} />
+                <Route path = "/home/triage" element = {<Triage/>} />
             </Routes>
         </BrowserRouter>
     )

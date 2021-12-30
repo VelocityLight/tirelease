@@ -1,43 +1,56 @@
 package api
 
 import (
+	"net/http"
 	"tirelease/internal/controller"
 
-	// "github.com/gin-contrib/static"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
-
-func pong(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "pong",
-	})
-}
 
 // Create gin-routers
 func Routers(file string) (router *gin.Engine) {
 	router = gin.Default()
 
 	// Cors
+	routeCors(router)
+
+	// Root html & Folder static/ for JS/CSS & page/*any for website
+	routeHtml(router, file)
+
+	// Real REST-API registry
+	routeRestAPI(router)
+
+	return router
+}
+
+func routeCors(router *gin.Engine) {
 	router.Use(Cors())
+}
 
-	// Static fronted file
-	// router.Use(
-	// 	static.Serve("/page", static.LocalFile(file, true)),
-	// )
-	// router.LoadHTMLGlob(file + ".html")
-
-	// Test "ping"
-	ping := router.Group("/ping")
+func routeHtml(router *gin.Engine, file string) {
+	router.Use(
+		static.Serve("/", static.LocalFile(file, true)),
+	)
+	router.Use(
+		static.Serve("/static", static.LocalFile(file, true)),
+	)
+	homePages := router.Group("/home")
 	{
-		ping.GET("/", pong)
+		homePages.GET("/*any", func(c *gin.Context) {
+			c.FileFromFS("/", http.Dir(file))
+		})
 	}
+}
 
-	// REST API registry
+// REST-API Function
+func routeRestAPI(router *gin.Engine) {
 	testEntity := router.Group("/testentity")
 	{
 		testEntity.GET("/select", controller.TestEntitySelect)
 		testEntity.POST("/insert", controller.TestEntityInsert)
 	}
+
 	triageItem := router.Group("/triage")
 	{
 		triageItem.GET("/select", controller.SelectTriageItems)
@@ -45,5 +58,4 @@ func Routers(file string) (router *gin.Engine) {
 		triageItem.POST("/accept", controller.AddLabelsToIssue)
 	}
 
-	return router
 }

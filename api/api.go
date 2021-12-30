@@ -15,7 +15,7 @@ func Routers(file string) (router *gin.Engine) {
 	// Cors
 	routeCors(router)
 
-	// Root html & Folder static/ for JS/CSS & page/*any for website
+	// Root html & Folder static/ for JS/CSS & home/*any for website('url' match to website/src/routes.js)
 	routeHtml(router, file)
 
 	// Real REST-API registry

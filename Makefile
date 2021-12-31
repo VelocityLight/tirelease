@@ -44,14 +44,14 @@ docker:
 docker.run:
 	docker run -p 8080:8080 -t ${DOCKER_NAME}
 
-k8s.config:
+k8s.init:
 	kubectl apply -f ${K8S_DEPLOYMENT_FILE}/namespace.yaml
 	kubectl apply -f ${K8S_DEPLOYMENT_FILE}/deployment.yaml
 	kubectl apply -f ${K8S_DEPLOYMENT_FILE}/service.yaml
 	@echo "k8s deploy project successful hahaha!"
 
 k8s.update:
-	kubectl rollout restart deployment ${K8S_METADATA_NAME} -n ${K8S_METADATA_NAME}
+	kubectl rollout restart deployment/${K8S_METADATA_NAME} -n ${K8S_METADATA_NAME}
 
 k8s.clean:
 	kubectl delete all --all -n ${K8S_METADATA_NAME}

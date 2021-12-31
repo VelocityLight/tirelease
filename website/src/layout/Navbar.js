@@ -58,13 +58,13 @@ export const Navbar = (props) => {
                     noWrap
                     sx={{ flexGrow: 1 }}
                 >
-                    Dashboard
+                    Hello TiRelease
                 </Typography>
-                <IconButton color="inherit">
+                {/* <IconButton color="inherit">
                     <Badge badgeContent={4} color="secondary">
                     <NotificationsIcon />
                     </Badge>
-                </IconButton>
+                </IconButton> */}
                 </Toolbar>
             </NavbarStyle>
         </>

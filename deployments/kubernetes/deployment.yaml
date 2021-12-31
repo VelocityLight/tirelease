@@ -25,3 +25,4 @@ spec:
           ports:
             - containerPort: 8080
               protocol: TCP
+      terminationGracePeriodSeconds: 30 # 定义优雅关闭的宽限期:即在收到停止请求后进行资源释放或者做其它操作的最大时间,超时将强制结束,默认值：30

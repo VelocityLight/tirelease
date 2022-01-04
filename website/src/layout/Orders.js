@@ -43,7 +43,7 @@ export const secondaryListItems = (
 export const thirdListItems = (
   <div>
     <ListSubheader inset>Visual Reports</ListSubheader>
-    <ListItem button component={Link} to="/home/ci">
+    <ListItem button component={Link} to="/home/aboutci">
       <ListItemIcon>
         <BugReportIcon />
       </ListItemIcon>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from "react";
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 
-async function select() {
+const query = async() => {
     let data;
     await axios({
         method: 'get',
@@ -15,12 +16,17 @@ async function select() {
     })
     .then (function (response){
         data = response.data.data;
-    });
+    })
+    .catch (function (error) {
+        console.log(error);
+    })
+    ;
     return data;
 }
 
 export default function CITable() {
-    const rows = [];
+    const [rows, setRows] = useState([]);
+    query().then(res => setRows(res));
 
     return (
         <>

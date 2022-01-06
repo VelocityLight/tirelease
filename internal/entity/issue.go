@@ -1,11 +1,13 @@
 package entity
 
 import (
+	"github.com/google/go-github/v41/github"
 	"github.com/shurcooL/githubv4"
 )
 
 // Struct of Issue
 type Issue struct {
+	// DataBase Column
 	ID      int64  `json:"id,omitempty"`
 	Number  int    `json:"number,omitempty"`
 	State   string `json:"state,omitempty"`
@@ -22,6 +24,19 @@ type Issue struct {
 	AssigneesString string `json:"assignees_string,omitempty"`
 
 	ClosedByPullRequestID int64 `json:"closed_by_pull_request_id,omitempty"`
+
+	// OutPut-Serial
+	Labels    *[]github.Label `json:"labels,omitempty"`
+	Assignee  *github.User    `json:"assignee,omitempty"`
+	Assignees *[]github.User  `json:"assignees,omitempty"`
+}
+
+// List Option
+type IssueOption struct {
+	ID     int64  `json:"id"`
+	Number int    `json:"number,omitempty"`
+	State  string `json:"state,omitempty"`
+	Repo   string `json:"repo,omitempty"`
 }
 
 // DB-Table

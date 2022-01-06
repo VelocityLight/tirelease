@@ -1,11 +1,13 @@
 package entity
 
 import (
+	"github.com/google/go-github/v41/github"
 	"github.com/shurcooL/githubv4"
 )
 
 // Struct of Pull Request
 type PullRequest struct {
+	// DataBase columns
 	ID         int64  `json:"id,omitempty"`
 	Number     int    `json:"number,omitempty"`
 	State      string `json:"state,omitempty"`
@@ -27,6 +29,21 @@ type PullRequest struct {
 	AssigneeString           string `json:"assignee_string,omitempty"`
 	AssigneesString          string `json:"assignees_string,omitempty"`
 	RequestedReviewersString string `json:"requested_reviewers_string,omitempty"`
+
+	// OutPut-Serial
+	Labels             *[]github.Label `json:"labels,omitempty"`
+	Assignee           *github.User    `json:"assignee,omitempty"`
+	Assignees          *[]github.User  `json:"assignees,omitempty"`
+	RequestedReviewers *[]github.User  `json:"requested_reviewers,omitempty"`
+}
+
+// List Option
+type PullRequestOption struct {
+	ID         int64  `json:"id"`
+	Number     int    `json:"number,omitempty"`
+	State      string `json:"state,omitempty"`
+	Repo       string `json:"repo,omitempty"`
+	HeadBranch string `json:"head_branch,omitempty"`
 }
 
 // DB-Table

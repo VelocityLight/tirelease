@@ -14,7 +14,7 @@ import (
 
 func CreateOrUpdateIssue(issue *entity.Issue) error {
 	// 加工
-	SerializeIssue(issue)
+	serializeIssue(issue)
 
 	// 存储
 	if err := database.DBConn.DB.Clauses(
@@ -33,13 +33,20 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 
 	// 加工
 	for _, issue := range issues {
-		UnSerializeIssue(&issue)
+		unSerializeIssue(&issue)
 	}
 	return &issues, nil
 }
 
+func DeleteIssue(issue *entity.Issue) error {
+	if err := database.DBConn.DB.Delete(issue).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("delete issue: %+v failed", issue))
+	}
+	return nil
+}
+
 // 序列化和反序列化
-func SerializeIssue(issue *entity.Issue) {
+func serializeIssue(issue *entity.Issue) {
 	if nil != issue.Assignee {
 		assigneeString, _ := json.Marshal(issue.Assignee)
 		issue.AssigneeString = string(assigneeString)
@@ -54,7 +61,7 @@ func SerializeIssue(issue *entity.Issue) {
 	}
 }
 
-func UnSerializeIssue(issue *entity.Issue) {
+func unSerializeIssue(issue *entity.Issue) {
 	if issue.AssigneeString != "" {
 		var assignee github.User
 		json.Unmarshal([]byte(issue.AssigneeString), &assignee)

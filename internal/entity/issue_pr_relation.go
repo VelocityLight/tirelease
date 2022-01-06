@@ -14,6 +14,13 @@ type IssuePrRelation struct {
 	PullRequestID int `json:"pull_request_id,omitempty"`
 }
 
+// List Option
+type IssuePrRelationOption struct {
+	ID            int64 `json:"id"`
+	IssueID       int   `json:"issue_id,omitempty"`
+	PullRequestID int   `json:"pull_request_id,omitempty"`
+}
+
 // DB-Table
 func (IssuePrRelation) TableName() string {
 	return "issue_pr_relation"

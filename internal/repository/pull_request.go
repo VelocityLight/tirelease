@@ -14,7 +14,7 @@ import (
 
 func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
 	// 加工
-	SerializePullRequest(pullRequest)
+	serializePullRequest(pullRequest)
 
 	// 存储
 	if err := database.DBConn.DB.Clauses(
@@ -33,13 +33,20 @@ func SelectPullRequest(option *entity.PullRequestOption) (*[]entity.PullRequest,
 
 	// 加工
 	for _, pr := range prs {
-		UnSerializePullRequest(&pr)
+		unSerializePullRequest(&pr)
 	}
 	return &prs, nil
 }
 
+func DeletePullRequest(pullRequest *entity.PullRequest) error {
+	if err := database.DBConn.DB.Delete(pullRequest).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("delete pull request: %+v failed", pullRequest))
+	}
+	return nil
+}
+
 // 序列化和反序列化
-func SerializePullRequest(pullRequest *entity.PullRequest) {
+func serializePullRequest(pullRequest *entity.PullRequest) {
 	if nil != pullRequest.Assignee {
 		assigneeString, _ := json.Marshal(pullRequest.Assignee)
 		pullRequest.AssigneeString = string(assigneeString)
@@ -58,7 +65,7 @@ func SerializePullRequest(pullRequest *entity.PullRequest) {
 	}
 }
 
-func UnSerializePullRequest(pullRequest *entity.PullRequest) {
+func unSerializePullRequest(pullRequest *entity.PullRequest) {
 	if pullRequest.AssigneeString != "" {
 		var assignee github.User
 		json.Unmarshal([]byte(pullRequest.AssigneeString), &assignee)

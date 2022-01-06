@@ -15,7 +15,7 @@ func main() {
 	database.Connect()
 
 	// Github Client
-	git.Connect(configs.Config.Github.AccessToken)
+	git.ConnectV4(configs.Config.Github.AccessToken)
 
 	// Start website & rest api
 	router := api.Routers("website/build/")

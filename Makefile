@@ -31,6 +31,7 @@ build.web:
 	yarn build
 
 build.server:
+	go fmt ./... && \
 	go build -o ${GO_BINARY} ${TIRELEASE_MAIN_FILE}
 
 # =============================================================================

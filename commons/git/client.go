@@ -11,6 +11,7 @@ type GithubInfo struct {
 	Client *github.Client
 }
 
+// V3版本Rest-API
 var Client = &GithubInfo{}
 
 func Connect(accessToken string) {

@@ -61,22 +61,22 @@ func SerializePullRequest(pullRequest *entity.PullRequest) {
 func UnSerializePullRequest(pullRequest *entity.PullRequest) {
 	if pullRequest.AssigneeString != "" {
 		var assignee github.User
-		json.Unmarshal([]byte(pullRequest.AssigneeString), assignee)
+		json.Unmarshal([]byte(pullRequest.AssigneeString), &assignee)
 		pullRequest.Assignee = &assignee
 	}
 	if pullRequest.AssigneesString != "" {
 		var assignees []github.User
-		json.Unmarshal([]byte(pullRequest.AssigneeString), assignees)
+		json.Unmarshal([]byte(pullRequest.AssigneeString), &assignees)
 		pullRequest.Assignees = &assignees
 	}
 	if pullRequest.LabelsString != "" {
 		var labels []github.Label
-		json.Unmarshal([]byte(pullRequest.LabelsString), labels)
+		json.Unmarshal([]byte(pullRequest.LabelsString), &labels)
 		pullRequest.Labels = &labels
 	}
 	if pullRequest.RequestedReviewersString != "" {
 		var requestedReviewers []github.User
-		json.Unmarshal([]byte(pullRequest.RequestedReviewersString), requestedReviewers)
+		json.Unmarshal([]byte(pullRequest.RequestedReviewersString), &requestedReviewers)
 		pullRequest.RequestedReviewers = &requestedReviewers
 	}
 }

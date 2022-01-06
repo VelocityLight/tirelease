@@ -57,17 +57,17 @@ func SerializeIssue(issue *entity.Issue) {
 func UnSerializeIssue(issue *entity.Issue) {
 	if issue.AssigneeString != "" {
 		var assignee github.User
-		json.Unmarshal([]byte(issue.AssigneeString), assignee)
+		json.Unmarshal([]byte(issue.AssigneeString), &assignee)
 		issue.Assignee = &assignee
 	}
 	if issue.AssigneesString != "" {
 		var assignees []github.User
-		json.Unmarshal([]byte(issue.AssigneeString), assignees)
+		json.Unmarshal([]byte(issue.AssigneeString), &assignees)
 		issue.Assignees = &assignees
 	}
 	if issue.LabelsString != "" {
 		var labels []github.Label
-		json.Unmarshal([]byte(issue.LabelsString), labels)
+		json.Unmarshal([]byte(issue.LabelsString), &labels)
 		issue.Labels = &labels
 	}
 }

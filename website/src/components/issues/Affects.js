@@ -9,6 +9,7 @@ import {
   Paper,
   Stack,
   Chip,
+  Link,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AffectsSelector from "./AffectsSelector";
@@ -16,8 +17,9 @@ import { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import ReleaseSelector from "./ReleaseSelector";
 
-export default function Affects({ affectsProp }) {
+export default function Affects({ affectsProp, expand } = { expand: false }) {
   const [foldNotAffect, setFoldNotAffect] = useState(true);
 
   const onToggleFold = () => {
@@ -36,7 +38,7 @@ export default function Affects({ affectsProp }) {
     .map(({ version }) => version);
   return (
     <>
-      <Accordion>
+      <Accordion defaultExpanded={expand}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Stack direction={"row"} spacing={1}>
             {affected.map((version) => {
@@ -65,11 +67,14 @@ export default function Affects({ affectsProp }) {
         <AccordionDetails>
           <Stack alignItems={"flex-start"} spacing={1}>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} size="small">
+              <Table sx={{ minWidth: 950 }} size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>Version</TableCell>
                     <TableCell>Affects</TableCell>
+                    <TableCell>PR</TableCell>
+                    <TableCell>State</TableCell>
+                    <TableCell>Release</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -105,15 +110,53 @@ export default function Affects({ affectsProp }) {
                               affectsProp={item.affect}
                               onChange={(targetValue) => {
                                 setAffects([
-                                  ...affects.map(({ version, affect }) => {
-                                    if (version === item.version) {
-                                      return { version, affect: targetValue };
+                                  ...affects.map(
+                                    ({ version, affect, ...rest }) => {
+                                      if (version === item.version) {
+                                        return {
+                                          version,
+                                          affect: targetValue,
+                                          ...rest,
+                                        };
+                                      }
+                                      return { version, affect, ...rest };
                                     }
-                                    return { version, affect };
-                                  }),
+                                  ),
                                 ]);
                               }}
                             ></AffectsSelector>
+                          </TableCell>
+                          <TableCell>
+                            {item.pr && (
+                              <Link href={item.pr.Url}>{item.pr.Number}</Link>
+                            )}
+                          </TableCell>
+                          <TableCell>{item.pr && item.pr.State}</TableCell>
+                          <TableCell>
+                            {item.Release && (
+                              <ReleaseSelector
+                                releaseProp={item.Release}
+                                onChange={(triageStatus) => {
+                                  setAffects([
+                                    ...affects.map(
+                                      ({ version, Release, ...rest }) => {
+                                        if (version === item.version) {
+                                          return {
+                                            version,
+                                            Release: {
+                                              ...Release,
+                                              TriageStatus: triageStatus,
+                                            },
+                                            ...rest,
+                                          };
+                                        }
+                                        return { version, Release, ...rest };
+                                      }
+                                    ),
+                                  ]);
+                                }}
+                              />
+                            )}
                           </TableCell>
                         </TableRow>
                       );

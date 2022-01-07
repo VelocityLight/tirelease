@@ -10,6 +10,7 @@ import (
 type PullRequest struct {
 	// DataBase columns
 	ID         int64  `json:"id,omitempty"`
+	PullRequestID string `json:"pull_request_id,omitempty"`
 	Number     int    `json:"number,omitempty"`
 	State      string `json:"state,omitempty"`
 	Title      string `json:"title,omitempty"`
@@ -43,6 +44,7 @@ type PullRequest struct {
 // List Option
 type PullRequestOption struct {
 	ID         int64  `json:"id"`
+	PullRequestID string `json:"pull_request_id,omitempty"`
 	Number     int    `json:"number,omitempty"`
 	State      string `json:"state,omitempty"`
 	Repo       string `json:"repo,omitempty"`
@@ -57,7 +59,8 @@ func (PullRequest) TableName() string {
 /**
 
 CREATE TABLE IF NOT EXISTS pull_request (
-	id INT(11) NOT NULL COMMENT '全局ID',
+	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	pull_request_id VARCHAR(255) COMMENT 'Pr全局ID',
 	number INT(11) NOT NULL COMMENT '当前库ID',
 	state VARCHAR(32) NOT NULL COMMENT '状态',
 	title VARCHAR(1024) COMMENT '标题',
@@ -82,6 +85,7 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	requested_reviewers_string TEXT COMMENT '处理人列表',
 
 	PRIMARY KEY (id),
+	UNIQUE KEY uk_prid (pull_request_id),
 	INDEX idx_state (state),
 	INDEX idx_repo (repo),
 	INDEX idx_createdat (created_at),

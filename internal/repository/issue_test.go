@@ -19,7 +19,7 @@ func TestIssue(t *testing.T) {
 
 	// Create
 	var issue = &entity.Issue{
-		ID:        100,
+		IssueID:   "100",
 		Number:    100,
 		State:     "open",
 		Title:     "first",
@@ -36,7 +36,7 @@ func TestIssue(t *testing.T) {
 
 	// Select
 	var option = &entity.IssueOption{
-		ID: 100,
+		IssueID:   "100",
 	}
 	issues, err := SelectIssue(option)
 	// Assert

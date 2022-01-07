@@ -7,7 +7,7 @@ import (
 type VersionTriage struct {
 	ID           int64               `json:"id,omitempty"`
 	VersionName  string              `json:"version_name,omitempty"`
-	IssueID      int64               `json:"issue_id,omitempty"`
+	IssueID      string               `json:"issue_id,omitempty"`
 	TriageResult VersionTriageResult `json:"triage_result,omitempty"`
 
 	CreateTime time.Time `json:"create_time"`
@@ -31,7 +31,7 @@ const (
 type VersionTriageOption struct {
 	ID           int64               `json:"id"`
 	VersionName  string              `json:"version_name,omitempty"`
-	IssueID      int64               `json:"issue_id,omitempty"`
+	IssueID      string               `json:"issue_id,omitempty"`
 	TriageResult VersionTriageResult `json:"triage_result,omitempty"`
 }
 
@@ -43,9 +43,9 @@ func (VersionTriage) TableName() string {
 /**
 
 CREATE TABLE IF NOT EXISTS version_triage (
-	id INT(11) NOT NULL COMMENT '全局ID',
+	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	version_name VARCHAR(255) NOT NULL COMMENT '版本号',
-	issue_id INT(11) COMMENT 'IssueID',
+	issue_id VARCHAR(255) COMMENT 'Issue全局ID',
 	triage_result VARCHAR(32) COMMENT 'Triage状态',
 
 	create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

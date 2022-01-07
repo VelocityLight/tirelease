@@ -1,8 +1,9 @@
 package entity
 
 import (
+	"time"
+
 	"github.com/google/go-github/v41/github"
-	"github.com/shurcooL/githubv4"
 )
 
 // Struct of Issue
@@ -15,9 +16,9 @@ type Issue struct {
 	Repo    string `json:"repo,omitempty"`
 	HTMLURL string `json:"html_url,omitempty"`
 
-	ClosedAt  githubv4.DateTime `json:"close_at,omitempty"`
-	CreatedAt githubv4.DateTime `json:"create_at,omitempty"`
-	UpdatedAt githubv4.DateTime `json:"update_at,omitempty"`
+	ClosedAt  time.Time `json:"closed_at,omitempty"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
 
 	LabelsString    string `json:"labels_string,omitempty"`
 	AssigneeString  string `json:"assignee_string,omitempty"`
@@ -26,9 +27,9 @@ type Issue struct {
 	ClosedByPullRequestID int64 `json:"closed_by_pull_request_id,omitempty"`
 
 	// OutPut-Serial
-	Labels    *[]github.Label `json:"labels,omitempty"`
-	Assignee  *github.User    `json:"assignee,omitempty"`
-	Assignees *[]github.User  `json:"assignees,omitempty"`
+	Labels    *[]github.Label `json:"labels,omitempty" gorm:"-"`
+	Assignee  *github.User    `json:"assignee,omitempty" gorm:"-"`
+	Assignees *[]github.User  `json:"assignees,omitempty" gorm:"-"`
 }
 
 // List Option
@@ -53,9 +54,9 @@ CREATE TABLE IF NOT EXISTS issue (
 	repo VARCHAR(255) COMMENT '仓库',
 	html_url VARCHAR(1024) COMMENT '链接',
 
-	close_at TIMESTAMP COMMENT '关闭时间',
-	create_at TIMESTAMP COMMENT '创建时间',
-	update_at TIMESTAMP COMMENT '更新时间',
+	closed_at TIMESTAMP COMMENT '关闭时间',
+	created_at TIMESTAMP COMMENT '创建时间',
+	updated_at TIMESTAMP COMMENT '更新时间',
 
 	labels_string TEXT COMMENT '标签',
 	assignee_string TEXT COMMENT '处理人',
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS issue (
 	PRIMARY KEY (id),
 	INDEX idx_state (state),
 	INDEX idx_repo (repo),
-	INDEX idx_createat (create_at)
+	INDEX idx_createdat (created_at)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'issue信息表';
 **/

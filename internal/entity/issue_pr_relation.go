@@ -38,5 +38,5 @@ CREATE TABLE IF NOT EXISTS issue_pr_releation (
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_issueid_prid (issue_id, pull_request_id)
 )
-ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'pull_request信息表';
+ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'issue与pull_request关联表';
 **/

@@ -32,8 +32,8 @@ func SelectPullRequest(option *entity.PullRequestOption) (*[]entity.PullRequest,
 	}
 
 	// 加工
-	for _, pr := range prs {
-		unSerializePullRequest(&pr)
+	for i := 0; i < len(prs); i++ {
+		unSerializePullRequest(&prs[i])
 	}
 	return &prs, nil
 }

@@ -17,15 +17,15 @@ type MysqlInfo struct {
 
 var DBConn = &MysqlInfo{}
 
-func Connect() {
+func Connect(config *configs.ConfigYaml) {
 	// Params
 	url := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true",
-		configs.Config.Mysql.UserName,
-		configs.Config.Mysql.PassWord,
-		configs.Config.Mysql.Host,
-		configs.Config.Mysql.Port,
-		configs.Config.Mysql.DataBase,
-		configs.Config.Mysql.CharSet)
+		config.Mysql.UserName,
+		config.Mysql.PassWord,
+		config.Mysql.Host,
+		config.Mysql.Port,
+		config.Mysql.DataBase,
+		config.Mysql.CharSet)
 
 	// Connect
 	db, err := gorm.Open(mysql.Open(url), &gorm.Config{})

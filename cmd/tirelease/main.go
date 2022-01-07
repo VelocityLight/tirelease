@@ -12,7 +12,7 @@ func main() {
 	configs.LoadConfig("config.yaml")
 
 	// Connect database
-	database.Connect()
+	database.Connect(configs.Config)
 
 	// Github Client
 	git.ConnectV4(configs.Config.Github.AccessToken)

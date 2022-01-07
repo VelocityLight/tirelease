@@ -1,8 +1,9 @@
 package entity
 
 import (
+	"time"
+
 	"github.com/google/go-github/v41/github"
-	"github.com/shurcooL/githubv4"
 )
 
 // Struct of Pull Request
@@ -16,10 +17,10 @@ type PullRequest struct {
 	HTMLURL    string `json:"html_url,omitempty"`
 	HeadBranch string `json:"head_branch,omitempty"`
 
-	CreatedAt githubv4.DateTime `json:"created_at,omitempty"`
-	UpdatedAt githubv4.DateTime `json:"updated_at,omitempty"`
-	ClosedAt  githubv4.DateTime `json:"closed_at,omitempty"`
-	MergedAt  githubv4.DateTime `json:"merged_at,omitempty"`
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	ClosedAt  time.Time `json:"closed_at,omitempty"`
+	MergedAt  time.Time `json:"merged_at,omitempty"`
 
 	Merged         bool   `json:"merged,omitempty"`
 	Mergeable      bool   `json:"mergeable,omitempty"`
@@ -31,10 +32,10 @@ type PullRequest struct {
 	RequestedReviewersString string `json:"requested_reviewers_string,omitempty"`
 
 	// OutPut-Serial
-	Labels             *[]github.Label `json:"labels,omitempty"`
-	Assignee           *github.User    `json:"assignee,omitempty"`
-	Assignees          *[]github.User  `json:"assignees,omitempty"`
-	RequestedReviewers *[]github.User  `json:"requested_reviewers,omitempty"`
+	Labels             *[]github.Label `json:"labels,omitempty" gorm:"-"`
+	Assignee           *github.User    `json:"assignee,omitempty" gorm:"-"`
+	Assignees          *[]github.User  `json:"assignees,omitempty" gorm:"-"`
+	RequestedReviewers *[]github.User  `json:"requested_reviewers,omitempty" gorm:"-"`
 }
 
 // List Option
@@ -61,9 +62,9 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	html_url VARCHAR(1024) COMMENT '链接',
 	head_branch VARCHAR(255) COMMENT '链接',
 
-	close_at TIMESTAMP COMMENT '关闭时间',
-	create_at TIMESTAMP COMMENT '创建时间',
-	update_at TIMESTAMP COMMENT '更新时间',
+	closed_at TIMESTAMP COMMENT '关闭时间',
+	created_at TIMESTAMP COMMENT '创建时间',
+	updated_at TIMESTAMP COMMENT '更新时间',
 	merged_at TIMESTAMP COMMENT '更新时间',
 
 	merged BOOLEAN COMMENT '是否已合入',
@@ -78,7 +79,7 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	PRIMARY KEY (id),
 	INDEX idx_state (state),
 	INDEX idx_repo (repo),
-	INDEX idx_createat (create_at)
+	INDEX idx_createdat (created_at)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'pull_request信息表';
 **/

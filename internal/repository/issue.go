@@ -32,8 +32,8 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 	}
 
 	// 加工
-	for _, issue := range issues {
-		unSerializeIssue(&issue)
+	for i := 0; i < len(issues); i++ {
+		unSerializeIssue(&issues[i])
 	}
 	return &issues, nil
 }

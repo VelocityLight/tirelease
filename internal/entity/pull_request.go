@@ -9,14 +9,14 @@ import (
 // Struct of Pull Request
 type PullRequest struct {
 	// DataBase columns
-	ID         int64  `json:"id,omitempty"`
+	ID            int64  `json:"id,omitempty"`
 	PullRequestID string `json:"pull_request_id,omitempty"`
-	Number     int    `json:"number,omitempty"`
-	State      string `json:"state,omitempty"`
-	Title      string `json:"title,omitempty"`
-	Repo       string `json:"repo,omitempty"`
-	HTMLURL    string `json:"html_url,omitempty"`
-	HeadBranch string `json:"head_branch,omitempty"`
+	Number        int    `json:"number,omitempty"`
+	State         string `json:"state,omitempty"`
+	Title         string `json:"title,omitempty"`
+	Repo          string `json:"repo,omitempty"`
+	HTMLURL       string `json:"html_url,omitempty"`
+	HeadBranch    string `json:"head_branch,omitempty"`
 
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
@@ -27,7 +27,7 @@ type PullRequest struct {
 	Mergeable      bool   `json:"mergeable,omitempty"`
 	MergeableState string `json:"mergeable_state,omitempty"`
 
-	SourcePullRequestID int64 `json:"source_pull_request_id,omitempty"`
+	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 
 	LabelsString             string `json:"labels_string,omitempty"`
 	AssigneeString           string `json:"assignee_string,omitempty"`
@@ -43,12 +43,13 @@ type PullRequest struct {
 
 // List Option
 type PullRequestOption struct {
-	ID         int64  `json:"id"`
-	PullRequestID string `json:"pull_request_id,omitempty"`
-	Number     int    `json:"number,omitempty"`
-	State      string `json:"state,omitempty"`
-	Repo       string `json:"repo,omitempty"`
-	HeadBranch string `json:"head_branch,omitempty"`
+	ID                  int64  `json:"id"`
+	PullRequestID       string `json:"pull_request_id,omitempty"`
+	Number              int    `json:"number,omitempty"`
+	State               string `json:"state,omitempty"`
+	Repo                string `json:"repo,omitempty"`
+	HeadBranch          string `json:"head_branch,omitempty"`
+	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 }
 
 // DB-Table
@@ -77,7 +78,7 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	mergeable BOOLEAN COMMENT '是否可合入',
 	mergeable_state VARCHAR(32) COMMENT '可合入状态',
 
-	source_pull_request_id INT(11) NOT NULL COMMENT '来源ID',
+	source_pull_request_id VARCHAR(255) COMMENT '来源ID',
 
 	labels_string TEXT COMMENT '标签',
 	assignee_string TEXT COMMENT '处理人',

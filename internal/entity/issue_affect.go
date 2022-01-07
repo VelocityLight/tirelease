@@ -9,7 +9,7 @@ type IssueAffect struct {
 	CreateTime time.Time `json:"create_time"`
 	UpdateTime time.Time `json:"update_time"`
 
-	IssueID       string              `json:"issue_id,omitempty"`
+	IssueID       string             `json:"issue_id,omitempty"`
 	AffectVersion string             `json:"affect_version,omitempty"`
 	AffectResult  AffectResultResult `json:"affect_result,omitempty"`
 }
@@ -26,15 +26,15 @@ const (
 // List Option
 type IssueAffectOption struct {
 	ID            int64  `json:"id"`
-	IssueID       string  `json:"issue_id,omitempty"`
+	IssueID       string `json:"issue_id,omitempty"`
 	AffectVersion string `json:"affect_version,omitempty"`
 }
 
 // Update Option
 type IssueAffectUpdateOption struct {
-	ID         int64     `json:"id,omitempty"`
-	IssueID       string  `json:"issue_id,omitempty"`
-	AffectVersion string `json:"affect_version,omitempty"`
+	ID            int64              `json:"id,omitempty"`
+	IssueID       string             `json:"issue_id,omitempty"`
+	AffectVersion string             `json:"affect_version,omitempty"`
 	AffectResult  AffectResultResult `json:"affect_result,omitempty"`
 }
 

@@ -18,23 +18,23 @@ func TestPullRequest(t *testing.T) {
 
 	// Create
 	var pr = &entity.PullRequest{
-		PullRequestID:         "100",
-		Number:     100,
-		State:      "open",
-		Title:      "first",
-		Repo:       "ff",
-		HTMLURL:    "json",
-		ClosedAt:   time.Now(),
-		CreatedAt:  time.Now(),
-		UpdatedAt:  time.Now(),
-		MergedAt:   time.Now(),
-		HeadBranch: "targetBranch",
+		PullRequestID: "100",
+		Number:        100,
+		State:         "open",
+		Title:         "first",
+		Repo:          "ff",
+		HTMLURL:       "json",
+		ClosedAt:      time.Now(),
+		CreatedAt:     time.Now(),
+		UpdatedAt:     time.Now(),
+		MergedAt:      time.Now(),
+		HeadBranch:    "targetBranch",
 
 		Merged:         true,
 		Mergeable:      true,
 		MergeableState: "OK",
 
-		SourcePullRequestID: 1000,
+		SourcePullRequestID: "1000",
 	}
 	pr.Assignee = &github.User{Login: github.String("jcye")}
 	err := CreateOrUpdatePullRequest(pr)
@@ -43,7 +43,7 @@ func TestPullRequest(t *testing.T) {
 
 	// Select
 	var option = &entity.PullRequestOption{
-		PullRequestID:         "100",
+		PullRequestID: "100",
 	}
 	prs, err := SelectPullRequest(option)
 	// Assert

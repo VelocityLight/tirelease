@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"tirelease/commons/configs"
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
 
@@ -12,9 +11,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreatePullRequest(t *testing.T) {
+func TestPullRequest(t *testing.T) {
 	// Init
-	var config = generateConfig2()
+	var config = generateConfig()
 	database.Connect(config)
 
 	// Create
@@ -50,17 +49,4 @@ func TestCreatePullRequest(t *testing.T) {
 	// Assert
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*prs) > 0)
-}
-
-func generateConfig2() *configs.ConfigYaml {
-	var config = &configs.ConfigYaml{}
-
-	config.Mysql.UserName = "cicd_online"
-	config.Mysql.PassWord = "wGEXq8a4MeCw6G"
-	config.Mysql.Host = "172.16.4.36"
-	config.Mysql.Port = "3306"
-	config.Mysql.DataBase = "cicd_online"
-	config.Mysql.CharSet = "utf8"
-
-	return config
 }

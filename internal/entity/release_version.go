@@ -60,6 +60,7 @@ func (ReleaseVersion) TableName() string {
 }
 
 /**
+
 CREATE TABLE IF NOT EXISTS release_version (
 	id INT(11) NOT NULL COMMENT '全局ID',
 
@@ -84,4 +85,5 @@ CREATE TABLE IF NOT EXISTS release_version (
 	INDEX idx_status (status)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '发布版本表';
+
 **/

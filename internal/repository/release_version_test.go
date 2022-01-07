@@ -4,16 +4,15 @@ import (
 	"testing"
 	"time"
 
-	"tirelease/commons/configs"
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateReleaseVersion(t *testing.T) {
+func TestReleaseVersion(t *testing.T) {
 	// Init
-	var config = generateConfig3()
+	var config = generateConfig()
 	database.Connect(config)
 
 	// Create
@@ -53,17 +52,4 @@ func TestCreateReleaseVersion(t *testing.T) {
 	// Assert
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*versions) > 0)
-}
-
-func generateConfig3() *configs.ConfigYaml {
-	var config = &configs.ConfigYaml{}
-
-	config.Mysql.UserName = "cicd_online"
-	config.Mysql.PassWord = "wGEXq8a4MeCw6G"
-	config.Mysql.Host = "172.16.4.36"
-	config.Mysql.Port = "3306"
-	config.Mysql.DataBase = "cicd_online"
-	config.Mysql.CharSet = "utf8"
-
-	return config
 }

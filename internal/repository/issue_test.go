@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateIssue(t *testing.T) {
+func TestIssue(t *testing.T) {
 	// Init
 	var config = generateConfig()
 	database.Connect(config)

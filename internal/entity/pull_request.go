@@ -26,6 +26,8 @@ type PullRequest struct {
 	Mergeable      bool   `json:"mergeable,omitempty"`
 	MergeableState string `json:"mergeable_state,omitempty"`
 
+	SourcePullRequestID int64 `json:"source_pull_request_id,omitempty"`
+
 	LabelsString             string `json:"labels_string,omitempty"`
 	AssigneeString           string `json:"assignee_string,omitempty"`
 	AssigneesString          string `json:"assignees_string,omitempty"`
@@ -65,11 +67,13 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	closed_at TIMESTAMP COMMENT '关闭时间',
 	created_at TIMESTAMP COMMENT '创建时间',
 	updated_at TIMESTAMP COMMENT '更新时间',
-	merged_at TIMESTAMP COMMENT '更新时间',
+	merged_at TIMESTAMP COMMENT '合入时间',
 
 	merged BOOLEAN COMMENT '是否已合入',
 	mergeable BOOLEAN COMMENT '是否可合入',
-	mergeable_state BOOLEAN COMMENT '可合入状态',
+	mergeable_state VARCHAR(32) COMMENT '可合入状态',
+
+	source_pull_request_id INT(11) NOT NULL COMMENT '来源ID',
 
 	labels_string TEXT COMMENT '标签',
 	assignee_string TEXT COMMENT '处理人',
@@ -79,7 +83,8 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	PRIMARY KEY (id),
 	INDEX idx_state (state),
 	INDEX idx_repo (repo),
-	INDEX idx_createdat (created_at)
+	INDEX idx_createdat (created_at),
+	INDEX idx_sourceprid (source_pull_request_id)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'pull_request信息表';
 **/

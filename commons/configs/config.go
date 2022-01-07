@@ -4,8 +4,6 @@ import (
 	"github.com/jinzhu/configor"
 )
 
-
-
 // Database configuration
 type ConfigYaml struct {
 	Mysql struct {

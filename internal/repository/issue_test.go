@@ -4,12 +4,12 @@ import (
 	"testing"
 	"time"
 
-	"tirelease/internal/entity"
 	"tirelease/commons/configs"
 	"tirelease/commons/database"
+	"tirelease/internal/entity"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/google/go-github/v41/github"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateIssue(t *testing.T) {
@@ -19,13 +19,13 @@ func TestCreateIssue(t *testing.T) {
 
 	// Create
 	var issue = &entity.Issue{
-		ID: 100,
-		Number: 100,
-		State: "open",
-		Title: "first",
-		Repo: "ff",
-		HTMLURL: "json",
-		ClosedAt: time.Now(),
+		ID:        100,
+		Number:    100,
+		State:     "open",
+		Title:     "first",
+		Repo:      "ff",
+		HTMLURL:   "json",
+		ClosedAt:  time.Now(),
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -53,6 +53,6 @@ func generateConfig() *configs.ConfigYaml {
 	config.Mysql.Port = "3306"
 	config.Mysql.DataBase = "cicd_online"
 	config.Mysql.CharSet = "utf8"
-	
+
 	return config
 }

@@ -99,6 +99,12 @@ type PullRequestWithoutTimelineItems struct {
 			Name githubv4.String
 		}
 	} `graphql:"labels(last: 15)"`
+	Assignees struct {
+		Nodes []struct {
+			Login     githubv4.String
+			CreatedAt githubv4.DateTime
+		}
+	} `graphql:"assignees(last: 5)"`
 	Repository  Repository
 	BaseRefName githubv4.String
 	HeadRefName githubv4.String

@@ -91,7 +91,13 @@ export default function Affects({ affectsProp }) {
                           }}
                         >
                           <TableCell>
-                            <Chip label={item.version} />
+                            <Chip
+                              label={item.version}
+                              color={item.affect !== "no" ? "error" : "success"}
+                              variant={
+                                item.affect !== "yes" ? "outlined" : "filled"
+                              }
+                            />
                           </TableCell>
                           <TableCell>
                             <AffectsSelector

@@ -36,7 +36,7 @@ func TestIssue(t *testing.T) {
 
 	// Select
 	var option = &entity.IssueOption{
-		IssueID:   "100",
+		IssueID: "100",
 	}
 	issues, err := SelectIssue(option)
 	// Assert

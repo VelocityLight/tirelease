@@ -7,7 +7,7 @@ import (
 type VersionTriage struct {
 	ID           int64               `json:"id,omitempty"`
 	VersionName  string              `json:"version_name,omitempty"`
-	IssueID      string               `json:"issue_id,omitempty"`
+	IssueID      string              `json:"issue_id,omitempty"`
 	TriageResult VersionTriageResult `json:"triage_result,omitempty"`
 
 	CreateTime time.Time `json:"create_time"`
@@ -31,7 +31,7 @@ const (
 type VersionTriageOption struct {
 	ID           int64               `json:"id"`
 	VersionName  string              `json:"version_name,omitempty"`
-	IssueID      string               `json:"issue_id,omitempty"`
+	IssueID      string              `json:"issue_id,omitempty"`
 	TriageResult VersionTriageResult `json:"triage_result,omitempty"`
 }
 

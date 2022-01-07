@@ -25,7 +25,7 @@ type Issue struct {
 	AssigneeString  string `json:"assignee_string,omitempty"`
 	AssigneesString string `json:"assignees_string,omitempty"`
 
-	ClosedByPullRequestID int64 `json:"closed_by_pull_request_id,omitempty"`
+	ClosedByPullRequestID string `json:"closed_by_pull_request_id,omitempty"`
 
 	// OutPut-Serial
 	Labels    *[]github.Label `json:"labels,omitempty" gorm:"-"`
@@ -35,11 +35,11 @@ type Issue struct {
 
 // List Option
 type IssueOption struct {
-	ID     int64  `json:"id"`
+	ID      int64  `json:"id"`
 	IssueID string `json:"issue_id,omitempty"`
-	Number int    `json:"number,omitempty"`
-	State  string `json:"state,omitempty"`
-	Repo   string `json:"repo,omitempty"`
+	Number  int    `json:"number,omitempty"`
+	State   string `json:"state,omitempty"`
+	Repo    string `json:"repo,omitempty"`
 }
 
 // DB-Table
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS issue (
 	assignee_string TEXT COMMENT '处理人',
 	assignees_string TEXT COMMENT '处理人列表',
 
-	closed_by_pull_request_id INT(11) COMMENT '处理的PR',
+	closed_by_pull_request_id VARCHAR(255) COMMENT '处理的PR',
 
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_issueid (issue_id),

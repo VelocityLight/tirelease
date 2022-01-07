@@ -9,11 +9,39 @@ import { IssueRow } from "./IssueRow";
 
 import { sampleData } from "./SampleData";
 
+const columns = {
+  Repo: {
+    display: true,
+    filter: null,
+    selection: null,
+  },
+  Issue: {
+    display: true,
+    filter: null,
+    selection: null,
+  },
+  Title: {
+    display: true,
+    filter: null,
+    selection: null,
+  },
+  Created: {
+    display: true,
+    filter: null,
+    selection: null,
+  },
+  Updated: {
+    display: true,
+    filter: null,
+    selection: null,
+  },
+};
+
 export const IssueTable = () => {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small">
+        <Table sx={{ minWidth: 950 }} size="small">
           <TableHead>
             <TableRow>
               <TableCell width={10}>Repo</TableCell>

@@ -58,7 +58,7 @@ export const Navbar = (props) => {
                     noWrap
                     sx={{ flexGrow: 1 }}
                 >
-                    Hello TiRelease
+                    tissue
                 </Typography>
                 {/* <IconButton color="inherit">
                     <Badge badgeContent={4} color="secondary">

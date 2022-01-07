@@ -5,11 +5,16 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 
 export default function AffectsSelector(
-  { version, affectsProp } = { version: "master", affectsProp: "unknown" }
+  { version, affectsProp, onChange } = {
+    version: "master",
+    affectsProp: "unknown",
+    onChange: () => {},
+  }
 ) {
   const [affects, setAffects] = React.useState(affectsProp || "unknown");
 
   const handleChange = (event) => {
+    onChange(event.target.value);
     setAffects(event.target.value);
   };
 

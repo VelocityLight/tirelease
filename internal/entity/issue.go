@@ -10,6 +10,7 @@ import (
 type Issue struct {
 	// DataBase Column
 	ID      int64  `json:"id,omitempty"`
+	IssueID string `json:"issue_id,omitempty"`
 	Number  int    `json:"number,omitempty"`
 	State   string `json:"state,omitempty"`
 	Title   string `json:"title,omitempty"`
@@ -35,6 +36,7 @@ type Issue struct {
 // List Option
 type IssueOption struct {
 	ID     int64  `json:"id"`
+	IssueID string `json:"issue_id,omitempty"`
 	Number int    `json:"number,omitempty"`
 	State  string `json:"state,omitempty"`
 	Repo   string `json:"repo,omitempty"`
@@ -48,7 +50,8 @@ func (Issue) TableName() string {
 /**
 
 CREATE TABLE IF NOT EXISTS issue (
-	id INT(11) NOT NULL COMMENT '全局ID',
+	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+	issue_id VARCHAR(255) NOT NULL COMMENT 'Issue全局ID',
 	number INT(11) NOT NULL COMMENT '当前库ID',
 	state VARCHAR(32) NOT NULL COMMENT '状态',
 	title VARCHAR(1024) COMMENT '标题',
@@ -66,6 +69,7 @@ CREATE TABLE IF NOT EXISTS issue (
 	closed_by_pull_request_id INT(11) COMMENT '处理的PR',
 
 	PRIMARY KEY (id),
+	UNIQUE KEY uk_issueid (issue_id),
 	INDEX idx_state (state),
 	INDEX idx_repo (repo),
 	INDEX idx_createdat (created_at)

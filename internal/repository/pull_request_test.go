@@ -18,7 +18,7 @@ func TestPullRequest(t *testing.T) {
 
 	// Create
 	var pr = &entity.PullRequest{
-		ID:         100,
+		PullRequestID:         "100",
 		Number:     100,
 		State:      "open",
 		Title:      "first",
@@ -43,7 +43,7 @@ func TestPullRequest(t *testing.T) {
 
 	// Select
 	var option = &entity.PullRequestOption{
-		ID: 100,
+		PullRequestID:         "100",
 	}
 	prs, err := SelectPullRequest(option)
 	// Assert

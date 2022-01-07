@@ -17,9 +17,8 @@ func TestVersionTriage(t *testing.T) {
 
 	// Create
 	var versionTriage = &entity.VersionTriage{
-		ID:           100,
 		VersionName:  "5.4.1",
-		IssueID:      100,
+		IssueID:      "100",
 		TriageResult: entity.VersionTriageResultUnKnown,
 
 		CreateTime: time.Now(),

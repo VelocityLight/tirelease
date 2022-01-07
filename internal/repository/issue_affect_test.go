@@ -17,12 +17,11 @@ func TestIssueAffect(t *testing.T) {
 
 	// Create
 	var issueAffect = &entity.IssueAffect{
-		ID:         100,
 		CreateTime: time.Now(),
 		UpdateTime: time.Now(),
 
 		AffectVersion: "5.4.1",
-		IssueID:       100,
+		IssueID:       "100",
 		AffectResult:  entity.AffectResultResultUnKnown,
 	}
 	err := CreateIssueAffect(issueAffect)

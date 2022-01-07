@@ -46,6 +46,7 @@ func (Issue) TableName() string {
 }
 
 /**
+
 CREATE TABLE IF NOT EXISTS issue (
 	id INT(11) NOT NULL COMMENT '全局ID',
 	number INT(11) NOT NULL COMMENT '当前库ID',
@@ -70,4 +71,5 @@ CREATE TABLE IF NOT EXISTS issue (
 	INDEX idx_createdat (created_at)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'issue信息表';
+
 **/

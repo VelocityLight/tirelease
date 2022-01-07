@@ -27,6 +27,7 @@ func (IssuePrRelation) TableName() string {
 }
 
 /**
+
 CREATE TABLE IF NOT EXISTS issue_pr_releation (
 	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -39,4 +40,5 @@ CREATE TABLE IF NOT EXISTS issue_pr_releation (
 	UNIQUE KEY uk_issueid_prid (issue_id, pull_request_id)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'issue与pull_request关联表';
+
 **/

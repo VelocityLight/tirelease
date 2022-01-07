@@ -55,6 +55,7 @@ func (PullRequest) TableName() string {
 }
 
 /**
+
 CREATE TABLE IF NOT EXISTS pull_request (
 	id INT(11) NOT NULL COMMENT '全局ID',
 	number INT(11) NOT NULL COMMENT '当前库ID',
@@ -87,4 +88,5 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	INDEX idx_sourceprid (source_pull_request_id)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'pull_request信息表';
+
 **/

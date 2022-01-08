@@ -47,7 +47,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 }
 
 func InitDB() error {
-	issues, err := git.ClientV4.GetIssuesByTimeRange("pingcap", "tidb", []string{"type/bug"}, time.Now().Add(-48*time.Hour), time.Now(), 20, 500)
+	issues, err := git.ClientV4.GetIssuesByTimeRange("pingcap", "tidb", []string{"type/bug"}, time.Now().Add(-96*time.Hour), time.Now(), 20, 500)
 	if err != nil {
 		return err
 	}
@@ -159,7 +159,7 @@ func PullRequestNodeToPullRequest(pullRequestNode *git.PullRequest) *entity.Pull
 		State:         string(pullRequestNode.State),
 		Title:         string(pullRequestNode.Title),
 		Repo:          strings.Join([]string{string(pullRequestNode.Repository.Owner.Login), string(pullRequestNode.Repository.Name)}, "/"),
-		HeadBranch:    string(pullRequestNode.HeadRefName),
+		HeadBranch:    string(pullRequestNode.BaseRefName),
 		// MergedAt:            pullRequestNode.MergedAt.Time,
 		CreatedAt:           pullRequestNode.CreatedAt.Time,
 		UpdatedAt:           pullRequestNode.UpdatedAt.Time,

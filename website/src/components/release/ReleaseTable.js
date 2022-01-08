@@ -8,6 +8,46 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import AllColumns from "../issues/ColumnDefs";
+import { useQuery } from "react-query";
+
+function ReleaseCandidates({ version }) {
+  const { isLoading, error, data } = useQuery("releaseCandidates", () => {
+    return fetch("http://172.16.5.65:30750/issue")
+      .then((res) => {
+        const data = res.json();
+        console.log(data);
+        return data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+  console.log(isLoading, error, data);
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+  console.log(data);
+  return (
+    <IssueTable
+      data={data}
+      columns={[
+        AllColumns.Repo,
+        AllColumns.Issue,
+        AllColumns.Title,
+        AllColumns.ClosedAt,
+        AllColumns.Assignee,
+        AllColumns.Severity,
+        AllColumns.ClosedBy,
+        AllColumns.Affects,
+      ]}
+      onlyVersion={version}
+    ></IssueTable>
+  );
+}
 
 const ReleaseTable = () => {
   const [version, setVersion] = useState("none");
@@ -62,7 +102,9 @@ const ReleaseTable = () => {
             </DialogActions>
           </Dialog>
         </Stack>
-        {version !== "none" && <IssueTable onlyVersion={version}></IssueTable>}
+        {version !== "none" && (
+          <ReleaseCandidates version={version}></ReleaseCandidates>
+        )}
       </Stack>
     </>
   );

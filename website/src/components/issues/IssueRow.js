@@ -7,7 +7,6 @@ import ColorHash from "color-hash";
 import AllColumns from "./ColumnDefs";
 
 export const IssueRow = ({ row, onlyVersion, columns }) => {
-  console.log(row, onlyVersion);
   return (
     <TableRow
       key={row.Number}
@@ -74,6 +73,7 @@ export const IssueRow = ({ row, onlyVersion, columns }) => {
               return (
                 <TableCell>
                   <Affects
+                    id={row.IssueID}
                     affectsProp={row.Affects}
                     onlyVersion={onlyVersion}
                     expandProp={onlyVersion !== undefined}

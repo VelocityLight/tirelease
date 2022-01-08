@@ -47,7 +47,7 @@ function ToggleButtons({ onExpand, onShow }) {
 }
 
 export default function Affects(
-  { affectsProp, expandProp, showProp, onlyVersion, columns } = {
+  { id, affectsProp, expandProp, showProp, onlyVersion, columns } = {
     expandProp: false,
     showProp: false,
   }
@@ -56,7 +56,7 @@ export default function Affects(
   const [expand, setExpand] = useState(expandProp);
   const [affects, setAffects] = useState(
     onlyVersion
-      ? affectsProp.filter((item) => item.version === onlyVersion)
+      ? affectsProp.filter((item) => item.Version.toLowerCase() === onlyVersion)
       : affectsProp
   );
 
@@ -168,6 +168,7 @@ export default function Affects(
                               return (
                                 <TableCell>
                                   <AffectsSelector
+                                    id={id}
                                     version={item.Version}
                                     affectsProp={item.Affect.toLowerCase()}
                                     onChange={(targetValue) => {

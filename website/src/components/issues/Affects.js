@@ -192,9 +192,9 @@ export default function Affects(
                             case "PR":
                               return (
                                 <TableCell>
-                                  {item.Pr && (
-                                    <Link href={item.Pr.Url}>
-                                      {item.Pr.Number}
+                                  {item.PR && (
+                                    <Link href={item.PR.Url}>
+                                      {item.PR.Number}
                                     </Link>
                                   )}
                                 </TableCell>

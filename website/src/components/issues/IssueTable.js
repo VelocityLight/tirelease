@@ -7,72 +7,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IssueRow } from "./IssueRow";
 
+import AllColumns from "./ColumnDefs";
 import { sampleData } from "./SampleData";
 
-const AllColumns = {
-  Repo: {
-    title: "Repo",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  Issue: {
-    title: "Issue",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  Title: {
-    title: "Title",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  Created: {
-    title: "Created",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  Updated: {
-    title: "Updated",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  State: {
-    title: "State",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  LinkedPR: {
-    title: "Linked PR",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  Assignee: {
-    title: "Assignee",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  Affects: {
-    title: "Affects",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-  Severity: {
-    title: "Severity",
-    display: true,
-    filter: null,
-    selection: null,
-  },
-};
-
 export const IssueTable = ({
+  data = sampleData,
   onlyVersion,
   columns = [
     AllColumns.Repo,
@@ -80,13 +19,15 @@ export const IssueTable = ({
     AllColumns.Title,
     AllColumns.Created,
     AllColumns.Severity,
-    AllColumns.State,
     AllColumns.Assignee,
     AllColumns.LinkedPR,
-    AllColumns.Affects,
+    {
+      ...AllColumns.Affects,
+      columns: [AllColumns.Affects.columns[0], AllColumns.Affects.columns[1]],
+    },
   ],
 }) => {
-  console.log(onlyVersion, columns);
+  console.log(data, onlyVersion, columns);
   return (
     <>
       <TableContainer component={Paper}>
@@ -102,8 +43,13 @@ export const IssueTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {sampleData.map((row) => (
-              <IssueRow key={row.Number} row={row} onlyVersion={onlyVersion} />
+            {data.map((row) => (
+              <IssueRow
+                key={row.Number}
+                row={row}
+                onlyVersion={onlyVersion}
+                columns={columns}
+              />
             ))}
           </TableBody>
         </Table>

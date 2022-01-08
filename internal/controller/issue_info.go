@@ -8,7 +8,8 @@ import (
 )
 
 func ListIssueInfo(c *gin.Context) {
-	issueInfos, err := service.ListIssueInfo()
+	state := c.DefaultQuery("state", "CLOSED")
+	issueInfos, err := service.ListIssueInfo(state)
 	if err != nil {
 		log.Fatal(err)
 		c.JSON(500, err.Error())

@@ -19,9 +19,9 @@ const data = {
   ],
   Affects: [
     {
-      version: "master",
-      affect: "yes",
-      pr: {
+      Version: "master",
+      Affect: "yes",
+      PR: {
         Repository: "tidb",
         Number: 31058,
         Title: "session: fix data race in ParseWithParamsInternal",
@@ -35,9 +35,9 @@ const data = {
       Release: { BaseVersion: "master", TriageStatus: "accept" },
     },
     {
-      version: "5.4",
-      affect: "yes",
-      pr: {
+      Version: "5.4",
+      Affect: "yes",
+      PR: {
         Repository: "tidb",
         Number: 31401,
         Title: "planner: do not cache tableDual plan (#31386)",
@@ -51,9 +51,9 @@ const data = {
       Release: { BaseVersion: "5.4", TriageStatus: "accept", Patch: "1" },
     },
     {
-      version: "5.3",
-      affect: "yes",
-      pr: {
+      Version: "5.3",
+      Affect: "yes",
+      PR: {
         Repository: "tidb",
         Number: 31402,
         Title: "planner: do not cache tableDual plan (#31386)",
@@ -67,9 +67,9 @@ const data = {
       Release: { BaseVersion: "5.3", TriageStatus: "later", Patch: "2" },
     },
     {
-      version: "5.2",
-      affect: "yes",
-      pr: {
+      Version: "5.2",
+      Affect: "yes",
+      PR: {
         Repository: "tidb",
         Number: 31403,
         Title: "planner: do not cache tableDual plan (#31386)",
@@ -83,9 +83,9 @@ const data = {
       Release: { BaseVersion: "5.2", TriageStatus: "won't-fix", Patch: "4" },
     },
     {
-      version: "5.1",
-      affect: "yes",
-      pr: {
+      Version: "5.1",
+      Affect: "yes",
+      PR: {
         Repository: "tidb",
         Number: 31404,
         Title: "planner: do not cache tableDual plan (#31386)",
@@ -98,14 +98,14 @@ const data = {
       },
       Release: { BaseVersion: "5.1", TriageStatus: "released", Patch: "1" },
     },
-    { version: "5.0", affect: "no", pr: null, Release: null },
+    { Version: "5.0", Affect: "no", PR: null, Release: null },
     {
-      version: "4.0",
-      affect: "unknown",
+      Version: "4.0",
+      Affect: "unknown",
       Release: { BaseVersion: "4.0", TriageStatus: "unknown", Patch: "1" },
     },
   ],
   ReleaseInNext: [,],
 };
 
-export const sampleData = [data, data, data, data, data, data, data, data];
+export const sampleData = [data];

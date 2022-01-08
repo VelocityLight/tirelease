@@ -9,12 +9,11 @@ import Release from "./pages/release";
 import RecentOpen from "./pages/open";
 import RecentClose from "./pages/close";
 
-
 const MyRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Example />} />
+        <Route path="/" element={<RecentOpen />} />
         <Route path="/open" element={<RecentOpen />} />
         <Route path="/close" element={<RecentClose />} />
         <Route path="/home" element={<Example />} />

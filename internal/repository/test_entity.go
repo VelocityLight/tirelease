@@ -24,7 +24,7 @@ func TestEntityInsert(testEntity *entity.TestEntity) error {
 func TestEntitySelect(option *entity.TestEntityOption) (*[]entity.TestEntity, error) {
 	var testEntities []entity.TestEntity
 
-	if err := database.DBConn.DB.Find(&testEntities).Where(option).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Find(&testEntities).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find test entity: %+v failed", option))
 	}
 	return &testEntities, nil

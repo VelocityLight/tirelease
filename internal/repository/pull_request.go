@@ -27,7 +27,7 @@ func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
 func SelectPullRequest(option *entity.PullRequestOption) (*[]entity.PullRequest, error) {
 	// 查询
 	var prs []entity.PullRequest
-	if err := database.DBConn.DB.Find(&prs).Where(option).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Find(&prs).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find pull request: %+v failed", option))
 	}
 

@@ -35,7 +35,7 @@ func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.ReleaseVersion, error) {
 	// 查询
 	var releaseVersions []entity.ReleaseVersion
-	if err := database.DBConn.DB.Find(&releaseVersions).Where(option).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Find(&releaseVersions).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version: %+v failed", option))
 	}
 

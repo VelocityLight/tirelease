@@ -22,7 +22,7 @@ func CreateIssuePrRelation(issuePrRelation *entity.IssuePrRelation) error {
 func SelectIssuePrRelation(option *entity.IssuePrRelationOption) (*[]entity.IssuePrRelation, error) {
 	// 查询
 	var issuePrRelations []entity.IssuePrRelation
-	if err := database.DBConn.DB.Find(&issuePrRelations).Where(option).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Find(&issuePrRelations).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find issue_pr_relation: %+v failed", option))
 	}
 	return &issuePrRelations, nil

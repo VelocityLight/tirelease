@@ -25,7 +25,6 @@ func TestIssue(t *testing.T) {
 		Title:     "first",
 		Repo:      "ff",
 		HTMLURL:   "json",
-		ClosedAt:  time.Now(),
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}

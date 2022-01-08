@@ -27,7 +27,7 @@ func CreateOrUpdateIssue(issue *entity.Issue) error {
 func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 	// 查询
 	var issues []entity.Issue
-	if err := database.DBConn.DB.Where(option).Find(&issues).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Order("created_at desc").Find(&issues).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find issue: %+v failed", option))
 	}
 

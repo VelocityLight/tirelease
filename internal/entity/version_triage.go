@@ -20,11 +20,11 @@ type VersionTriage struct {
 type VersionTriageResult string
 
 const (
-	VersionTriageResultUnKnown  = VersionTriageResult("UnKnown")
-	VersionTriageResultAccept   = VersionTriageResult("Accept")
-	VersionTriageResultLater    = VersionTriageResult("Later")
-	VersionTriageResultWontFix  = VersionTriageResult("Won't Fix")
-	VersionTriageResultReleased = VersionTriageResult("Released")
+	VersionTriageResultUnKnown  = VersionTriageResult("unknown")
+	VersionTriageResultAccept   = VersionTriageResult("accept")
+	VersionTriageResultLater    = VersionTriageResult("later")
+	VersionTriageResultWontFix  = VersionTriageResult("won't-fix")
+	VersionTriageResultReleased = VersionTriageResult("released")
 )
 
 // List Option

@@ -61,6 +61,7 @@ func routeRestAPI(router *gin.Engine) {
 	issue := router.Group("/issue")
 	{
 		issue.GET("", controller.ListIssueInfo)
+		issue.GET("/filter", controller.FilterIssueInfo)
 		issue.POST("/affect", controller.UpdateIssueAffectAndTriage)
 
 	}

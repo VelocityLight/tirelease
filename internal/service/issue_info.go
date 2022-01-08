@@ -68,6 +68,26 @@ func ListIssueInfo(state string) ([]*IssueInfo, error) {
 	return resp, nil
 }
 
+func FilterIssueInfo(minorVersion string) ([]*IssueInfo, error) {
+	resp := []*IssueInfo{}
+	issues, err := ListIssueInfo("CLOSED")
+	if err != nil {
+		return resp, err
+	}
+	for _, issue := range issues {
+		for _, affect := range issue.Affects {
+			if affect.Version == minorVersion {
+				if affect.Affect == "unknown" || affect.Affect == "yes" {
+					if affect.Release.TriageStatus == "" || affect.Release.TriageStatus == "unknown" || affect.Release.TriageStatus == "accept" {
+						resp = append(resp, issue)
+					}
+				}
+			}
+		}
+	}
+	return resp, nil
+}
+
 func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[string]string) ([]*Affect, error) {
 	resp := []*Affect{}
 	issueAffects, err := repository.SelectIssueAffect(&entity.IssueAffectOption{IssueID: issueID})

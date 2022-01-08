@@ -94,6 +94,89 @@ func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []st
 	return
 }
 
+func (client *GithubInfoV4) GetPullRequestsFrom(owner, name string, from time.Time, batchLimit int, totalLimit int) (prs []PullRequest, err error) {
+	var query struct {
+		Repository struct {
+			PullRequests struct {
+				Edges []struct {
+					Cursor githubv4.String
+					Node   PullRequest
+				}
+			} `graphql:"pullRequests(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: DESC})"`
+		} `graphql:"repository(name: $name, owner: $owner)"`
+	}
+
+	cursor := (*githubv4.String)(nil)
+	total := 0
+
+	since := from.Add(-1 * time.Minute)
+	log.Printf("fetching since %s", since)
+
+	for totalLimit != 0 {
+		limit := batchLimit
+		if totalLimit > 0 && totalLimit < limit {
+			limit = totalLimit
+		}
+		param := map[string]interface{}{
+			"name":   githubv4.String(name),
+			"owner":  githubv4.String(owner),
+			"limit":  githubv4.Int(limit),
+			"cursor": cursor,
+		}
+
+		err = client.client.Query(context.Background(), &query, param)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		edges := query.Repository.PullRequests.Edges
+
+		for _, edge := range edges {
+			prs = append(prs, edge.Node)
+			log.Printf("%06d %s %s\n", edge.Node.Number, edge.Node.UpdatedAt.Format(time.RFC3339), edge.Node.Title)
+		}
+
+		cnt := len(edges)
+		if cnt != 0 {
+			lastIssue := &edges[cnt-1]
+			cursor = &lastIssue.Cursor
+			lastUpdated := lastIssue.Node.UpdatedAt.Time
+			total += cnt
+			totalLimit -= cnt
+			log.Println(cnt, "fetced", owner, name, lastUpdated)
+			if since.After(lastUpdated) {
+				break
+			}
+		}
+		if cnt != limit {
+			break
+		}
+	}
+
+	log.Printf("fetched %d pull requests from %s/%s\n", total, owner, name)
+	return
+}
+
+func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number int) (*PullRequest, error) {
+	var query struct {
+		Repository struct {
+			PullRequest struct {
+				PullRequest
+			} `graphql:"pullRequest(number: $number)"`
+		} `graphql:"repository(name: $name, owner: $owner)"`
+	}
+	num := githubv4.Int(number)
+	params := map[string]interface{}{
+		"number": num,
+		"name":   githubv4.String(name),
+		"owner":  githubv4.String(owner),
+	}
+	if err := client.client.Query(context.Background(), &query, params); err != nil {
+		return nil, err
+	}
+	return &query.Repository.PullRequest.PullRequest, nil
+}
+
 func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*IssueNode, error) {
 	var query struct {
 		Repository struct {

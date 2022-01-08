@@ -50,6 +50,7 @@ func ListIssueInfo() ([]*IssueInfo, error) {
 		}
 
 		issueInfo := &IssueInfo{
+			IssueID:   issue.IssueID,
 			Number:    issue.Number,
 			Title:     issue.Title,
 			Url:       issue.HTMLURL,
@@ -105,6 +106,7 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 			}
 			if strings.HasSuffix(cpr.HeadBranch, issueAffect.AffectVersion) {
 				pr = Pr{
+					PrID:        cpr.PullRequestID,
 					Repository:  cpr.Repo,
 					Number:      cpr.Number,
 					Title:       cpr.Title,
@@ -158,6 +160,7 @@ func getAssignee(users []github.User) string {
 }
 
 type IssueInfo struct {
+	IssueID   string
 	Number    int
 	Title     string
 	Url       string
@@ -179,6 +182,7 @@ type Affect struct {
 }
 
 type Pr struct {
+	PrID        string
 	Repository  string
 	Number      int
 	Title       string

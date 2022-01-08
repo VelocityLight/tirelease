@@ -38,11 +38,21 @@ func IssueAffectOperate(updateOption *entity.IssueAffectUpdateOption) error {
 	if nil != err {
 		return err
 	}
+	releaseType := entity.ReleaseVersionTypePatch
+	status := entity.ReleaseVersionStatusOpen
+	versions, err := repository.SelectReleaseVersion(&entity.ReleaseVersionOption{Type: &releaseType, Status: &status})
+	if err != nil {
+		return err
+	}
+	patchVersion := ""
+	for _, version := range *versions {
+		patchVersion = version.Name
+	}
 
 	// Insert version_triage
 	if (*issueAffects)[0].AffectResult == entity.AffectResultResultYes {
 		versionTriage := &entity.VersionTriage{
-			VersionName:  (*issueAffects)[0].AffectVersion,
+			VersionName:  patchVersion,
 			IssueID:      (*issueAffects)[0].IssueID,
 			TriageResult: entity.VersionTriageResultUnKnown,
 			CreateTime:   time.Now(),

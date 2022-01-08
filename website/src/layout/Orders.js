@@ -1,41 +1,47 @@
-import * as React from 'react';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
-import BugReportIcon from '@mui/icons-material/BugReport';
-import StorageIcon from '@mui/icons-material/Storage';
-import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
-import { Link } from 'react-router-dom';
+import * as React from "react";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import AccountTreeIcon from "@mui/icons-material/AccountTree";
+import LowPriorityIcon from "@mui/icons-material/LowPriority";
+import BugReportIcon from "@mui/icons-material/BugReport";
+import StorageIcon from "@mui/icons-material/Storage";
+import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
+import { Link } from "react-router-dom";
 
 export const mainListItems = (
   <div>
-    <ListSubheader inset>Data Center</ListSubheader>
-    <ListItem button component={Link} to="/home/example">
+    <ListSubheader inset>Routinely</ListSubheader>
+    <ListItem button component={Link} to="/open">
       <ListItemIcon>
         <StorageIcon />
       </ListItemIcon>
-      <ListItemText primary="Repositories" />
+      <ListItemText primary="Recent Open" />
     </ListItem>
-    <ListItem button component={Link} to="/home/triage">
+    <ListItem button component={Link} to="/close">
       <ListItemIcon>
         <FeaturedPlayListIcon />
       </ListItemIcon>
-      <ListItemText primary="Issues" />
+      <ListItemText primary="Recent Close" />
     </ListItem>
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    
-    <ListSubheader inset>Process Management</ListSubheader>
+    <ListSubheader inset>Engineering</ListSubheader>
     <ListItem button component={Link} to="/home/triage">
       <ListItemIcon>
         <AccountTreeIcon />
       </ListItemIcon>
       <ListItemText primary="Projects" />
+    </ListItem>
+    <ListItem button component={Link} to="/release">
+      <ListItemIcon>
+        <LowPriorityIcon />
+      </ListItemIcon>
+      <ListItemText primary="Release" />
     </ListItem>
   </div>
 );

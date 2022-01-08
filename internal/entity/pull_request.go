@@ -18,10 +18,10 @@ type PullRequest struct {
 	HTMLURL       string `json:"html_url,omitempty"`
 	HeadBranch    string `json:"head_branch,omitempty"`
 
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
-	ClosedAt  time.Time `json:"closed_at,omitempty"`
-	MergedAt  time.Time `json:"merged_at,omitempty"`
+	CreatedAt time.Time  `json:"created_at,omitempty"`
+	UpdatedAt time.Time  `json:"updated_at,omitempty"`
+	ClosedAt  *time.Time `json:"closed_at,omitempty"`
+	MergedAt  *time.Time `json:"merged_at,omitempty"`
 
 	Merged         bool   `json:"merged,omitempty"`
 	Mergeable      bool   `json:"mergeable,omitempty"`

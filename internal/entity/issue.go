@@ -17,9 +17,9 @@ type Issue struct {
 	Repo    string `json:"repo,omitempty"`
 	HTMLURL string `json:"html_url,omitempty"`
 
-	ClosedAt  time.Time `json:"closed_at,omitempty"`
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	ClosedAt  *time.Time `json:"closed_at,omitempty"`
+	CreatedAt time.Time  `json:"created_at,omitempty"`
+	UpdatedAt time.Time  `json:"updated_at,omitempty"`
 
 	LabelsString    string `json:"labels_string,omitempty"`
 	AssigneeString  string `json:"assignee_string,omitempty"`

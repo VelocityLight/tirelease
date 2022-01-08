@@ -33,17 +33,28 @@ func ListIssueInfo() ([]*IssueInfo, error) {
 	if err != nil {
 		return resp, err
 	}
+
 	for _, issue := range *issues {
+		if issue.Labels == nil {
+			issue.Labels = &[]github.Label{}
+		}
+		if issue.Assignees == nil {
+			issue.Assignees = &[]github.User{}
+		}
+		if issue.ClosedAt == nil {
+			issue.ClosedAt = &time.Time{}
+		}
 		affects, err := ListAffected(issue.IssueID, issue.ClosedByPullRequestID, minorPatchVersionMap)
 		if err != nil {
 			return resp, err
 		}
+
 		issueInfo := &IssueInfo{
 			Number:    issue.Number,
 			Title:     issue.Title,
 			Url:       issue.HTMLURL,
 			CreatedAt: issue.CreatedAt,
-			ClosedAt:  issue.ClosedAt,
+			ClosedAt:  *issue.ClosedAt,
 			Severity:  getIssueType(*issue.Labels),
 			State:     issue.State,
 			Type:      getIssueSeverity(*issue.Labels),
@@ -89,6 +100,9 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 		}
 		pr := Pr{}
 		for _, cpr := range cherryPickToPrs {
+			if cpr.MergedAt == nil {
+				cpr.MergedAt = &time.Time{}
+			}
 			if strings.HasSuffix(cpr.HeadBranch, issueAffect.AffectVersion) {
 				pr = Pr{
 					Repository:  cpr.Repo,
@@ -97,7 +111,7 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 					Url:         cpr.HTMLURL,
 					State:       cpr.State,
 					MergeTarget: cpr.HeadBranch,
-					MergedAt:    cpr.MergedAt,
+					MergedAt:    *cpr.MergedAt,
 				}
 			}
 		}

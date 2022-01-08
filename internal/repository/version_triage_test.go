@@ -23,7 +23,6 @@ func TestVersionTriage(t *testing.T) {
 
 		CreateTime: time.Now(),
 		UpdateTime: time.Now(),
-		DueTime:    time.Now(),
 		Comment:    "Patch版本5.4.1",
 	}
 	err := CreateVersionTriage(versionTriage)

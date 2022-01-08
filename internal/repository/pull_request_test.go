@@ -24,10 +24,8 @@ func TestPullRequest(t *testing.T) {
 		Title:         "first",
 		Repo:          "ff",
 		HTMLURL:       "json",
-		ClosedAt:      time.Now(),
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
-		MergedAt:      time.Now(),
 		HeadBranch:    "targetBranch",
 
 		Merged:         true,

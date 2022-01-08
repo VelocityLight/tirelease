@@ -11,7 +11,7 @@ import (
 
 var MinorVersionList = []string{"4.0", "5.0", "5.1", "5.2", "5.3", "5.4"}
 
-func ListIssueInfo() ([]*IssueInfo, error) {
+func ListIssueInfo(state string) ([]*IssueInfo, error) {
 	resp := []*IssueInfo{}
 	status := entity.ReleaseVersionStatusOpen
 	typeV := entity.ReleaseVersionTypePatch
@@ -28,7 +28,7 @@ func ListIssueInfo() ([]*IssueInfo, error) {
 		minorPatchVersionMap[patchVersion.FatherReleaseVersionName] = patchVersion.Name
 	}
 
-	optionI := entity.IssueOption{}
+	optionI := entity.IssueOption{State: state}
 	issues, err := repository.SelectIssue(&optionI)
 	if err != nil {
 		return resp, err

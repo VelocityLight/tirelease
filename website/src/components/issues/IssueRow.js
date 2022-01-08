@@ -5,7 +5,8 @@ import SeveritySelector from "./SeveritySelector";
 import Affects from "./Affects";
 import ColorHash from "color-hash";
 
-export const IssueRow = ({ row }) => {
+export const IssueRow = ({ row, onlyVersion }) => {
+  console.log(row, onlyVersion);
   return (
     <TableRow
       key={row.Number}
@@ -42,7 +43,12 @@ export const IssueRow = ({ row }) => {
       </TableCell>
       <TableCell> None </TableCell>
       <TableCell>
-        <Affects affectsProp={row.Affects}></Affects>
+        <Affects
+          affectsProp={row.Affects}
+          onlyVersion={onlyVersion}
+          expandProp={onlyVersion !== undefined}
+          showProp={false}
+        ></Affects>
       </TableCell>
     </TableRow>
   );

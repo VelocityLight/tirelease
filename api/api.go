@@ -58,4 +58,10 @@ func routeRestAPI(router *gin.Engine) {
 		triageItem.POST("/accept", controller.AddLabelsToIssue)
 	}
 
+	issue := router.Group("/issue")
+	{
+		issue.GET("", controller.ListIssueInfo)
+
+	}
+
 }

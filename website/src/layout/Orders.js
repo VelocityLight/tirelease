@@ -6,24 +6,31 @@ import ListSubheader from "@mui/material/ListSubheader";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import LowPriorityIcon from "@mui/icons-material/LowPriority";
 import BugReportIcon from "@mui/icons-material/BugReport";
-import StorageIcon from "@mui/icons-material/Storage";
-import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import { Link } from "react-router-dom";
+import AdjustIcon from "@mui/icons-material/Adjust";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
 export const mainListItems = (
   <div>
     <ListSubheader inset>Routinely</ListSubheader>
     <ListItem button component={Link} to="/open">
       <ListItemIcon>
-        <StorageIcon />
+        <AdjustIcon />
       </ListItemIcon>
       <ListItemText primary="Recent Open" />
     </ListItem>
     <ListItem button component={Link} to="/close">
       <ListItemIcon>
-        <FeaturedPlayListIcon />
+        <CheckCircleOutlineIcon />
       </ListItemIcon>
       <ListItemText primary="Recent Close" />
+    </ListItem>
+    <ListItem button component={Link} to="/assignments">
+      <ListItemIcon>
+        <AssignmentIcon />
+      </ListItemIcon>
+      <ListItemText primary="Assignments" />
     </ListItem>
   </div>
 );
@@ -31,12 +38,7 @@ export const mainListItems = (
 export const secondaryListItems = (
   <div>
     <ListSubheader inset>Engineering</ListSubheader>
-    <ListItem button component={Link} to="/home/triage">
-      <ListItemIcon>
-        <AccountTreeIcon />
-      </ListItemIcon>
-      <ListItemText primary="Projects" />
-    </ListItem>
+
     <ListItem button component={Link} to="/release">
       <ListItemIcon>
         <LowPriorityIcon />

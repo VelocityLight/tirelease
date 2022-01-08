@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"tirelease/internal/entity"
@@ -46,11 +47,13 @@ func IssueAffectOperate(updateOption *entity.IssueAffectUpdateOption) error {
 	}
 	patchVersion := ""
 	for _, version := range *versions {
-		patchVersion = version.Name
+		if version.FatherReleaseVersionName == option.AffectVersion {
+			patchVersion = version.Name
+		}
 	}
 
 	// Insert version_triage
-	if (*issueAffects)[0].AffectResult == entity.AffectResultResultYes {
+	if string((*issueAffects)[0].AffectResult) == strings.ToLower(string(entity.AffectResultResultYes)) {
 		versionTriage := &entity.VersionTriage{
 			VersionName:  patchVersion,
 			IssueID:      (*issueAffects)[0].IssueID,

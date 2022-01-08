@@ -56,9 +56,9 @@ func ListIssueInfo() ([]*IssueInfo, error) {
 			Url:       issue.HTMLURL,
 			CreatedAt: issue.CreatedAt,
 			ClosedAt:  *issue.ClosedAt,
-			Severity:  getIssueType(*issue.Labels),
+			Severity:  getIssueSeverity(*issue.Labels),
 			State:     issue.State,
-			Type:      getIssueSeverity(*issue.Labels),
+			Type:      getIssueType(*issue.Labels),
 			Assignee:  getAssignee(*issue.Assignees),
 			Labels:    []string{},
 			Affects:   affects,
@@ -94,10 +94,16 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 				break
 			}
 		}
+		patch := ""
+		versionsNums := strings.Split(minorPatchVersionMap[issueAffect.AffectVersion], ".")
+		if len(versionsNums) == 3 {
+			patch = versionsNums[2]
+		}
+
 		release := Release{
 			BaseVersion:  issueAffect.AffectVersion,
 			TriageStatus: triagestatus,
-			Patch:        minorPatchVersionMap[issueAffect.AffectVersion],
+			Patch:        patch,
 		}
 		pr := Pr{}
 		for _, cpr := range cherryPickToPrs {
@@ -120,9 +126,9 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 
 		affect := &Affect{
 			Version: issueAffect.AffectVersion,
-			Affect:  string(issueAffect.AffectResult),
+			Affect:  strings.ToLower(string((issueAffect.AffectResult))),
 			Release: &release,
-			Pr:      &pr,
+			PR:      &pr,
 		}
 		resp = append(resp, affect)
 	}
@@ -177,7 +183,7 @@ type IssueInfo struct {
 type Affect struct {
 	Version string
 	Affect  string
-	Pr      *Pr
+	PR      *Pr
 	Release *Release
 }
 

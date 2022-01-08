@@ -8,10 +8,10 @@ type ReleaseVersion struct {
 	// Columns
 	ID int64 `json:"id,omitempty"`
 
-	CreateTime        time.Time `json:"create_time,omitempty"`
-	UpdateTime        time.Time `json:"update_time,omitempty"`
-	PlanReleaseTime   time.Time `json:"plan_release_time,omitempty"`
-	ActualReleaseTime time.Time `json:"actual_release_time,omitempty"`
+	CreateTime        time.Time  `json:"create_time,omitempty"`
+	UpdateTime        time.Time  `json:"update_time,omitempty"`
+	PlanReleaseTime   *time.Time `json:"plan_release_time,omitempty"`
+	ActualReleaseTime *time.Time `json:"actual_release_time,omitempty"`
 
 	Name        string               `json:"name,omitempty"`
 	Description string               `json:"description,omitempty"`
@@ -62,8 +62,7 @@ func (ReleaseVersion) TableName() string {
 /**
 
 CREATE TABLE IF NOT EXISTS release_version (
-	id INT(11) NOT NULL COMMENT '全局ID',
-
+	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	create_time TIMESTAMP COMMENT '创建时间',
 	update_time TIMESTAMP COMMENT '更新时间',
 	plan_release_time TIMESTAMP COMMENT '计划发布时间',

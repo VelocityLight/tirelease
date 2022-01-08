@@ -87,7 +87,7 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 		cherryPickToPrs = *results
 	}
 	for _, issueAffect := range *issueAffects {
-		triagestatus := ""
+		triagestatus := "unknown"
 		for _, versionTraige := range *versionTraiges {
 			if versionTraige.VersionName == minorPatchVersionMap[issueAffect.AffectVersion] {
 				triagestatus = string(versionTraige.TriageResult)

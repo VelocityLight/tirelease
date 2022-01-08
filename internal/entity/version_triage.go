@@ -10,10 +10,10 @@ type VersionTriage struct {
 	IssueID      string              `json:"issue_id,omitempty"`
 	TriageResult VersionTriageResult `json:"triage_result,omitempty"`
 
-	CreateTime time.Time `json:"create_time"`
-	UpdateTime time.Time `json:"update_time"`
-	DueTime    time.Time `json:"due_time,omitempty"`
-	Comment    string    `json:"comment,omitempty"`
+	CreateTime time.Time  `json:"create_time"`
+	UpdateTime time.Time  `json:"update_time"`
+	DueTime    *time.Time `json:"due_time,omitempty"`
+	Comment    string     `json:"comment,omitempty"`
 }
 
 // Enum type

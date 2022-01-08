@@ -17,3 +17,14 @@ func ListIssueInfo(c *gin.Context) {
 	}
 	c.JSON(200, issueInfos)
 }
+
+func FilterIssueInfo(c *gin.Context) {
+	version := c.DefaultQuery("version", "5.4")
+	issueInfos, err := service.FilterIssueInfo(version)
+	if err != nil {
+		log.Fatal(err)
+		c.JSON(500, err.Error())
+		return
+	}
+	c.JSON(200, issueInfos)
+}

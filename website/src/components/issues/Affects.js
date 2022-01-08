@@ -47,7 +47,7 @@ function ToggleButtons({ onExpand, onShow }) {
 }
 
 export default function Affects(
-  { affectsProp, expandProp, showProp, onlyVersion } = {
+  { affectsProp, expandProp, showProp, onlyVersion, columns } = {
     expandProp: false,
     showProp: false,
   }
@@ -61,14 +61,14 @@ export default function Affects(
   );
 
   const unknown = affects
-    .filter(({ affect }) => affect === "unknown")
-    .map(({ version }) => version);
+    .filter(({ Affect }) => Affect.toLowerCase() === "unknown")
+    .map(({ Version }) => Version);
   const affected = affects
-    .filter(({ affect }) => affect === "yes")
-    .map(({ version }) => version);
+    .filter(({ Affect }) => Affect.toLowerCase() === "yes")
+    .map(({ Version }) => Version);
   const notAffected = affects
-    .filter(({ affect }) => affect === "no")
-    .map(({ version }) => version);
+    .filter(({ Affect }) => Affect.toLowerCase() === "no")
+    .map(({ Version }) => Version);
   return (
     <>
       <Stack direction={"row"} spacing={1} alignItems={"center"}>
@@ -112,20 +112,23 @@ export default function Affects(
       {expand && (
         <Stack alignItems={"flex-start"} spacing={1}>
           {/* <TableContainer component={Paper}> */}
-          <Table sx={{ minWidth: 950 }} size="small">
+          <Table sx={{ minWidth: 150 * columns.length }} size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Version</TableCell>
-                <TableCell>Affects</TableCell>
-                <TableCell>PR</TableCell>
-                <TableCell>State</TableCell>
-                <TableCell>Release</TableCell>
+                {columns.map((column) => {
+                  if (column.display) {
+                    return (
+                      <TableCell key={column.title}>{column.title}</TableCell>
+                    );
+                  }
+                  return <></>;
+                })}
               </TableRow>
             </TableHead>
             <TableBody>
               {affects
                 .filter((item) => {
-                  if (showNotAffect && item.affect === "no") {
+                  if (showNotAffect && item.Affect.toLowerCase() === "no") {
                     return false;
                   }
                   return true;
@@ -133,74 +136,114 @@ export default function Affects(
                 .map((item) => {
                   return (
                     <TableRow
-                      key={item.version}
+                      key={item.Version}
                       sx={{
                         "&:last-child td, &:last-child th": {
                           border: 0,
                         },
                       }}
                     >
-                      <TableCell>
-                        <Chip
-                          label={item.version}
-                          color={item.affect !== "no" ? "error" : "success"}
-                          variant={
-                            item.affect !== "yes" ? "outlined" : "filled"
-                          }
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <AffectsSelector
-                          version={item.version}
-                          affectsProp={item.affect}
-                          onChange={(targetValue) => {
-                            setAffects([
-                              ...affects.map(({ version, affect, ...rest }) => {
-                                if (version === item.version) {
-                                  return {
-                                    version,
-                                    affect: targetValue,
-                                    ...rest,
-                                  };
-                                }
-                                return { version, affect, ...rest };
-                              }),
-                            ]);
-                          }}
-                        ></AffectsSelector>
-                      </TableCell>
-                      <TableCell>
-                        {item.pr && (
-                          <Link href={item.pr.Url}>{item.pr.Number}</Link>
-                        )}
-                      </TableCell>
-                      <TableCell>{item.pr && item.pr.State}</TableCell>
-                      <TableCell>
-                        {item.Release && (
-                          <ReleaseSelector
-                            releaseProp={item.Release}
-                            onChange={(triageStatus) => {
-                              setAffects([
-                                ...affects.map(
-                                  ({ version, Release, ...rest }) => {
-                                    if (version === item.version) {
-                                      return {
-                                        version,
-                                        Release: {
-                                          ...Release,
-                                          TriageStatus: triageStatus,
-                                        },
-                                        ...rest,
-                                      };
+                      {columns.map((column) => {
+                        if (column.display) {
+                          switch (column.title) {
+                            case "Version":
+                              return (
+                                <TableCell>
+                                  <Chip
+                                    label={item.Version}
+                                    color={
+                                      item.Affect.toLowerCase() !== "no"
+                                        ? "error"
+                                        : "success"
                                     }
-                                    return { version, Release, ...rest };
-                                  }
-                                ),
-                              ]);
-                            }}
-                          />
-                        )}
-                      </TableCell>
+                                    variant={
+                                      item.Affect.toLowerCase() !== "yes"
+                                        ? "outlined"
+                                        : "filled"
+                                    }
+                                  />
+                                </TableCell>
+                              );
+                            case "Affects":
+                              return (
+                                <TableCell>
+                                  <AffectsSelector
+                                    version={item.Version}
+                                    affectsProp={item.Affect.toLowerCase()}
+                                    onChange={(targetValue) => {
+                                      setAffects([
+                                        ...affects.map(
+                                          ({ Version, Affect, ...rest }) => {
+                                            if (Version === item.Version) {
+                                              return {
+                                                Version,
+                                                Affect: targetValue,
+                                                ...rest,
+                                              };
+                                            }
+                                            return { Version, Affect, ...rest };
+                                          }
+                                        ),
+                                      ]);
+                                    }}
+                                  ></AffectsSelector>
+                                </TableCell>
+                              );
+                            case "PR":
+                              return (
+                                <TableCell>
+                                  {item.PR && (
+                                    <Link href={item.PR.Url}>
+                                      {item.PR.Number}
+                                    </Link>
+                                  )}
+                                </TableCell>
+                              );
+                            case "State":
+                              return (
+                                <TableCell>
+                                  {item.pr && item.pr.State}
+                                </TableCell>
+                              );
+                            case "Release":
+                              return (
+                                <TableCell>
+                                  {item.Release && (
+                                    <ReleaseSelector
+                                      releaseProp={item.Release}
+                                      onChange={(triageStatus) => {
+                                        setAffects([
+                                          ...affects.map(
+                                            ({ version, Release, ...rest }) => {
+                                              if (version === item.version) {
+                                                return {
+                                                  version,
+                                                  Release: {
+                                                    ...Release,
+                                                    TriageStatus: triageStatus,
+                                                  },
+                                                  ...rest,
+                                                };
+                                              }
+                                              return {
+                                                version,
+                                                Release,
+                                                ...rest,
+                                              };
+                                            }
+                                          ),
+                                        ]);
+                                      }}
+                                    />
+                                  )}
+                                </TableCell>
+                              );
+                            default:
+                              return <></>;
+                          }
+                        }
+                        return <></>;
+                      })}
                     </TableRow>
                   );
                 })}

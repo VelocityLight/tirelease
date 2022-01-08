@@ -102,7 +102,7 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 
 		release := Release{
 			BaseVersion:  issueAffect.AffectVersion,
-			TriageStatus: triagestatus,
+			TriageStatus: strings.ToLower(triagestatus),
 			Patch:        patch,
 		}
 		pr := Pr{}

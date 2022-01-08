@@ -22,7 +22,7 @@ func CreateVersionTriage(versionTriage *entity.VersionTriage) error {
 func SelectVersionTriage(option *entity.VersionTriageOption) (*[]entity.VersionTriage, error) {
 	// 查询
 	var versionTriages []entity.VersionTriage
-	if err := database.DBConn.DB.Find(&versionTriages).Where(option).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Find(&versionTriages).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find version triage: %+v failed", option))
 	}
 	return &versionTriages, nil

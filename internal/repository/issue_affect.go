@@ -22,7 +22,7 @@ func CreateIssueAffect(issueAffect *entity.IssueAffect) error {
 func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect, error) {
 	// 查询
 	var issueAffects []entity.IssueAffect
-	if err := database.DBConn.DB.Find(&issueAffects).Where(option).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Find(&issueAffects).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find issue affect: %+v failed", option))
 	}
 	return &issueAffects, nil

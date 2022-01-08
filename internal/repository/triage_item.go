@@ -24,7 +24,7 @@ func TriageItemInsert(triageItem *entity.TriageItem) error {
 func TriageItemSelect(option *entity.TriageItemOption) (*[]entity.TriageItem, error) {
 	var triageItems []entity.TriageItem
 
-	if err := database.DBConn.DB.Find(&triageItems).Where(option).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Find(&triageItems).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find triage item: %+v failed", option))
 	}
 	return &triageItems, nil

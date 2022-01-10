@@ -55,7 +55,7 @@ function a11yProps(index) {
 
 function OpenedToday() {
   const { isLoading, error, data } = useQuery("openedToday", () => {
-    return fetch("http://172.16.5.65:30750/issue")
+    return fetch("http://172.16.5.65:30750/issue?state=OPEN")
       .then((res) => {
         const data = res.json();
         console.log(data);

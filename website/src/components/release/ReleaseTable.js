@@ -13,7 +13,7 @@ import { useQuery } from "react-query";
 
 function ReleaseCandidates({ version }) {
   const { isLoading, error, data } = useQuery("releaseCandidates", () => {
-    return fetch("http://172.16.5.65:30750/issue")
+    return fetch("http://172.16.5.65:30750/issue/filter?version=" + version)
       .then((res) => {
         const data = res.json();
         console.log(data);

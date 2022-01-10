@@ -86,7 +86,6 @@ const RecentOpen = () => {
   return (
     <Layout>
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
-        <p>Welcome to Tissue!</p>
         <Accordion defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             Recent Open

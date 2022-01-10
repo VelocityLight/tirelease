@@ -23,46 +23,46 @@ const CIColumns = {
         filter: null,
         selection: null,
     },
-    // recent_runs: {
-    //     title: "recent_runs",
-    //     display: true,
-    //     filter: null,
-    //     selection: null,
-    //     columns: [
-    //         {
-    //             title: "start_time",
-    //             display: true,
-    //         },
-    //         {
-    //             title: "commit_id",
-    //             display: true,
-    //         },
-    //         {
-    //             title: "branch",
-    //             display: true,
-    //         },
-    //         {
-    //             title: "excution_time",
-    //             display: true,
-    //         },
-    //         {
-    //             title: "pull_request",
-    //             display: true,
-    //         },
-    //         {
-    //             title: "error_message",
-    //             display: true,
-    //         },
-    //         {
-    //             title: "job_url",
-    //             display: true,
-    //         },
-    //         {
-    //             title: "stack_trace",
-    //             display: true,
-    //         },
-    //     ],
-    // },
+    recent_runs: {
+        title: "recent_runs",
+        display: true,
+        filter: null,
+        selection: null,
+        columns: {
+            start_time: {
+                title: "start_time",
+                display: true,
+            },
+            commit_id: {
+                title: "commit_id",
+                display: true,
+            },
+            branch: {
+                title: "branch",
+                display: true,
+            },
+            excution_time: {
+                title: "excution_time",
+                display: true,
+            },
+            pull_request: {
+                title: "pull_request",
+                display: true,
+            },
+            error_message: {
+                title: "error_message",
+                display: true,
+            },
+            job_url: {
+                title: "job_url",
+                display: true,
+            },
+            stack_trace: {
+                title: "stack_trace",
+                display: true,
+            },
+        },
+    },
 };
 
 export default CIColumns;

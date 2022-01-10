@@ -7,9 +7,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import CIColumns from "./CIColumns";
-import { CIErrorTable } from "./CIErrorTable";
 
-const CIRow = ({ row, columns }) => {
+const CIErrorRow = ({ row, columns }) => {
     return (
         <TableRow
             sx={{
@@ -19,16 +18,22 @@ const CIRow = ({ row, columns }) => {
         {columns.map((column) => {
             if (column.display) {
             switch (column.title) {
-                case "test_suite_name":
-                    return <TableCell>{row.test_suite_name}</TableCell>;
-                case "test_case_name":
-                    return <TableCell>{row.test_case_name}</TableCell>;
-                case "test_class_name":
-                    return <TableCell>{row.test_class_name}</TableCell>;
-                case "failed_count":
-                    return <TableCell>{row.failed_count}</TableCell>;
-                case "recent_runs":
-                    return <TableCell> <CIErrorTable data={row.recent_runs} /> </TableCell>;   
+                case "start_time":
+                    return <TableCell>{row.start_time}</TableCell>;
+                case "commit_id":
+                    return <TableCell>{row.commit_id}</TableCell>;
+                case "branch":
+                    return <TableCell>{row.branch}</TableCell>;
+                case "excution_time":
+                    return <TableCell>{row.excution_time}</TableCell>;
+                case "pull_request":
+                    return <TableCell>{row.pull_request}</TableCell>;
+                case "job_url":
+                    return <TableCell>{row.job_url}</TableCell>;
+                case "error_message":
+                    return <TableCell>{row.error_message}</TableCell>;
+                case "stack_trace":
+                    return <TableCell>{row.stack_trace}</TableCell>;
                 default:
                     return <></>;
             }
@@ -40,14 +45,17 @@ const CIRow = ({ row, columns }) => {
 };
 
   
-export const CITable = ({
+export const CIErrorTable = ({
     data,
     columns = [
-        CIColumns.test_suite_name,
-        CIColumns.test_case_name,
-        CIColumns.test_class_name,
-        CIColumns.failed_count,
-        CIColumns.recent_runs,
+        CIColumns.recent_runs.columns.start_time,
+        CIColumns.recent_runs.columns.commit_id,
+        CIColumns.recent_runs.columns.branch,
+        CIColumns.recent_runs.columns.excution_time,
+        CIColumns.recent_runs.columns.pull_request,
+        CIColumns.recent_runs.columns.job_url,
+        CIColumns.recent_runs.columns.error_message,
+        CIColumns.recent_runs.columns.stack_trace,
     ],
   }) => 
 {
@@ -68,7 +76,7 @@ export const CITable = ({
             </TableHead>
             <TableBody>
                 {data.map((row) => (
-                <CIRow
+                <CIErrorRow
                     row={row}
                     columns={columns}
                 />

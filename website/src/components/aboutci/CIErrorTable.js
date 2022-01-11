@@ -40,6 +40,7 @@ function ToggleButtons({ onShow }) {
 
 const CIErrorRow = ({ row, columns }) => {
     return (
+        <>
         <TableRow
             sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
@@ -71,6 +72,7 @@ const CIErrorRow = ({ row, columns }) => {
         return <></>;
         })}
         </TableRow>
+        </>
     );
 };
 

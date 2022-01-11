@@ -1,3 +1,6 @@
+import * as React from "react";
+import { useState } from "react";
+
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
@@ -6,7 +9,34 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+
 import CIColumns from "./CIColumns";
+
+function ToggleButtons({ onShow }) {
+    const [buttonState, setButtonState] = React.useState([]);
+
+    const handleChange = (event, change) => {
+        setButtonState(change);
+        console.log(event, change);
+        onShow(change.includes("show"));
+    };
+
+    return (
+        <ToggleButtonGroup
+        size="small"
+        value={buttonState}
+        onChange={handleChange}
+        aria-label="list state"
+        >
+        <ToggleButton value="show" aria-label="show">
+            <VisibilityIcon />
+        </ToggleButton>
+        </ToggleButtonGroup>
+    );
+}
 
 const CIErrorRow = ({ row, columns }) => {
     return (
@@ -60,29 +90,42 @@ export const CIErrorTable = ({
   }) => 
 {
     console.log(data, columns);
+
+    const [show, setShow] = useState(false);
+
     return (
         <>
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 950 }} size="small">
-            <TableHead>
-                <TableRow>
-                {columns.map((column) => {
-                    if (column.display) {
-                        return <TableCell>{column.title}</TableCell>;
-                    }
-                    return <></>;
-                })}
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {data.map((row) => (
-                <CIErrorRow
-                    row={row}
-                    columns={columns}
-                />
-                ))}
-            </TableBody>
-            </Table>
+            <ToggleButtons
+                onShow={(show) => {
+                    setShow(show);
+                }}
+            ></ToggleButtons>
+            {show && (
+                <Table sx={{ minWidth: 950 }} size="small">
+                <TableHead>
+                    <TableRow>
+                    {columns.map((column) => {
+                        if (column.display) {
+                            return <TableCell>{column.title}</TableCell>;
+                        }
+                        return <></>;
+                    })}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.map((row) => (
+                    <CIErrorRow
+                        row={row}
+                        columns={columns}
+                    />
+                    ))}
+                </TableBody>
+                </Table>
+            )}
+            {!show && (
+                <></>
+            )}
         </TableContainer>
         </>
     );

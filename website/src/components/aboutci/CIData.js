@@ -22,8 +22,10 @@ export default function CIData() {
             <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
                 <CIJobNameSelector jobName={jobName} setJobName={setJobName}/>
                 <CIDatePicker timestamp={timestamp} setTimestamp={setTimestamp}/>
-                <Button variant="contained">Query</Button>
+                {/* <Button variant="contained" onClick={handleClick}>Query</Button> */}
             </Stack>
+
+
             {jobName != null && timestamp != null && (
                 <CITable jobName={jobName} timestamp={Math.round(timestamp.getTime()/1000)} />
             )}

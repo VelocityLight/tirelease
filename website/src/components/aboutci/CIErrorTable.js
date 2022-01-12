@@ -20,7 +20,7 @@ function ToggleButtons({ onShow }) {
 
     const handleChange = (event, change) => {
         setButtonState(change);
-        console.log(event, change);
+        // console.log(event, change);
         onShow(change.includes("show"));
     };
 
@@ -91,7 +91,7 @@ export const CIErrorTable = ({
     ],
   }) => 
 {
-    console.log(data, columns);
+    // console.log(data, columns);
 
     const [show, setShow] = useState(false);
 

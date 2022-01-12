@@ -1,3 +1,5 @@
+import { useQuery } from "react-query";
+
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
@@ -9,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import CIColumns from "./CIColumns";
 import { CIErrorTable } from "./CIErrorTable";
 
-const CIRow = ({ row, columns }) => {
+const RenderCIRow = ({ row, columns }) => {
     return (
         <TableRow
             sx={{
@@ -40,7 +42,7 @@ const CIRow = ({ row, columns }) => {
 };
 
   
-export const CITable = ({
+const RenderCITable = ({
     data,
     columns = [
         CIColumns.test_suite_name,
@@ -51,7 +53,7 @@ export const CITable = ({
     ],
   }) => 
 {
-    console.log(data, columns);
+    // console.log(data, columns);
     return (
         <>
         <TableContainer component={Paper}>
@@ -68,7 +70,7 @@ export const CITable = ({
             </TableHead>
             <TableBody>
                 {data.map((row) => (
-                <CIRow
+                <RenderCIRow
                     row={row}
                     columns={columns}
                 />
@@ -79,3 +81,28 @@ export const CITable = ({
         </>
     );
 };
+
+export const CITable = ({ jobName, timestamp }) => {
+    const { isLoading, error, data } = useQuery("CITable", () => {
+        return fetch("http://172.16.5.2:30792/report/?job_name=" + jobName + "&timestamp=" + timestamp)
+        .then((res) => {
+            const data = res.json();
+            // console.log(data);
+            return data;
+        })
+        .catch((e) => {
+            console.log(e);
+        });
+    });
+    // console.log(isLoading, error, data);
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+    if (error) {
+        return <p>Error: {error.message}</p>;
+    }
+    // console.log(data);
+    return (
+        <RenderCITable data={data} />
+    );
+}

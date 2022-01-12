@@ -50,18 +50,18 @@ export const secondaryListItems = (
 
 export const thirdListItems = (
   <div>
-    <ListSubheader inset>Visual Reports</ListSubheader>
+    <ListSubheader inset>Tools</ListSubheader>
     <ListItem button component={Link} to="/home/aboutci">
       <ListItemIcon>
         <BugReportIcon />
       </ListItemIcon>
-      <ListItemText primary="About CI" />
+      <ListItemText primary="TiFailureChaser" />
     </ListItem>
     <ListItem button component={Link} to="/home/databoard">
       <ListItemIcon>
         <AccountTreeIcon />
       </ListItemIcon>
-      <ListItemText primary="About Project" />
+      <ListItemText primary="Version Reports" />
     </ListItem>
   </div>
 );

@@ -1,12 +1,9 @@
 import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
 
 import { CIJobNameSelector} from "./CIJobNameSelector";
+import { CIDatePicker} from "./CIDatePicker";
 import { CITable} from "./CITable";
 
 function addDays(date, days) {
@@ -24,16 +21,7 @@ export default function CIData() {
         <Stack spacing={1}>
             <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
                 <CIJobNameSelector jobName={jobName} setJobName={setJobName}/>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DatePicker
-                        label="timestamp"
-                        value={timestamp}
-                        onChange={(newTime) => {
-                            setTimestamp(newTime);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                    />
-                </LocalizationProvider>
+                <CIDatePicker timestamp={timestamp} setTimestamp={setTimestamp}/>
                 <Button variant="contained">Query</Button>
             </Stack>
             {jobName != null && timestamp != null && (

@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 
 import { CIJobNameSelector} from "./CIJobNameSelector";
 import { CIDatePicker} from "./CIDatePicker";
-import { CITable} from "./CITable";
+import { CITable } from "./CITable";
 
 function addDays(date, days) {
     var result = new Date(date);
@@ -15,6 +15,12 @@ function addDays(date, days) {
 export default function CIData() {
     const [jobName, setJobName] = useState("tidb-unit-test-hourly");
     const [timestamp, setTimestamp] = useState(addDays(new Date(), -3));
+    const [table, setTable] = useState(null);
+
+    const refreshTable = (jobName, timestamp) => {
+        const tb = <CITable jobName={jobName} timestamp={Math.round(timestamp.getTime()/1000)} />;
+        setTable(tb)
+    }
 
     return (
         <>
@@ -22,13 +28,11 @@ export default function CIData() {
             <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
                 <CIJobNameSelector jobName={jobName} setJobName={setJobName}/>
                 <CIDatePicker timestamp={timestamp} setTimestamp={setTimestamp}/>
-                {/* <Button variant="contained" onClick={handleClick}>Query</Button> */}
+                <Button variant="contained" onClick={() => refreshTable(jobName, timestamp)}>Query</Button>
             </Stack>
-
-
-            {jobName != null && timestamp != null && (
-                <CITable jobName={jobName} timestamp={Math.round(timestamp.getTime()/1000)} />
-            )}
+            <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
+                {table}
+            </Stack>
         </Stack>
         </>
     );

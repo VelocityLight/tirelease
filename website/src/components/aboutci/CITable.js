@@ -41,7 +41,6 @@ const RenderCIRow = ({ row, columns }) => {
     );
 };
 
-  
 const RenderCITable = ({
     data,
     columns = [

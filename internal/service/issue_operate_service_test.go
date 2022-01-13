@@ -39,6 +39,21 @@ func TestIssueAffectOperate(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 }
 
+func TestIssueAffectOperateWeb(t *testing.T) {
+	// Init
+	var config = generateConfig()
+	database.Connect(config)
+
+	// Update
+	var updateOption = &entity.IssueAffectUpdateOption{
+		IssueID:       "I_kwDOAoCpQc5BYBWZ",
+		AffectVersion: "5.3",
+		AffectResult:  entity.AffectResultResultYes,
+	}
+	err := IssueAffectOperate(updateOption)
+	assert.Equal(t, true, err == nil)
+}
+
 func generateConfig() *configs.ConfigYaml {
 	var config = &configs.ConfigYaml{}
 

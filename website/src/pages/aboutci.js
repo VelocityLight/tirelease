@@ -8,7 +8,7 @@ import CIData from '../components/aboutci/CIData';
 const AboutCI = () => {
     return (
         <Layout>
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                     <CIData />
                 </Paper>

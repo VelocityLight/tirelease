@@ -13,7 +13,7 @@ export default function AffectsSelector({
   onChange = () => {},
 }) {
   const mutation = useMutation((newAffect) => {
-    return axios.post("http://172.16.5.65:30750/issue/affect", newAffect);
+    return axios.post("/issue/affect", newAffect);
   });
   const [affects, setAffects] = React.useState(affectsProp || "unknown");
 

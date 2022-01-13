@@ -14,14 +14,14 @@ const MyRoutes = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RecentOpen />} />
-        <Route path="/open" element={<RecentOpen />} />
-        <Route path="/close" element={<RecentClose />} />
-        <Route path="/home" element={<Example />} />
-        <Route path="/example" element={<Example />} />
-        <Route path="/release" element={<Release />} />
+        <Route path="/home" element={<RecentOpen />} />
+        <Route path="/home/example" element={<Example />} />
+        <Route path="/home/open" element={<RecentOpen />} />
+        <Route path="/home/close" element={<RecentClose />} />
+        <Route path="/home/release" element={<Release />} />
         <Route path="/home/databoard" element={<DataBoard />} />
         <Route path="/home/triage" element={<Triage />} />
-        <Route path="/assignments" element={<Assignments />} />
+        <Route path="/home/assignments" element={<Assignments />} />
         <Route path="/home/aboutci" element={<AboutCI />} />
       </Routes>
     </BrowserRouter>

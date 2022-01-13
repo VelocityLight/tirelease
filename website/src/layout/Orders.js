@@ -14,19 +14,19 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 export const mainListItems = (
   <div>
     <ListSubheader inset>Data Center</ListSubheader>
-    <ListItem button component={Link} to="/open">
+    <ListItem button component={Link} to="/home/open">
       <ListItemIcon>
         <AdjustIcon />
       </ListItemIcon>
-      <ListItemText primary="Recent Open" />
+      <ListItemText primary="Issues" />
     </ListItem>
-    {/* <ListItem button component={Link} to="/close">
+    {/* <ListItem button component={Link} to="/home/close">
       <ListItemIcon>
         <CheckCircleOutlineIcon />
       </ListItemIcon>
       <ListItemText primary="Recent Close" />
     </ListItem> */}
-    <ListItem button component={Link} to="/assignments">
+    <ListItem button component={Link} to="/home/assignments">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
@@ -39,7 +39,7 @@ export const secondaryListItems = (
   <div>
     <ListSubheader inset>Version Management</ListSubheader>
 
-    <ListItem button component={Link} to="/release">
+    <ListItem button component={Link} to="/home/release">
       <ListItemIcon>
         <LowPriorityIcon />
       </ListItemIcon>
@@ -50,7 +50,7 @@ export const secondaryListItems = (
 
 export const thirdListItems = (
   <div>
-    <ListSubheader inset>Other Tools</ListSubheader>
+    <ListSubheader inset>CI/CD Tools</ListSubheader>
     <ListItem button component={Link} to="/home/aboutci">
       <ListItemIcon>
         <BugReportIcon />

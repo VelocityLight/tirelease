@@ -88,7 +88,7 @@ const RecentOpen = () => {
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
         <Accordion defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Recent Open
+            Recent Open (55)
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{ width: "100%" }}>
@@ -108,13 +108,13 @@ const RecentOpen = () => {
                 <OpenedToday />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <OpenedToday />
+                Item Two
               </TabPanel>
               <TabPanel value={value} index={2}>
-                <OpenedToday />
+                Item Three
               </TabPanel>
               <TabPanel value={value} index={3}>
-                <OpenedToday />
+                Item Four
               </TabPanel>
             </Box>
           </AccordionDetails>

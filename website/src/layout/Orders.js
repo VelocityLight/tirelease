@@ -13,19 +13,19 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 
 export const mainListItems = (
   <div>
-    <ListSubheader inset>Routinely</ListSubheader>
+    <ListSubheader inset>Data Center</ListSubheader>
     <ListItem button component={Link} to="/open">
       <ListItemIcon>
         <AdjustIcon />
       </ListItemIcon>
       <ListItemText primary="Recent Open" />
     </ListItem>
-    <ListItem button component={Link} to="/close">
+    {/* <ListItem button component={Link} to="/close">
       <ListItemIcon>
         <CheckCircleOutlineIcon />
       </ListItemIcon>
       <ListItemText primary="Recent Close" />
-    </ListItem>
+    </ListItem> */}
     <ListItem button component={Link} to="/assignments">
       <ListItemIcon>
         <AssignmentIcon />
@@ -37,7 +37,7 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Engineering</ListSubheader>
+    <ListSubheader inset>Version Management</ListSubheader>
 
     <ListItem button component={Link} to="/release">
       <ListItemIcon>
@@ -50,19 +50,19 @@ export const secondaryListItems = (
 
 export const thirdListItems = (
   <div>
-    <ListSubheader inset>Tools</ListSubheader>
+    <ListSubheader inset>Other Tools</ListSubheader>
     <ListItem button component={Link} to="/home/aboutci">
       <ListItemIcon>
         <BugReportIcon />
       </ListItemIcon>
       <ListItemText primary="TiFailureChaser" />
     </ListItem>
-    <ListItem button component={Link} to="/home/databoard">
+    {/* <ListItem button component={Link} to="/home/databoard">
       <ListItemIcon>
         <AccountTreeIcon />
       </ListItemIcon>
       <ListItemText primary="Version Reports" />
-    </ListItem>
+    </ListItem> */}
   </div>
 );
 

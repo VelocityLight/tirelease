@@ -1,12 +1,12 @@
-# Depracated & Useless Temporarily
-# --------------------------------
+# ingress -> service -> label selector -> pods
+# Doc: https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: tirelease
   namespace: tirelease
-  # annotations: # configure some options depending on the Ingress controller
+  # annotations: # 设置 Ingress 对象向 Nginx 实例中添加规则, 比如: Rewrite URL重写
   #   nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:

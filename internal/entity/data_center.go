@@ -1,12 +1,12 @@
 package entity
 
-// Data-Centric return struct
-type IssueCentric struct {
+// Data-Center return struct
+type IssueDataCenter struct {
 	Issue        *Issue
 	PullRequests []*PullRequest
 }
 
-type PullRequestCentric struct {
+type PullRequestDataCenter struct {
 	PullRequests *PullRequest
 	Issue        []*Issue
 }

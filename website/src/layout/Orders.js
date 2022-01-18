@@ -26,12 +26,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Recent Close" />
     </ListItem> */}
-    <ListItem button component={Link} to="/home/assignments">
+    {/* <ListItem button component={Link} to="/home/assignments">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Assignments" />
-    </ListItem>
+    </ListItem> */}
   </div>
 );
 

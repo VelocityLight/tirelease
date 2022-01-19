@@ -21,7 +21,6 @@ func TestClient(t *testing.T) {
 	assert.Equal(t, true, len(repos) > 0)
 }
 
-
 func TestGetIssue(t *testing.T) {
 	// Connect
 	Connect("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")
@@ -69,4 +68,3 @@ func TestGetPullRequest(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, pullRequest != nil)
 }
-

@@ -8,6 +8,7 @@ require (
 	github.com/google/go-github/v41 v41.0.0
 	github.com/jinzhu/configor v1.2.1
 	github.com/pkg/errors v0.9.1
+	github.com/robfig/cron v1.2.0
 	github.com/shurcooL/githubv4 v0.0.0-20220106005112-0707a5a90543
 	github.com/stretchr/testify v1.4.0
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8

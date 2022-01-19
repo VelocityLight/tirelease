@@ -1,3 +1,6 @@
+// Tool Url: https://github.com/google/go-github
+// Tool Guide: https://docs.github.com/en/rest/reference/webhooks#repository-webhook-configuration
+
 package git
 
 import (

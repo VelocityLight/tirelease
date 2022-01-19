@@ -1,3 +1,6 @@
+// Tool Url: https://github.com/go-gorm/gorm
+// Tool Guide: https://gorm.io/docs/
+
 package database
 
 import (

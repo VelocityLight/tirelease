@@ -1,3 +1,6 @@
+// Tool Url: https://github.com/shurcooL/githubv4
+// Tool Guide: https://docs.github.com/en/graphql
+
 package git
 
 import (

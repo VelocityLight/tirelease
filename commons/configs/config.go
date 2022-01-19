@@ -1,3 +1,5 @@
+// Tool Url: https://github.com/jinzhu/configor
+
 package configs
 
 import (

@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS issue_pr_releation (
 	pull_request_id VARCHAR(255) NOT NULL COMMENT 'pr的全局ID',
 
 	PRIMARY KEY (id),
-	UNIQUE KEY uk_issueid_prid (issue_id, pull_request_id)
+	UNIQUE KEY uk_issueid_prid (issue_id, pull_request_id),
+	INDEX idx_prid (pull_request_id)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'issue与pull_request关联表';
 

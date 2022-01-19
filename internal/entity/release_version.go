@@ -34,6 +34,7 @@ type ReleaseVersionStatus string
 
 const (
 	ReleaseVersionStatusOpen     = ReleaseVersionStatus("Open")
+	ReleaseVersionStatusClosed   = ReleaseVersionStatus("Closed")
 	ReleaseVersionStatusReleased = ReleaseVersionStatus("Released")
 )
 
@@ -48,10 +49,11 @@ const (
 
 // List Option
 type ReleaseVersionOption struct {
-	ID     int64                 `json:"id"`
-	Name   string                `json:"name,omitempty"`
-	Type   *ReleaseVersionType   `json:"type,omitempty"`
-	Status *ReleaseVersionStatus `json:"status,omitempty"`
+	ID                       int64                `json:"id"`
+	Name                     string               `json:"name,omitempty"`
+	FatherReleaseVersionName string               `json:"father_release_version_name,omitempty"`
+	Type                     ReleaseVersionType   `json:"type,omitempty"`
+	Status                   ReleaseVersionStatus `json:"status,omitempty"`
 }
 
 // DB-Table
@@ -80,8 +82,8 @@ CREATE TABLE IF NOT EXISTS release_version (
 
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_name (name),
-	INDEX idx_type (type),
-	INDEX idx_status (status)
+	INDEX idx_createtime (create_time),
+	INDEX idx_fathername (father_release_version_name)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT '发布版本表';
 

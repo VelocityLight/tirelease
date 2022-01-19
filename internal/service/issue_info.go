@@ -16,8 +16,8 @@ func ListIssueInfo(state string) ([]*IssueInfo, error) {
 	status := entity.ReleaseVersionStatusOpen
 	typeV := entity.ReleaseVersionTypePatch
 	optionRV := entity.ReleaseVersionOption{
-		Status: &status,
-		Type:   &typeV,
+		Status: status,
+		Type:   typeV,
 	}
 	patchVersions, err := repository.SelectReleaseVersion(&optionRV)
 	if err != nil {

@@ -41,7 +41,7 @@ func IssueAffectOperate(updateOption *entity.IssueAffectUpdateOption) error {
 	}
 	releaseType := entity.ReleaseVersionTypePatch
 	status := entity.ReleaseVersionStatusOpen
-	versions, err := repository.SelectReleaseVersion(&entity.ReleaseVersionOption{Type: &releaseType, Status: &status})
+	versions, err := repository.SelectReleaseVersion(&entity.ReleaseVersionOption{Type: releaseType, Status: status})
 	if err != nil {
 		return err
 	}

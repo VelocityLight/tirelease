@@ -15,7 +15,7 @@ func main() {
 	// Connect database
 	database.Connect(configs.Config)
 
-	// Github Client
+	// Github Client (If Needed)
 	git.ConnectV4(configs.Config.Github.AccessToken)
 
 	// Start Cron (If Needed)

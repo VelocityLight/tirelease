@@ -31,7 +31,7 @@ export default function CIData() {
         <>
         <Stack spacing={1}>
             <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
-                <CIJobNameSelector jobName={jobName} setJobName={setJobName}/>
+                {/* <CIJobNameSelector jobName={jobName} setJobName={setJobName}/> */}
                 <CIDatePicker timestamp={timestamp} setTimestamp={setTimestamp}/>
                 <Button variant="contained" onClick={refreshTable}>Query</Button>
             </Stack>

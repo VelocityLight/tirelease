@@ -1,9 +1,10 @@
 import { useQuery } from "react-query";
+import { withStyles } from '@mui/styles'
 
 import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
@@ -11,9 +12,23 @@ import Paper from "@mui/material/Paper";
 import CIColumns from "./CIColumns";
 import { CIErrorTable } from "./CIErrorTable";
 
+const MyTableHead = withStyles(theme => ({
+    root: {
+        backgroundColor: 'black'
+    }
+}))(TableHead);
+
+const MyTableRow = withStyles(theme => ({
+    root: {
+        color: 'white'
+    }
+}))(TableRow);
+
+  
 const RenderCIRow = ({ row, columns }) => {
     return (
         <TableRow
+            key={row.id}
             sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
             }}
@@ -34,9 +49,19 @@ const RenderCIRow = ({ row, columns }) => {
                 case "case_status":
                     return <TableCell>{row.case_status}</TableCell>;
                 case "first_seen":
-                    return <TableCell>{row.first_seen.pull_request}/{row.first_seen.commit_id}/{row.first_seen.author}</TableCell>;
+                    return <TableCell>
+                        PrID:{row.first_seen.pull_request}<br/>
+                        CommitID:{row.first_seen.commit_id}<br/>
+                        Author:{row.first_seen.author}
+                    </TableCell>;
                 case "last_seen":
-                    return <TableCell>{row.last_seen.pull_request}/{row.last_seen.commit_id}/{row.last_seen.author}</TableCell>;
+                    return <TableCell>
+                        PrID:{row.last_seen.pull_request}<br/>
+                        CommitID:{row.last_seen.commit_id}<br/>
+                        Author:{row.last_seen.author}
+                    </TableCell>;
+                case "first_introducer":
+                    return <TableCell>{row.first_introducer}</TableCell>;
                 case "recent_runs":
                     return <TableCell> <CIErrorTable data={row.recent_runs} /> </TableCell>;   
                 default:
@@ -58,6 +83,7 @@ export const RenderCITable = ({
         CIColumns.test_case_name,
         CIColumns.test_class_name,
         CIColumns.failed_count,
+        CIColumns.first_introducer,
         CIColumns.first_seen,
         CIColumns.last_seen,
         CIColumns.recent_runs,

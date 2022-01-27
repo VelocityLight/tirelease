@@ -47,6 +47,12 @@ const CIColumns = {
         filter: null,
         selection: null,
     },
+    first_introducer: {
+        title: "first_introducer",
+        display: true,
+        filter: null,
+        selection: null,
+    },
     recent_runs: {
         title: "recent_runs",
         display: true,

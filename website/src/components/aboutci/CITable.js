@@ -33,6 +33,10 @@ const RenderCIRow = ({ row, columns }) => {
                     return <TableCell>{row.case_type}</TableCell>;
                 case "case_status":
                     return <TableCell>{row.case_status}</TableCell>;
+                case "first_seen":
+                    return <TableCell>{row.first_seen.pull_request}/{row.first_seen.commit_id}/{row.first_seen.author}</TableCell>;
+                case "last_seen":
+                    return <TableCell>{row.last_seen.pull_request}/{row.last_seen.commit_id}/{row.last_seen.author}</TableCell>;
                 case "recent_runs":
                     return <TableCell> <CIErrorTable data={row.recent_runs} /> </TableCell>;   
                 default:
@@ -48,12 +52,14 @@ const RenderCIRow = ({ row, columns }) => {
 export const RenderCITable = ({
     data,
     columns = [
+        CIColumns.case_type,
+        CIColumns.case_status,
         CIColumns.test_suite_name,
         CIColumns.test_case_name,
         CIColumns.test_class_name,
         CIColumns.failed_count,
-        CIColumns.case_type,
-        CIColumns.case_status,
+        CIColumns.first_seen,
+        CIColumns.last_seen,
         CIColumns.recent_runs,
     ],
   }) => 

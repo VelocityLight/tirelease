@@ -64,7 +64,7 @@ export const RenderCITable = ({
     ],
   }) => 
 {
-    console.log(data, columns);
+    // console.log(data, columns);
     return (
         <>
         <TableContainer component={Paper}>

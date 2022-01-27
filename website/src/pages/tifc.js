@@ -3,9 +3,9 @@ import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 
 import Layout from '../layout/Layout';
-import CIData from '../components/aboutci/CIData';
+import CIData from '../components/tifc/CIData';
 
-const AboutCI = () => {
+const TiFC = () => {
     return (
         <Layout>
             <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
@@ -17,4 +17,4 @@ const AboutCI = () => {
     )
 };
 
-export default AboutCI;
+export default TiFC;

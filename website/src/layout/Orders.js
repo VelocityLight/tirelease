@@ -51,7 +51,7 @@ export const secondaryListItems = (
 export const thirdListItems = (
   <div>
     <ListSubheader inset>CI/CD Tools</ListSubheader>
-    <ListItem button component={Link} to="/home/aboutci">
+    <ListItem button component={Link} to="/home/tifc">
       <ListItemIcon>
         <BugReportIcon />
       </ListItemIcon>

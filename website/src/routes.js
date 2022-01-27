@@ -4,7 +4,7 @@ import Example from "./pages/example";
 import DataBoard from "./pages/databoard";
 import Triage from "./pages/triage";
 import Assignments from "./pages/assignments";
-import AboutCI from "./pages/aboutci";
+import TiFC from "./pages/tifc";
 import Release from "./pages/release";
 import RecentOpen from "./pages/open";
 import RecentClose from "./pages/close";
@@ -22,7 +22,7 @@ const MyRoutes = () => {
         <Route path="/home/databoard" element={<DataBoard />} />
         <Route path="/home/triage" element={<Triage />} />
         <Route path="/home/assignments" element={<Assignments />} />
-        <Route path="/home/aboutci" element={<AboutCI />} />
+        <Route path="/home/tifc" element={<TiFC />} />
       </Routes>
     </BrowserRouter>
   );

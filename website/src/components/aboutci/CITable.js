@@ -29,6 +29,10 @@ const RenderCIRow = ({ row, columns }) => {
                     return <TableCell>{row.test_class_name}</TableCell>;
                 case "failed_count":
                     return <TableCell>{row.failed_count}</TableCell>;
+                case "case_type":
+                    return <TableCell>{row.case_type}</TableCell>;
+                case "case_status":
+                    return <TableCell>{row.case_status}</TableCell>;
                 case "recent_runs":
                     return <TableCell> <CIErrorTable data={row.recent_runs} /> </TableCell>;   
                 default:
@@ -41,18 +45,20 @@ const RenderCIRow = ({ row, columns }) => {
     );
 };
 
-const RenderCITable = ({
+export const RenderCITable = ({
     data,
     columns = [
         CIColumns.test_suite_name,
         CIColumns.test_case_name,
         CIColumns.test_class_name,
         CIColumns.failed_count,
+        CIColumns.case_type,
+        CIColumns.case_status,
         CIColumns.recent_runs,
     ],
   }) => 
 {
-    // console.log(data, columns);
+    console.log(data, columns);
     return (
         <>
         <TableContainer component={Paper}>
@@ -81,27 +87,27 @@ const RenderCITable = ({
     );
 };
 
-export const CITable = ({ jobName, timestamp }) => {
-    const { isLoading, error, data } = useQuery("CITable", () => {
-        return fetch("http://172.16.5.15:30792/report/?job_name=" + jobName + "&timestamp=" + timestamp)
-        .then((res) => {
-            const data = res.json();
-            // console.log(data);
-            return data;
-        })
-        .catch((e) => {
-            console.log(e);
-        });
-    });
-    // console.log(isLoading, error, data);
-    if (isLoading) {
-        return <p>Loading...</p>;
-    }
-    if (error) {
-        return <p>Error: {error.message}</p>;
-    }
-    // console.log(data);
-    return (
-        <RenderCITable data={data} />
-    );
-}
+// const CITable = ({ jobName, timestamp }) => {
+//     const { isLoading, error, data } = useQuery("CITable", () => {
+//         return fetch("http://172.16.5.15:30792/report/?job_name=" + jobName + "&timestamp=" + timestamp)
+//         .then((res) => {
+//             const data = res.json();
+//             // console.log(data);
+//             return data;
+//         })
+//         .catch((e) => {
+//             console.log(e);
+//         });
+//     });
+//     // console.log(isLoading, error, data);
+//     if (isLoading) {
+//         return <p>Loading...</p>;
+//     }
+//     if (error) {
+//         return <p>Error: {error.message}</p>;
+//     }
+//     // console.log(data);
+//     return (
+//         <RenderCITable data={data} />
+//     );
+// }

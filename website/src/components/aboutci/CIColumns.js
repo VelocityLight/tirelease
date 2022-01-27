@@ -23,6 +23,30 @@ const CIColumns = {
         filter: null,
         selection: null,
     },
+    case_type: {
+        title: "case_type",
+        display: true,
+        filter: null,
+        selection: null,
+    },
+    case_status: {
+        title: "case_status",
+        display: true,
+        filter: null,
+        selection: null,
+    },
+    first_seen: {
+        title: "first_seen",
+        display: true,
+        filter: null,
+        selection: null,
+    },
+    last_seen: {
+        title: "last_seen",
+        display: true,
+        filter: null,
+        selection: null,
+    },
     recent_runs: {
         title: "recent_runs",
         display: true,

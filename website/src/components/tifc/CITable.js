@@ -33,9 +33,16 @@ const RenderCIRow = ({ row, columns }) => {
                 "&:last-child td, &:last-child th": { border: 0 },
             }}
         >
-        {columns.map((column) => {
+        {
+        columns.map((column) => {
             if (column.display) {
             switch (column.title) {
+                case "test_case_info":
+                    return <TableCell>
+                        test_suite_name: {row.test_suite_name}<br/>
+                        test_case_name: {row.test_case_name}<br/>
+                        test_class_name: {row.test_class_name}
+                    </TableCell>;
                 case "test_suite_name":
                     return <TableCell>{row.test_suite_name}</TableCell>;
                 case "test_case_name":
@@ -50,15 +57,15 @@ const RenderCIRow = ({ row, columns }) => {
                     return <TableCell>{row.case_status}</TableCell>;
                 case "first_seen":
                     return <TableCell>
-                        PrID:{row.first_seen.pull_request}<br/>
-                        CommitID:{row.first_seen.commit_id}<br/>
-                        Author:{row.first_seen.author}
+                        PrID: {row.first_seen.pull_request}<br/>
+                        CommitID: {row.first_seen.commit_id}<br/>
+                        Author: {row.first_seen.author}
                     </TableCell>;
                 case "last_seen":
                     return <TableCell>
-                        PrID:{row.last_seen.pull_request}<br/>
-                        CommitID:{row.last_seen.commit_id}<br/>
-                        Author:{row.last_seen.author}
+                        PrID: {row.last_seen.pull_request}<br/>
+                        CommitID: {row.last_seen.commit_id}<br/>
+                        Author: {row.last_seen.author}
                     </TableCell>;
                 case "first_introducer":
                     return <TableCell>{row.first_introducer}</TableCell>;
@@ -69,7 +76,8 @@ const RenderCIRow = ({ row, columns }) => {
             }
         }
         return <></>;
-        })}
+        })
+        }
         </TableRow>
     );
 };
@@ -77,12 +85,10 @@ const RenderCIRow = ({ row, columns }) => {
 export const RenderCITable = ({
     data,
     columns = [
+        CIColumns.failed_count,
         CIColumns.case_type,
         CIColumns.case_status,
-        CIColumns.test_suite_name,
-        CIColumns.test_case_name,
-        CIColumns.test_class_name,
-        CIColumns.failed_count,
+        CIColumns.test_case_info,
         CIColumns.first_introducer,
         CIColumns.first_seen,
         CIColumns.last_seen,

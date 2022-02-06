@@ -14,7 +14,7 @@ export const CIDatePicker = ({ timestamp, setTimestamp }) => {
         <>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
-                label="timestamp"
+                label="from time (default to now)"
                 value={timestamp}
                 onChange={(newTime) => {
                     setTimestamp(newTime);

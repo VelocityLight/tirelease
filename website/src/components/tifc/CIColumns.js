@@ -1,4 +1,10 @@
 const CIColumns = {
+    test_case_info: {
+        title: "test_case_info",
+        display: true,
+        filter: null,
+        selection: null,
+    },
     test_suite_name: {
         title: "test_suite_name",
         display: true,

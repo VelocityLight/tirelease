@@ -1,5 +1,6 @@
 // Tool Url: https://github.com/shurcooL/githubv4
 // Tool Guide: https://docs.github.com/en/graphql
+// Web API Explorer: https://docs.github.com/en/graphql/overview/explorer
 
 package git
 

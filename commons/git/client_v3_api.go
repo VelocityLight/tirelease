@@ -16,6 +16,10 @@ func (client *GithubInfo) GetIssueByNumber(owner, name string, number int) (*git
 	return client.Client.Issues.Get(context.Background(), owner, name, number)
 }
 
+func (client *GithubInfo) GetIssuesByTimeRange(owner, name string, option *github.IssueListByRepoOptions) ([]*github.Issue, *github.Response, error) {
+	return client.Client.Issues.ListByRepo(context.Background(), owner, name, option)
+}
+
 func (client *GithubInfo) GetIssueCommentsByIssueNumber(owner, name string, number int) ([]*github.IssueComment, *github.Response, error) {
 	return client.Client.Issues.ListComments(context.Background(), owner, name, number, &github.IssueListCommentsOptions{})
 }

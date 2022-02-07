@@ -2,7 +2,9 @@ package git
 
 import (
 	"testing"
+	"time"
 
+	"github.com/google/go-github/v41/github"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -24,13 +26,28 @@ func TestGetIssue(t *testing.T) {
 	// Connect
 	Connect(TestToken)
 
-	// List comments
-
+	// Query
 	issue, _, err := Client.GetIssueByNumber(TestOwner, TestRepo, TestIssueId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, issue != nil)
+}
+
+func TestGetIssuesByTimeRange(t *testing.T) {
+	// Connect
+	Connect(TestToken)
+
+	// Query
+	day, _ := time.ParseDuration("-24h")
+	option := &github.IssueListByRepoOptions{
+		Since: time.Now().Add(15 * day),
+	}
+	issues, _, err := Client.GetIssuesByTimeRange(TestOwner, TestRepo, option)
+
+	// Assert
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, len(issues) > 0)
 }
 
 func TestGetIssueComments(t *testing.T) {

@@ -16,22 +16,7 @@ func GetIssueRelationInfoByIssueNumber(owner, repo string, number int) (*dto.Iss
 		return nil, err
 	}
 
-	issueAffects, err := ConsistIssueAffectsByIssue(issue)
-	if nil != err {
-		return nil, err
-	}
-	issuePrRelations, pullRequests, err := ConsistIssuePrRelationsByIssue(issue)
-	if nil != err {
-		return nil, err
-	}
-
-	triageRelationInfo := &dto.IssueRelationInfo{
-		Issue:            issue,
-		IssueAffects:     issueAffects,
-		IssuePrRelations: issuePrRelations,
-		PullRequests:     pullRequests,
-	}
-	return triageRelationInfo, nil
+	return ConsistTriageRelationInfoByIssue(issue)
 }
 
 // Save TriageRelationInfo Every Detail
@@ -63,6 +48,26 @@ func SaveIssueRelationInfo(triageRelationInfo *dto.IssueRelationInfo) error {
 	}
 
 	return nil
+}
+
+// ConsistTriageRelationInfoByIssue
+func ConsistTriageRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, error) {
+	issueAffects, err := ConsistIssueAffectsByIssue(issue)
+	if nil != err {
+		return nil, err
+	}
+	issuePrRelations, pullRequests, err := ConsistIssuePrRelationsByIssue(issue)
+	if nil != err {
+		return nil, err
+	}
+
+	triageRelationInfo := &dto.IssueRelationInfo{
+		Issue:            issue,
+		IssueAffects:     issueAffects,
+		IssuePrRelations: issuePrRelations,
+		PullRequests:     pullRequests,
+	}
+	return triageRelationInfo, nil
 }
 
 // Consist IssueAffects by Issue

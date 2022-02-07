@@ -17,4 +17,5 @@ func TestConsistIssuePrRelationsByIssue(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(triageRelationInfo.IssuePrRelations) > 0)
 	assert.Equal(t, true, len(triageRelationInfo.PullRequests) > 0)
+	assert.Equal(t, true, len(triageRelationInfo.IssuePrRelations) == len(triageRelationInfo.PullRequests))
 }

@@ -2,6 +2,7 @@ package service
 
 import (
 	"strings"
+	"time"
 
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
@@ -16,6 +17,23 @@ func GetIssueByNumberFromV3(owner, repo string, number int) (*entity.Issue, erro
 		return nil, err
 	}
 	return ConsistIssueFromV3(issue), nil
+}
+
+// GetIssuesByTimeFromV3
+func GetIssuesByTimeFromV3(owner, repo string, time *time.Time) ([]*entity.Issue, error) {
+	option := &github.IssueListByRepoOptions{
+		Since: *time,
+	}
+	gitIssues, _, err := git.Client.GetIssuesByTimeRange(owner, repo, option)
+	if nil != err {
+		return nil, err
+	}
+
+	issues := make([]*entity.Issue, 0)
+	for _, issue := range gitIssues {
+		issues = append(issues, ConsistIssueFromV3(issue))
+	}
+	return issues, nil
 }
 
 // ConsistIssueFromV3

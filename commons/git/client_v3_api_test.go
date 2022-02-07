@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var testToken string = "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"
+var testToken string = "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"
 var testIssueId int = 28078
 var testPullRequestId int = 31287
 var testOwner string = "pingcap"

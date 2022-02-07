@@ -8,6 +8,46 @@ import (
 	"github.com/shurcooL/githubv4"
 )
 
+func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*IssueNode, error) {
+	var query struct {
+		Repository struct {
+			Issue struct {
+				IssueNode
+			} `graphql:"issue(number: $number)"`
+		} `graphql:"repository(name: $name, owner: $owner)"`
+	}
+	num := githubv4.Int(number)
+	params := map[string]interface{}{
+		"number": num,
+		"name":   githubv4.String(name),
+		"owner":  githubv4.String(owner),
+	}
+	if err := client.client.Query(context.Background(), &query, params); err != nil {
+		return nil, err
+	}
+	return &query.Repository.Issue.IssueNode, nil
+}
+
+func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number int) (*PullRequest, error) {
+	var query struct {
+		Repository struct {
+			PullRequest struct {
+				PullRequest
+			} `graphql:"pullRequest(number: $number)"`
+		} `graphql:"repository(name: $name, owner: $owner)"`
+	}
+	num := githubv4.Int(number)
+	params := map[string]interface{}{
+		"number": num,
+		"name":   githubv4.String(name),
+		"owner":  githubv4.String(owner),
+	}
+	if err := client.client.Query(context.Background(), &query, params); err != nil {
+		return nil, err
+	}
+	return &query.Repository.PullRequest.PullRequest, nil
+}
+
 func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueNode, err error) {
 	var query struct {
 		Repository struct {
@@ -138,44 +178,4 @@ func (client *GithubInfoV4) GetPullRequestsFrom(owner, name string, from time.Ti
 
 	log.Printf("fetched %d pull requests from %s/%s\n", total, owner, name)
 	return
-}
-
-func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number int) (*PullRequest, error) {
-	var query struct {
-		Repository struct {
-			PullRequest struct {
-				PullRequest
-			} `graphql:"pullRequest(number: $number)"`
-		} `graphql:"repository(name: $name, owner: $owner)"`
-	}
-	num := githubv4.Int(number)
-	params := map[string]interface{}{
-		"number": num,
-		"name":   githubv4.String(name),
-		"owner":  githubv4.String(owner),
-	}
-	if err := client.client.Query(context.Background(), &query, params); err != nil {
-		return nil, err
-	}
-	return &query.Repository.PullRequest.PullRequest, nil
-}
-
-func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*IssueNode, error) {
-	var query struct {
-		Repository struct {
-			Issue struct {
-				IssueNode
-			} `graphql:"issue(number: $number)"`
-		} `graphql:"repository(name: $name, owner: $owner)"`
-	}
-	num := githubv4.Int(number)
-	params := map[string]interface{}{
-		"number": num,
-		"name":   githubv4.String(name),
-		"owner":  githubv4.String(owner),
-	}
-	if err := client.client.Query(context.Background(), &query, params); err != nil {
-		return nil, err
-	}
-	return &query.Repository.Issue.IssueNode, nil
 }

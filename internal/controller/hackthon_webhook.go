@@ -22,3 +22,7 @@ func WebhookHandler(c *gin.Context) {
 	}
 	c.JSON(200, gin.H{"status": "ok"})
 }
+
+func InitDataForDemo(c *gin.Context) {
+	service.InitDB()
+}

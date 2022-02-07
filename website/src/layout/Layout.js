@@ -21,7 +21,7 @@ export const Layout = (props) => {
       <ThemeProvider theme={mdTheme}>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
-          <Navbar open={open} toggleDrawer={toggleDrawer} />
+          {/* <Navbar open={open} toggleDrawer={toggleDrawer} /> */}
           <Sidebar open={open} toggleDrawer={toggleDrawer} />
           <Box
             component="main"
@@ -35,7 +35,7 @@ export const Layout = (props) => {
               overflow: "auto",
             }}
           >
-            <Toolbar />
+            {/* <Toolbar /> */}
             {children}
           </Box>
         </Box>

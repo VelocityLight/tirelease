@@ -60,6 +60,4 @@ INSERT INTO release_version (create_time, update_time, name, description, owner,
 INSERT INTO release_version (create_time, update_time, name, description, owner, type, status, father_release_version_name) VALUES (Now(),Now(),'5.0.7','Patch版本5.0.7','JunChenYe', 'Patch', 'Open', '5.0');
 INSERT INTO release_version (create_time, update_time, name, description, owner, type, status, father_release_version_name) VALUES (Now(),Now(),'4.0.17','Patch版本4.0.17','JunChenYe', 'Patch', 'Open', '4.0');
 
-
-
 **/

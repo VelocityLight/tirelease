@@ -14,6 +14,7 @@ type PullRequest struct {
 	Number        int    `json:"number,omitempty"`
 	State         string `json:"state,omitempty"`
 	Title         string `json:"title,omitempty"`
+	Owner         string `json:"owner,omitempty"`
 	Repo          string `json:"repo,omitempty"`
 	HTMLURL       string `json:"html_url,omitempty"`
 	HeadBranch    string `json:"head_branch,omitempty"`
@@ -23,9 +24,9 @@ type PullRequest struct {
 	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 	MergedAt  *time.Time `json:"merged_at,omitempty"`
 
-	Merged         bool   `json:"merged,omitempty"`
-	Mergeable      bool   `json:"mergeable,omitempty"`
-	MergeableState string `json:"mergeable_state,omitempty"`
+	Merged         bool    `json:"merged,omitempty"`
+	Mergeable      *bool   `json:"mergeable,omitempty"`
+	MergeableState *string `json:"mergeable_state,omitempty"`
 
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 
@@ -47,6 +48,7 @@ type PullRequestOption struct {
 	PullRequestID       string `json:"pull_request_id,omitempty"`
 	Number              int    `json:"number,omitempty"`
 	State               string `json:"state,omitempty"`
+	Owner               string `json:"owner,omitempty"`
 	Repo                string `json:"repo,omitempty"`
 	HeadBranch          string `json:"head_branch,omitempty"`
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
@@ -65,21 +67,22 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	number INT(11) NOT NULL COMMENT '当前库ID',
 	state VARCHAR(32) NOT NULL COMMENT '状态',
 	title VARCHAR(1024) COMMENT '标题',
-	repo VARCHAR(255) COMMENT '仓库',
+
+	owner VARCHAR(255) COMMENT '仓库所有者',
+	repo VARCHAR(255) COMMENT '仓库名称',
 	html_url VARCHAR(1024) COMMENT '链接',
 	head_branch VARCHAR(255) COMMENT '链接',
 
 	closed_at TIMESTAMP COMMENT '关闭时间',
 	created_at TIMESTAMP COMMENT '创建时间',
 	updated_at TIMESTAMP COMMENT '更新时间',
-	merged_at TIMESTAMP COMMENT '合入时间',
 
+	merged_at TIMESTAMP COMMENT '合入时间',
 	merged BOOLEAN COMMENT '是否已合入',
 	mergeable BOOLEAN COMMENT '是否可合入',
 	mergeable_state VARCHAR(32) COMMENT '可合入状态',
 
 	source_pull_request_id VARCHAR(255) COMMENT '来源ID',
-
 	labels_string TEXT COMMENT '标签',
 	assignee_string TEXT COMMENT '处理人',
 	assignees_string TEXT COMMENT '处理人列表',
@@ -88,7 +91,7 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_prid (pull_request_id),
 	INDEX idx_state (state),
-	INDEX idx_repo (repo),
+	INDEX idx_owner_repo (owner, repo),
 	INDEX idx_createdat (created_at),
 	INDEX idx_sourceprid (source_pull_request_id)
 )

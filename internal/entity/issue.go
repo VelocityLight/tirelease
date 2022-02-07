@@ -8,12 +8,14 @@ import (
 
 // Struct of Issue
 type Issue struct {
+	github.Issue
 	// DataBase Column
 	ID      int64  `json:"id,omitempty"`
 	IssueID string `json:"issue_id,omitempty"`
 	Number  int    `json:"number,omitempty"`
 	State   string `json:"state,omitempty"`
 	Title   string `json:"title,omitempty"`
+	Owner   string `json:"owner,omitempty"`
 	Repo    string `json:"repo,omitempty"`
 	HTMLURL string `json:"html_url,omitempty"`
 
@@ -39,6 +41,7 @@ type IssueOption struct {
 	IssueID string `json:"issue_id,omitempty"`
 	Number  int    `json:"number,omitempty"`
 	State   string `json:"state,omitempty"`
+	Owner   string `json:"owner,omitempty"`
 	Repo    string `json:"repo,omitempty"`
 }
 
@@ -55,7 +58,8 @@ CREATE TABLE IF NOT EXISTS issue (
 	number INT(11) NOT NULL COMMENT '当前库ID',
 	state VARCHAR(32) NOT NULL COMMENT '状态',
 	title VARCHAR(1024) COMMENT '标题',
-	repo VARCHAR(255) COMMENT '仓库',
+	owner VARCHAR(255) COMMENT '仓库所有者',
+	repo VARCHAR(255) COMMENT '仓库名称',
 	html_url VARCHAR(1024) COMMENT '链接',
 
 	closed_at TIMESTAMP COMMENT '关闭时间',
@@ -71,7 +75,7 @@ CREATE TABLE IF NOT EXISTS issue (
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_issueid (issue_id),
 	INDEX idx_state (state),
-	INDEX idx_repo (repo),
+	INDEX idx_owner_repo (owner, repo),
 	INDEX idx_createdat (created_at)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'issue信息表';

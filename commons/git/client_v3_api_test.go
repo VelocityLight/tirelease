@@ -6,16 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var testToken string = "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"
-var testIssueId int = 28078
-var testPullRequestId int = 31287
-var testOwner string = "pingcap"
-var testRepo string = "tidb"
-
 //=======================================================================Repository
 func TestGetRepository(t *testing.T) {
 	// Connect
-	Connect(testToken)
+	Connect(TestToken)
 
 	// List all repositories for the authenticated user
 	repos, _, err := Client.GetRepositories()
@@ -28,11 +22,11 @@ func TestGetRepository(t *testing.T) {
 //=======================================================================Issue
 func TestGetIssue(t *testing.T) {
 	// Connect
-	Connect(testToken)
+	Connect(TestToken)
 
 	// List comments
 
-	issue, _, err := Client.GetIssueByNumber(testOwner, testRepo, testIssueId)
+	issue, _, err := Client.GetIssueByNumber(TestOwner, TestRepo, TestIssueId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)
@@ -41,10 +35,10 @@ func TestGetIssue(t *testing.T) {
 
 func TestGetIssueComments(t *testing.T) {
 	// Connect
-	Connect(testToken)
+	Connect(TestToken)
 
 	// List comments
-	comments, _, err := Client.GetIssueCommentsByIssueNumber(testOwner, testRepo, testIssueId)
+	comments, _, err := Client.GetIssueCommentsByIssueNumber(TestOwner, TestRepo, TestIssueId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)
@@ -53,10 +47,10 @@ func TestGetIssueComments(t *testing.T) {
 
 func TestGetIssueTimelines(t *testing.T) {
 	// Connect
-	Connect(testToken)
+	Connect(TestToken)
 
 	// List comments
-	reactions, _, err := Client.GetIssueTimelinesByIssueNumber(testOwner, testRepo, testIssueId)
+	reactions, _, err := Client.GetIssueTimelinesByIssueNumber(TestOwner, TestRepo, TestIssueId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)
@@ -65,10 +59,10 @@ func TestGetIssueTimelines(t *testing.T) {
 
 func TestGetIssueEvents(t *testing.T) {
 	// Connect
-	Connect(testToken)
+	Connect(TestToken)
 
 	// List comments
-	events, _, err := Client.GetIssueEventsByIssueNumber(testOwner, testRepo, testIssueId)
+	events, _, err := Client.GetIssueEventsByIssueNumber(TestOwner, TestRepo, TestIssueId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)
@@ -78,10 +72,10 @@ func TestGetIssueEvents(t *testing.T) {
 //=======================================================================PullRequest
 func TestGetPullRequest(t *testing.T) {
 	// Connect
-	Connect(testToken)
+	Connect(TestToken)
 
 	// List comments
-	pullRequest, _, err := Client.GetPullRequestByNumber(testOwner, testRepo, testPullRequestId)
+	pullRequest, _, err := Client.GetPullRequestByNumber(TestOwner, TestRepo, TestPullRequestId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)

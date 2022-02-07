@@ -2,6 +2,8 @@ package git
 
 import "github.com/shurcooL/githubv4"
 
+var CrossReferencedEvent = "CrossReferencedEvent"
+
 type IssueNode struct {
 	Title  githubv4.String
 	State  githubv4.IssueState
@@ -78,10 +80,11 @@ type PullRequest struct {
 }
 
 type PullRequestWithoutTimelineItems struct {
-	ID          githubv4.ID
-	State       githubv4.PullRequestState
-	Merged      githubv4.Boolean
-	MergedAt    githubv4.DateTime
+	ID     githubv4.ID
+	State  githubv4.PullRequestState
+	Merged githubv4.Boolean
+	// Mergeable githubv4.Boolean
+
 	MergeCommit struct {
 		OID           githubv4.GitObjectID
 		CommittedDate githubv4.DateTime
@@ -91,10 +94,13 @@ type PullRequestWithoutTimelineItems struct {
 	}
 	CreatedAt githubv4.DateTime
 	UpdatedAt githubv4.DateTime
-	Title     githubv4.String
-	Url       githubv4.String
-	Number    githubv4.Int
-	Labels    struct {
+	// ClosedAt  githubv4.DateTime
+	// MergedAt  githubv4.DateTime
+
+	Title  githubv4.String
+	Url    githubv4.String
+	Number githubv4.Int
+	Labels struct {
 		Nodes []struct {
 			Name githubv4.String
 		}
@@ -116,3 +122,10 @@ type Repository struct {
 		Login githubv4.String
 	}
 }
+
+// 测试用例数据
+var TestToken string = "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"
+var TestIssueId int = 28078
+var TestPullRequestId int = 31287
+var TestOwner string = "pingcap"
+var TestRepo string = "tidb"

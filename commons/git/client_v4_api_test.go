@@ -11,7 +11,7 @@ import (
 //=======================================================================Login
 func TestGetLoginV4(t *testing.T) {
 	// Connect
-	ConnectV4(testToken)
+	ConnectV4(TestToken)
 
 	// Query
 	var query struct {
@@ -29,10 +29,10 @@ func TestGetLoginV4(t *testing.T) {
 //=======================================================================Issue
 func TestGetIssueV4(t *testing.T) {
 	// Connect
-	ConnectV4(testToken)
+	ConnectV4(TestToken)
 
 	// Query
-	issue, err := ClientV4.GetIssueByNumber(testOwner, testRepo, testIssueId)
+	issue, err := ClientV4.GetIssueByNumber(TestOwner, TestRepo, TestIssueId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)
@@ -42,10 +42,10 @@ func TestGetIssueV4(t *testing.T) {
 //=======================================================================Pr
 func TestGetPullRequestV4(t *testing.T) {
 	// Connect
-	ConnectV4(testToken)
+	ConnectV4(TestToken)
 
 	// Query
-	pr, err := ClientV4.GetPullRequestsByNumber(testOwner, testRepo, testPullRequestId)
+	pr, err := ClientV4.GetPullRequestsByNumber(TestOwner, TestRepo, TestPullRequestId)
 
 	// Assert
 	assert.Equal(t, true, err == nil)

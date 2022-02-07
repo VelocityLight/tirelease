@@ -28,9 +28,7 @@ func TestPullRequest(t *testing.T) {
 		UpdatedAt:     time.Now(),
 		HeadBranch:    "targetBranch",
 
-		Merged:         true,
-		Mergeable:      true,
-		MergeableState: "OK",
+		Merged: true,
 
 		SourcePullRequestID: "1000",
 	}

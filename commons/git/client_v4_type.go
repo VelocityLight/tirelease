@@ -124,7 +124,7 @@ type Repository struct {
 }
 
 // 测试用例数据
-var TestToken string = "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"
+var TestToken string = "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"
 var TestIssueId int = 28078
 var TestPullRequestId int = 31287
 var TestOwner string = "pingcap"

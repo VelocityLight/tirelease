@@ -1,0 +1,52 @@
+package service
+
+import (
+	"strings"
+
+	"tirelease/commons/git"
+	"tirelease/internal/entity"
+
+	"github.com/google/go-github/v41/github"
+)
+
+// GetIssueByNumberFromV3
+func GetIssueByNumberFromV3(owner, repo string, number int) (*entity.Issue, error) {
+	issue, _, err := git.Client.GetIssueByNumber(owner, repo, number)
+	if nil != err {
+		return nil, err
+	}
+	return ConsistIssueFromV3(issue), nil
+}
+
+// ConsistIssueFromV3
+func ConsistIssueFromV3(issue *github.Issue) *entity.Issue {
+	labels := &[]github.Label{}
+	for _, node := range issue.Labels {
+		*labels = append(*labels, *node)
+	}
+	assignees := &[]github.User{}
+	for _, node := range issue.Assignees {
+		*assignees = append(*assignees, *node)
+	}
+	url := strings.Split(*issue.RepositoryURL, "/")
+	owner := url[len(url)-2]
+	repo := url[len(url)-1]
+
+	return &entity.Issue{
+		IssueID: *issue.NodeID,
+		Number:  *issue.Number,
+		State:   *issue.State,
+		Title:   *issue.Title,
+		Owner:   owner,
+		Repo:    repo,
+		HTMLURL: *issue.HTMLURL,
+
+		CreatedAt: *issue.CreatedAt,
+		UpdatedAt: *issue.UpdatedAt,
+		ClosedAt:  issue.ClosedAt,
+
+		Labels:    labels,
+		Assignee:  issue.Assignee,
+		Assignees: assignees,
+	}
+}

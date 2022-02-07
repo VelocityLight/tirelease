@@ -8,7 +8,6 @@ import (
 
 // Struct of Issue
 type Issue struct {
-	github.Issue
 	// DataBase Column
 	ID      int64  `json:"id,omitempty"`
 	IssueID string `json:"issue_id,omitempty"`

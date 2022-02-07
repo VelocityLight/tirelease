@@ -67,7 +67,19 @@ func SaveIssueRelationInfo(triageRelationInfo *dto.IssueRelationInfo) error {
 
 // Consist IssueAffects by Issue
 func ConsistIssueAffectsByIssue(issue *entity.Issue) ([]*entity.IssueAffect, error) {
-	return nil, nil
+	issueAffects := make([]*entity.IssueAffect, 0)
+	// todo: minorVersion is fixed now, need to search later - 2022.2.7
+	for _, minorVersion := range MinorVersionList {
+		issueAffect := &entity.IssueAffect{
+			CreateTime:    time.Now(),
+			UpdateTime:    time.Now(),
+			IssueID:       issue.IssueID,
+			AffectVersion: minorVersion,
+			AffectResult:  entity.AffectResultResultUnKnown,
+		}
+		issueAffects = append(issueAffects, issueAffect)
+	}
+	return issueAffects, nil
 }
 
 // Consist IssuePrRelations & PullRequests by Issue

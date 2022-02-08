@@ -42,10 +42,14 @@ tirelease
     └── database/      # Database connectors
     └── git/           # Github client, reference: https://github.com/google/go-github
     └── httpclient/    # Http client utils
+    └── cron/          # Cron utils
 └── internal/          # Business code & function
     └── entity/        # Object entity
     └── repository/    # Function operator
-    └── service/       # Http handler
+    └── service/       # Service for controller/
+    └── controller/    # Deal with http request
+    └── dto/           # Output struct(no database)
+    └── cron/          # Quarz service
 └── website/           # UI components and pages. detail can jump to  website/README.MD
     ├── yarn.lock      # React environment configuration for machines
     ├── package.json   # React environment configuration for people

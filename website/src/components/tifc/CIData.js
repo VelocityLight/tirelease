@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import { CIJobNameSelector} from "./CIJobNameSelector";
 import { CIDatePicker} from "./CIDatePicker";
 import { RenderCITable} from "./CITable";
+import { CITips } from "./CITips";
+import { RenderCITableGrid} from "./CITableGrid";
 
 function addDays(date, days) {
     var result = new Date(date);
@@ -34,10 +36,12 @@ export default function CIData() {
                 {/* <CIJobNameSelector jobName={jobName} setJobName={setJobName}/> */}
                 <CIDatePicker timestamp={timestamp} setTimestamp={setTimestamp}/>
                 <Button variant="contained" onClick={refreshTable}>Query</Button>
+                <CITips />
             </Stack>
             {table && (
                 <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
-                    <RenderCITable data={table} />
+                    {/* <RenderCITable data={table} /> */}
+                    <RenderCITableGrid data={table}/>
                 </Stack>
             )}
         </Stack>

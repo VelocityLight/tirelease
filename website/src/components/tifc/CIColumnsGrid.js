@@ -42,6 +42,10 @@ const CIColumnsGrid = [
         field: 'test_case_info',
         headerName: 'Test Case Info',
         headerAlign: 'left',
+        valueGetter: function(params) {
+            // for download
+            return `TestSuiteName: ${params.row.test_suite_name || ''} | TestCaseName: ${params.row.test_case_name || ''} | TestClassName: ${params.row.test_class_name || ''}`;
+        },
         renderCell: function(params) {
             return <p>
                 TestSuiteName: {params.row.test_suite_name} <br/>
@@ -67,6 +71,10 @@ const CIColumnsGrid = [
         field: 'first_seen',
         headerName: 'First Seen',
         headerAlign: 'left',
+        valueGetter: function(params) {
+            // for download
+            return JSON.stringify(params.row.first_seen, null, 4);
+        },
         renderCell: function(params) {
             return <p>
                 PRID: {params.row.first_seen.pull_request} <br/>
@@ -84,6 +92,10 @@ const CIColumnsGrid = [
         field: 'last_seen',
         headerName: 'Last Seen',
         headerAlign: 'left',
+        valueGetter: function(params) {
+            // for download
+            return JSON.stringify(params.row.last_seen, null, 4);
+        },
         renderCell: function(params) {
             return <p>
                 PRID: {params.row.last_seen.pull_request} <br/>
@@ -101,7 +113,12 @@ const CIColumnsGrid = [
         field: 'may_introduced_by',
         headerName: 'May Introduced By',
         headerAlign: 'left',
+        valueGetter: function(params) {
+            // for download
+            return JSON.stringify(params.row.may_introduced_by, null, 4);
+        },
         renderCell: function(params) {
+            // for page show
             return <p>
                 PRID: {params.row.may_introduced_by.pull_request} <br/>
                 CommitID: {params.row.may_introduced_by.commit_id} <br/>
@@ -136,6 +153,10 @@ const CIColumnsGrid = [
         field: 'recent_runs',
         headerName: 'Trace History',
         headerAlign: 'left',
+        valueGetter: function(params) {
+            // for download
+            return JSON.stringify(params.row.recent_runs, null, 4);
+        },
         renderCell: function(params){
             return <CIRecentRuns data={params.row.recent_runs} />
         },

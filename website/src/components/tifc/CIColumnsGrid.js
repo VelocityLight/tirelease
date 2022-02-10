@@ -42,16 +42,18 @@ const CIColumnsGrid = [
         field: 'test_case_info',
         headerName: 'Test Case Info',
         headerAlign: 'left',
-        valueGetter: function(params){
-            return 'TestSuiteName: ' + params.row.test_suite_name + '<br/>'
-                + 'TestCaseName: ' + params.row.test_case_name + '<br/>'
-                + 'TestClassName: ' + params.row.test_class_name;
+        renderCell: function(params) {
+            return <p>
+                TestSuiteName: {params.row.test_suite_name} <br/>
+                TestCaseName: {params.row.test_case_name} <br/>
+                TestClassName: {params.row.test_class_name} 
+            </p>;
         },
         sortable: false,
         align: 'left',
         editable: false,
         filterable: true,
-        minWidth: 300,
+        minWidth: 400,
     },
     {
         field: 'first_introducer',
@@ -60,6 +62,57 @@ const CIColumnsGrid = [
         align: 'left',
         editable: false,
         minWidth: 130,
+    },
+    {
+        field: 'first_seen',
+        headerName: 'First Seen',
+        headerAlign: 'left',
+        renderCell: function(params) {
+            return <p>
+                PRID: {params.row.first_seen.pull_request} <br/>
+                CommitID: {params.row.first_seen.commit_id} <br/>
+                Author: {params.row.first_seen.author} 
+            </p>;
+        },
+        sortable: false,
+        align: 'left',
+        editable: false,
+        filterable: false,
+        minWidth: 400,
+    },
+    {
+        field: 'last_seen',
+        headerName: 'Last Seen',
+        headerAlign: 'left',
+        renderCell: function(params) {
+            return <p>
+                PRID: {params.row.last_seen.pull_request} <br/>
+                CommitID: {params.row.last_seen.commit_id} <br/>
+                Author: {params.row.last_seen.author} 
+            </p>;
+        },
+        sortable: false,
+        align: 'left',
+        editable: false,
+        filterable: false,
+        minWidth: 400,
+    },
+    {
+        field: 'may_introduced_by',
+        headerName: 'May Introduced By',
+        headerAlign: 'left',
+        renderCell: function(params) {
+            return <p>
+                PRID: {params.row.may_introduced_by.pull_request} <br/>
+                CommitID: {params.row.may_introduced_by.commit_id} <br/>
+                Author: {params.row.may_introduced_by.author} 
+            </p>;
+        },
+        sortable: false,
+        align: 'left',
+        editable: false,
+        filterable: false,
+        minWidth: 400,
     },
     {   
         field: 'resource_cost',
@@ -70,39 +123,18 @@ const CIColumnsGrid = [
         filterable: false,
         minWidth: 130,
     },
-    {
-        field: 'first_seen',
-        headerName: 'First Seen',
+    {   
+        field: 'failure_age',
+        headerName: 'Failure Age',
         headerAlign: 'left',
-        valueGetter: function(params){
-            return 'PRID: ' + params.row.first_seen.pull_request + '<br/>'
-                + 'CommitID: ' + params.row.first_seen.commit_id + '<br/>'
-                + 'Author: ' + params.row.first_seen.author;
-        },
-        sortable: false,
         align: 'left',
         editable: false,
         filterable: false,
-        minWidth: 200,
-    },
-    {
-        field: 'last_seen',
-        headerName: 'Last Seen',
-        headerAlign: 'left',
-        valueGetter: function(params){
-            return 'PRID: ' + params.row.last_seen.pull_request + '<br/>'
-                + 'CommitID: ' + params.row.last_seen.commit_id + '<br/>'
-                + 'Author: ' + params.row.last_seen.author;
-        },
-        sortable: false,
-        align: 'left',
-        editable: false,
-        filterable: false,
-        minWidth: 200,
+        minWidth: 130,
     },
     {
         field: 'recent_runs',
-        headerName: 'Trace Logs',
+        headerName: 'Trace History',
         headerAlign: 'left',
         renderCell: function(params){
             return <CIRecentRuns data={params.row.recent_runs} />
@@ -111,6 +143,7 @@ const CIColumnsGrid = [
         align: 'left',
         editable: false,
         filterable: false,
+        minWidth: 120,
     },
 ];
 

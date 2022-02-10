@@ -6,7 +6,7 @@ import CIColumnsGrid from "./CIColumnsGrid";
 export const RenderCITableGrid = ({data}) => {
     return (
         <>
-        <div style={{ height: 600, width: '100%' }}>
+        <div style={{ height: 650, width: '100%' }}>
         <DataGrid
             rows = {data}
             columns = {CIColumnsGrid}
@@ -15,6 +15,9 @@ export const RenderCITableGrid = ({data}) => {
             components={{
                 Toolbar: GridToolbar,
             }}
+            rowHeight = {70}
+            showCellRightBorder = {true}
+            showColumnRightBorder = {false}
             // checkboxSelection
             disableSelectionOnClick
         />

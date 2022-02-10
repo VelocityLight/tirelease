@@ -30,7 +30,7 @@ export const CIRecentRuns =( {data} ) => {
 
     return (
         <>
-        <Button onClick={handleClickOpen('paper')}>Logs</Button>
+        <Button onClick={handleClickOpen('paper')}>History</Button>
         {/* <Button onClick={handleClickOpen('body')}>scroll=body</Button> */}
         <Dialog
             open={open}

@@ -1,7 +1,8 @@
 # ingress -> service -> label selector -> pods
 # Doc: https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource
+# apiVersion example: https://yano3.hatenablog.jp/entry/2021/05/10/202814
 
-apiVersion: networking.k8s.io/v1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: tirelease
@@ -10,13 +11,11 @@ metadata:
   #   nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-    - host: tirelease.example.com # 映射到该域名: 在系统的hosts文件里配置--将这个域名映射到nginx-ingress-controller的ip地址就可以访问
+    - host: release.pingcap.net # 映射到该域名: 在系统的hosts文件里配置--将这个域名映射到nginx-ingress-controller的ip地址就可以访问
       http: # 创建HTTP协议的访问
         paths:
           - path: / # 通过/路径就可以访问该服务(all paths match)
-            pathType: Prefix # 以<path>分隔的URL路径前缀匹配,匹配对大小写敏感
-            backend: 
-              service: # 后端service的名称及端口号
-                name: tirelease
-                port:
-                  number: 80
+            # pathType: Prefix # 以<path>分隔的URL路径前缀匹配,匹配对大小写敏感
+            backend:  # 后端service的名称及端口号
+              serviceName: tirelease
+              servicePort: 80

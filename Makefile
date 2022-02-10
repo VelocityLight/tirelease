@@ -49,13 +49,14 @@ k8s.init:
 	kubectl apply -f ${K8S_DEPLOYMENT_FILE}/namespace.yaml
 	kubectl apply -f ${K8S_DEPLOYMENT_FILE}/deployment.yaml
 	kubectl apply -f ${K8S_DEPLOYMENT_FILE}/service.yaml
+	kubectl apply -f ${K8S_DEPLOYMENT_FILE}/ingress.yaml
 	@echo "k8s deploy project successful hahaha!"
 
 k8s.update:
 	kubectl rollout restart deployment/${K8S_METADATA_NAME} -n ${K8S_METADATA_NAME}
 
 k8s.clean:
-	kubectl delete all --all -n ${K8S_METADATA_NAME}
+	kubectl delete all,ingress --all -n ${K8S_METADATA_NAME}
 	@echo "k8s clean all resources successful hahaha!"
 
 # =============================================================================

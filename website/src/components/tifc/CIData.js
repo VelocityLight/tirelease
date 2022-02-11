@@ -30,7 +30,7 @@ export default function CIData() {
     }
     useEffect(() => {
         refreshTable();
-    }, []);
+    }, []); // empty dependency array
 
     return (
         <>

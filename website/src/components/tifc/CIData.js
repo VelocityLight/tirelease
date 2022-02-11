@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from '@mui/material/Button';
 
@@ -28,6 +28,9 @@ export default function CIData() {
             console.log(e);
         });
     }
+    useEffect(() => {
+        refreshTable();
+    }, []);
 
     return (
         <>

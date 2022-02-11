@@ -61,11 +61,11 @@ const CIColumnsGrid = [
     },
     {
         field: 'first_introducer',
-        headerName: 'First Introducer',
+        headerName: 'Possiblie Introducer',
         headerAlign: 'left',
         align: 'left',
         editable: false,
-        minWidth: 130,
+        minWidth: 180,
     },
     {
         field: 'first_seen',

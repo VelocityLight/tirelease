@@ -9,16 +9,40 @@ import (
 )
 
 //=======================================================================Repository
-func TestGetRepository(t *testing.T) {
+func TestGetRepositoriesByUser(t *testing.T) {
 	// Connect
 	Connect(TestToken)
 
 	// List all repositories for the authenticated user
-	repos, _, err := Client.GetRepositories()
+	repos, _, err := Client.GetRepositoriesByUser(TestUser)
 
 	// Assert
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(repos) > 0)
+}
+
+func TestGetRepositoriesByOrg(t *testing.T) {
+	// Connect
+	Connect(TestToken)
+
+	// List all repositories for the authenticated user
+	repos, _, err := Client.GetRepositoriesByOrg(TestOrg)
+
+	// Assert
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, len(repos) > 0)
+}
+
+func TestGetRepositoryByOwnerAndName(t *testing.T) {
+	// Connect
+	Connect(TestToken)
+
+	// List all repositories for the authenticated user
+	repo, _, err := Client.GetRepositoryByOwnerAndName(TestOwner, TestRepo)
+
+	// Assert
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, repo != nil)
 }
 
 //=======================================================================Issue

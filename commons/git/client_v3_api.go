@@ -7,8 +7,16 @@ import (
 )
 
 // ============================================================================ Repository
-func (client *GithubInfo) GetRepositories() ([]*github.Repository, *github.Response, error) {
-	return client.Client.Repositories.List(context.Background(), "", nil)
+func (client *GithubInfo) GetRepositoriesByUser(user string) ([]*github.Repository, *github.Response, error) {
+	return client.Client.Repositories.List(context.Background(), user, nil)
+}
+
+func (client *GithubInfo) GetRepositoriesByOrg(org string) ([]*github.Repository, *github.Response, error) {
+	return client.Client.Repositories.ListByOrg(context.Background(), org, nil)
+}
+
+func (client *GithubInfo) GetRepositoryByOwnerAndName(owner, name string) (*github.Repository, *github.Response, error) {
+	return client.Client.Repositories.Get(context.Background(), owner, name)
 }
 
 // ============================================================================ Issue

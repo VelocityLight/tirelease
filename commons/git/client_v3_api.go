@@ -24,7 +24,7 @@ func (client *GithubInfo) GetIssueByNumber(owner, name string, number int) (*git
 	return client.Client.Issues.Get(context.Background(), owner, name, number)
 }
 
-func (client *GithubInfo) GetIssuesByTimeRange(owner, name string, option *github.IssueListByRepoOptions) ([]*github.Issue, *github.Response, error) {
+func (client *GithubInfo) GetIssuesByOption(owner, name string, option *github.IssueListByRepoOptions) ([]*github.Issue, *github.Response, error) {
 	return client.Client.Issues.ListByRepo(context.Background(), owner, name, option)
 }
 

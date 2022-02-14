@@ -8,6 +8,7 @@ import (
 	"tirelease/internal/entity"
 
 	"github.com/google/go-github/v41/github"
+	"github.com/shurcooL/githubv4"
 )
 
 // GetIssueByNumberFromV3
@@ -24,7 +25,7 @@ func GetIssuesByTimeFromV3(owner, repo string, time *time.Time) ([]*entity.Issue
 	option := &github.IssueListByRepoOptions{
 		Since: *time,
 	}
-	gitIssues, _, err := git.Client.GetIssuesByTimeRange(owner, repo, option)
+	gitIssues, _, err := git.Client.GetIssuesByOption(owner, repo, option)
 	if nil != err {
 		return nil, err
 	}
@@ -66,5 +67,48 @@ func ConsistIssueFromV3(issue *github.Issue) *entity.Issue {
 		Labels:    labels,
 		Assignee:  issue.Assignee,
 		Assignees: assignees,
+	}
+}
+
+// ConsistIssueFromV4
+// TODO: v4 implement by tony at 2022/02/14
+func ConsistIssueFromV4(issueNode *git.IssueNode) *entity.Issue {
+	labels := &[]github.Label{}
+	for _, labelNode := range issueNode.Labels.Nodes {
+		label := github.Label{
+			Name: github.String(string(labelNode.Name)),
+		}
+		*labels = append(*labels, label)
+	}
+	assignees := &[]github.User{}
+	for _, userNode := range issueNode.Assignees.Nodes {
+		user := github.User{
+			Login:     (*string)(&userNode.Login),
+			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+		}
+		*assignees = append(*assignees, user)
+	}
+	closedByPrID := ""
+	if issueNode.State == githubv4.IssueStateClosed {
+		for _, edge := range issueNode.TimelineItems.Edges {
+			closer := edge.Node.ClosedEvent.Closer.PullRequest
+			if closer.Number != 0 {
+				closedByPrID = closer.ID.(string)
+			}
+		}
+	}
+
+	return &entity.Issue{
+		IssueID:               issueNode.ID.(string),
+		Number:                int(issueNode.Number),
+		State:                 string(issueNode.State),
+		Title:                 string(issueNode.Title),
+		Owner:                 string(issueNode.Repository.Owner.Login),
+		Repo:                  string(issueNode.Repository.Name),
+		CreatedAt:             issueNode.CreatedAt.Time,
+		UpdatedAt:             issueNode.UpdatedAt.Time,
+		Labels:                labels,
+		Assignees:             assignees,
+		ClosedByPullRequestID: closedByPrID,
 	}
 }

@@ -56,3 +56,39 @@ func ConsistPullRequestFromV3(pullRequest *github.PullRequest) *entity.PullReque
 		RequestedReviewers: requestedReviewers,
 	}
 }
+
+// ConsistPullRequestFromV4
+// TODO: v4 implement by tony at 2022/02/14
+func ConsistPullRequestFromV4(pullRequest *git.PullRequest) *entity.PullRequest {
+	labels := &[]github.Label{}
+	for _, labelNode := range pullRequest.Labels.Nodes {
+		label := github.Label{
+			Name: github.String(string(labelNode.Name)),
+		}
+		*labels = append(*labels, label)
+	}
+	assignees := &[]github.User{}
+	for _, userNode := range pullRequest.Assignees.Nodes {
+		user := github.User{
+			Login:     (*string)(&userNode.Login),
+			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+		}
+		*assignees = append(*assignees, user)
+	}
+
+	return &entity.PullRequest{
+		PullRequestID: pullRequest.ID.(string),
+		Number:        int(pullRequest.Number),
+		State:         string(pullRequest.State),
+		Title:         string(pullRequest.Title),
+		Owner:         string(pullRequest.Repository.Owner.Login),
+		Repo:          string(pullRequest.Repository.Name),
+		HTMLURL:       string(pullRequest.Url),
+		HeadBranch:    string(pullRequest.BaseRefName),
+		CreatedAt:     pullRequest.CreatedAt.Time,
+		UpdatedAt:     pullRequest.UpdatedAt.Time,
+		Merged:        bool(pullRequest.Merged),
+		Labels:        labels,
+		Assignees:     assignees,
+	}
+}

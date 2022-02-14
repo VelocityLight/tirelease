@@ -65,9 +65,15 @@ func TestGetIssuesByTimeRange(t *testing.T) {
 	// Query
 	day, _ := time.ParseDuration("-24h")
 	option := &github.IssueListByRepoOptions{
+		ListOptions: github.ListOptions{
+			Page:    1,
+			PerPage: 100,
+		},
+
 		Since: time.Now().Add(15 * day),
+		Sort:  "updated",
 	}
-	issues, _, err := Client.GetIssuesByTimeRange(TestOwner, TestRepo, option)
+	issues, _, err := Client.GetIssuesByOption(TestOwner, TestRepo, option)
 
 	// Assert
 	assert.Equal(t, true, err == nil)

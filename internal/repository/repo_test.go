@@ -1,4 +1,3 @@
-
 package repository
 
 import (
@@ -17,8 +16,8 @@ func TestRepo(t *testing.T) {
 
 	// Create
 	var repo = &entity.Repo{
-		Owner:       "Velocity",
-		Repo:        "tirelease",
+		Owner:    "Velocity",
+		Repo:     "tirelease",
 		FullName: "Velocity/tirelease",
 	}
 	err := CreateRepo(repo)
@@ -40,4 +39,3 @@ INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, desc
 INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'tikv','tikv','tikv/tikv', 'https://github.com/tikv/tikv', 'tikv源码库');
 
 **/
-

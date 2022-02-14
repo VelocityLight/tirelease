@@ -22,6 +22,18 @@ const CIColumnsGrid = [
         minWidth: 120,
         resizable: true,
     },
+    { 
+        field: 'affected_prs',
+        headerName: 'Affected PRs',
+        headerAlign: 'left',
+        type: 'number',
+        align: 'left',
+        editable: false,
+        filterable: false,
+        pinnable: true,
+        minWidth: 120,
+        resizable: true,
+    },
     {
         field: 'case_type',
         headerName: 'Failure Type',

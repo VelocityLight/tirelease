@@ -35,6 +35,7 @@ func TestRepo(t *testing.T) {
 /**
 sql:
 
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tiflow','pingcap/tiflow', 'https://github.com/pingcap/tiflow', 'tiflow源码库');
 INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tidb','pingcap/tidb', 'https://github.com/pingcap/tidb', 'tidb源码库');
 INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'tikv','tikv','tikv/tikv', 'https://github.com/tikv/tikv', 'tikv源码库');
 

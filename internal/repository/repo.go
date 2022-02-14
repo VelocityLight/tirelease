@@ -24,3 +24,12 @@ func UpdateRepo(repo *entity.Repo) error {
 	}
 	return nil
 }
+
+func SelectRepo(option *entity.RepoOption) (*[]entity.Repo, error) {
+	// 查询
+	var repos []entity.Repo
+	if err := database.DBConn.DB.Where(option).Find(&repos).Error; err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("find repo: %+v failed", option))
+	}
+	return &repos, nil
+}

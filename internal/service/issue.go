@@ -22,18 +22,38 @@ func GetIssueByNumberFromV3(owner, repo string, number int) (*entity.Issue, erro
 
 // GetIssuesByTimeFromV3
 func GetIssuesByTimeFromV3(owner, repo string, time *time.Time) ([]*entity.Issue, error) {
+	var page = 1
+	var pageSize = 100
 	option := &github.IssueListByRepoOptions{
-		Since: *time,
+		ListOptions: github.ListOptions{
+			Page:    page,
+			PerPage: pageSize,
+		},
+		Sort: "updated",
 	}
-	gitIssues, _, err := git.Client.GetIssuesByOption(owner, repo, option)
-	if nil != err {
-		return nil, err
+	if nil != time {
+		option.Since = *time
 	}
 
 	issues := make([]*entity.Issue, 0)
-	for _, issue := range gitIssues {
-		issues = append(issues, ConsistIssueFromV3(issue))
+	for {
+		gitIssues, _, err := git.Client.GetIssuesByOption(owner, repo, option)
+		if nil != err {
+			return nil, err
+		}
+		for _, issue := range gitIssues {
+			if nil == issue.PullRequestLinks { // V3 considers every pull request an issue, so api return both issues and pull requests in the response
+				issues = append(issues, ConsistIssueFromV3(issue))
+			}
+		}
+		page++
+		option.ListOptions.Page = page
+
+		if len(gitIssues) < pageSize {
+			break
+		}
 	}
+
 	return issues, nil
 }
 
@@ -99,16 +119,20 @@ func ConsistIssueFromV4(issueNode *git.IssueNode) *entity.Issue {
 	}
 
 	return &entity.Issue{
-		IssueID:               issueNode.ID.(string),
-		Number:                int(issueNode.Number),
-		State:                 string(issueNode.State),
-		Title:                 string(issueNode.Title),
-		Owner:                 string(issueNode.Repository.Owner.Login),
-		Repo:                  string(issueNode.Repository.Name),
-		CreatedAt:             issueNode.CreatedAt.Time,
-		UpdatedAt:             issueNode.UpdatedAt.Time,
-		Labels:                labels,
-		Assignees:             assignees,
+		IssueID: issueNode.ID.(string),
+		Number:  int(issueNode.Number),
+		State:   string(issueNode.State),
+		Title:   string(issueNode.Title),
+		Owner:   string(issueNode.Repository.Owner.Login),
+		Repo:    string(issueNode.Repository.Name),
+		HTMLURL: string(issueNode.Url),
+
+		CreatedAt: issueNode.CreatedAt.Time,
+		UpdatedAt: issueNode.UpdatedAt.Time,
+
+		Labels:    labels,
+		Assignees: assignees,
+
 		ClosedByPullRequestID: closedByPrID,
 	}
 }

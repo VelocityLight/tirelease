@@ -28,7 +28,7 @@ func (IssuePrRelation) TableName() string {
 
 /**
 
-CREATE TABLE IF NOT EXISTS issue_pr_releation (
+CREATE TABLE IF NOT EXISTS issue_pr_relation (
 	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
 	create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',

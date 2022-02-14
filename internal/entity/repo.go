@@ -14,7 +14,7 @@ type Repo struct {
 	Owner   string `json:"owner,omitempty"`
 	Repo    string `json:"repo,omitempty"`
 	FullName string `json:"full_name,omitempty"`
-	HTMLURL string `json:"html_url,omitempty"`
+	HTMLURL *string `json:"html_url,omitempty"`
 	Description         *string         `json:"description,omitempty"`
 }
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS repo (
 
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_owner_repo (owner, repo),
-	INDEX idx_fullname (full_name),
+	INDEX idx_fullname (full_name)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'repo信息表';
 

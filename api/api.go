@@ -45,25 +45,30 @@ func routeHtml(router *gin.Engine, file string) {
 
 // REST-API Function
 func routeRestAPI(router *gin.Engine) {
-	testEntity := router.Group("/testentity")
-	{
-		testEntity.GET("/select", controller.TestEntitySelect)
-		testEntity.POST("/insert", controller.TestEntityInsert)
-	}
+	// testEntity := router.Group("/testentity")
+	// {
+	// 	testEntity.GET("/select", controller.TestEntitySelect)
+	// 	testEntity.POST("/insert", controller.TestEntityInsert)
+	// }
 
-	triageItem := router.Group("/triage")
-	{
-		triageItem.GET("/select", controller.SelectTriageItems)
-		triageItem.POST("/insert", controller.InsertTriageItems)
-		triageItem.POST("/accept", controller.AddLabelsToIssue)
-	}
+	// triageItem := router.Group("/triage")
+	// {
+	// 	triageItem.GET("/select", controller.SelectTriageItems)
+	// 	triageItem.POST("/insert", controller.InsertTriageItems)
+	// 	triageItem.POST("/accept", controller.AddLabelsToIssue)
+	// }
 
-	issue := router.Group("/issue")
+	// issue := router.Group("/issue")
+	// {
+	// 	issue.GET("", controller.ListIssueInfo)
+	// 	issue.GET("/init", controller.InitDataForDemo)
+	// 	issue.GET("/filter", controller.FilterIssueInfo)
+	// 	issue.POST("/affect", controller.UpdateIssueAffectAndTriage)
+	// }
+	releaseVersion := router.Group("/release")
 	{
-		issue.GET("", controller.ListIssueInfo)
-		issue.GET("/init", controller.InitDataForDemo)
-		issue.GET("/filter", controller.FilterIssueInfo)
-		issue.POST("/affect", controller.UpdateIssueAffectAndTriage)
+		releaseVersion.GET("/list", controller.SelectReleaseVersion)
+		releaseVersion.POST("/insert", controller.CreateReleaseVersion)
+		releaseVersion.POST("/update", controller.UpdateReleaseVersion)
 	}
-
 }

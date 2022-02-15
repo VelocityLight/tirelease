@@ -5,7 +5,6 @@ import (
 	"tirelease/commons/configs"
 	"tirelease/commons/database"
 	"tirelease/commons/git"
-	"tirelease/internal/cron"
 	// "tirelease/internal/cron"
 )
 
@@ -22,7 +21,7 @@ func main() {
 
 	// Start Cron (If Needed)
 	// cron.DemoCron()
-	cron.IssueWebHook()
+	// cron.IssueWebHook()
 
 	// Start website && REST-API
 	router := api.Routers("website/build/")

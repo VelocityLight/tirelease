@@ -9,4 +9,3 @@ func IssueWebHook() {
 	// Cron 表达式及功能方法
 	cron.Create("* */1 * * * *", func() { service.InitIssueAndRelationFirstTime() })
 }
-internal/cron/cron_issue_webhook.go

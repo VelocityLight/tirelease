@@ -16,5 +16,8 @@ bin/
 .idea/
 .vscode/
 
+# Self configuration files
+config.yaml
+
 # System temporary file, like cache file
 .DS_Store

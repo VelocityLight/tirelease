@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 
 import { VersionTable } from "./VersionTable";
+import { VersionSearch } from "./VersionSearch";
+import { VersionAdd } from "./VersionAdd";
 
 export default function Version() {
     const [table, setTable] = useState(null);
@@ -22,11 +24,13 @@ export default function Version() {
     return (
         <>
         <Stack spacing={1}>
-            {/* {table && ( */}
-                <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
-                    <VersionTable data={table}/>
-                </Stack>
-            {/* )} */}
+            <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
+                <VersionSearch />
+                <VersionAdd />
+            </Stack>
+            <Stack direction={"row"} justifyContent={"flex-start"} spacing={2}>
+                <VersionTable data={table}/>
+            </Stack>
         </Stack>
         </>
     );

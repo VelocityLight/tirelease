@@ -1,49 +1,42 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
+
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
-import LowPriorityIcon from "@mui/icons-material/LowPriority";
 import BugReportIcon from "@mui/icons-material/BugReport";
-import { Link } from "react-router-dom";
-import AdjustIcon from "@mui/icons-material/Adjust";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import AssignmentIcon from "@mui/icons-material/Assignment";
+import ColorizeIcon from '@mui/icons-material/Colorize';
+import AdUnitsIcon from '@mui/icons-material/AdUnits';
 
 export const mainListItems = (
   <div>
     <ListSubheader inset>Data Center</ListSubheader>
     <ListItem button component={Link} to="/home/open">
       <ListItemIcon>
-        <AdjustIcon />
+        <AdUnitsIcon />
       </ListItemIcon>
       <ListItemText primary="Issues" />
     </ListItem>
-    {/* <ListItem button component={Link} to="/home/close">
-      <ListItemIcon>
-        <CheckCircleOutlineIcon />
-      </ListItemIcon>
-      <ListItemText primary="Recent Close" />
-    </ListItem> */}
-    {/* <ListItem button component={Link} to="/home/assignments">
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Assignments" />
-    </ListItem> */}
   </div>
 );
 
 export const secondaryListItems = (
   <div>
-    <ListSubheader inset>Version Management</ListSubheader>
+    <ListSubheader inset>Release Management</ListSubheader>
 
-    <ListItem button component={Link} to="/home/release">
+    <ListItem button component={Link} to="/home/version">
       <ListItemIcon>
-        <LowPriorityIcon />
+        <AccountTreeIcon />
       </ListItemIcon>
-      <ListItemText primary="Release" />
+      <ListItemText primary="Version" />
+    </ListItem>
+    <ListItem button component={Link} to="/home/triage">
+      <ListItemIcon>
+        <ColorizeIcon />
+      </ListItemIcon>
+      <ListItemText primary="Version Triage" />
     </ListItem>
   </div>
 );
@@ -57,12 +50,6 @@ export const thirdListItems = (
       </ListItemIcon>
       <ListItemText primary="TiFailureChaser" />
     </ListItem>
-    {/* <ListItem button component={Link} to="/home/databoard">
-      <ListItemIcon>
-        <AccountTreeIcon />
-      </ListItemIcon>
-      <ListItemText primary="Version Reports" />
-    </ListItem> */}
   </div>
 );
 

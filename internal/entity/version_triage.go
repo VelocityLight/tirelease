@@ -23,11 +23,12 @@ type VersionTriage struct {
 type VersionTriageResult string
 
 const (
-	VersionTriageResultUnKnown  = VersionTriageResult("UnKnown")
-	VersionTriageResultAccept   = VersionTriageResult("Accept")
-	VersionTriageResultLater    = VersionTriageResult("Later")
-	VersionTriageResultWontFix  = VersionTriageResult("Won't Fix")
-	VersionTriageResultReleased = VersionTriageResult("Released")
+	VersionTriageResultUnKnown      = VersionTriageResult("UnKnown")
+	VersionTriageResultAccept       = VersionTriageResult("Accept")
+	VersionTriageResultAcceptFrozen = VersionTriageResult("Accept(Frozen)")
+	VersionTriageResultLater        = VersionTriageResult("Later")
+	VersionTriageResultWontFix      = VersionTriageResult("Won't Fix")
+	VersionTriageResultReleased     = VersionTriageResult("Released")
 )
 
 // Enum type

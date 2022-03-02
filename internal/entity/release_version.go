@@ -35,6 +35,7 @@ type ReleaseVersionStatus string
 const (
 	ReleaseVersionStatusOpen     = ReleaseVersionStatus("Open")
 	ReleaseVersionStatusClosed   = ReleaseVersionStatus("Closed")
+	ReleaseVersionStatusFrozen   = ReleaseVersionStatus("Frozen")
 	ReleaseVersionStatusReleased = ReleaseVersionStatus("Released")
 )
 

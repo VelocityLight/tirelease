@@ -39,6 +39,18 @@ func TestGetIssueV4(t *testing.T) {
 	assert.Equal(t, true, issue != nil)
 }
 
+func TestGetIssueByIDV4(t *testing.T) {
+	// Connect
+	ConnectV4(TestToken)
+
+	// Query
+	issue, err := ClientV4.GetIssueByID(TestIssueNodeID)
+
+	// Assert
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, issue != nil)
+}
+
 //=======================================================================Pr
 func TestGetPullRequestV4(t *testing.T) {
 	// Connect

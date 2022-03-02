@@ -8,12 +8,12 @@ var CrossReferencedEvent = "CrossReferencedEvent"
 // ============================================================= Struct Of Needed Fields
 type IssueField struct {
 	IssueFieldWithoutTimelineItems
-	TimelineItems IssueTimelineItems `graphql:"timelineItems(first: 20, itemTypes: [CROSS_REFERENCED_EVENT, CLOSED_EVENT] )"`
+	TimelineItems IssueTimelineItems `graphql:"timelineItems(first: 50, itemTypes: [CROSS_REFERENCED_EVENT, CLOSED_EVENT] )"`
 }
 
 type PullRequestField struct {
 	PullRequestFieldWithoutTimelineItems
-	TimelineItems PullRequestTimelineItems `graphql:"timelineItems(first: 15, itemTypes: [CROSS_REFERENCED_EVENT, ISSUE_COMMENT] )"`
+	TimelineItems PullRequestTimelineItems `graphql:"timelineItems(first: 50, itemTypes: [CROSS_REFERENCED_EVENT, ISSUE_COMMENT] )"`
 }
 
 type RepositoryField struct {
@@ -52,8 +52,8 @@ type IssueFieldWithoutTimelineItems struct {
 	CreatedAt  githubv4.DateTime
 	UpdatedAt  githubv4.DateTime
 	Repository RepositoryField
-	Labels     LabelField     `graphql:"labels(first: 100)"`
-	Assignees  AssigneesFiled `graphql:"assignees(first: 100)"`
+	Labels     LabelField     `graphql:"labels(first: 30)"`
+	Assignees  AssigneesFiled `graphql:"assignees(first: 10)"`
 }
 
 type PullRequestFieldWithoutTimelineItems struct {
@@ -72,8 +72,8 @@ type PullRequestFieldWithoutTimelineItems struct {
 	Title       githubv4.String
 	Url         githubv4.String
 	Number      githubv4.Int
-	Labels      LabelField     `graphql:"labels(first: 100)"`
-	Assignees   AssigneesFiled `graphql:"assignees(first: 100)"`
+	Labels      LabelField     `graphql:"labels(first: 30)"`
+	Assignees   AssigneesFiled `graphql:"assignees(first: 10)"`
 	Repository  RepositoryField
 	BaseRefName githubv4.String
 	HeadRefName githubv4.String

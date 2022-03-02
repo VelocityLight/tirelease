@@ -28,6 +28,22 @@ func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*I
 	return &query.Repository.Issue.IssueField, nil
 }
 
+func (client *GithubInfoV4) GetIssueByID(id string) (*IssueField, error) {
+	// var query struct {
+	// 	Node struct {
+	// 		IssueField
+	// 	} `graphql:"node(id: $id)"`
+	// }
+	// params := map[string]interface{}{
+	// 	"id": githubv4.ID(id),
+	// }
+	// if err := client.client.Query(context.Background(), &query, params); err != nil {
+	// 	return nil, err
+	// }
+	// return &query.Node.IssueField, nil
+	return nil, nil
+}
+
 func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number int) (*PullRequestField, error) {
 	var query struct {
 		Repository struct {

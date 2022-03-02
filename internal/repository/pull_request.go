@@ -38,6 +38,17 @@ func SelectPullRequest(option *entity.PullRequestOption) (*[]entity.PullRequest,
 	return &prs, nil
 }
 
+func SelectPullRequestUnique(option *entity.PullRequestOption) (*entity.PullRequest, error) {
+	var pr entity.PullRequest
+	if err := database.DBConn.DB.Where(option).First(&pr).Error; err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("find pull request unique: %+v failed", option))
+	}
+
+	// 加工
+	unSerializePullRequest(&pr)
+	return &pr, nil
+}
+
 func DeletePullRequest(pullRequest *entity.PullRequest) error {
 	if err := database.DBConn.DB.Delete(pullRequest).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("delete pull request: %+v failed", pullRequest))

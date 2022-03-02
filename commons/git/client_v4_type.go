@@ -57,9 +57,9 @@ type IssueFieldWithoutTimelineItems struct {
 }
 
 type PullRequestFieldWithoutTimelineItems struct {
-	ID     githubv4.ID
+	ID          githubv4.ID
 	Number      githubv4.Int
-	State  githubv4.PullRequestState
+	State       githubv4.PullRequestState
 	Title       githubv4.String
 	Repository  RepositoryField
 	Url         githubv4.String
@@ -67,23 +67,22 @@ type PullRequestFieldWithoutTimelineItems struct {
 
 	CreatedAt githubv4.DateTime
 	UpdatedAt githubv4.DateTime
-	ClosedAt *githubv4.DateTime
-	MergedAt *githubv4.DateTime
+	ClosedAt  *githubv4.DateTime
+	MergedAt  *githubv4.DateTime
 
-	Merged githubv4.Boolean
+	Merged    githubv4.Boolean
 	Mergeable githubv4.MergeableState
-	
+
 	MergeCommit struct {
 		OID           githubv4.GitObjectID
 		CommittedDate githubv4.DateTime
 	}
-	Author    UserField
+	Author UserField
 
-	Labels      LabelField     `graphql:"labels(first: 30)"`
-	Assignees   AssigneesFiled `graphql:"assignees(first: 10)"`
-	
+	Labels    LabelField     `graphql:"labels(first: 30)"`
+	Assignees AssigneesFiled `graphql:"assignees(first: 10)"`
+
 	BaseRefName githubv4.String
-	
 }
 
 type IssueTimelineItems struct {

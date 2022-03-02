@@ -8,11 +8,11 @@ import (
 	"github.com/shurcooL/githubv4"
 )
 
-func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*IssueNode, error) {
+func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*IssueField, error) {
 	var query struct {
 		Repository struct {
 			Issue struct {
-				IssueNode
+				IssueField
 			} `graphql:"issue(number: $number)"`
 		} `graphql:"repository(name: $name, owner: $owner)"`
 	}
@@ -25,7 +25,7 @@ func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*I
 	if err := client.client.Query(context.Background(), &query, params); err != nil {
 		return nil, err
 	}
-	return &query.Repository.Issue.IssueNode, nil
+	return &query.Repository.Issue.IssueField, nil
 }
 
 func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number int) (*PullRequest, error) {
@@ -48,13 +48,13 @@ func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number i
 	return &query.Repository.PullRequest.PullRequest, nil
 }
 
-func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueNode, err error) {
+func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueField, err error) {
 	var query struct {
 		Repository struct {
 			Issues struct {
 				Edges []struct {
 					Cursor githubv4.String
-					Node   IssueNode
+					Node   IssueField
 				}
 			} `graphql:"issues(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: ASC}, labels: $labels, filterBy: {since: $since})"`
 		} `graphql:"repository(name: $name, owner: $owner)"`

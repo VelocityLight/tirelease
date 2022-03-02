@@ -4,36 +4,20 @@ import "github.com/shurcooL/githubv4"
 
 var CrossReferencedEvent = "CrossReferencedEvent"
 
-type IssueNode struct {
-	Title  githubv4.String
-	State  githubv4.IssueState
-	ID     githubv4.ID
-	Number githubv4.Int
-	Url    githubv4.String
-	Author struct {
-		Login githubv4.String
-	}
-	Body       githubv4.String
-	ClosedAt   githubv4.DateTime
-	CreatedAt  githubv4.DateTime
-	UpdatedAt  githubv4.DateTime
-	Repository struct {
-		Name  githubv4.String
-		Owner struct {
-			Login githubv4.String
-		}
-	}
-	Labels struct {
-		Nodes []struct {
-			Name githubv4.String
-		}
-	} `graphql:"labels(last: 15)"`
-	Assignees struct {
-		Nodes []struct {
-			Login     githubv4.String
-			CreatedAt githubv4.DateTime
-		}
-	} `graphql:"assignees(last: 5)"`
+type IssueField struct {
+	Title         githubv4.String
+	State         githubv4.IssueState
+	ID            githubv4.ID
+	Number        githubv4.Int
+	Url           githubv4.String
+	Author        AuthorField
+	Body          githubv4.String
+	ClosedAt      githubv4.DateTime
+	CreatedAt     githubv4.DateTime
+	UpdatedAt     githubv4.DateTime
+	Repository    RepositoryField
+	Labels        LabelField `graphql:"labels(first: 100)"`
+	Assignees     AssigneesFiled `graphql:"assignees(first: 100)"`
 	TimelineItems struct {
 		Edges []struct {
 			Node struct {
@@ -69,10 +53,8 @@ type PullRequest struct {
 					}
 				} `graphql:"... on CrossReferencedEvent"`
 				IssueComment struct {
-					Author struct {
-						Login githubv4.String
-					}
-					Body githubv4.String
+					Author AuthorField
+					Body   githubv4.String
 				} `graphql:"... on IssueComment"`
 			}
 		}
@@ -89,45 +71,42 @@ type PullRequestWithoutTimelineItems struct {
 		OID           githubv4.GitObjectID
 		CommittedDate githubv4.DateTime
 	}
-	Author struct {
-		Login githubv4.String
-	}
+	Author    AuthorField
 	CreatedAt githubv4.DateTime
 	UpdatedAt githubv4.DateTime
 	// ClosedAt  githubv4.DateTime
 	// MergedAt  githubv4.DateTime
 
-	Title  githubv4.String
-	Url    githubv4.String
-	Number githubv4.Int
-	Labels struct {
-		Nodes []struct {
-			Name githubv4.String
-		}
-	} `graphql:"labels(last: 15)"`
-	Assignees struct {
-		Nodes []struct {
-			Login     githubv4.String
-			CreatedAt githubv4.DateTime
-		}
-	} `graphql:"assignees(last: 5)"`
-	Repository  Repository
+	Title       githubv4.String
+	Url         githubv4.String
+	Number      githubv4.Int
+	Labels      LabelField `graphql:"labels(first: 100)"`
+	Assignees   AssigneesFiled `graphql:"assignees(first: 100)"`
+	Repository  RepositoryField
 	BaseRefName githubv4.String
 	HeadRefName githubv4.String
 }
 
-type Repository struct {
+type RepositoryField struct {
 	Name  githubv4.String
 	Owner struct {
 		Login githubv4.String
 	}
 }
 
-// 测试用例数据
-var TestToken string = "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"
-var TestIssueId int = 28078
-var TestPullRequestId int = 31287
-var TestOwner string = "pingcap"
-var TestRepo string = "tidb"
-var TestOrg string = "PingCAP"
-var TestUser string = "VelocityLight"
+type LabelField struct {
+	Nodes []struct {
+		Name githubv4.String
+	}
+}
+
+type AssigneesFiled struct {
+	Nodes []struct {
+		Login     githubv4.String
+		CreatedAt githubv4.DateTime
+	}
+}
+
+type AuthorField struct {
+	Login githubv4.String
+}

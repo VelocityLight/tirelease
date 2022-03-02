@@ -30,7 +30,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 		if err != nil {
 			return err
 		}
-		if err := repository.CreateOrUpdateIssue(IssueNodeToIssue(issue)); err != nil {
+		if err := repository.CreateOrUpdateIssue(IssueFieldToIssue(issue)); err != nil {
 			return err
 		}
 	}
@@ -65,8 +65,8 @@ func InitDB() error {
 			}
 		}
 	}
-	for _, issueNode := range issues {
-		issue := IssueNodeToIssue(&issueNode)
+	for _, issueFiled := range issues {
+		issue := IssueFieldToIssue(&issueFiled)
 		if err := repository.CreateOrUpdateIssue(issue); err != nil {
 			return err
 		}
@@ -84,16 +84,16 @@ func InitDB() error {
 	return nil
 }
 
-func IssueNodeToIssue(issueNode *git.IssueNode) *entity.Issue {
+func IssueFieldToIssue(issueFiled *git.IssueField) *entity.Issue {
 	labels := &[]github.Label{}
-	for _, labelNode := range issueNode.Labels.Nodes {
+	for _, labelNode := range issueFiled.Labels.Nodes {
 		label := github.Label{}
 		label.Name = github.String(string(labelNode.Name))
 		*labels = append(*labels, label)
 	}
 
 	assignees := &[]github.User{}
-	for _, userNode := range issueNode.Assignees.Nodes {
+	for _, userNode := range issueFiled.Assignees.Nodes {
 		user := github.User{
 			Login:     (*string)(&userNode.Login),
 			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
@@ -102,8 +102,8 @@ func IssueNodeToIssue(issueNode *git.IssueNode) *entity.Issue {
 	}
 
 	closedByPrID := ""
-	if issueNode.State == githubv4.IssueStateClosed {
-		for _, edge := range issueNode.TimelineItems.Edges {
+	if issueFiled.State == githubv4.IssueStateClosed {
+		for _, edge := range issueFiled.TimelineItems.Edges {
 			closer := edge.Node.ClosedEvent.Closer.PullRequest
 			if closer.Number != 0 {
 				closedByPrID = closer.ID.(string)
@@ -112,20 +112,20 @@ func IssueNodeToIssue(issueNode *git.IssueNode) *entity.Issue {
 	}
 
 	resp := &entity.Issue{
-		IssueID: issueNode.ID.(string),
-		Number:  int(issueNode.Number),
-		State:   string(issueNode.State),
-		Title:   string(issueNode.Title),
-		Repo:    strings.Join([]string{string(issueNode.Repository.Owner.Login), string(issueNode.Repository.Name)}, "/"),
-		// ClosedAt:              issueNode.ClosedAt.Time,
-		CreatedAt:             issueNode.CreatedAt.Time,
-		UpdatedAt:             issueNode.UpdatedAt.Time,
+		IssueID: issueFiled.ID.(string),
+		Number:  int(issueFiled.Number),
+		State:   string(issueFiled.State),
+		Title:   string(issueFiled.Title),
+		Repo:    strings.Join([]string{string(issueFiled.Repository.Owner.Login), string(issueFiled.Repository.Name)}, "/"),
+		// ClosedAt:              issueFiled.ClosedAt.Time,
+		CreatedAt:             issueFiled.CreatedAt.Time,
+		UpdatedAt:             issueFiled.UpdatedAt.Time,
 		Labels:                labels,
 		Assignees:             assignees,
 		ClosedByPullRequestID: closedByPrID,
 	}
-	// if !issueNode.ClosedAt.Time.IsZero() {
-	// 	resp.ClosedAt = issueNode.ClosedAt.Time
+	// if !issueFiled.ClosedAt.Time.IsZero() {
+	// 	resp.ClosedAt = issueFiled.ClosedAt.Time
 	// }
 	return resp
 }

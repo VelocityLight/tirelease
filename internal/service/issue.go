@@ -92,16 +92,16 @@ func ConsistIssueFromV3(issue *github.Issue) *entity.Issue {
 
 // ConsistIssueFromV4
 // TODO: v4 implement by tony at 2022/02/14
-func ConsistIssueFromV4(issueNode *git.IssueNode) *entity.Issue {
+func ConsistIssueFromV4(issueFiled *git.IssueField) *entity.Issue {
 	labels := &[]github.Label{}
-	for _, labelNode := range issueNode.Labels.Nodes {
+	for _, labelNode := range issueFiled.Labels.Nodes {
 		label := github.Label{
 			Name: github.String(string(labelNode.Name)),
 		}
 		*labels = append(*labels, label)
 	}
 	assignees := &[]github.User{}
-	for _, userNode := range issueNode.Assignees.Nodes {
+	for _, userNode := range issueFiled.Assignees.Nodes {
 		user := github.User{
 			Login:     (*string)(&userNode.Login),
 			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
@@ -109,8 +109,8 @@ func ConsistIssueFromV4(issueNode *git.IssueNode) *entity.Issue {
 		*assignees = append(*assignees, user)
 	}
 	closedByPrID := ""
-	if issueNode.State == githubv4.IssueStateClosed {
-		for _, edge := range issueNode.TimelineItems.Edges {
+	if issueFiled.State == githubv4.IssueStateClosed {
+		for _, edge := range issueFiled.TimelineItems.Edges {
 			closer := edge.Node.ClosedEvent.Closer.PullRequest
 			if closer.Number != 0 {
 				closedByPrID = closer.ID.(string)
@@ -119,16 +119,16 @@ func ConsistIssueFromV4(issueNode *git.IssueNode) *entity.Issue {
 	}
 
 	return &entity.Issue{
-		IssueID: issueNode.ID.(string),
-		Number:  int(issueNode.Number),
-		State:   string(issueNode.State),
-		Title:   string(issueNode.Title),
-		Owner:   string(issueNode.Repository.Owner.Login),
-		Repo:    string(issueNode.Repository.Name),
-		HTMLURL: string(issueNode.Url),
+		IssueID: issueFiled.ID.(string),
+		Number:  int(issueFiled.Number),
+		State:   string(issueFiled.State),
+		Title:   string(issueFiled.Title),
+		Owner:   string(issueFiled.Repository.Owner.Login),
+		Repo:    string(issueFiled.Repository.Name),
+		HTMLURL: string(issueFiled.Url),
 
-		CreatedAt: issueNode.CreatedAt.Time,
-		UpdatedAt: issueNode.UpdatedAt.Time,
+		CreatedAt: issueFiled.CreatedAt.Time,
+		UpdatedAt: issueFiled.UpdatedAt.Time,
 
 		Labels:    labels,
 		Assignees: assignees,

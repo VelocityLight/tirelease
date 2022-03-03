@@ -4,6 +4,7 @@ import "github.com/shurcooL/githubv4"
 
 // ============================================================= Constants
 var CrossReferencedEvent = "CrossReferencedEvent"
+var CherryPickLabel = "cherry-pick-approved"
 
 // ============================================================= Struct Of Needed Fields
 type IssueField struct {

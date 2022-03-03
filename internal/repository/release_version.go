@@ -46,6 +46,18 @@ func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.Releas
 	return &releaseVersions, nil
 }
 
+func SelectReleaseVersionUnique(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
+	// 查询
+	var releaseVersion entity.ReleaseVersion
+	if err := database.DBConn.DB.Where(option).First(&releaseVersion).Error; err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("find release version unique: %+v failed", option))
+	}
+
+	// 加工
+	unSerializeReleaseVersion(&releaseVersion)
+	return &releaseVersion, nil
+}
+
 // 序列化和反序列化
 func serializeReleaseVersion(version *entity.ReleaseVersion) {
 	if nil != version.Repos {

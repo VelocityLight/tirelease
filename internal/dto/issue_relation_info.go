@@ -6,6 +6,7 @@ import (
 
 // IssueRelationInfo Query Struct
 type IssueRelationInfoQuery struct {
+	// IssueFilter
 	ID      int64  `json:"id,omitempty"`
 	IssueID string `json:"issue_id,omitempty"`
 	Number  int    `json:"number,omitempty"`
@@ -13,6 +14,7 @@ type IssueRelationInfoQuery struct {
 	Owner   string `json:"owner,omitempty"`
 	Repo    string `json:"repo,omitempty"`
 
+	// AffectFilter
 	AffectVersion string `json:"affect_version,omitempty"`
 }
 

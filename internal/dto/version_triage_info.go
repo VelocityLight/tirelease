@@ -12,9 +12,12 @@ type VersionTriageInfoQuery struct {
 
 // VersionTriage ReturnBack Struct
 type VersionTriageInfo struct {
-	VersionTriage     *entity.VersionTriage  `json:"version_triage,omitempty"`
-	ReleaseVersion    *entity.ReleaseVersion `json:"release_version,omitempty"`
-	IssueRelationInfo *IssueRelationInfo     `json:"issue_relation_info,omitempty"`
+	ReleaseVersion *entity.ReleaseVersion `json:"release_version,omitempty"`
+
+	VersionTriage     *entity.VersionTriage `json:"version_triage,omitempty"`
+	IsFrozen          bool                  `json:"is_frozen,omitempty"`
+	IsAccept          bool                  `json:"is_accept,omitempty"`
+	IssueRelationInfo *IssueRelationInfo    `json:"issue_relation_info,omitempty"`
 }
 
 type VersionTriageInfoWrap struct {

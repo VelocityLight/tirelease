@@ -10,7 +10,7 @@ import (
 func CreateReleaseVersion(c *gin.Context) {
 	// Params
 	releaseVersion := &entity.ReleaseVersion{}
-	c.BindJSON(releaseVersion)
+	c.ShouldBind(releaseVersion)
 
 	// Action
 	err := repository.CreateReleaseVersion(releaseVersion)
@@ -25,7 +25,7 @@ func CreateReleaseVersion(c *gin.Context) {
 func UpdateReleaseVersion(c *gin.Context) {
 	// Params
 	releaseVersion := &entity.ReleaseVersion{}
-	c.BindJSON(releaseVersion)
+	c.ShouldBind(releaseVersion)
 
 	// Action
 	err := repository.UpdateReleaseVersion(releaseVersion)

@@ -35,3 +35,12 @@ func UpdateVersionTriage(versionTriage *entity.VersionTriage) error {
 	}
 	return nil
 }
+
+func CreateOrUpdateVersionTriage(versionTriage *entity.VersionTriage) error {
+	// 存储
+	if err := database.DBConn.DB.Clauses(
+		clause.OnConflict{UpdateAll: true}).Create(&versionTriage).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("create or update version triage: %+v failed", versionTriage))
+	}
+	return nil
+}

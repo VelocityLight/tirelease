@@ -53,8 +53,8 @@ func (Issue) TableName() string {
 	return "issue"
 }
 
-// ConsistIssueFromV3
-func ConsistIssueFromV3(issue *github.Issue) *Issue {
+// ComposeIssueFromV3
+func ComposeIssueFromV3(issue *github.Issue) *Issue {
 	labels := &[]github.Label{}
 	for _, node := range issue.Labels {
 		*labels = append(*labels, *node)
@@ -86,9 +86,9 @@ func ConsistIssueFromV3(issue *github.Issue) *Issue {
 	}
 }
 
-// ConsistIssueFromV4
+// ComposeIssueFromV4
 // TODO: v4 implement by tony at 2022/02/14
-func ConsistIssueFromV4(issueFiled *git.IssueField) *Issue {
+func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 	labels := &[]github.Label{}
 	for _, labelNode := range issueFiled.Labels.Nodes {
 		label := github.Label{

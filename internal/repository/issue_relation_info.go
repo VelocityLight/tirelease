@@ -54,7 +54,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 	// From Issue to select IssueAffects & IssuePrRelations & PullRequests
 	alls := make([]dto.IssueRelationInfo, 0)
 	for _, issue := range *issues {
-		issueRelationInfo, err := ConsistRelationInfoByIssue(&issue)
+		issueRelationInfo, err := ComposeRelationInfoByIssue(&issue)
 		if nil != err {
 			return nil, err
 		}
@@ -80,7 +80,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 }
 
 // ============================================================================ Inner Function
-func ConsistRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, error) {
+func ComposeRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, error) {
 	// Find IssueAffects
 	issueAffectOption := &entity.IssueAffectOption{
 		IssueID: issue.IssueID,

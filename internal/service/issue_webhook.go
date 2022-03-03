@@ -29,7 +29,7 @@ func UpdateIssueAndRelationInfoByTime(repoOption *entity.RepoOption, time *time.
 		}
 
 		for _, issue := range issues {
-			issueRelation, err := ConsistTriageRelationInfoByIssue(issue)
+			issueRelation, err := ComposeTriageRelationInfoByIssue(issue)
 			if err != nil {
 				return err
 			}

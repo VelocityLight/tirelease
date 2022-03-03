@@ -61,8 +61,8 @@ func (PullRequest) TableName() string {
 	return "pull_request"
 }
 
-// ConsistPullRequestFromV3
-func ConsistPullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
+// ComposePullRequestFromV3
+func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 	labels := &[]github.Label{}
 	for _, node := range pullRequest.Labels {
 		*labels = append(*labels, *node)
@@ -102,9 +102,9 @@ func ConsistPullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 	}
 }
 
-// ConsistPullRequestFromV4
+// ComposePullRequestFromV4
 // TODO: v4 implement by tony at 2022/02/14
-func ConsistPullRequestFromV4(pullRequestField *git.PullRequestField) *PullRequest {
+func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullRequest {
 	labels := &[]github.Label{}
 	for _, labelNode := range pullRequestField.Labels.Nodes {
 		label := github.Label{

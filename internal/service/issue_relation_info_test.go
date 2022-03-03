@@ -10,7 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestConsistIssuePrRelationsByIssue(t *testing.T) {
+func TestComposeIssuePrRelationsByIssue(t *testing.T) {
 	// Init
 	git.Connect(git.TestToken)
 	git.ConnectV4(git.TestToken)

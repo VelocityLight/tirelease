@@ -66,9 +66,9 @@ func routeRestAPI(router *gin.Engine) {
 	// 	issue.POST("/affect", controller.UpdateIssueAffectAndTriage)
 	// }
 
-	issueRelationInfo := router.Group("/issue_relation_info")
+	issue := router.Group("/issue")
 	{
-		issueRelationInfo.GET("", controller.SelectIssueRelationInfos)
+		issue.GET("", controller.SelectIssueRelationInfos)
 	}
 
 	releaseVersion := router.Group("/version")

@@ -15,7 +15,7 @@ func GetIssueByNumberFromV3(owner, repo string, number int) (*entity.Issue, erro
 	if nil != err {
 		return nil, err
 	}
-	return entity.ConsistIssueFromV3(issue), nil
+	return entity.ComposeIssueFromV3(issue), nil
 }
 
 func GetIssuesByTimeFromV3(owner, repo string, time *time.Time) ([]*entity.Issue, error) {
@@ -40,7 +40,7 @@ func GetIssuesByTimeFromV3(owner, repo string, time *time.Time) ([]*entity.Issue
 		}
 		for _, issue := range gitIssues {
 			if nil == issue.PullRequestLinks { // V3 considers every pull request an issue, so api return both issues and pull requests in the response
-				issues = append(issues, entity.ConsistIssueFromV3(issue))
+				issues = append(issues, entity.ComposeIssueFromV3(issue))
 			}
 		}
 		page++

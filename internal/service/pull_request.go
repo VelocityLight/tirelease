@@ -11,5 +11,5 @@ func GetPullRequestByNumberFromV3(owner, repo string, number int) (*entity.PullR
 	if nil != err {
 		return nil, err
 	}
-	return entity.ConsistPullRequestFromV3(pr), nil
+	return entity.ComposePullRequestFromV3(pr), nil
 }

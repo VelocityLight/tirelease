@@ -69,6 +69,7 @@ func routeRestAPI(router *gin.Engine) {
 	issue := router.Group("/issue")
 	{
 		issue.GET("", controller.SelectIssueRelationInfos)
+		issue.POST("/cherrypick", controller.CreateOrUpdateVersionTriage)
 	}
 
 	releaseVersion := router.Group("/version")
@@ -78,8 +79,4 @@ func routeRestAPI(router *gin.Engine) {
 		releaseVersion.POST("/update", controller.UpdateReleaseVersion)
 	}
 
-	cherryPick := router.Group("/cherrypick")
-	{
-		cherryPick.POST("", controller.CreateOrUpdateVersionTriage)
-	}
 }

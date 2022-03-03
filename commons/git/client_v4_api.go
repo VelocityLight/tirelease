@@ -8,11 +8,11 @@ import (
 	"github.com/shurcooL/githubv4"
 )
 
-func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*IssueNode, error) {
+func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*IssueField, error) {
 	var query struct {
 		Repository struct {
 			Issue struct {
-				IssueNode
+				IssueField
 			} `graphql:"issue(number: $number)"`
 		} `graphql:"repository(name: $name, owner: $owner)"`
 	}
@@ -25,14 +25,30 @@ func (client *GithubInfoV4) GetIssueByNumber(owner, name string, number int) (*I
 	if err := client.client.Query(context.Background(), &query, params); err != nil {
 		return nil, err
 	}
-	return &query.Repository.Issue.IssueNode, nil
+	return &query.Repository.Issue.IssueField, nil
 }
 
-func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number int) (*PullRequest, error) {
+func (client *GithubInfoV4) GetIssueByID(id string) (*IssueField, error) {
+	// var query struct {
+	// 	Node struct {
+	// 		IssueField
+	// 	} `graphql:"node(id: $id)"`
+	// }
+	// params := map[string]interface{}{
+	// 	"id": githubv4.ID(id),
+	// }
+	// if err := client.client.Query(context.Background(), &query, params); err != nil {
+	// 	return nil, err
+	// }
+	// return &query.Node.IssueField, nil
+	return nil, nil
+}
+
+func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number int) (*PullRequestField, error) {
 	var query struct {
 		Repository struct {
 			PullRequest struct {
-				PullRequest
+				PullRequestField
 			} `graphql:"pullRequest(number: $number)"`
 		} `graphql:"repository(name: $name, owner: $owner)"`
 	}
@@ -45,16 +61,16 @@ func (client *GithubInfoV4) GetPullRequestsByNumber(owner, name string, number i
 	if err := client.client.Query(context.Background(), &query, params); err != nil {
 		return nil, err
 	}
-	return &query.Repository.PullRequest.PullRequest, nil
+	return &query.Repository.PullRequest.PullRequestField, nil
 }
 
-func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueNode, err error) {
+func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueField, err error) {
 	var query struct {
 		Repository struct {
 			Issues struct {
 				Edges []struct {
 					Cursor githubv4.String
-					Node   IssueNode
+					Node   IssueField
 				}
 			} `graphql:"issues(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: ASC}, labels: $labels, filterBy: {since: $since})"`
 		} `graphql:"repository(name: $name, owner: $owner)"`
@@ -117,13 +133,13 @@ func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []st
 	return
 }
 
-func (client *GithubInfoV4) GetPullRequestsFrom(owner, name string, from time.Time, batchLimit int, totalLimit int) (prs []PullRequest, err error) {
+func (client *GithubInfoV4) GetPullRequestsFrom(owner, name string, from time.Time, batchLimit int, totalLimit int) (prs []PullRequestField, err error) {
 	var query struct {
 		Repository struct {
 			PullRequests struct {
 				Edges []struct {
 					Cursor githubv4.String
-					Node   PullRequest
+					Node   PullRequestField
 				}
 			} `graphql:"pullRequests(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: DESC})"`
 		} `graphql:"repository(name: $name, owner: $owner)"`

@@ -6,57 +6,24 @@ import (
 	"tirelease/commons/git"
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
-	"tirelease/internal/repository"
 )
 
-// Get All IssueRelationInfo by Issue
+// ================================================================ Compose Function From Remote Query
 func GetIssueRelationInfoByIssueNumber(owner, repo string, number int) (*dto.IssueRelationInfo, error) {
 	issue, err := GetIssueByNumberFromV3(owner, repo, number)
 	if nil != err {
 		return nil, err
 	}
 
-	return ConsistTriageRelationInfoByIssue(issue)
+	return ComposeTriageRelationInfoByIssue(issue)
 }
 
-// Save TriageRelationInfo Every Detail
-func SaveIssueRelationInfo(triageRelationInfo *dto.IssueRelationInfo) error {
-	// Save Issue
-	if err := repository.CreateOrUpdateIssue(triageRelationInfo.Issue); nil != err {
-		return err
-	}
-
-	// Save IssueAffects
-	for _, issueAffect := range triageRelationInfo.IssueAffects {
-		if err := repository.CreateIssueAffect(issueAffect); nil != err {
-			return err
-		}
-	}
-
-	// Save IssuePrRelations
-	for _, issuePrRelation := range triageRelationInfo.IssuePrRelations {
-		if err := repository.CreateIssuePrRelation(issuePrRelation); nil != err {
-			return err
-		}
-	}
-
-	// Save PullRequests
-	for _, pullRequest := range triageRelationInfo.PullRequests {
-		if err := repository.CreateOrUpdatePullRequest(pullRequest); nil != err {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ConsistTriageRelationInfoByIssue
-func ConsistTriageRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, error) {
-	issueAffects, err := ConsistIssueAffectsByIssue(issue)
+func ComposeTriageRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, error) {
+	issueAffects, err := ComposeIssueAffectsByIssue(issue)
 	if nil != err {
 		return nil, err
 	}
-	issuePrRelations, pullRequests, err := ConsistIssuePrRelationsByIssue(issue)
+	issuePrRelations, pullRequests, err := ComposeIssuePrRelationsByIssue(issue)
 	if nil != err {
 		return nil, err
 	}
@@ -70,9 +37,8 @@ func ConsistTriageRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationIn
 	return triageRelationInfo, nil
 }
 
-// Consist IssueAffects by Issue
-func ConsistIssueAffectsByIssue(issue *entity.Issue) ([]*entity.IssueAffect, error) {
-	issueAffects := make([]*entity.IssueAffect, 0)
+func ComposeIssueAffectsByIssue(issue *entity.Issue) (*[]entity.IssueAffect, error) {
+	issueAffects := make([]entity.IssueAffect, 0)
 	// todo: minorVersion is fixed now, need to search later - 2022.2.7
 	for _, minorVersion := range MinorVersionList {
 		issueAffect := &entity.IssueAffect{
@@ -82,13 +48,12 @@ func ConsistIssueAffectsByIssue(issue *entity.Issue) ([]*entity.IssueAffect, err
 			AffectVersion: minorVersion,
 			AffectResult:  entity.AffectResultResultUnKnown,
 		}
-		issueAffects = append(issueAffects, issueAffect)
+		issueAffects = append(issueAffects, *issueAffect)
 	}
-	return issueAffects, nil
+	return &issueAffects, nil
 }
 
-// Consist IssuePrRelations & PullRequests by Issue
-func ConsistIssuePrRelationsByIssue(issue *entity.Issue) ([]*entity.IssuePrRelation, []*entity.PullRequest, error) {
+func ComposeIssuePrRelationsByIssue(issue *entity.Issue) (*[]entity.IssuePrRelation, *[]entity.PullRequest, error) {
 	// Query timeline
 	issueWithTimeline, err := git.ClientV4.GetIssueByNumber(issue.Owner, issue.Repo, issue.Number)
 	if nil != err {
@@ -99,9 +64,9 @@ func ConsistIssuePrRelationsByIssue(issue *entity.Issue) ([]*entity.IssuePrRelat
 		return nil, nil, nil
 	}
 
-	// Analyze timeline to consist IssuePrRelations & PullRequests
-	issuePrRelations := make([]*entity.IssuePrRelation, 0)
-	pullRequests := make([]*entity.PullRequest, 0)
+	// Analyze timeline to compose IssuePrRelations & PullRequests
+	issuePrRelations := make([]entity.IssuePrRelation, 0)
+	pullRequests := make([]entity.PullRequest, 0)
 	for _, edge := range edges {
 		if nil == &edge.Node || nil == &edge.Node.CrossReferencedEvent ||
 			nil == &edge.Node.CrossReferencedEvent.Source || nil == &edge.Node.CrossReferencedEvent.Source.PullRequest {
@@ -126,10 +91,10 @@ func ConsistIssuePrRelationsByIssue(issue *entity.Issue) ([]*entity.IssuePrRelat
 		if nil != err {
 			return nil, nil, err
 		}
-		issuePrRelations = append(issuePrRelations, issuePrRelation)
-		pullRequests = append(pullRequests, pullRequest)
+		issuePrRelations = append(issuePrRelations, *issuePrRelation)
+		pullRequests = append(pullRequests, *pullRequest)
 	}
 
 	// Return
-	return issuePrRelations, pullRequests, nil
+	return &issuePrRelations, &pullRequests, nil
 }

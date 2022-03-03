@@ -1,9 +1,13 @@
 package entity
 
 import (
+	"strings"
 	"time"
 
+	"tirelease/commons/git"
+
 	"github.com/google/go-github/v41/github"
+	"github.com/shurcooL/githubv4"
 )
 
 // Struct of Issue
@@ -47,6 +51,86 @@ type IssueOption struct {
 // DB-Table
 func (Issue) TableName() string {
 	return "issue"
+}
+
+// ComposeIssueFromV3
+func ComposeIssueFromV3(issue *github.Issue) *Issue {
+	labels := &[]github.Label{}
+	for _, node := range issue.Labels {
+		*labels = append(*labels, *node)
+	}
+	assignees := &[]github.User{}
+	for _, node := range issue.Assignees {
+		*assignees = append(*assignees, *node)
+	}
+	url := strings.Split(*issue.RepositoryURL, "/")
+	owner := url[len(url)-2]
+	repo := url[len(url)-1]
+
+	return &Issue{
+		IssueID: *issue.NodeID,
+		Number:  *issue.Number,
+		State:   *issue.State,
+		Title:   *issue.Title,
+		Owner:   owner,
+		Repo:    repo,
+		HTMLURL: *issue.HTMLURL,
+
+		CreatedAt: *issue.CreatedAt,
+		UpdatedAt: *issue.UpdatedAt,
+		ClosedAt:  issue.ClosedAt,
+
+		Labels:    labels,
+		Assignee:  issue.Assignee,
+		Assignees: assignees,
+	}
+}
+
+// ComposeIssueFromV4
+// TODO: v4 implement by tony at 2022/02/14
+func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
+	labels := &[]github.Label{}
+	for _, labelNode := range issueFiled.Labels.Nodes {
+		label := github.Label{
+			Name: github.String(string(labelNode.Name)),
+		}
+		*labels = append(*labels, label)
+	}
+	assignees := &[]github.User{}
+	for _, userNode := range issueFiled.Assignees.Nodes {
+		user := github.User{
+			Login:     (*string)(&userNode.Login),
+			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+		}
+		*assignees = append(*assignees, user)
+	}
+	closedByPrID := ""
+	if issueFiled.State == githubv4.IssueStateClosed {
+		for _, edge := range issueFiled.TimelineItems.Edges {
+			closer := edge.Node.ClosedEvent.Closer.PullRequest
+			if closer.Number != 0 {
+				closedByPrID = closer.ID.(string)
+			}
+		}
+	}
+
+	return &Issue{
+		IssueID: issueFiled.ID.(string),
+		Number:  int(issueFiled.Number),
+		State:   string(issueFiled.State),
+		Title:   string(issueFiled.Title),
+		Owner:   string(issueFiled.Repository.Owner.Login),
+		Repo:    string(issueFiled.Repository.Name),
+		HTMLURL: string(issueFiled.Url),
+
+		CreatedAt: issueFiled.CreatedAt.Time,
+		UpdatedAt: issueFiled.UpdatedAt.Time,
+
+		Labels:    labels,
+		Assignees: assignees,
+
+		ClosedByPullRequestID: closedByPrID,
+	}
 }
 
 /**

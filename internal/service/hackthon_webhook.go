@@ -30,7 +30,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 		if err != nil {
 			return err
 		}
-		if err := repository.CreateOrUpdateIssue(IssueNodeToIssue(issue)); err != nil {
+		if err := repository.CreateOrUpdateIssue(IssueFieldToIssue(issue)); err != nil {
 			return err
 		}
 	}
@@ -39,7 +39,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 		if err != nil {
 			return err
 		}
-		if err := repository.CreateOrUpdatePullRequest(PullRequestNodeToPullRequest(pullRequest)); err != nil {
+		if err := repository.CreateOrUpdatePullRequest(PullRequestFieldToPullRequest(pullRequest)); err != nil {
 			return err
 		}
 	}
@@ -65,8 +65,8 @@ func InitDB() error {
 			}
 		}
 	}
-	for _, issueNode := range issues {
-		issue := IssueNodeToIssue(&issueNode)
+	for _, issueFiled := range issues {
+		issue := IssueFieldToIssue(&issueFiled)
 		if err := repository.CreateOrUpdateIssue(issue); err != nil {
 			return err
 		}
@@ -76,7 +76,7 @@ func InitDB() error {
 		return err
 	}
 	for _, prNode := range prs {
-		pr := PullRequestNodeToPullRequest(&prNode)
+		pr := PullRequestFieldToPullRequest(&prNode)
 		if err := repository.CreateOrUpdatePullRequest(pr); err != nil {
 			return err
 		}
@@ -84,16 +84,16 @@ func InitDB() error {
 	return nil
 }
 
-func IssueNodeToIssue(issueNode *git.IssueNode) *entity.Issue {
+func IssueFieldToIssue(issueFiled *git.IssueField) *entity.Issue {
 	labels := &[]github.Label{}
-	for _, labelNode := range issueNode.Labels.Nodes {
+	for _, labelNode := range issueFiled.Labels.Nodes {
 		label := github.Label{}
 		label.Name = github.String(string(labelNode.Name))
 		*labels = append(*labels, label)
 	}
 
 	assignees := &[]github.User{}
-	for _, userNode := range issueNode.Assignees.Nodes {
+	for _, userNode := range issueFiled.Assignees.Nodes {
 		user := github.User{
 			Login:     (*string)(&userNode.Login),
 			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
@@ -102,8 +102,8 @@ func IssueNodeToIssue(issueNode *git.IssueNode) *entity.Issue {
 	}
 
 	closedByPrID := ""
-	if issueNode.State == githubv4.IssueStateClosed {
-		for _, edge := range issueNode.TimelineItems.Edges {
+	if issueFiled.State == githubv4.IssueStateClosed {
+		for _, edge := range issueFiled.TimelineItems.Edges {
 			closer := edge.Node.ClosedEvent.Closer.PullRequest
 			if closer.Number != 0 {
 				closedByPrID = closer.ID.(string)
@@ -112,33 +112,33 @@ func IssueNodeToIssue(issueNode *git.IssueNode) *entity.Issue {
 	}
 
 	resp := &entity.Issue{
-		IssueID: issueNode.ID.(string),
-		Number:  int(issueNode.Number),
-		State:   string(issueNode.State),
-		Title:   string(issueNode.Title),
-		Repo:    strings.Join([]string{string(issueNode.Repository.Owner.Login), string(issueNode.Repository.Name)}, "/"),
-		// ClosedAt:              issueNode.ClosedAt.Time,
-		CreatedAt:             issueNode.CreatedAt.Time,
-		UpdatedAt:             issueNode.UpdatedAt.Time,
+		IssueID: issueFiled.ID.(string),
+		Number:  int(issueFiled.Number),
+		State:   string(issueFiled.State),
+		Title:   string(issueFiled.Title),
+		Repo:    strings.Join([]string{string(issueFiled.Repository.Owner.Login), string(issueFiled.Repository.Name)}, "/"),
+		// ClosedAt:              issueFiled.ClosedAt.Time,
+		CreatedAt:             issueFiled.CreatedAt.Time,
+		UpdatedAt:             issueFiled.UpdatedAt.Time,
 		Labels:                labels,
 		Assignees:             assignees,
 		ClosedByPullRequestID: closedByPrID,
 	}
-	// if !issueNode.ClosedAt.Time.IsZero() {
-	// 	resp.ClosedAt = issueNode.ClosedAt.Time
+	// if !issueFiled.ClosedAt.Time.IsZero() {
+	// 	resp.ClosedAt = issueFiled.ClosedAt.Time
 	// }
 	return resp
 }
 
-func PullRequestNodeToPullRequest(pullRequestNode *git.PullRequest) *entity.PullRequest {
+func PullRequestFieldToPullRequest(pullRequestField *git.PullRequestField) *entity.PullRequest {
 	labels := &[]github.Label{}
-	for _, labelNode := range pullRequestNode.Labels.Nodes {
+	for _, labelNode := range pullRequestField.Labels.Nodes {
 		label := github.Label{}
 		label.Name = github.String(string(labelNode.Name))
 		*labels = append(*labels, label)
 	}
 	assignees := &[]github.User{}
-	for _, userNode := range pullRequestNode.Assignees.Nodes {
+	for _, userNode := range pullRequestField.Assignees.Nodes {
 		user := github.User{
 			Login:     (*string)(&userNode.Login),
 			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
@@ -146,30 +146,30 @@ func PullRequestNodeToPullRequest(pullRequestNode *git.PullRequest) *entity.Pull
 		*assignees = append(*assignees, user)
 	}
 	SourcePrID := ""
-	for _, edge := range pullRequestNode.TimelineItems.Edges {
+	for _, edge := range pullRequestField.TimelineItems.Edges {
 		sourcePr := edge.Node.CrossReferencedEvent.Source.PullRequest
-		if sourcePr.Number != 0 && strings.HasPrefix(string(pullRequestNode.Title), string(sourcePr.Title)) {
+		if sourcePr.Number != 0 && strings.HasPrefix(string(pullRequestField.Title), string(sourcePr.Title)) {
 			SourcePrID = sourcePr.ID.(string)
 		}
 	}
 
 	resp := &entity.PullRequest{
-		PullRequestID: pullRequestNode.ID.(string),
-		Number:        int(pullRequestNode.Number),
-		State:         string(pullRequestNode.State),
-		Title:         string(pullRequestNode.Title),
-		Repo:          strings.Join([]string{string(pullRequestNode.Repository.Owner.Login), string(pullRequestNode.Repository.Name)}, "/"),
-		HeadBranch:    string(pullRequestNode.BaseRefName),
-		// MergedAt:            pullRequestNode.MergedAt.Time,
-		CreatedAt:           pullRequestNode.CreatedAt.Time,
-		UpdatedAt:           pullRequestNode.UpdatedAt.Time,
-		Merged:              bool(pullRequestNode.Merged),
+		PullRequestID: pullRequestField.ID.(string),
+		Number:        int(pullRequestField.Number),
+		State:         string(pullRequestField.State),
+		Title:         string(pullRequestField.Title),
+		Repo:          strings.Join([]string{string(pullRequestField.Repository.Owner.Login), string(pullRequestField.Repository.Name)}, "/"),
+		HeadBranch:    string(pullRequestField.BaseRefName),
+		// MergedAt:            pullRequestField.MergedAt.Time,
+		CreatedAt:           pullRequestField.CreatedAt.Time,
+		UpdatedAt:           pullRequestField.UpdatedAt.Time,
+		Merged:              bool(pullRequestField.Merged),
 		Labels:              labels,
 		Assignees:           assignees,
 		SourcePullRequestID: SourcePrID,
 	}
-	// if !pullRequestNode.MergedAt.Time.IsZero() {
-	// 	resp.MergedAt = pullRequestNode.MergedAt.Time
+	// if !pullRequestField.MergedAt.Time.IsZero() {
+	// 	resp.MergedAt = pullRequestField.MergedAt.Time
 	// }
 
 	return resp

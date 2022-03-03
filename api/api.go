@@ -69,7 +69,7 @@ func routeRestAPI(router *gin.Engine) {
 	issue := router.Group("/issue")
 	{
 		issue.GET("", controller.SelectIssueRelationInfos)
-		issue.POST("/cherrypick", controller.CreateOrUpdateVersionTriage)
+		issue.POST("/pick", controller.CreateOrUpdateVersionTriage)
 	}
 
 	releaseVersion := router.Group("/version")

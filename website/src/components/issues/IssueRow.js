@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "@mui/material/Link";
 import { TableRow, TableCell } from "@mui/material";
 
@@ -5,6 +7,8 @@ import SeveritySelector from "./SeveritySelector";
 import Affects from "./Affects";
 import ColorHash from "color-hash";
 import AllColumns from "./ColumnDefs";
+
+dayjs.extend(relativeTime);
 
 export const IssueRow = ({ row, onlyVersion, columns }) => {
   return (
@@ -30,7 +34,7 @@ export const IssueRow = ({ row, onlyVersion, columns }) => {
             case "Created":
               return (
                 <TableCell>
-                  {row.CreatedAt || new Date().toDateString()}
+                  {dayjs(row.CreatedAt).fromNow() || "Unknown"}
                 </TableCell>
               );
             case "Severity":
@@ -52,23 +56,31 @@ export const IssueRow = ({ row, onlyVersion, columns }) => {
             case "Assignee":
               return (
                 <TableCell>
-                  <button
-                    style={{
-                      backgroundColor: new ColorHash().hex(row.Assignee),
-                      border: 0,
-                      borderRadius: "20px",
-                      padding: "5px 10px",
-                      maxWidth: "12em",
-                      minWidth: "5em",
-                    }}
-                    href={"https://github.com/" + row.Assignee}
-                  >
-                    {row.Assignee}
-                  </button>
+                  {row.Assignee && (
+                    <button
+                      style={{
+                        backgroundColor: new ColorHash().hex(row.Assignee),
+                        border: 0,
+                        borderRadius: "20px",
+                        padding: "5px 10px",
+                        maxWidth: "12em",
+                        minWidth: "5em",
+                      }}
+                      href={"https://github.com/" + row.Assignee}
+                    >
+                      {row.Assignee}
+                    </button>
+                  )}
+                  {row.Assignee || "Unassigned"}
                 </TableCell>
               );
             case "Linked PR":
-              return <TableCell> None </TableCell>;
+              return (
+                <TableCell>
+                  {row.PR && <a href={row.PR.Url}>{row.PR.Number}</a>}
+                  {row.PR || "None"}
+                </TableCell>
+              );
             case "Affects":
               return (
                 <TableCell>

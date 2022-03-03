@@ -70,7 +70,7 @@ export default function Affects(
     .filter(({ Affect }) => Affect.toLowerCase() === "no")
     .map(({ Version }) => Version);
   return (
-    <>
+    <div>
       <Stack direction={"row"} spacing={1} alignItems={"center"}>
         {!onlyVersion && (
           <ToggleButtons
@@ -253,6 +253,6 @@ export default function Affects(
           {/* </TableContainer> */}
         </Stack>
       )}
-    </>
+    </div>
   );
 }

@@ -14,37 +14,11 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Tabs from "@mui/material/Tabs";
 import Box from "@mui/material/Box";
 
-import PropTypes from "prop-types";
-import Typography from "@mui/material/Typography";
 import { sampleData } from "../components/issues/SampleData";
 import { useQuery } from "react-query";
 import AllColumns from "../components/issues/ColumnDefs";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
+import TabPanel from "../components/issues/TablePanel";
+import { url } from "../utils";
 
 function a11yProps(index) {
   return {
@@ -55,7 +29,7 @@ function a11yProps(index) {
 
 function OpenedToday() {
   const { isLoading, error, data } = useQuery("openedToday", () => {
-    return fetch("http://172.16.5.65:30750/issue?state=OPEN")
+    return fetch(url("issue?state=open"))
       .then((res) => {
         const data = res.json();
         console.log(data);
@@ -67,13 +41,38 @@ function OpenedToday() {
   });
   console.log(isLoading, error, data);
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
   }
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <div>
+        <p>Error: {error.message}</p>
+      </div>
+    );
   }
-  console.log(data);
-  return <IssueTable data={data}></IssueTable>;
+  console.log("fetched data", data);
+  return (
+    <IssueTable
+      data={data}
+      columns={[
+        AllColumns.Repo,
+        AllColumns.Issue,
+        AllColumns.Title,
+        AllColumns.Created,
+        AllColumns.Severity,
+        AllColumns.Assignee,
+        AllColumns.LinkedPR,
+        {
+          ...AllColumns.Affects,
+          columns: [...AllColumns.Affects.columns],
+        },
+      ]}
+    ></IssueTable>
+  );
 }
 
 const RecentOpen = () => {
@@ -88,7 +87,7 @@ const RecentOpen = () => {
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
         <Accordion defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Recent Open (55)
+            Recent Open
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{ width: "100%" }}>

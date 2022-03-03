@@ -2,7 +2,7 @@ package controller
 
 import (
 	"tirelease/internal/dto"
-	"tirelease/internal/repository"
+	"tirelease/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +13,7 @@ func SelectIssueRelationInfos(c *gin.Context) {
 	c.ShouldBind(&option)
 
 	// Action
-	issueRelationInfos, err := repository.SelectIssueRelationInfo(&option)
+	issueRelationInfos, err := service.SelectIssueRelationInfo(&option)
 	if err != nil {
 		c.JSON(500, err.Error())
 		return

@@ -5,7 +5,8 @@ import (
 
 	"tirelease/commons/database"
 	"tirelease/commons/git"
-	"tirelease/internal/repository"
+
+	"tirelease/internal/dto"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -24,6 +25,21 @@ func TestComposeIssuePrRelationsByIssue(t *testing.T) {
 	assert.Equal(t, true, len(*triageRelationInfo.IssuePrRelations) == len(*triageRelationInfo.PullRequests))
 
 	// Save (If Needed)
-	err = repository.SaveIssueRelationInfo(triageRelationInfo)
+	err = SaveIssueRelationInfo(triageRelationInfo)
 	assert.Equal(t, true, err == nil)
+}
+
+func TestSelectIssueRelationInfo(t *testing.T) {
+	// Init
+	var config = generateConfig()
+	database.Connect(config)
+
+	// Select
+	option := &dto.IssueRelationInfoQuery{
+		Owner: git.TestOwner,
+		Repo:  git.TestRepo,
+	}
+	issueRelationInfos, err := SelectIssueRelationInfo(option)
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, len(*issueRelationInfos) > 0)
 }

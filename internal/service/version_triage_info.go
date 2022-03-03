@@ -32,9 +32,9 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	}
 
 	// Operate Git
-	// if !isFrozen && isAccept {
-	// 	// TODO by tony: git label
-	// }
+	if !isFrozen && isAccept {
+		// TODO by tony: git label
+	}
 
 	// Return
 	return &dto.VersionTriageInfo{

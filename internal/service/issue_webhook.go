@@ -33,7 +33,7 @@ func UpdateIssueAndRelationInfoByTime(repoOption *entity.RepoOption, time *time.
 			if err != nil {
 				return err
 			}
-			err = repository.SaveIssueRelationInfo(issueRelation)
+			err = SaveIssueRelationInfo(issueRelation)
 			if err != nil {
 				return err
 			}

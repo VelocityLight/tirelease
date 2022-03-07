@@ -43,3 +43,23 @@ func SelectVersionTriageInfos(c *gin.Context) {
 	// Response
 	c.JSON(200, gin.H{"data": versionTriageInfos})
 }
+
+func SelectVersionTriageResult(c *gin.Context) {
+	var enumResult = struct {
+		VersionTriageResultUnKnown      entity.VersionTriageResult
+		VersionTriageResultAccept       entity.VersionTriageResult
+		VersionTriageResultAcceptFrozen entity.VersionTriageResult
+		VersionTriageResultLater        entity.VersionTriageResult
+		VersionTriageResultWontFix      entity.VersionTriageResult
+		VersionTriageResultReleased     entity.VersionTriageResult
+	}{
+		VersionTriageResultUnKnown:      entity.VersionTriageResultUnKnown,
+		VersionTriageResultAccept:       entity.VersionTriageResultAccept,
+		VersionTriageResultAcceptFrozen: entity.VersionTriageResultAcceptFrozen,
+		VersionTriageResultLater:        entity.VersionTriageResultLater,
+		VersionTriageResultWontFix:      entity.VersionTriageResultWontFix,
+		VersionTriageResultReleased:     entity.VersionTriageResultReleased,
+	}
+
+	c.JSON(200, gin.H{"data": enumResult})
+}

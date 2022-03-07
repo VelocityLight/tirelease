@@ -23,6 +23,20 @@ func SelectIssueAffect(c *gin.Context) {
 	c.JSON(200, gin.H{"data": issueAffects})
 }
 
+func SelectIssueAffectResult(c *gin.Context) {
+	var enumResult = struct {
+		AffectResultResultUnKnown entity.AffectResultResult
+		AffectResultResultYes     entity.AffectResultResult
+		AffectResultResultNo      entity.AffectResultResult
+	}{
+		AffectResultResultUnKnown: entity.AffectResultResultUnKnown,
+		AffectResultResultYes:     entity.AffectResultResultYes,
+		AffectResultResultNo:      entity.AffectResultResultNo,
+	}
+
+	c.JSON(200, gin.H{"data": enumResult})
+}
+
 func UpdateIssueAffect(c *gin.Context) {
 	// Params
 	issueAffect := entity.IssueAffect{}

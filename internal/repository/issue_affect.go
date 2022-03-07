@@ -30,7 +30,8 @@ func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect,
 
 func UpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	// 更新
-	if err := database.DBConn.DB.Save(&issueAffect).Error; err != nil {
+	if err := database.DBConn.DB.Clauses(
+		clause.OnConflict{UpdateAll: true}).Save(&issueAffect).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("update issue affect: %+v failed", issueAffect))
 	}
 	return nil

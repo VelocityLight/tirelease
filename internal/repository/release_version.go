@@ -35,7 +35,7 @@ func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.ReleaseVersion, error) {
 	// 查询
 	var releaseVersions []entity.ReleaseVersion
-	if err := database.DBConn.DB.Where(option).Find(&releaseVersions).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Order("create_time desc").Find(&releaseVersions).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version: %+v failed", option))
 	}
 
@@ -49,7 +49,7 @@ func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.Releas
 func SelectReleaseVersionUnique(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
 	// 查询
 	var releaseVersion entity.ReleaseVersion
-	if err := database.DBConn.DB.Where(option).First(&releaseVersion).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Order("create_time desc").First(&releaseVersion).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version unique: %+v failed", option))
 	}
 

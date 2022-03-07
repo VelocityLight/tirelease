@@ -70,14 +70,15 @@ func routeRestAPI(router *gin.Engine) {
 	{
 		issue.GET("", controller.SelectIssueRelationInfos)
 		issue.POST("/:issue_id/cherrypick/:version_name", controller.CreateOrUpdateVersionTriage)
-		issue.PATCH("/:id/cherrypick", controller.CreateOrUpdateVersionTriage)
+		issue.PATCH("/:issue_id/cherrypick/:version_name", controller.CreateOrUpdateVersionTriage)
+		issue.GET("/cherrypick/:version_name", controller.SelectVersionTriageInfos)
 	}
 
 	releaseVersion := router.Group("/version")
 	{
 		releaseVersion.GET("/list", controller.SelectReleaseVersion)
 		releaseVersion.POST("/insert", controller.CreateReleaseVersion)
-		releaseVersion.POST("/update", controller.UpdateReleaseVersion)
+		releaseVersion.PATCH("/update", controller.UpdateReleaseVersion)
 	}
 
 }

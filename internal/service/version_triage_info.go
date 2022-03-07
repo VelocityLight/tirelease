@@ -46,8 +46,51 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	}, nil
 }
 
-func SelectVersionTriageInfo() {
+func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTriageInfoWrap, error) {
+	// Option
+	versionTriageOption := &entity.VersionTriageOption{
+		ID:           query.ID,
+		IssueID:      query.IssueID,
+		VersionName:  query.VersionName,
+		TriageResult: query.TriageResult,
+	}
 
+	// Select
+	versionTriages, err := repository.SelectVersionTriage(versionTriageOption)
+	if err != nil {
+		return nil, err
+	}
+	releaseVersion, err := repository.SelectReleaseVersionUnique(&entity.ReleaseVersionOption{
+		Name: query.VersionName,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	// Compose
+	versionTriageInfos := make([]dto.VersionTriageInfo, 0)
+	for _, versionTriage := range *versionTriages {
+		issueRelationInfos, err := SelectIssueRelationInfo(&dto.IssueRelationInfoQuery{
+			IssueID:    versionTriage.IssueID,
+			HeadBranch: releaseVersion.ReleaseBranch,
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		versionTriageInfo := dto.VersionTriageInfo{}
+		versionTriageInfo.VersionTriage = &versionTriage
+		if len(*issueRelationInfos) == 1 {
+			versionTriageInfo.IssueRelationInfo = &(*issueRelationInfos)[0]
+		}
+		versionTriageInfo.ReleaseVersion = releaseVersion
+		versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
+	}
+
+	return &dto.VersionTriageInfoWrap{
+		ReleaseVersion:     releaseVersion,
+		VersionTriageInfos: &versionTriageInfos,
+	}, nil
 }
 
 func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {

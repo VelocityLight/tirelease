@@ -1,0 +1,39 @@
+package controller
+
+import (
+	"tirelease/internal/entity"
+	"tirelease/internal/repository"
+	"tirelease/internal/service"
+
+	"github.com/gin-gonic/gin"
+)
+
+func SelectIssueAffect(c *gin.Context) {
+	// Params
+	option := entity.IssueAffectOption{}
+	c.ShouldBind(&option)
+
+	// Action
+	issueAffects, err := repository.SelectIssueAffect(&option)
+	if err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+
+	c.JSON(200, gin.H{"data": issueAffects})
+}
+
+func UpdateIssueAffect(c *gin.Context) {
+	// Params
+	issueAffect := entity.IssueAffect{}
+	c.ShouldBind(&issueAffect)
+
+	// Action
+	err := service.UpdateIssueAffect(&issueAffect)
+	if err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+
+	c.JSON(200, gin.H{"status": "ok"})
+}

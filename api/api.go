@@ -91,6 +91,7 @@ func routeRestAPI(router *gin.Engine) {
 	webhook := router.Group("/webhook")
 	{
 		webhook.POST("", controller.TestPingPong)
+		webhook.POST("/pr", controller.TestPingPong)
 	}
 
 }

@@ -88,4 +88,9 @@ func routeRestAPI(router *gin.Engine) {
 		releaseVersion.DELETE("/type", controller.SelectReleaseVersionType)
 	}
 
+	webhook := router.Group("/webhook")
+	{
+		webhook.GET("", controller.TestPingPong)
+	}
+
 }

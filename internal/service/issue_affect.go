@@ -39,7 +39,7 @@ func UpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 
 			IssueID:      issueAffect.IssueID,
 			VersionName:  (*releaseVersions)[0].Name,
-			TriageResult: entity.VersionTriageResultAccept,
+			TriageResult: entity.VersionTriageResultUnKnown,
 		}
 		_, err := CreateOrUpdateVersionTriageInfo(versionTriage)
 		if err != nil {

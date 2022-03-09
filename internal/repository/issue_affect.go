@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -11,6 +12,8 @@ import (
 )
 
 func CreateIssueAffect(issueAffect *entity.IssueAffect) error {
+	issueAffect.CreateTime = time.Now()
+	issueAffect.UpdateTime = time.Now()
 	// 存储
 	if err := database.DBConn.DB.Clauses(
 		clause.OnConflict{DoNothing: true}).Create(&issueAffect).Error; err != nil {
@@ -28,11 +31,15 @@ func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect,
 	return &issueAffects, nil
 }
 
-func UpdateIssueAffect(issueAffect *entity.IssueAffect) error {
+func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	// 更新
-	if err := database.DBConn.DB.Clauses(
-		clause.OnConflict{UpdateAll: true}).Save(&issueAffect).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("update issue affect: %+v failed", issueAffect))
+	issueAffect.CreateTime = time.Now()
+	issueAffect.UpdateTime = time.Now()
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{
+		// DoUpdates: clause.AssignmentColumns([]string{"update_time", "affect_result"}),
+		UpdateAll: true,
+	}).Create(&issueAffect).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("create or update issue affect: %+v failed", issueAffect))
 	}
 	return nil
 }

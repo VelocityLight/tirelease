@@ -10,7 +10,7 @@ import (
 )
 
 func UpdateIssueAffect(issueAffect *entity.IssueAffect) error {
-	err := repository.UpdateIssueAffect(issueAffect)
+	err := repository.CreateOrUpdateIssueAffect(issueAffect)
 	if err != nil {
 		return err
 	}

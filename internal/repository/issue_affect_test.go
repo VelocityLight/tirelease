@@ -24,13 +24,8 @@ func TestIssueAffect(t *testing.T) {
 		IssueID:       "100",
 		AffectResult:  entity.AffectResultResultUnKnown,
 	}
-	err := CreateIssueAffect(issueAffect)
-	// Assert
-	assert.Equal(t, true, err == nil)
-
-	// Update
 	issueAffect.AffectResult = entity.AffectResultResultYes
-	err = UpdateIssueAffect(issueAffect)
+	err := CreateOrUpdateIssueAffect(issueAffect)
 	// Assert
 	assert.Equal(t, true, err == nil)
 

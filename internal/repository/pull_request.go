@@ -12,13 +12,12 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
+func CreatePullRequest(pullRequest *entity.PullRequest) error {
 	// 加工
 	serializePullRequest(pullRequest)
 
 	// 存储
-	if err := database.DBConn.DB.Clauses(
-		clause.OnConflict{UpdateAll: true}).Omit("Labels", "Assignee", "Assignees", "RequestedReviewers").Create(&pullRequest).Error; err != nil {
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&pullRequest).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("create pull request: %+v failed", pullRequest))
 	}
 	return nil
@@ -52,6 +51,19 @@ func SelectPullRequestUnique(option *entity.PullRequestOption) (*entity.PullRequ
 func DeletePullRequest(pullRequest *entity.PullRequest) error {
 	if err := database.DBConn.DB.Delete(pullRequest).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("delete pull request: %+v failed", pullRequest))
+	}
+	return nil
+}
+
+func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
+	// 加工
+	serializePullRequest(pullRequest)
+
+	// 存储
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Omit("Labels", "Assignee", "Assignees", "RequestedReviewers").Create(&pullRequest).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("create or update pull request: %+v failed", pullRequest))
 	}
 	return nil
 }

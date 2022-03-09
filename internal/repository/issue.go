@@ -12,13 +12,12 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-func CreateOrUpdateIssue(issue *entity.Issue) error {
+func CreateIssue(issue *entity.Issue) error {
 	// 加工
 	serializeIssue(issue)
 
 	// 存储
-	if err := database.DBConn.DB.Clauses(
-		clause.OnConflict{UpdateAll: true}).Omit("Labels", "Assignee", "Assignees").Create(&issue).Error; err != nil {
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&issue).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("create issue: %+v failed", issue))
 	}
 	return nil
@@ -41,6 +40,19 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 func DeleteIssue(issue *entity.Issue) error {
 	if err := database.DBConn.DB.Delete(issue).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("delete issue: %+v failed", issue))
+	}
+	return nil
+}
+
+func CreateOrUpdateIssue(issue *entity.Issue) error {
+	// 加工
+	serializeIssue(issue)
+
+	// 存储
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Omit("Labels", "Assignee", "Assignees").Create(&issue).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("create or update issue: %+v failed", issue))
 	}
 	return nil
 }

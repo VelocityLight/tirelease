@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	// "tirelease/commons/git"
+	"tirelease/commons/git"
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
@@ -33,7 +34,10 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 
 	// Operate Git
 	if !isFrozen && isAccept {
-		// TODO by tony: git label
+		err := AddLabelByIssueID(versionTriage.IssueID, git.CherryPickLabel)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// Return

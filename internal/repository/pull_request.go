@@ -44,7 +44,7 @@ func SelectPullRequestUnique(option *entity.PullRequestOption) (*entity.PullRequ
 	}
 
 	if pr.PullRequestID == "" {
-		return nil, errors.New(fmt.Sprintf("find pull request unique: %+v failed", option))
+		return nil, errors.New(fmt.Sprintf("pull request not found: %+v", option))
 	}
 
 	// 加工

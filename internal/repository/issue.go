@@ -37,6 +37,21 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 	return &issues, nil
 }
 
+func SelectIssueUnique(option *entity.IssueOption) (*entity.Issue, error) {
+	// 查询
+	var issue entity.Issue
+	if err := database.DBConn.DB.Where(option).First(&issue).Error; err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("find issue unique: %+v failed", option))
+	}
+	if issue.IssueID == "" {
+		return nil, errors.New(fmt.Sprintf("issue not found: %+v", option))
+	}
+
+	// 加工
+	unSerializeIssue(&issue)
+	return &issue, nil
+}
+
 // func DeleteIssue(issue *entity.Issue) error {
 // 	if err := database.DBConn.DB.Delete(issue).Error; err != nil {
 // 		return errors.Wrap(err, fmt.Sprintf("delete issue: %+v failed", issue))

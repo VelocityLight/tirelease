@@ -17,6 +17,8 @@ func TestPullRequest(t *testing.T) {
 	database.Connect(config)
 
 	// Create
+	assignee := &github.User{Login: github.String("jcye")}
+	var assignees = &([]github.User{*assignee})
 	var pr = &entity.PullRequest{
 		PullRequestID: "100",
 		Number:        100,
@@ -31,8 +33,8 @@ func TestPullRequest(t *testing.T) {
 		Merged: true,
 
 		SourcePullRequestID: "1000",
+		Assignees:           assignees,
 	}
-	pr.Assignee = &github.User{Login: github.String("jcye")}
 	err := CreateOrUpdatePullRequest(pr)
 	// Assert
 	assert.Equal(t, true, err == nil)

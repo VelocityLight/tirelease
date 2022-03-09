@@ -51,7 +51,7 @@ func CreateOrUpdateIssue(issue *entity.Issue) error {
 	// 存储
 	if err := database.DBConn.DB.Clauses(clause.OnConflict{
 		UpdateAll: true,
-	}).Omit("Labels", "Assignee", "Assignees").Create(&issue).Error; err != nil {
+	}).Omit("Labels", "Assignees").Create(&issue).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("create or update issue: %+v failed", issue))
 	}
 	return nil
@@ -59,10 +59,6 @@ func CreateOrUpdateIssue(issue *entity.Issue) error {
 
 // 序列化和反序列化
 func serializeIssue(issue *entity.Issue) {
-	if nil != issue.Assignee {
-		assigneeString, _ := json.Marshal(issue.Assignee)
-		issue.AssigneeString = string(assigneeString)
-	}
 	if nil != issue.Assignees {
 		assigneesString, _ := json.Marshal(issue.Assignees)
 		issue.AssigneesString = string(assigneesString)
@@ -74,14 +70,9 @@ func serializeIssue(issue *entity.Issue) {
 }
 
 func unSerializeIssue(issue *entity.Issue) {
-	if issue.AssigneeString != "" {
-		var assignee github.User
-		json.Unmarshal([]byte(issue.AssigneeString), &assignee)
-		issue.Assignee = &assignee
-	}
 	if issue.AssigneesString != "" {
 		var assignees []github.User
-		json.Unmarshal([]byte(issue.AssigneeString), &assignees)
+		json.Unmarshal([]byte(issue.AssigneesString), &assignees)
 		issue.Assignees = &assignees
 	}
 	if issue.LabelsString != "" {

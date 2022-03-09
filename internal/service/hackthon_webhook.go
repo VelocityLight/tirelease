@@ -95,8 +95,7 @@ func IssueFieldToIssue(issueFiled *git.IssueField) *entity.Issue {
 	assignees := &[]github.User{}
 	for _, userNode := range issueFiled.Assignees.Nodes {
 		user := github.User{
-			Login:     (*string)(&userNode.Login),
-			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+			Login: (*string)(&userNode.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
@@ -140,8 +139,7 @@ func PullRequestFieldToPullRequest(pullRequestField *git.PullRequestField) *enti
 	assignees := &[]github.User{}
 	for _, userNode := range pullRequestField.Assignees.Nodes {
 		user := github.User{
-			Login:     (*string)(&userNode.Login),
-			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+			Login: (*string)(&userNode.Login),
 		}
 		*assignees = append(*assignees, user)
 	}

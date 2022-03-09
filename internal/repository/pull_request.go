@@ -66,7 +66,7 @@ func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
 	// 存储
 	if err := database.DBConn.DB.Clauses(clause.OnConflict{
 		UpdateAll: true,
-	}).Omit("Labels", "Assignee", "Assignees", "RequestedReviewers").Create(&pullRequest).Error; err != nil {
+	}).Omit("Labels", "Assignees", "RequestedReviewers").Create(&pullRequest).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("create or update pull request: %+v failed", pullRequest))
 	}
 	return nil
@@ -74,10 +74,6 @@ func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
 
 // 序列化和反序列化
 func serializePullRequest(pullRequest *entity.PullRequest) {
-	if nil != pullRequest.Assignee {
-		assigneeString, _ := json.Marshal(pullRequest.Assignee)
-		pullRequest.AssigneeString = string(assigneeString)
-	}
 	if nil != pullRequest.Assignees {
 		assigneesString, _ := json.Marshal(pullRequest.Assignees)
 		pullRequest.AssigneesString = string(assigneesString)
@@ -93,14 +89,9 @@ func serializePullRequest(pullRequest *entity.PullRequest) {
 }
 
 func unSerializePullRequest(pullRequest *entity.PullRequest) {
-	if pullRequest.AssigneeString != "" {
-		var assignee github.User
-		json.Unmarshal([]byte(pullRequest.AssigneeString), &assignee)
-		pullRequest.Assignee = &assignee
-	}
 	if pullRequest.AssigneesString != "" {
 		var assignees []github.User
-		json.Unmarshal([]byte(pullRequest.AssigneeString), &assignees)
+		json.Unmarshal([]byte(pullRequest.AssigneesString), &assignees)
 		pullRequest.Assignees = &assignees
 	}
 	if pullRequest.LabelsString != "" {

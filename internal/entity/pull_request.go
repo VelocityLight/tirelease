@@ -27,19 +27,16 @@ type PullRequest struct {
 	MergedAt  *time.Time `json:"merged_at,omitempty"`
 
 	Merged         bool    `json:"merged,omitempty"`
-	Mergeable      *bool   `json:"mergeable,omitempty"`
 	MergeableState *string `json:"mergeable_state,omitempty"`
 
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 
 	LabelsString             string `json:"labels_string,omitempty"`
-	AssigneeString           string `json:"assignee_string,omitempty"`
 	AssigneesString          string `json:"assignees_string,omitempty"`
 	RequestedReviewersString string `json:"requested_reviewers_string,omitempty"`
 
 	// OutPut-Serial
 	Labels             *[]github.Label `json:"labels,omitempty" gorm:"-"`
-	Assignee           *github.User    `json:"assignee,omitempty" gorm:"-"`
 	Assignees          *[]github.User  `json:"assignees,omitempty" gorm:"-"`
 	RequestedReviewers *[]github.User  `json:"requested_reviewers,omitempty" gorm:"-"`
 }
@@ -65,11 +62,17 @@ func (PullRequest) TableName() string {
 func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 	labels := &[]github.Label{}
 	for _, node := range pullRequest.Labels {
-		*labels = append(*labels, *node)
+		label := github.Label{
+			Name: node.Name,
+		}
+		*labels = append(*labels, label)
 	}
 	assignees := &[]github.User{}
 	for _, node := range pullRequest.Assignees {
-		*assignees = append(*assignees, *node)
+		user := github.User{
+			Login: node.Login,
+		}
+		*assignees = append(*assignees, user)
 	}
 	requestedReviewers := &[]github.User{}
 	for _, node := range pullRequest.RequestedReviewers {
@@ -92,11 +95,9 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 		MergedAt:  pullRequest.MergedAt,
 
 		Merged:         *pullRequest.Merged,
-		Mergeable:      pullRequest.Mergeable,
 		MergeableState: pullRequest.MergeableState,
 
 		Labels:             labels,
-		Assignee:           pullRequest.Assignee,
 		Assignees:          assignees,
 		RequestedReviewers: requestedReviewers,
 	}
@@ -115,11 +116,18 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 	assignees := &[]github.User{}
 	for _, userNode := range pullRequestField.Assignees.Nodes {
 		user := github.User{
-			Login:     (*string)(&userNode.Login),
-			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+			Login: (*string)(&userNode.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
+	requestedReviewers := &[]github.User{}
+	for _, userNode := range pullRequestField.ReviewRequests.Nodes {
+		user := github.User{
+			Login: (*string)(&userNode.Login),
+		}
+		*requestedReviewers = append(*requestedReviewers, user)
+	}
+	var mergeableState = string(pullRequestField.Mergeable)
 
 	return &PullRequest{
 		PullRequestID: pullRequestField.ID.(string),
@@ -130,12 +138,26 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		Repo:          string(pullRequestField.Repository.Name),
 		HTMLURL:       string(pullRequestField.Url),
 		HeadBranch:    string(pullRequestField.BaseRefName),
-		CreatedAt:     pullRequestField.CreatedAt.Time,
-		UpdatedAt:     pullRequestField.UpdatedAt.Time,
-		Merged:        bool(pullRequestField.Merged),
-		Labels:        labels,
-		Assignees:     assignees,
+
+		CreatedAt: pullRequestField.CreatedAt.Time,
+		UpdatedAt: pullRequestField.UpdatedAt.Time,
+		ClosedAt:  &pullRequestField.ClosedAt.Time,
+		MergedAt:  &pullRequestField.MergedAt.Time,
+
+		Merged:         bool(pullRequestField.Merged),
+		MergeableState: &mergeableState,
+
+		Labels:             labels,
+		Assignees:          assignees,
+		RequestedReviewers: requestedReviewers,
 	}
+}
+
+func ComposePullRequestWithoutTimelineFromV4(withoutTimeline *git.PullRequestFieldWithoutTimelineItems) *PullRequest {
+	pullRequestField := &git.PullRequestField{
+		PullRequestFieldWithoutTimelineItems: *withoutTimeline,
+	}
+	return ComposePullRequestFromV4(pullRequestField)
 }
 
 /**
@@ -155,15 +177,13 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	closed_at TIMESTAMP COMMENT '关闭时间',
 	created_at TIMESTAMP COMMENT '创建时间',
 	updated_at TIMESTAMP COMMENT '更新时间',
-
 	merged_at TIMESTAMP COMMENT '合入时间',
+
 	merged BOOLEAN COMMENT '是否已合入',
-	mergeable BOOLEAN COMMENT '是否可合入',
 	mergeable_state VARCHAR(32) COMMENT '可合入状态',
 
 	source_pull_request_id VARCHAR(255) COMMENT '来源ID',
 	labels_string TEXT COMMENT '标签',
-	assignee_string TEXT COMMENT '处理人',
 	assignees_string TEXT COMMENT '处理人列表',
 	requested_reviewers_string TEXT COMMENT '处理人列表',
 

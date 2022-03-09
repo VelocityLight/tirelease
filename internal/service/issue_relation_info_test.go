@@ -18,7 +18,7 @@ func TestComposeIssuePrRelationsByIssue(t *testing.T) {
 	database.Connect(generateConfig())
 
 	// Test
-	triageRelationInfo, err := GetIssueRelationInfoByIssueNumber(git.TestOwner, git.TestRepo, git.TestIssueId)
+	triageRelationInfo, err := GetIssueRelationInfoByIssueNumberV4(git.TestOwner, git.TestRepo, git.TestIssueId)
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*triageRelationInfo.IssuePrRelations) > 0)
 	assert.Equal(t, true, len(*triageRelationInfo.PullRequests) > 0)

@@ -26,7 +26,7 @@ func TestIssueAffectOperate(t *testing.T) {
 		IssueID:       "100",
 		AffectResult:  entity.AffectResultResultUnKnown,
 	}
-	err := repository.CreateIssueAffect(issueAffect)
+	err := repository.CreateOrUpdateIssueAffect(issueAffect)
 	assert.Equal(t, true, err == nil)
 
 	// Update

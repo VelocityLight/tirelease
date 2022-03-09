@@ -11,16 +11,16 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-func CreateIssueAffect(issueAffect *entity.IssueAffect) error {
-	issueAffect.CreateTime = time.Now()
-	issueAffect.UpdateTime = time.Now()
-	// 存储
-	if err := database.DBConn.DB.Clauses(
-		clause.OnConflict{DoNothing: true}).Create(&issueAffect).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("create issue affect: %+v failed", issueAffect))
-	}
-	return nil
-}
+// func CreateIssueAffect(issueAffect *entity.IssueAffect) error {
+// 	issueAffect.CreateTime = time.Now()
+// 	issueAffect.UpdateTime = time.Now()
+// 	// 存储
+// 	if err := database.DBConn.DB.Clauses(
+// 		clause.OnConflict{DoNothing: true}).Create(&issueAffect).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("create issue affect: %+v failed", issueAffect))
+// 	}
+// 	return nil
+// }
 
 func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect, error) {
 	// 查询

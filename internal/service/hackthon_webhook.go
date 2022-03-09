@@ -23,7 +23,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 				AffectVersion: minorVersion,
 				AffectResult:  entity.AffectResultResultUnKnown,
 			}
-			if err := repository.CreateIssueAffect(&issueAffect); err != nil {
+			if err := repository.CreateOrUpdateIssueAffect(&issueAffect); err != nil {
 				return err
 			}
 		}
@@ -60,7 +60,7 @@ func InitDB() error {
 				AffectVersion: minorVersion,
 				AffectResult:  entity.AffectResultResultUnKnown,
 			}
-			if err := repository.CreateIssueAffect(&issueAffect); err != nil {
+			if err := repository.CreateOrUpdateIssueAffect(&issueAffect); err != nil {
 				return err
 			}
 		}

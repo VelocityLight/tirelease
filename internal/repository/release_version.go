@@ -58,7 +58,7 @@ func SelectReleaseVersionUnique(option *entity.ReleaseVersionOption) (*entity.Re
 	}
 
 	if releaseVersion.Name == "" {
-		return nil, errors.Wrap(nil, fmt.Sprintf("find release version unique is nil: %+v failed", option))
+		return nil, errors.New(fmt.Sprintf("find release version unique is nil: %+v failed", option))
 	}
 	// 加工
 	unSerializeReleaseVersion(&releaseVersion)

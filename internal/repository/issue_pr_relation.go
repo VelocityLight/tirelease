@@ -31,9 +31,9 @@ func SelectIssuePrRelation(option *entity.IssuePrRelationOption) (*[]entity.Issu
 	return &issuePrRelations, nil
 }
 
-func DeleteIssuePrRelation(issuePrRelation *entity.IssuePrRelation) error {
-	if err := database.DBConn.DB.Delete(issuePrRelation).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("delete issue_pr_relation: %+v failed", issuePrRelation))
-	}
-	return nil
-}
+// func DeleteIssuePrRelation(issuePrRelation *entity.IssuePrRelation) error {
+// 	if err := database.DBConn.DB.Delete(issuePrRelation).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("delete issue_pr_relation: %+v failed", issuePrRelation))
+// 	}
+// 	return nil
+// }

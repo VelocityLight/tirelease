@@ -98,9 +98,6 @@ func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVe
 	if err != nil {
 		return nil, err
 	}
-	if releaseVersion == nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("find release version unique is nil: %+v failed", option))
-	}
 	if releaseVersion.Status == entity.ReleaseVersionStatusReleased || releaseVersion.Status == entity.ReleaseVersionStatusClosed {
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already closed or released: %+v failed", releaseVersion))
 	}

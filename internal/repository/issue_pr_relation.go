@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -11,6 +12,8 @@ import (
 )
 
 func CreateIssuePrRelation(issuePrRelation *entity.IssuePrRelation) error {
+	issuePrRelation.CreateTime = time.Now()
+	issuePrRelation.UpdateTime = time.Now()
 	// 存储
 	if err := database.DBConn.DB.Clauses(
 		clause.OnConflict{DoNothing: true}).Create(&issuePrRelation).Error; err != nil {

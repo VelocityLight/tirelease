@@ -2,7 +2,6 @@ package repository
 
 import (
 	"testing"
-	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -20,10 +19,7 @@ func TestVersionTriage(t *testing.T) {
 		VersionName:  "5.4.1",
 		IssueID:      "100",
 		TriageResult: entity.VersionTriageResultUnKnown,
-
-		CreateTime: time.Now(),
-		UpdateTime: time.Now(),
-		Comment:    "Patch版本5.4.1",
+		Comment:      "Patch版本5.4.1",
 	}
 	err := CreateVersionTriage(versionTriage)
 	// Assert

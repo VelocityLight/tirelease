@@ -2,7 +2,6 @@ package repository
 
 import (
 	"testing"
-	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -17,9 +16,6 @@ func TestReleaseVersion(t *testing.T) {
 
 	// Create
 	var version = &entity.ReleaseVersion{
-		CreateTime: time.Now(),
-		UpdateTime: time.Now(),
-
 		Name:        "5.4.1",
 		Description: "Patch版本5.4.1",
 		Owner:       "jcye",

@@ -36,8 +36,7 @@ func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	issueAffect.CreateTime = time.Now()
 	issueAffect.UpdateTime = time.Now()
 	if err := database.DBConn.DB.Clauses(clause.OnConflict{
-		// DoUpdates: clause.AssignmentColumns([]string{"update_time", "affect_result"}),
-		UpdateAll: true,
+		DoUpdates: clause.AssignmentColumns([]string{"update_time", "affect_result"}),
 	}).Create(&issueAffect).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("create or update issue affect: %+v failed", issueAffect))
 	}

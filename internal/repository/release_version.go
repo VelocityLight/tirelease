@@ -3,6 +3,7 @@ package repository
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -12,6 +13,8 @@ import (
 
 func CreateReleaseVersion(version *entity.ReleaseVersion) error {
 	// 加工
+	version.CreateTime = time.Now()
+	version.UpdateTime = time.Now()
 	serializeReleaseVersion(version)
 
 	// 存储
@@ -23,10 +26,11 @@ func CreateReleaseVersion(version *entity.ReleaseVersion) error {
 
 func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 	// 加工
+	version.UpdateTime = time.Now()
 	serializeReleaseVersion(version)
 
 	// 更新
-	if err := database.DBConn.DB.Omit("Repos", "Labels").Save(&version).Error; err != nil {
+	if err := database.DBConn.DB.Omit("CreateTime", "Repos", "Labels").Save(&version).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("update release version: %+v failed", version))
 	}
 	return nil
@@ -53,6 +57,9 @@ func SelectReleaseVersionUnique(option *entity.ReleaseVersionOption) (*entity.Re
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version unique: %+v failed", option))
 	}
 
+	if releaseVersion.Name == "" {
+		return nil, errors.Wrap(nil, fmt.Sprintf("find release version unique is nil: %+v failed", option))
+	}
 	// 加工
 	unSerializeReleaseVersion(&releaseVersion)
 	return &releaseVersion, nil

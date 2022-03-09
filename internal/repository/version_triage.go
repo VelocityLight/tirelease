@@ -42,8 +42,10 @@ func UpdateVersionTriage(versionTriage *entity.VersionTriage) error {
 
 func CreateOrUpdateVersionTriage(versionTriage *entity.VersionTriage) error {
 	// 存储
+	versionTriage.CreateTime = time.Now()
+	versionTriage.UpdateTime = time.Now()
 	if err := database.DBConn.DB.Clauses(clause.OnConflict{
-		UpdateAll: true,
+		DoUpdates: clause.AssignmentColumns([]string{"update_time", "triage_owner", "block_version_release", "due_time", "comment"}),
 	}).Create(&versionTriage).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("create or update version triage: %+v failed", versionTriage))
 	}

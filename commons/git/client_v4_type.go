@@ -22,6 +22,10 @@ type RepositoryField struct {
 	}
 }
 
+type UserField struct {
+	Login githubv4.String
+}
+
 type LabelField struct {
 	Nodes []struct {
 		Name githubv4.String
@@ -30,20 +34,16 @@ type LabelField struct {
 
 type AssigneesFiled struct {
 	Nodes []struct {
-		Login githubv4.String
+		UserField `graphql:"... on User"`
 	}
 }
 
 type ReviewRequestField struct {
 	Nodes []struct {
 		RequestedReviewer struct {
-			Login githubv4.String
-		} `graphql:"... on User"`
+			UserField `graphql:"... on User"`
+		}
 	}
-}
-
-type UserField struct {
-	Login githubv4.String
 }
 
 type IssueFieldWithoutTimelineItems struct {
@@ -88,9 +88,9 @@ type PullRequestFieldWithoutTimelineItems struct {
 	// }
 	// Author UserField
 
-	Labels    LabelField     `graphql:"labels(first: 30)"`
-	Assignees AssigneesFiled `graphql:"assignees(first: 10)"`
-	// ReviewRequests ReviewRequestField `graphql:"reviewRequests(first: 10)"`
+	Labels         LabelField         `graphql:"labels(first: 30)"`
+	Assignees      AssigneesFiled     `graphql:"assignees(first: 10)"`
+	ReviewRequests ReviewRequestField `graphql:"reviewRequests(first: 10)"`
 }
 
 type IssueTimelineItems struct {

@@ -44,3 +44,8 @@ func (client *GithubInfo) GetIssueEventsByIssueNumber(owner, name string, number
 func (client *GithubInfo) GetPullRequestByNumber(owner, name string, number int) (*github.PullRequest, *github.Response, error) {
 	return client.Client.PullRequests.Get(context.Background(), owner, name, number)
 }
+
+// ============================================================================ Label
+func (client *GithubInfo) AddLabel(owner, name string, number int, label string) ([]*github.Label, *github.Response, error) {
+	return client.Client.Issues.AddLabelsToIssue(context.Background(), owner, name, number, []string{label})
+}

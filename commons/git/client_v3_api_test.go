@@ -128,3 +128,15 @@ func TestGetPullRequest(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, pullRequest != nil)
 }
+
+//=======================================================================Label
+func TestAddLabel(t *testing.T) {
+	// Connect
+	Connect(TestToken)
+
+	// Add label
+	_, _, err := Client.AddLabel(TestOwner2, TestRepo2, TestPullRequestId2, CherryPickLabel)
+
+	// Assert
+	assert.Equal(t, true, err == nil)
+}

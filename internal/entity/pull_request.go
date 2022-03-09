@@ -26,8 +26,10 @@ type PullRequest struct {
 	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 	MergedAt  *time.Time `json:"merged_at,omitempty"`
 
-	Merged         bool    `json:"merged,omitempty"`
-	MergeableState *string `json:"mergeable_state,omitempty"`
+	Merged             bool    `json:"merged,omitempty"`
+	MergeableState     *string `json:"mergeable_state,omitempty"`
+	CherryPickApproved bool    `json:"cherry_pick_approved,omitempty"`
+	AlreadyReviewed    bool    `json:"already_reviewed,omitempty"`
 
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 
@@ -60,12 +62,22 @@ func (PullRequest) TableName() string {
 
 // ComposePullRequestFromV3
 func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
+	alreadyReviwed := false
+	cherryPickApproved := false
 	labels := &[]github.Label{}
 	for _, node := range pullRequest.Labels {
 		label := github.Label{
 			Name: node.Name,
 		}
 		*labels = append(*labels, label)
+
+		if *label.Name == git.CherryPickLabel {
+			cherryPickApproved = true
+		}
+		if *label.Name == git.LGT2Label {
+			alreadyReviwed = true
+		}
+
 	}
 	assignees := &[]github.User{}
 	for _, node := range pullRequest.Assignees {
@@ -94,8 +106,10 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 		ClosedAt:  pullRequest.ClosedAt,
 		MergedAt:  pullRequest.MergedAt,
 
-		Merged:         *pullRequest.Merged,
-		MergeableState: pullRequest.MergeableState,
+		Merged:             *pullRequest.Merged,
+		MergeableState:     pullRequest.MergeableState,
+		CherryPickApproved: cherryPickApproved,
+		AlreadyReviewed:    alreadyReviwed,
 
 		Labels:             labels,
 		Assignees:          assignees,
@@ -106,12 +120,21 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 // ComposePullRequestFromV4
 // TODO: v4 implement by tony at 2022/02/14
 func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullRequest {
+	alreadyReviwed := false
+	cherryPickApproved := false
 	labels := &[]github.Label{}
-	for _, labelNode := range pullRequestField.Labels.Nodes {
+	for _, node := range pullRequestField.Labels.Nodes {
 		label := github.Label{
-			Name: github.String(string(labelNode.Name)),
+			Name: github.String(string(node.Name)),
 		}
 		*labels = append(*labels, label)
+
+		if *label.Name == git.CherryPickLabel {
+			cherryPickApproved = true
+		}
+		if *label.Name == git.LGT2Label {
+			alreadyReviwed = true
+		}
 	}
 	assignees := &[]github.User{}
 	for _, userNode := range pullRequestField.Assignees.Nodes {
@@ -144,8 +167,10 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		ClosedAt:  &pullRequestField.ClosedAt.Time,
 		MergedAt:  &pullRequestField.MergedAt.Time,
 
-		Merged:         bool(pullRequestField.Merged),
-		MergeableState: &mergeableState,
+		Merged:             bool(pullRequestField.Merged),
+		MergeableState:     &mergeableState,
+		CherryPickApproved: cherryPickApproved,
+		AlreadyReviewed:    alreadyReviwed,
 
 		Labels:             labels,
 		Assignees:          assignees,
@@ -181,6 +206,8 @@ CREATE TABLE IF NOT EXISTS pull_request (
 
 	merged BOOLEAN COMMENT '是否已合入',
 	mergeable_state VARCHAR(32) COMMENT '可合入状态',
+	cherry_pick_approved BOOLEAN COMMENT '是否已进入版本',
+	already_reviewed BOOLEAN COMMENT '是否已代码评审',
 
 	source_pull_request_id VARCHAR(255) COMMENT '来源ID',
 	labels_string TEXT COMMENT '标签',

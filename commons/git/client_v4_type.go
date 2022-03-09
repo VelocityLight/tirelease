@@ -34,6 +34,14 @@ type AssigneesFiled struct {
 	}
 }
 
+type ReviewRequestField struct {
+	Nodes []struct {
+		RequestedReviewer struct {
+			Login githubv4.String
+		} `graphql:"... on User"`
+	}
+}
+
 type UserField struct {
 	Login githubv4.String
 }
@@ -80,9 +88,9 @@ type PullRequestFieldWithoutTimelineItems struct {
 	// }
 	// Author UserField
 
-	Labels         LabelField     `graphql:"labels(first: 30)"`
-	Assignees      AssigneesFiled `graphql:"assignees(first: 10)"`
-	ReviewRequests AssigneesFiled `graphql:"reviewRequests(first: 10)"`
+	Labels    LabelField     `graphql:"labels(first: 30)"`
+	Assignees AssigneesFiled `graphql:"assignees(first: 10)"`
+	// ReviewRequests ReviewRequestField `graphql:"reviewRequests(first: 10)"`
 }
 
 type IssueTimelineItems struct {

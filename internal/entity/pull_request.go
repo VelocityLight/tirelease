@@ -144,12 +144,12 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		*assignees = append(*assignees, user)
 	}
 	requestedReviewers := &[]github.User{}
-	for _, userNode := range pullRequestField.ReviewRequests.Nodes {
-		user := github.User{
-			Login: (*string)(&userNode.Login),
-		}
-		*requestedReviewers = append(*requestedReviewers, user)
-	}
+	// for _, userNode := range pullRequestField.ReviewRequests.Nodes {
+	// 	user := github.User{
+	// 		Login: (*string)(&userNode.Login),
+	// 	}
+	// 	*requestedReviewers = append(*requestedReviewers, user)
+	// }
 	var mergeableState = string(pullRequestField.Mergeable)
 
 	return &PullRequest{

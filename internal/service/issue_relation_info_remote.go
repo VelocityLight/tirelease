@@ -9,6 +9,15 @@ import (
 )
 
 // ================================================================ Compose Function From Remote Query
+func GetIssueRelationInfoByIssueIDV4(issueID string) (*dto.IssueRelationInfo, error) {
+	issue, err := git.ClientV4.GetIssueByID(issueID)
+	if nil != err {
+		return nil, err
+	}
+
+	return ComposeIssueRelationInfoByIssueV4(issue)
+}
+
 func GetIssueRelationInfoByIssueNumberV4(owner, repo string, number int) (*dto.IssueRelationInfo, error) {
 	issue, err := git.ClientV4.GetIssueByNumber(owner, repo, number)
 	if nil != err {

@@ -11,7 +11,7 @@ import (
 )
 
 // Cron Job
-func CronRefreshIssuesV4() error {
+func CronRefreshPullRequestV4() error {
 	// get repos
 	repoOption := &entity.RepoOption{}
 	repos, err := repository.SelectRepo(repoOption)
@@ -24,20 +24,16 @@ func CronRefreshIssuesV4() error {
 	batchLimit := 20
 	totalLimit := 500
 	for _, repo := range *repos {
-		issues, err := git.ClientV4.GetIssuesByTimeRangeV4(
-			repo.Owner, repo.Repo, []string{git.BugLabel},
-			time.Now().Add(time.Duration(fromTimeBefore)*time.Hour), time.Now(),
+		prs, err := git.ClientV4.GetPullRequestsFromV4(
+			repo.Owner, repo.Repo,
+			time.Now().Add(time.Duration(fromTimeBefore)*time.Hour),
 			batchLimit, totalLimit)
 		if err != nil {
 			return err
 		}
 
-		for _, issue := range issues {
-			issueRelation, err := ComposeIssueRelationInfoByIssueV4(&issue)
-			if err != nil {
-				return err
-			}
-			err = SaveIssueRelationInfo(issueRelation)
+		for _, pr := range prs {
+			err = repository.CreateOrUpdatePullRequest(entity.ComposePullRequestFromV4(&pr))
 			if err != nil {
 				return err
 			}
@@ -48,22 +44,14 @@ func CronRefreshIssuesV4() error {
 
 // Git Webhook
 // Webhook param only support v3 (v4 has no webhook right now)
-func WebhookRefreshIssueV4(issue *github.Issue) error {
+func WebhookRefreshPullRequestV3(pr *github.PullRequest) error {
 	// params
-	if issue == nil {
+	if pr == nil {
 		return nil
 	}
-	issueID := *issue.NodeID
 
 	// handler
-	issueRelationInfo, err := GetIssueRelationInfoByIssueIDV4(issueID)
-	if err != nil {
-		return err
-	}
-	if issueRelationInfo == nil {
-		return nil
-	}
-	err = SaveIssueRelationInfo(issueRelationInfo)
+	err := repository.CreateOrUpdatePullRequest(entity.ComposePullRequestFromV3(pr))
 	if err != nil {
 		return err
 	}

@@ -9,7 +9,7 @@ import (
 )
 
 // ============================================================================ Others
-func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueField, err error) {
+func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueField, err error) {
 	var query struct {
 		Repository struct {
 			Issues struct {
@@ -78,7 +78,7 @@ func (client *GithubInfoV4) GetIssuesByTimeRange(owner, name string, labels []st
 	return
 }
 
-func (client *GithubInfoV4) GetPullRequestsFrom(owner, name string, from time.Time, batchLimit int, totalLimit int) (prs []PullRequestField, err error) {
+func (client *GithubInfoV4) GetPullRequestsFromV4(owner, name string, from time.Time, batchLimit int, totalLimit int) (prs []PullRequestField, err error) {
 	var query struct {
 		Repository struct {
 			PullRequests struct {

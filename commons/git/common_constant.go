@@ -4,3 +4,4 @@ package git
 var CrossReferencedEvent = "CrossReferencedEvent"
 var CherryPickLabel = "cherry-pick-approved"
 var LGT2Label = "status/LGT2"
+var BugLabel = "type/bug"

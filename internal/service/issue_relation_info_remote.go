@@ -15,10 +15,10 @@ func GetIssueRelationInfoByIssueNumberV4(owner, repo string, number int) (*dto.I
 		return nil, err
 	}
 
-	return ComposeTriageRelationInfoByIssueV4(issue)
+	return ComposeIssueRelationInfoByIssueV4(issue)
 }
 
-func ComposeTriageRelationInfoByIssueV4(issue *git.IssueField) (*dto.IssueRelationInfo, error) {
+func ComposeIssueRelationInfoByIssueV4(issue *git.IssueField) (*dto.IssueRelationInfo, error) {
 	issueAffects, err := ComposeIssueAffectWithIssueID(issue.ID.(string))
 	if nil != err {
 		return nil, err

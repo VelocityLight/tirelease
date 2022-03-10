@@ -47,7 +47,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 }
 
 func InitDB() error {
-	issues, err := git.ClientV4.GetIssuesByTimeRange("pingcap", "tidb", []string{"type/bug"}, time.Now().Add(-96*time.Hour), time.Now(), 20, 500)
+	issues, err := git.ClientV4.GetIssuesByTimeRangeV4("pingcap", "tidb", []string{"type/bug"}, time.Now().Add(-96*time.Hour), time.Now(), 20, 500)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func InitDB() error {
 			return err
 		}
 	}
-	prs, err := git.ClientV4.GetPullRequestsFrom("pingcap", "tidb", time.Now().Add(-48*time.Hour), 20, 500)
+	prs, err := git.ClientV4.GetPullRequestsFromV4("pingcap", "tidb", time.Now().Add(-48*time.Hour), 20, 500)
 	if err != nil {
 		return err
 	}

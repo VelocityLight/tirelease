@@ -1,13 +1,15 @@
 package controller
 
 import (
+	"tirelease/commons/configs"
+
 	"github.com/gin-gonic/gin"
 	"github.com/google/go-github/v41/github"
 )
 
 func GithubWebhookHandler(c *gin.Context) {
 	// parse webhook payload
-	payload, err := github.ValidatePayload(c.Request, nil)
+	payload, err := github.ValidatePayload(c.Request, []byte(configs.Config.Github.WebhookSecret))
 	if err != nil {
 		c.JSON(500, err.Error())
 		return

@@ -18,7 +18,8 @@ type ConfigYaml struct {
 	}
 
 	Github struct {
-		AccessToken string `required:"true"`
+		AccessToken   string `required:"true"`
+		WebhookSecret string `required:"true"`
 	}
 }
 

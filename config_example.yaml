@@ -12,3 +12,4 @@ mysql:
 
 github:
   accesstoken: ***
+  webhookSecret: ***

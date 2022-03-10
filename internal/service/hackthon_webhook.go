@@ -157,7 +157,7 @@ func PullRequestFieldToPullRequest(pullRequestField *git.PullRequestField) *enti
 		State:         string(pullRequestField.State),
 		Title:         string(pullRequestField.Title),
 		Repo:          strings.Join([]string{string(pullRequestField.Repository.Owner.Login), string(pullRequestField.Repository.Name)}, "/"),
-		HeadBranch:    string(pullRequestField.BaseRefName),
+		BaseBranch:    string(pullRequestField.BaseRefName),
 		// MergedAt:            pullRequestField.MergedAt.Time,
 		CreatedAt:           pullRequestField.CreatedAt.Time,
 		UpdatedAt:           pullRequestField.UpdatedAt.Time,

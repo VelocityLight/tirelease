@@ -28,7 +28,7 @@ func TestPullRequest(t *testing.T) {
 		HTMLURL:       "json",
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
-		HeadBranch:    "targetBranch",
+		BaseBranch:    "targetBranch",
 
 		Merged: true,
 

@@ -51,7 +51,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 	for i := range issueRelationInfos {
 		pullRequests := make([]entity.PullRequest, 0)
 		for _, pr := range *(issueRelationInfos[i].PullRequests) {
-			if option.HeadBranch == "" || pr.HeadBranch == option.HeadBranch {
+			if option.BaseBranch == "" || pr.BaseBranch == option.BaseBranch {
 				pullRequests = append(pullRequests, pr)
 			}
 		}

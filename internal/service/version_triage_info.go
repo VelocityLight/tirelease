@@ -76,7 +76,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	for _, versionTriage := range *versionTriages {
 		issueRelationInfos, err := SelectIssueRelationInfo(&dto.IssueRelationInfoQuery{
 			IssueID:    versionTriage.IssueID,
-			HeadBranch: releaseVersion.ReleaseBranch,
+			BaseBranch: releaseVersion.ReleaseBranch,
 		})
 		if err != nil {
 			return nil, err

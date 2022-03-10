@@ -19,7 +19,7 @@ type PullRequest struct {
 	Owner         string `json:"owner,omitempty"`
 	Repo          string `json:"repo,omitempty"`
 	HTMLURL       string `json:"html_url,omitempty"`
-	HeadBranch    string `json:"head_branch,omitempty"`
+	BaseBranch    string `json:"base_branch,omitempty"`
 
 	CreatedAt time.Time  `json:"created_at,omitempty"`
 	UpdatedAt time.Time  `json:"updated_at,omitempty"`
@@ -51,7 +51,7 @@ type PullRequestOption struct {
 	State               string `json:"state,omitempty"`
 	Owner               string `json:"owner,omitempty"`
 	Repo                string `json:"repo,omitempty"`
-	HeadBranch          string `json:"head_branch,omitempty"`
+	BaseBranch          string `json:"base_branch,omitempty"`
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 }
 
@@ -88,7 +88,10 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 	}
 	requestedReviewers := &[]github.User{}
 	for _, node := range pullRequest.RequestedReviewers {
-		*requestedReviewers = append(*requestedReviewers, *node)
+		user := github.User{
+			Login: node.Login,
+		}
+		*requestedReviewers = append(*requestedReviewers, user)
 	}
 
 	return &PullRequest{
@@ -99,7 +102,7 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 		Owner:         *pullRequest.Base.Repo.Owner.Login,
 		Repo:          *pullRequest.Base.Repo.Name,
 		HTMLURL:       *pullRequest.HTMLURL,
-		HeadBranch:    *pullRequest.Head.Ref,
+		BaseBranch:    *pullRequest.Base.Ref,
 
 		CreatedAt: *pullRequest.CreatedAt,
 		UpdatedAt: *pullRequest.UpdatedAt,
@@ -160,7 +163,7 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		Owner:         string(pullRequestField.Repository.Owner.Login),
 		Repo:          string(pullRequestField.Repository.Name),
 		HTMLURL:       string(pullRequestField.Url),
-		HeadBranch:    string(pullRequestField.BaseRefName),
+		BaseBranch:    string(pullRequestField.BaseRefName),
 
 		CreatedAt: pullRequestField.CreatedAt.Time,
 		UpdatedAt: pullRequestField.UpdatedAt.Time,
@@ -202,7 +205,7 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	owner VARCHAR(255) COMMENT '仓库所有者',
 	repo VARCHAR(255) COMMENT '仓库名称',
 	html_url VARCHAR(1024) COMMENT '链接',
-	head_branch VARCHAR(255) COMMENT '链接',
+	base_branch VARCHAR(255) COMMENT '目标分支',
 
 	closed_at TIMESTAMP COMMENT '关闭时间',
 	created_at TIMESTAMP COMMENT '创建时间',

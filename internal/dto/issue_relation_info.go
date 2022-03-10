@@ -16,7 +16,7 @@ type IssueRelationInfoQuery struct {
 
 	// Filter Option
 	AffectVersion string `json:"affect_version,omitempty"`
-	HeadBranch    string `json:"head_branch,omitempty"`
+	BaseBranch    string `json:"base_branch,omitempty"`
 }
 
 // IssueRelationInfo ReturnBack Struct

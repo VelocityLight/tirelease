@@ -9,7 +9,7 @@ import (
 	"tirelease/commons/git"
 )
 
-// CronJob
+// Cron Job
 func CronRefreshIssuesV4() error {
 	// get repos
 	repoOption := &entity.RepoOption{}
@@ -46,5 +46,6 @@ func CronRefreshIssuesV4() error {
 }
 
 // Git Webhook
-
-// Inner Service
+func WebhookRefreshIssueV4() error {
+	return nil
+}

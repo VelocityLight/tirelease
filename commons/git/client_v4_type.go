@@ -58,7 +58,7 @@ type IssueFieldWithoutTimelineItems struct {
 
 	CreatedAt githubv4.DateTime
 	UpdatedAt githubv4.DateTime
-	ClosedAt  githubv4.DateTime
+	ClosedAt  *githubv4.DateTime
 
 	Labels    LabelField     `graphql:"labels(first: 30)"`
 	Assignees AssigneesFiled `graphql:"assignees(first: 10)"`

@@ -22,9 +22,9 @@ type Issue struct {
 	Repo    string `json:"repo,omitempty"`
 	HTMLURL string `json:"html_url,omitempty"`
 
-	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 	CreatedAt time.Time  `json:"created_at,omitempty"`
 	UpdatedAt time.Time  `json:"updated_at,omitempty"`
+	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 
 	LabelsString    string `json:"labels_string,omitempty"`
 	AssigneesString string `json:"assignees_string,omitempty"`
@@ -117,7 +117,7 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 		}
 	}
 
-	return &Issue{
+	issue := &Issue{
 		IssueID: issueFiled.ID.(string),
 		Number:  int(issueFiled.Number),
 		State:   string(issueFiled.State),
@@ -128,13 +128,17 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 
 		CreatedAt: issueFiled.CreatedAt.Time,
 		UpdatedAt: issueFiled.UpdatedAt.Time,
-		ClosedAt:  &issueFiled.ClosedAt.Time,
 
 		Labels:    labels,
 		Assignees: assignees,
 
 		ClosedByPullRequestID: closedByPrID,
 	}
+	if issueFiled.ClosedAt != nil {
+		issue.ClosedAt = &issueFiled.ClosedAt.Time
+	}
+
+	return issue
 }
 
 /**

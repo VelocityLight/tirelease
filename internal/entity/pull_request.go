@@ -152,7 +152,7 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 	}
 	var mergeableState = string(pullRequestField.Mergeable)
 
-	return &PullRequest{
+	pr := &PullRequest{
 		PullRequestID: pullRequestField.ID.(string),
 		Number:        int(pullRequestField.Number),
 		State:         string(pullRequestField.State),
@@ -164,8 +164,6 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 
 		CreatedAt: pullRequestField.CreatedAt.Time,
 		UpdatedAt: pullRequestField.UpdatedAt.Time,
-		ClosedAt:  &pullRequestField.ClosedAt.Time,
-		MergedAt:  &pullRequestField.MergedAt.Time,
 
 		Merged:             bool(pullRequestField.Merged),
 		MergeableState:     &mergeableState,
@@ -176,6 +174,13 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		Assignees:          assignees,
 		RequestedReviewers: requestedReviewers,
 	}
+	if pullRequestField.ClosedAt != nil {
+		pr.ClosedAt = &pullRequestField.ClosedAt.Time
+	}
+	if pullRequestField.MergedAt != nil {
+		pr.MergedAt = &pullRequestField.MergedAt.Time
+	}
+	return pr
 }
 
 func ComposePullRequestWithoutTimelineFromV4(withoutTimeline *git.PullRequestFieldWithoutTimelineItems) *PullRequest {

@@ -66,6 +66,11 @@ func routeRestAPI(router *gin.Engine) {
 	// 	issue.POST("/affect", controller.UpdateIssueAffectAndTriage)
 	// }
 
+	ping := router.Group("/ping")
+	{
+		ping.GET("", controller.TestPingPong)
+	}
+
 	issue := router.Group("/issue")
 	{
 		issue.GET("", controller.SelectIssueRelationInfos)

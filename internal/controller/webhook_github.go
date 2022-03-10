@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"tirelease/commons/configs"
 	"tirelease/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +9,7 @@ import (
 
 func GithubWebhookHandler(c *gin.Context) {
 	// parse webhook payload
-	payload, err := github.ValidatePayload(c.Request, []byte(configs.Config.Github.WebhookSecret))
+	payload, err := github.ValidatePayload(c.Request, nil)
 	if err != nil {
 		c.JSON(500, err.Error())
 		return

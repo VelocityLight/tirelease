@@ -23,7 +23,7 @@ import (
 // }
 
 func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect, error) {
-	// 查询
+	// search
 	var issueAffects []entity.IssueAffect
 	if err := database.DBConn.DB.Where(option).Find(&issueAffects).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find issue affect: %+v failed", option))
@@ -32,7 +32,12 @@ func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect,
 }
 
 func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
-	// 更新
+	// ignore useless create or update
+	if issueAffect.AffectResult == "" || issueAffect.AffectResult == entity.AffectResultResultUnKnown {
+		return nil
+	}
+
+	// update
 	issueAffect.CreateTime = time.Now()
 	issueAffect.UpdateTime = time.Now()
 	if err := database.DBConn.DB.Clauses(clause.OnConflict{

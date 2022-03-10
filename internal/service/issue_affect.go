@@ -3,45 +3,59 @@ package service
 import (
 	"fmt"
 
-	"github.com/pkg/errors"
+	"tirelease/commons/git"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 )
 
-func UpdateIssueAffect(issueAffect *entity.IssueAffect) error {
+func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
+	// create or update
 	err := repository.CreateOrUpdateIssueAffect(issueAffect)
 	if err != nil {
 		return err
 	}
 
-	// get lastest release_version
+	// result operation
+	err = IssueAffectResultOperation(issueAffect)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func IssueAffectResultOperation(issueAffect *entity.IssueAffect) error {
+	// param protection
+	if issueAffect.AffectResult != entity.AffectResultResultYes {
+		return nil
+	}
+
+	// select latest version & insert cherry-pick
 	releaseVersionOption := &entity.ReleaseVersionOption{
 		FatherReleaseVersionName: issueAffect.AffectVersion,
 		Status:                   entity.ReleaseVersionStatusOpen,
 	}
-	releaseVersions, err := repository.SelectReleaseVersion(releaseVersionOption)
+	releaseVersion, err := repository.SelectReleaseVersionUnique(releaseVersionOption)
 	if err != nil {
 		return err
 	}
-	if len(*releaseVersions) == 0 {
-		return errors.Wrap(err, fmt.Sprintf("no active release version: %+v failed", releaseVersionOption))
+	versionTriage := &entity.VersionTriage{
+		IssueID:      issueAffect.IssueID,
+		VersionName:  releaseVersion.Name,
+		TriageResult: entity.VersionTriageResultUnKnown,
+	}
+	_, err = CreateOrUpdateVersionTriageInfo(versionTriage)
+	if err != nil {
+		return err
 	}
 
-	// accept operate
-	if issueAffect.AffectResult == entity.AffectResultResultYes {
-		// todo update git label
-
-		// insert cherry-pick
-		versionTriage := &entity.VersionTriage{
-			IssueID:      issueAffect.IssueID,
-			VersionName:  (*releaseVersions)[0].Name,
-			TriageResult: entity.VersionTriageResultUnKnown,
-		}
-		_, err := CreateOrUpdateVersionTriageInfo(versionTriage)
-		if err != nil {
-			return err
-		}
+	// git add label
+	label := fmt.Sprintf(git.AffectsLabel, releaseVersion.Name)
+	err = AddLabelByIssueID(issueAffect.IssueID, label)
+	if err != nil {
+		return err
 	}
+
 	return nil
 }
 

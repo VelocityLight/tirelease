@@ -68,11 +68,11 @@ func SaveIssueRelationInfo(triageRelationInfo *dto.IssueRelationInfo) error {
 	}
 
 	// Save IssueAffects
-	// for _, issueAffect := range *triageRelationInfo.IssueAffects {
-	// 	if err := repository.CreateOrUpdateIssueAffect(&issueAffect); nil != err {
-	// 		return err
-	// 	}
-	// }
+	for _, issueAffect := range *triageRelationInfo.IssueAffects {
+		if err := repository.CreateOrUpdateIssueAffect(&issueAffect); nil != err {
+			return err
+		}
+	}
 
 	// Save IssuePrRelations
 	for _, issuePrRelation := range *triageRelationInfo.IssuePrRelations {

@@ -37,13 +37,13 @@ func SelectIssueAffectResult(c *gin.Context) {
 	c.JSON(200, gin.H{"data": enumResult})
 }
 
-func UpdateIssueAffect(c *gin.Context) {
+func CreateOrUpdateIssueAffect(c *gin.Context) {
 	// Params
 	issueAffect := entity.IssueAffect{}
 	c.ShouldBind(&issueAffect)
 
 	// Action
-	err := service.UpdateIssueAffect(&issueAffect)
+	err := service.CreateOrUpdateIssueAffect(&issueAffect)
 	if err != nil {
 		c.JSON(500, err.Error())
 		return

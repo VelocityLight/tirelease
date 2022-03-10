@@ -25,7 +25,7 @@ func CronRefreshIssuesV4() error {
 	totalLimit := 500
 	for _, repo := range *repos {
 		issues, err := git.ClientV4.GetIssuesByTimeRangeV4(
-			repo.Owner, repo.Repo, []string{git.BugLabel},
+			repo.Owner, repo.Repo, []string{git.BugTypeLabel},
 			time.Now().Add(time.Duration(fromTimeBefore)*time.Hour), time.Now(),
 			batchLimit, totalLimit)
 		if err != nil {

@@ -75,7 +75,7 @@ func routeRestAPI(router *gin.Engine) {
 		issue.GET("/cherrypick/:version_name", controller.SelectVersionTriageInfos)
 		issue.GET("/cherrypick/result", controller.SelectVersionTriageResult)
 
-		issue.PATCH("/:issue_id/affect/:version_name", controller.UpdateIssueAffect)
+		issue.PATCH("/:issue_id/affect/:version_name", controller.CreateOrUpdateIssueAffect)
 		issue.GET("/affect/result", controller.SelectIssueAffectResult)
 	}
 

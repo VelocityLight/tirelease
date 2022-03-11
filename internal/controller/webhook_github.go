@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"tirelease/commons/git"
 	"tirelease/internal/service"
 
 	"github.com/gin-gonic/gin"
@@ -31,10 +32,13 @@ func GithubWebhookHandler(c *gin.Context) {
 		}
 
 	case *github.IssueCommentEvent:
-		err := service.WebhookRefreshIssueV4(event.Issue)
-		if err != nil {
-			c.JSON(500, err.Error())
-			return
+		url := event.Issue.HTMLURL
+		if git.IsIssue(*url) {
+			err := service.WebhookRefreshIssueV4(event.Issue)
+			if err != nil {
+				c.JSON(500, err.Error())
+				return
+			}
 		}
 
 	case *github.PullRequestEvent:
@@ -45,7 +49,8 @@ func GithubWebhookHandler(c *gin.Context) {
 		}
 
 	default:
-		c.JSON(200, gin.H{"status": "ok", "data": "no listener, return directly"})
 
 	}
+
+	c.JSON(200, gin.H{"status": "ok"})
 }

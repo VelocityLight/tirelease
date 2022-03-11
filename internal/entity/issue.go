@@ -75,7 +75,7 @@ func ComposeIssueFromV3(issue *github.Issue) *Issue {
 	return &Issue{
 		IssueID: *issue.NodeID,
 		Number:  *issue.Number,
-		State:   *issue.State,
+		State:   strings.ToLower(*issue.State),
 		Title:   *issue.Title,
 		Owner:   owner,
 		Repo:    repo,
@@ -120,7 +120,7 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 	issue := &Issue{
 		IssueID: issueFiled.ID.(string),
 		Number:  int(issueFiled.Number),
-		State:   string(issueFiled.State),
+		State:   strings.ToLower(string(issueFiled.State)),
 		Title:   string(issueFiled.Title),
 		Owner:   string(issueFiled.Repository.Owner.Login),
 		Repo:    string(issueFiled.Repository.Name),

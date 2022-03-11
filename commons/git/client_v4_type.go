@@ -28,7 +28,8 @@ type UserField struct {
 
 type LabelField struct {
 	Nodes []struct {
-		Name githubv4.String
+		Name  githubv4.String
+		Color githubv4.String
 	}
 }
 

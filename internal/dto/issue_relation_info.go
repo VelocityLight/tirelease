@@ -14,6 +14,9 @@ type IssueRelationInfoQuery struct {
 	Owner   string `json:"owner,omitempty"`
 	Repo    string `json:"repo,omitempty"`
 
+	SeverityLabel string `json:"severity_label,omitempty"`
+	TypeLabel     string `json:"type_label,omitempty"`
+
 	// Filter Option
 	AffectVersion string `json:"affect_version,omitempty"`
 	BaseBranch    string `json:"base_branch,omitempty"`

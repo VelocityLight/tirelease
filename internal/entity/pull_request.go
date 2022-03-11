@@ -68,7 +68,8 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 	labels := &[]github.Label{}
 	for _, node := range pullRequest.Labels {
 		label := github.Label{
-			Name: node.Name,
+			Name:  node.Name,
+			Color: node.Color,
 		}
 		*labels = append(*labels, label)
 
@@ -131,6 +132,9 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 	for _, node := range pullRequestField.Labels.Nodes {
 		label := github.Label{
 			Name: github.String(string(node.Name)),
+		}
+		if node.Color != "" {
+			label.Color = github.String(string(node.Color))
 		}
 		*labels = append(*labels, label)
 

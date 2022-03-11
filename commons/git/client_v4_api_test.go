@@ -63,3 +63,15 @@ func TestGetPullRequestV4(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, pr != nil)
 }
+
+func TestGetPullRequestByIDV4(t *testing.T) {
+	// Connect
+	ConnectV4(TestToken)
+
+	// Query
+	pr, err := ClientV4.GetPullRequestByID(TestPullRequestNodeID)
+
+	// Assert
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, pr != nil)
+}

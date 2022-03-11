@@ -3,6 +3,7 @@ package repository
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -12,6 +13,8 @@ import (
 
 func CreateReleaseVersion(version *entity.ReleaseVersion) error {
 	// 加工
+	version.CreateTime = time.Now()
+	version.UpdateTime = time.Now()
 	serializeReleaseVersion(version)
 
 	// 存储
@@ -23,10 +26,11 @@ func CreateReleaseVersion(version *entity.ReleaseVersion) error {
 
 func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 	// 加工
+	version.UpdateTime = time.Now()
 	serializeReleaseVersion(version)
 
 	// 更新
-	if err := database.DBConn.DB.Omit("Repos", "Labels").Save(&version).Error; err != nil {
+	if err := database.DBConn.DB.Omit("CreateTime", "Repos", "Labels").Save(&version).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("update release version: %+v failed", version))
 	}
 	return nil
@@ -35,7 +39,7 @@ func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.ReleaseVersion, error) {
 	// 查询
 	var releaseVersions []entity.ReleaseVersion
-	if err := database.DBConn.DB.Where(option).Find(&releaseVersions).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Order("create_time desc").Find(&releaseVersions).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version: %+v failed", option))
 	}
 
@@ -44,6 +48,21 @@ func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.Releas
 		unSerializeReleaseVersion(&releaseVersions[i])
 	}
 	return &releaseVersions, nil
+}
+
+func SelectReleaseVersionUnique(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
+	// 查询
+	var releaseVersion entity.ReleaseVersion
+	if err := database.DBConn.DB.Where(option).Order("create_time desc").First(&releaseVersion).Error; err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("find release version unique: %+v failed", option))
+	}
+
+	if releaseVersion.Name == "" {
+		return nil, errors.New(fmt.Sprintf("find release version unique is nil: %+v failed", option))
+	}
+	// 加工
+	unSerializeReleaseVersion(&releaseVersion)
+	return &releaseVersion, nil
 }
 
 // 序列化和反序列化

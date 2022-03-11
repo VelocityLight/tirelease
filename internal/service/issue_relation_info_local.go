@@ -1,40 +1,13 @@
-package repository
+package service
 
 import (
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
+	"tirelease/internal/repository"
 )
 
+// ============================================================================
 // ============================================================================ CURD Of IssueRelationInfo
-func SaveIssueRelationInfo(triageRelationInfo *dto.IssueRelationInfo) error {
-	// Save Issue
-	if err := CreateOrUpdateIssue(triageRelationInfo.Issue); nil != err {
-		return err
-	}
-
-	// Save IssueAffects
-	for _, issueAffect := range *triageRelationInfo.IssueAffects {
-		if err := CreateIssueAffect(&issueAffect); nil != err {
-			return err
-		}
-	}
-
-	// Save IssuePrRelations
-	for _, issuePrRelation := range *triageRelationInfo.IssuePrRelations {
-		if err := CreateIssuePrRelation(&issuePrRelation); nil != err {
-			return err
-		}
-	}
-
-	// Save PullRequests
-	for _, pullRequest := range *triageRelationInfo.PullRequests {
-		if err := CreateOrUpdatePullRequest(&pullRequest); nil != err {
-			return err
-		}
-	}
-
-	return nil
-}
 
 func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRelationInfo, error) {
 	// Select Issues
@@ -46,7 +19,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		Owner:   option.Owner,
 		Repo:    option.Repo,
 	}
-	issues, err := SelectIssue(issueOption)
+	issues, err := repository.SelectIssue(issueOption)
 	if nil != err {
 		return nil, err
 	}
@@ -75,17 +48,55 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 			issueRelationInfos = append(issueRelationInfos, issueRelationInfo)
 		}
 	}
+	for i := range issueRelationInfos {
+		pullRequests := make([]entity.PullRequest, 0)
+		for _, pr := range *(issueRelationInfos[i].PullRequests) {
+			if option.BaseBranch == "" || pr.BaseBranch == option.BaseBranch {
+				pullRequests = append(pullRequests, pr)
+			}
+		}
+		issueRelationInfos[i].PullRequests = &pullRequests
+	}
 
 	return &issueRelationInfos, nil
 }
 
+func SaveIssueRelationInfo(triageRelationInfo *dto.IssueRelationInfo) error {
+	// Save Issue
+	if err := repository.CreateOrUpdateIssue(triageRelationInfo.Issue); nil != err {
+		return err
+	}
+
+	// Save IssueAffects
+	for _, issueAffect := range *triageRelationInfo.IssueAffects {
+		if err := repository.CreateOrUpdateIssueAffect(&issueAffect); nil != err {
+			return err
+		}
+	}
+
+	// Save IssuePrRelations
+	for _, issuePrRelation := range *triageRelationInfo.IssuePrRelations {
+		if err := repository.CreateIssuePrRelation(&issuePrRelation); nil != err {
+			return err
+		}
+	}
+
+	// Save PullRequests
+	// for _, pullRequest := range *triageRelationInfo.PullRequests {
+	// 	if err := repository.CreateOrUpdatePullRequest(&pullRequest); nil != err {
+	// 		return err
+	// 	}
+	// }
+
+	return nil
+}
+
+// ============================================================================
 // ============================================================================ Inner Function
+
 func ComposeRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, error) {
 	// Find IssueAffects
-	issueAffectOption := &entity.IssueAffectOption{
-		IssueID: issue.IssueID,
-	}
-	issueAffects, err := SelectIssueAffect(issueAffectOption)
+	issueAffects, err := ComposeIssueAffectWithIssueID(issue.IssueID)
 	if nil != err {
 		return nil, err
 	}
@@ -94,7 +105,7 @@ func ComposeRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, er
 	issuePrRelationOption := &entity.IssuePrRelationOption{
 		IssueID: issue.IssueID,
 	}
-	issuePrRelations, err := SelectIssuePrRelation(issuePrRelationOption)
+	issuePrRelations, err := repository.SelectIssuePrRelation(issuePrRelationOption)
 	if nil != err {
 		return nil, err
 	}
@@ -105,7 +116,7 @@ func ComposeRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, er
 		pullRequestOption := &entity.PullRequestOption{
 			PullRequestID: issuePrRelation.PullRequestID,
 		}
-		pullRequest, err := SelectPullRequestUnique(pullRequestOption)
+		pullRequest, err := repository.SelectPullRequestUnique(pullRequestOption)
 		if nil != err {
 			return nil, err
 		}

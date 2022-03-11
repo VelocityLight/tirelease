@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -10,17 +11,19 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-func CreateIssueAffect(issueAffect *entity.IssueAffect) error {
-	// 存储
-	if err := database.DBConn.DB.Clauses(
-		clause.OnConflict{DoNothing: true}).Create(&issueAffect).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("create issue affect: %+v failed", issueAffect))
-	}
-	return nil
-}
+// func CreateIssueAffect(issueAffect *entity.IssueAffect) error {
+// 	issueAffect.CreateTime = time.Now()
+// 	issueAffect.UpdateTime = time.Now()
+// 	// 存储
+// 	if err := database.DBConn.DB.Clauses(
+// 		clause.OnConflict{DoNothing: true}).Create(&issueAffect).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("create issue affect: %+v failed", issueAffect))
+// 	}
+// 	return nil
+// }
 
 func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect, error) {
-	// 查询
+	// search
 	var issueAffects []entity.IssueAffect
 	if err := database.DBConn.DB.Where(option).Find(&issueAffects).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find issue affect: %+v failed", option))
@@ -28,10 +31,19 @@ func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect,
 	return &issueAffects, nil
 }
 
-func UpdateIssueAffect(issueAffect *entity.IssueAffect) error {
-	// 更新
-	if err := database.DBConn.DB.Save(&issueAffect).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("update issue affect: %+v failed", issueAffect))
+func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
+	// ignore useless create or update
+	if issueAffect.AffectResult == "" || issueAffect.AffectResult == entity.AffectResultResultUnKnown {
+		return nil
+	}
+
+	// update
+	issueAffect.CreateTime = time.Now()
+	issueAffect.UpdateTime = time.Now()
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{
+		DoUpdates: clause.AssignmentColumns([]string{"update_time", "affect_result"}),
+	}).Create(&issueAffect).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("create or update issue affect: %+v failed", issueAffect))
 	}
 	return nil
 }

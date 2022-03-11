@@ -18,6 +18,8 @@ func TestIssue(t *testing.T) {
 	database.Connect(config)
 
 	// Create
+	assignee := &github.User{Login: github.String("jcye")}
+	var assignees = &([]github.User{*assignee})
 	var issue = &entity.Issue{
 		IssueID:   "100",
 		Number:    100,
@@ -27,8 +29,8 @@ func TestIssue(t *testing.T) {
 		HTMLURL:   "json",
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
+		Assignees: assignees,
 	}
-	issue.Assignee = &github.User{Login: github.String("jcye")}
 	err := CreateOrUpdateIssue(issue)
 	// Assert
 	assert.Equal(t, true, err == nil)

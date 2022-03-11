@@ -35,7 +35,7 @@ func IssueAffectOperate(updateOption *entity.IssueAffectUpdateOption) error {
 
 	// Update issue_affect
 	(*issueAffects)[0].AffectResult = updateOption.AffectResult
-	err = repository.UpdateIssueAffect(&(*issueAffects)[0])
+	err = repository.CreateOrUpdateIssueAffect(&(*issueAffects)[0])
 	if nil != err {
 		return err
 	}

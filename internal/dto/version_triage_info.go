@@ -4,17 +4,22 @@ import (
 	"tirelease/internal/entity"
 )
 
-// VersionTriageInfo Query Struct
+// VersionTriage Query Struct
 type VersionTriageInfoQuery struct {
-	VersionName string `json:"version_name,omitempty"`
-	IssueID     string `json:"issue_id,omitempty"`
+	ID           int64                      `json:"id"`
+	VersionName  string                     `json:"version_name,omitempty"`
+	IssueID      string                     `json:"issue_id,omitempty"`
+	TriageResult entity.VersionTriageResult `json:"triage_result,omitempty"`
 }
 
 // VersionTriage ReturnBack Struct
 type VersionTriageInfo struct {
-	VersionTriage     *entity.VersionTriage  `json:"version_triage,omitempty"`
-	ReleaseVersion    *entity.ReleaseVersion `json:"release_version,omitempty"`
-	IssueRelationInfo *IssueRelationInfo     `json:"issue_relation_info,omitempty"`
+	ReleaseVersion *entity.ReleaseVersion `json:"release_version,omitempty"`
+	IsFrozen       bool                   `json:"is_frozen,omitempty"`
+	IsAccept       bool                   `json:"is_accept,omitempty"`
+
+	VersionTriage     *entity.VersionTriage `json:"version_triage,omitempty"`
+	IssueRelationInfo *IssueRelationInfo    `json:"issue_relation_info,omitempty"`
 }
 
 type VersionTriageInfoWrap struct {

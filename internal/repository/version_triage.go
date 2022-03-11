@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -11,6 +12,8 @@ import (
 )
 
 func CreateVersionTriage(versionTriage *entity.VersionTriage) error {
+	versionTriage.CreateTime = time.Now()
+	versionTriage.UpdateTime = time.Now()
 	// 存储
 	if err := database.DBConn.DB.Clauses(
 		clause.OnConflict{DoNothing: true}).Create(&versionTriage).Error; err != nil {
@@ -30,8 +33,21 @@ func SelectVersionTriage(option *entity.VersionTriageOption) (*[]entity.VersionT
 
 func UpdateVersionTriage(versionTriage *entity.VersionTriage) error {
 	// 更新
-	if err := database.DBConn.DB.Save(&versionTriage).Error; err != nil {
+	versionTriage.UpdateTime = time.Now()
+	if err := database.DBConn.DB.Omit("CreateTime").Save(&versionTriage).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("update version triage: %+v failed", versionTriage))
+	}
+	return nil
+}
+
+func CreateOrUpdateVersionTriage(versionTriage *entity.VersionTriage) error {
+	// 存储
+	versionTriage.CreateTime = time.Now()
+	versionTriage.UpdateTime = time.Now()
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{
+		DoUpdates: clause.AssignmentColumns([]string{"update_time", "triage_owner", "triage_result", "block_version_release", "due_time", "comment"}),
+	}).Create(&versionTriage).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("create or update version triage: %+v failed", versionTriage))
 	}
 	return nil
 }

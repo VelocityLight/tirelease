@@ -10,7 +10,7 @@ import (
 func CreateReleaseVersion(c *gin.Context) {
 	// Params
 	releaseVersion := &entity.ReleaseVersion{}
-	c.BindJSON(releaseVersion)
+	c.ShouldBind(releaseVersion)
 
 	// Action
 	err := repository.CreateReleaseVersion(releaseVersion)
@@ -25,7 +25,7 @@ func CreateReleaseVersion(c *gin.Context) {
 func UpdateReleaseVersion(c *gin.Context) {
 	// Params
 	releaseVersion := &entity.ReleaseVersion{}
-	c.BindJSON(releaseVersion)
+	c.ShouldBind(releaseVersion)
 
 	// Action
 	err := repository.UpdateReleaseVersion(releaseVersion)
@@ -50,4 +50,34 @@ func SelectReleaseVersion(c *gin.Context) {
 	}
 
 	c.JSON(200, gin.H{"data": releaseVersions})
+}
+
+func SelectReleaseVersionStatus(c *gin.Context) {
+	var enumResult = struct {
+		ReleaseVersionStatusOpen     entity.ReleaseVersionStatus
+		ReleaseVersionStatusClosed   entity.ReleaseVersionStatus
+		ReleaseVersionStatusFrozen   entity.ReleaseVersionStatus
+		ReleaseVersionStatusReleased entity.ReleaseVersionStatus
+	}{
+		ReleaseVersionStatusOpen:     entity.ReleaseVersionStatusOpen,
+		ReleaseVersionStatusClosed:   entity.ReleaseVersionStatusClosed,
+		ReleaseVersionStatusFrozen:   entity.ReleaseVersionStatusFrozen,
+		ReleaseVersionStatusReleased: entity.ReleaseVersionStatusReleased,
+	}
+
+	c.JSON(200, gin.H{"data": enumResult})
+}
+
+func SelectReleaseVersionType(c *gin.Context) {
+	var enumResult = struct {
+		ReleaseVersionTypeMajor entity.ReleaseVersionType
+		ReleaseVersionTypeMinor entity.ReleaseVersionType
+		ReleaseVersionTypePatch entity.ReleaseVersionType
+	}{
+		ReleaseVersionTypeMajor: entity.ReleaseVersionTypeMajor,
+		ReleaseVersionTypeMinor: entity.ReleaseVersionTypeMinor,
+		ReleaseVersionTypePatch: entity.ReleaseVersionTypePatch,
+	}
+
+	c.JSON(200, gin.H{"data": enumResult})
 }

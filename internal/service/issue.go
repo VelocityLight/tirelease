@@ -5,9 +5,29 @@ import (
 
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
+	"tirelease/internal/repository"
 
 	"github.com/google/go-github/v41/github"
 )
+
+// Operation
+func AddLabelByIssueID(issueID, label string) error {
+	// select issue by id
+	option := &entity.IssueOption{
+		IssueID: issueID,
+	}
+	issue, err := repository.SelectIssueUnique(option)
+	if nil != err {
+		return err
+	}
+
+	// add issue label
+	_, _, err = git.Client.AddLabel(issue.Owner, issue.Repo, issue.Number, label)
+	if nil != err {
+		return err
+	}
+	return nil
+}
 
 // Query Issue From Github And Construct Issue Data Service
 func GetIssueByNumberFromV3(owner, repo string, number int) (*entity.Issue, error) {

@@ -23,7 +23,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 				AffectVersion: minorVersion,
 				AffectResult:  entity.AffectResultResultUnKnown,
 			}
-			if err := repository.CreateIssueAffect(&issueAffect); err != nil {
+			if err := repository.CreateOrUpdateIssueAffect(&issueAffect); err != nil {
 				return err
 			}
 		}
@@ -47,7 +47,7 @@ func UpdatePrAndIssue(webhookPayload WebhookPayload) error {
 }
 
 func InitDB() error {
-	issues, err := git.ClientV4.GetIssuesByTimeRange("pingcap", "tidb", []string{"type/bug"}, time.Now().Add(-96*time.Hour), time.Now(), 20, 500)
+	issues, err := git.ClientV4.GetIssuesByTimeRangeV4("pingcap", "tidb", []string{"type/bug"}, time.Now().Add(-96*time.Hour), time.Now(), 20, 500)
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func InitDB() error {
 				AffectVersion: minorVersion,
 				AffectResult:  entity.AffectResultResultUnKnown,
 			}
-			if err := repository.CreateIssueAffect(&issueAffect); err != nil {
+			if err := repository.CreateOrUpdateIssueAffect(&issueAffect); err != nil {
 				return err
 			}
 		}
@@ -71,7 +71,7 @@ func InitDB() error {
 			return err
 		}
 	}
-	prs, err := git.ClientV4.GetPullRequestsFrom("pingcap", "tidb", time.Now().Add(-48*time.Hour), 20, 500)
+	prs, err := git.ClientV4.GetPullRequestsFromV4("pingcap", "tidb", time.Now().Add(-48*time.Hour), 20, 500)
 	if err != nil {
 		return err
 	}
@@ -95,8 +95,7 @@ func IssueFieldToIssue(issueFiled *git.IssueField) *entity.Issue {
 	assignees := &[]github.User{}
 	for _, userNode := range issueFiled.Assignees.Nodes {
 		user := github.User{
-			Login:     (*string)(&userNode.Login),
-			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+			Login: (*string)(&userNode.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
@@ -140,8 +139,7 @@ func PullRequestFieldToPullRequest(pullRequestField *git.PullRequestField) *enti
 	assignees := &[]github.User{}
 	for _, userNode := range pullRequestField.Assignees.Nodes {
 		user := github.User{
-			Login:     (*string)(&userNode.Login),
-			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+			Login: (*string)(&userNode.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
@@ -159,7 +157,7 @@ func PullRequestFieldToPullRequest(pullRequestField *git.PullRequestField) *enti
 		State:         string(pullRequestField.State),
 		Title:         string(pullRequestField.Title),
 		Repo:          strings.Join([]string{string(pullRequestField.Repository.Owner.Login), string(pullRequestField.Repository.Name)}, "/"),
-		HeadBranch:    string(pullRequestField.BaseRefName),
+		BaseBranch:    string(pullRequestField.BaseRefName),
 		// MergedAt:            pullRequestField.MergedAt.Time,
 		CreatedAt:           pullRequestField.CreatedAt.Time,
 		UpdatedAt:           pullRequestField.UpdatedAt.Time,

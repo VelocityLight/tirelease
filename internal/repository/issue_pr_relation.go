@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -11,6 +12,8 @@ import (
 )
 
 func CreateIssuePrRelation(issuePrRelation *entity.IssuePrRelation) error {
+	issuePrRelation.CreateTime = time.Now()
+	issuePrRelation.UpdateTime = time.Now()
 	// 存储
 	if err := database.DBConn.DB.Clauses(
 		clause.OnConflict{DoNothing: true}).Create(&issuePrRelation).Error; err != nil {
@@ -28,9 +31,9 @@ func SelectIssuePrRelation(option *entity.IssuePrRelationOption) (*[]entity.Issu
 	return &issuePrRelations, nil
 }
 
-func DeleteIssuePrRelation(issuePrRelation *entity.IssuePrRelation) error {
-	if err := database.DBConn.DB.Delete(issuePrRelation).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("delete issue_pr_relation: %+v failed", issuePrRelation))
-	}
-	return nil
-}
+// func DeleteIssuePrRelation(issuePrRelation *entity.IssuePrRelation) error {
+// 	if err := database.DBConn.DB.Delete(issuePrRelation).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("delete issue_pr_relation: %+v failed", issuePrRelation))
+// 	}
+// 	return nil
+// }

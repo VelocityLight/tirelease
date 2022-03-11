@@ -1,9 +1,8 @@
+// V4 Object: https://docs.github.com/en/graphql/reference/objects
+
 package git
 
 import "github.com/shurcooL/githubv4"
-
-// ============================================================= Constants
-var CrossReferencedEvent = "CrossReferencedEvent"
 
 // ============================================================= Struct Of Needed Fields
 type IssueField struct {
@@ -23,6 +22,10 @@ type RepositoryField struct {
 	}
 }
 
+type UserField struct {
+	Login githubv4.String
+}
+
 type LabelField struct {
 	Nodes []struct {
 		Name githubv4.String
@@ -31,29 +34,34 @@ type LabelField struct {
 
 type AssigneesFiled struct {
 	Nodes []struct {
-		Login     githubv4.String
-		CreatedAt githubv4.DateTime
+		UserField `graphql:"... on User"`
 	}
 }
 
-type UserField struct {
-	Login githubv4.String
+type ReviewRequestField struct {
+	Nodes []struct {
+		RequestedReviewer struct {
+			UserField `graphql:"... on User"`
+		}
+	}
 }
 
 type IssueFieldWithoutTimelineItems struct {
-	Title      githubv4.String
-	State      githubv4.IssueState
-	ID         githubv4.ID
-	Number     githubv4.Int
-	Url        githubv4.String
-	Author     UserField
-	Body       githubv4.String
-	ClosedAt   githubv4.DateTime
-	CreatedAt  githubv4.DateTime
-	UpdatedAt  githubv4.DateTime
+	ID     githubv4.ID
+	Number githubv4.Int
+	State  githubv4.IssueState
+	Title  githubv4.String
+	// Author     UserField
 	Repository RepositoryField
-	Labels     LabelField     `graphql:"labels(first: 30)"`
-	Assignees  AssigneesFiled `graphql:"assignees(first: 10)"`
+	Url        githubv4.String
+	// Body       githubv4.String
+
+	CreatedAt githubv4.DateTime
+	UpdatedAt githubv4.DateTime
+	ClosedAt  *githubv4.DateTime
+
+	Labels    LabelField     `graphql:"labels(first: 30)"`
+	Assignees AssigneesFiled `graphql:"assignees(first: 10)"`
 }
 
 type PullRequestFieldWithoutTimelineItems struct {
@@ -63,6 +71,7 @@ type PullRequestFieldWithoutTimelineItems struct {
 	Title       githubv4.String
 	Repository  RepositoryField
 	Url         githubv4.String
+	BaseRefName githubv4.String
 	HeadRefName githubv4.String
 
 	CreatedAt githubv4.DateTime
@@ -73,16 +82,15 @@ type PullRequestFieldWithoutTimelineItems struct {
 	Merged    githubv4.Boolean
 	Mergeable githubv4.MergeableState
 
-	MergeCommit struct {
-		OID           githubv4.GitObjectID
-		CommittedDate githubv4.DateTime
-	}
-	Author UserField
+	// MergeCommit struct {
+	// 	OID           githubv4.GitObjectID
+	// 	CommittedDate githubv4.DateTime
+	// }
+	// Author UserField
 
-	Labels    LabelField     `graphql:"labels(first: 30)"`
-	Assignees AssigneesFiled `graphql:"assignees(first: 10)"`
-
-	BaseRefName githubv4.String
+	Labels         LabelField         `graphql:"labels(first: 30)"`
+	Assignees      AssigneesFiled     `graphql:"assignees(first: 10)"`
+	ReviewRequests ReviewRequestField `graphql:"reviewRequests(first: 10)"`
 }
 
 type IssueTimelineItems struct {
@@ -92,13 +100,13 @@ type IssueTimelineItems struct {
 			CrossReferencedEvent struct {
 				WillCloseTarget githubv4.Boolean
 				Source          struct {
-					PullRequest PullRequestField `graphql:"... on PullRequest"`
+					PullRequest PullRequestFieldWithoutTimelineItems `graphql:"... on PullRequest"`
 				}
 			} `graphql:"... on CrossReferencedEvent"`
 			ClosedEvent struct {
 				Actor  UserField
 				Closer struct {
-					PullRequest PullRequestField `graphql:"... on PullRequest"`
+					PullRequest PullRequestFieldWithoutTimelineItems `graphql:"... on PullRequest"`
 				}
 			} `graphql:"... on ClosedEvent"`
 		}

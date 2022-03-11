@@ -2,7 +2,6 @@ package repository
 
 import (
 	"testing"
-	"time"
 
 	"tirelease/commons/database"
 	"tirelease/internal/entity"
@@ -17,20 +16,12 @@ func TestIssueAffect(t *testing.T) {
 
 	// Create
 	var issueAffect = &entity.IssueAffect{
-		CreateTime: time.Now(),
-		UpdateTime: time.Now(),
-
 		AffectVersion: "5.4.1",
 		IssueID:       "100",
 		AffectResult:  entity.AffectResultResultUnKnown,
 	}
-	err := CreateIssueAffect(issueAffect)
-	// Assert
-	assert.Equal(t, true, err == nil)
-
-	// Update
 	issueAffect.AffectResult = entity.AffectResultResultYes
-	err = UpdateIssueAffect(issueAffect)
+	err := CreateOrUpdateIssueAffect(issueAffect)
 	// Assert
 	assert.Equal(t, true, err == nil)
 

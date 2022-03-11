@@ -19,6 +19,7 @@ type ReleaseVersion struct {
 	Type        ReleaseVersionType   `json:"type,omitempty"`
 	Status      ReleaseVersionStatus `json:"status,omitempty"`
 
+	ReleaseBranch            string `json:"release_branch,omitempty"`
 	FatherReleaseVersionName string `json:"father_release_version_name,omitempty"`
 
 	ReposString  string `json:"repos_string,omitempty"`
@@ -77,6 +78,7 @@ CREATE TABLE IF NOT EXISTS release_version (
 	type VARCHAR(32) COMMENT '版本类型',
 	status VARCHAR(32) COMMENT '版本状态',
 
+	release_branch VARCHAR(255) COMMENT '发布分支',
 	father_release_version_name VARCHAR(255) COMMENT '父版本号',
 	repos_string VARCHAR(1024) COMMENT '代码仓库列表',
 	labels_string VARCHAR(1024) COMMENT '标签规则列表',

@@ -22,19 +22,17 @@ type Issue struct {
 	Repo    string `json:"repo,omitempty"`
 	HTMLURL string `json:"html_url,omitempty"`
 
-	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 	CreatedAt time.Time  `json:"created_at,omitempty"`
 	UpdatedAt time.Time  `json:"updated_at,omitempty"`
+	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 
 	LabelsString    string `json:"labels_string,omitempty"`
-	AssigneeString  string `json:"assignee_string,omitempty"`
 	AssigneesString string `json:"assignees_string,omitempty"`
 
 	ClosedByPullRequestID string `json:"closed_by_pull_request_id,omitempty"`
 
 	// OutPut-Serial
 	Labels    *[]github.Label `json:"labels,omitempty" gorm:"-"`
-	Assignee  *github.User    `json:"assignee,omitempty" gorm:"-"`
 	Assignees *[]github.User  `json:"assignees,omitempty" gorm:"-"`
 }
 
@@ -57,11 +55,18 @@ func (Issue) TableName() string {
 func ComposeIssueFromV3(issue *github.Issue) *Issue {
 	labels := &[]github.Label{}
 	for _, node := range issue.Labels {
-		*labels = append(*labels, *node)
+		label := &github.Label{
+			ID:   node.ID,
+			Name: node.Name,
+		}
+		*labels = append(*labels, *label)
 	}
 	assignees := &[]github.User{}
 	for _, node := range issue.Assignees {
-		*assignees = append(*assignees, *node)
+		user := &github.User{
+			Login: node.Login,
+		}
+		*assignees = append(*assignees, *user)
 	}
 	url := strings.Split(*issue.RepositoryURL, "/")
 	owner := url[len(url)-2]
@@ -81,7 +86,6 @@ func ComposeIssueFromV3(issue *github.Issue) *Issue {
 		ClosedAt:  issue.ClosedAt,
 
 		Labels:    labels,
-		Assignee:  issue.Assignee,
 		Assignees: assignees,
 	}
 }
@@ -99,8 +103,7 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 	assignees := &[]github.User{}
 	for _, userNode := range issueFiled.Assignees.Nodes {
 		user := github.User{
-			Login:     (*string)(&userNode.Login),
-			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+			Login: (*string)(&userNode.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
@@ -114,7 +117,7 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 		}
 	}
 
-	return &Issue{
+	issue := &Issue{
 		IssueID: issueFiled.ID.(string),
 		Number:  int(issueFiled.Number),
 		State:   string(issueFiled.State),
@@ -131,6 +134,11 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 
 		ClosedByPullRequestID: closedByPrID,
 	}
+	if issueFiled.ClosedAt != nil {
+		issue.ClosedAt = &issueFiled.ClosedAt.Time
+	}
+
+	return issue
 }
 
 /**
@@ -150,7 +158,6 @@ CREATE TABLE IF NOT EXISTS issue (
 	updated_at TIMESTAMP COMMENT '更新时间',
 
 	labels_string TEXT COMMENT '标签',
-	assignee_string TEXT COMMENT '处理人',
 	assignees_string TEXT COMMENT '处理人列表',
 
 	closed_by_pull_request_id VARCHAR(255) COMMENT '处理的PR',

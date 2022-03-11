@@ -5,7 +5,7 @@ import (
 	"tirelease/internal/service"
 )
 
-func IssueWebHook() {
+func PullRequestCron() {
 	// Cron 表达式及功能方法
-	cron.Create("* */1 * * * *", func() { service.InitIssueAndRelationFirstTime() })
+	cron.Create("* */1 * * * *", func() { service.CronRefreshPullRequestV4() })
 }

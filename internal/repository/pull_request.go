@@ -12,22 +12,21 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
-	// 加工
-	serializePullRequest(pullRequest)
+// func CreatePullRequest(pullRequest *entity.PullRequest) error {
+// 	// 加工
+// 	serializePullRequest(pullRequest)
 
-	// 存储
-	if err := database.DBConn.DB.Clauses(
-		clause.OnConflict{UpdateAll: true}).Omit("Labels", "Assignee", "Assignees", "RequestedReviewers").Create(&pullRequest).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("create pull request: %+v failed", pullRequest))
-	}
-	return nil
-}
+// 	// 存储
+// 	if err := database.DBConn.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&pullRequest).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("create pull request: %+v failed", pullRequest))
+// 	}
+// 	return nil
+// }
 
 func SelectPullRequest(option *entity.PullRequestOption) (*[]entity.PullRequest, error) {
 	// 查询
 	var prs []entity.PullRequest
-	if err := database.DBConn.DB.Where(option).Order("created_at desc").Find(&prs).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Order("updated_at desc").Find(&prs).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find pull request: %+v failed", option))
 	}
 
@@ -44,24 +43,37 @@ func SelectPullRequestUnique(option *entity.PullRequestOption) (*entity.PullRequ
 		return nil, errors.Wrap(err, fmt.Sprintf("find pull request unique: %+v failed", option))
 	}
 
+	if pr.PullRequestID == "" {
+		return nil, errors.New(fmt.Sprintf("pull request not found: %+v", option))
+	}
+
 	// 加工
 	unSerializePullRequest(&pr)
 	return &pr, nil
 }
 
-func DeletePullRequest(pullRequest *entity.PullRequest) error {
-	if err := database.DBConn.DB.Delete(pullRequest).Error; err != nil {
-		return errors.Wrap(err, fmt.Sprintf("delete pull request: %+v failed", pullRequest))
+// func DeletePullRequest(pullRequest *entity.PullRequest) error {
+// 	if err := database.DBConn.DB.Delete(pullRequest).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("delete pull request: %+v failed", pullRequest))
+// 	}
+// 	return nil
+// }
+
+func CreateOrUpdatePullRequest(pullRequest *entity.PullRequest) error {
+	// 加工
+	serializePullRequest(pullRequest)
+
+	// 存储
+	if err := database.DBConn.DB.Clauses(clause.OnConflict{
+		UpdateAll: true,
+	}).Omit("Labels", "Assignees", "RequestedReviewers").Create(&pullRequest).Error; err != nil {
+		return errors.Wrap(err, fmt.Sprintf("create or update pull request: %+v failed", pullRequest))
 	}
 	return nil
 }
 
 // 序列化和反序列化
 func serializePullRequest(pullRequest *entity.PullRequest) {
-	if nil != pullRequest.Assignee {
-		assigneeString, _ := json.Marshal(pullRequest.Assignee)
-		pullRequest.AssigneeString = string(assigneeString)
-	}
 	if nil != pullRequest.Assignees {
 		assigneesString, _ := json.Marshal(pullRequest.Assignees)
 		pullRequest.AssigneesString = string(assigneesString)
@@ -77,14 +89,9 @@ func serializePullRequest(pullRequest *entity.PullRequest) {
 }
 
 func unSerializePullRequest(pullRequest *entity.PullRequest) {
-	if pullRequest.AssigneeString != "" {
-		var assignee github.User
-		json.Unmarshal([]byte(pullRequest.AssigneeString), &assignee)
-		pullRequest.Assignee = &assignee
-	}
 	if pullRequest.AssigneesString != "" {
 		var assignees []github.User
-		json.Unmarshal([]byte(pullRequest.AssigneeString), &assignees)
+		json.Unmarshal([]byte(pullRequest.AssigneesString), &assignees)
 		pullRequest.Assignees = &assignees
 	}
 	if pullRequest.LabelsString != "" {

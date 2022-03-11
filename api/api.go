@@ -66,15 +66,36 @@ func routeRestAPI(router *gin.Engine) {
 	// 	issue.POST("/affect", controller.UpdateIssueAffectAndTriage)
 	// }
 
+	ping := router.Group("/ping")
+	{
+		ping.GET("", controller.TestPingPong)
+	}
+
 	issue := router.Group("/issue")
 	{
 		issue.GET("", controller.SelectIssueRelationInfos)
+
+		issue.POST("/:issue_id/cherrypick/:version_name", controller.CreateOrUpdateVersionTriage)
+		issue.PATCH("/:issue_id/cherrypick/:version_name", controller.CreateOrUpdateVersionTriage)
+		issue.GET("/cherrypick/:version_name", controller.SelectVersionTriageInfos)
+		issue.GET("/cherrypick/result", controller.SelectVersionTriageResult)
+
+		issue.PATCH("/:issue_id/affect/:version_name", controller.CreateOrUpdateIssueAffect)
+		issue.GET("/affect/result", controller.SelectIssueAffectResult)
 	}
 
 	releaseVersion := router.Group("/version")
 	{
 		releaseVersion.GET("/list", controller.SelectReleaseVersion)
 		releaseVersion.POST("/insert", controller.CreateReleaseVersion)
-		releaseVersion.POST("/update", controller.UpdateReleaseVersion)
+		releaseVersion.PATCH("/update", controller.UpdateReleaseVersion)
+		releaseVersion.DELETE("/status", controller.SelectReleaseVersionStatus)
+		releaseVersion.DELETE("/type", controller.SelectReleaseVersionType)
 	}
+
+	webhook := router.Group("/webhook")
+	{
+		webhook.POST("", controller.GithubWebhookHandler)
+	}
+
 }

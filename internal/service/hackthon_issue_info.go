@@ -130,7 +130,7 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 			if cpr.MergedAt == nil {
 				cpr.MergedAt = &time.Time{}
 			}
-			if strings.HasSuffix(cpr.HeadBranch, issueAffect.AffectVersion) {
+			if strings.HasSuffix(cpr.BaseBranch, issueAffect.AffectVersion) {
 				pr = Pr{
 					PrID:        cpr.PullRequestID,
 					Repository:  cpr.Repo,
@@ -138,7 +138,7 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 					Title:       cpr.Title,
 					Url:         cpr.HTMLURL,
 					State:       cpr.State,
-					MergeTarget: cpr.HeadBranch,
+					MergeTarget: cpr.BaseBranch,
 					MergedAt:    *cpr.MergedAt,
 				}
 			}

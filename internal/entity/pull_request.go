@@ -19,27 +19,26 @@ type PullRequest struct {
 	Owner         string `json:"owner,omitempty"`
 	Repo          string `json:"repo,omitempty"`
 	HTMLURL       string `json:"html_url,omitempty"`
-	HeadBranch    string `json:"head_branch,omitempty"`
+	BaseBranch    string `json:"base_branch,omitempty"`
 
 	CreatedAt time.Time  `json:"created_at,omitempty"`
 	UpdatedAt time.Time  `json:"updated_at,omitempty"`
 	ClosedAt  *time.Time `json:"closed_at,omitempty"`
 	MergedAt  *time.Time `json:"merged_at,omitempty"`
 
-	Merged         bool    `json:"merged,omitempty"`
-	Mergeable      *bool   `json:"mergeable,omitempty"`
-	MergeableState *string `json:"mergeable_state,omitempty"`
+	Merged             bool    `json:"merged,omitempty"`
+	MergeableState     *string `json:"mergeable_state,omitempty"`
+	CherryPickApproved bool    `json:"cherry_pick_approved,omitempty"`
+	AlreadyReviewed    bool    `json:"already_reviewed,omitempty"`
 
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 
 	LabelsString             string `json:"labels_string,omitempty"`
-	AssigneeString           string `json:"assignee_string,omitempty"`
 	AssigneesString          string `json:"assignees_string,omitempty"`
 	RequestedReviewersString string `json:"requested_reviewers_string,omitempty"`
 
 	// OutPut-Serial
 	Labels             *[]github.Label `json:"labels,omitempty" gorm:"-"`
-	Assignee           *github.User    `json:"assignee,omitempty" gorm:"-"`
 	Assignees          *[]github.User  `json:"assignees,omitempty" gorm:"-"`
 	RequestedReviewers *[]github.User  `json:"requested_reviewers,omitempty" gorm:"-"`
 }
@@ -52,7 +51,7 @@ type PullRequestOption struct {
 	State               string `json:"state,omitempty"`
 	Owner               string `json:"owner,omitempty"`
 	Repo                string `json:"repo,omitempty"`
-	HeadBranch          string `json:"head_branch,omitempty"`
+	BaseBranch          string `json:"base_branch,omitempty"`
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty"`
 }
 
@@ -63,17 +62,36 @@ func (PullRequest) TableName() string {
 
 // ComposePullRequestFromV3
 func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
+	alreadyReviwed := false
+	cherryPickApproved := false
 	labels := &[]github.Label{}
 	for _, node := range pullRequest.Labels {
-		*labels = append(*labels, *node)
+		label := github.Label{
+			Name: node.Name,
+		}
+		*labels = append(*labels, label)
+
+		if *label.Name == git.CherryPickLabel {
+			cherryPickApproved = true
+		}
+		if *label.Name == git.LGT2Label {
+			alreadyReviwed = true
+		}
+
 	}
 	assignees := &[]github.User{}
 	for _, node := range pullRequest.Assignees {
-		*assignees = append(*assignees, *node)
+		user := github.User{
+			Login: node.Login,
+		}
+		*assignees = append(*assignees, user)
 	}
 	requestedReviewers := &[]github.User{}
 	for _, node := range pullRequest.RequestedReviewers {
-		*requestedReviewers = append(*requestedReviewers, *node)
+		user := github.User{
+			Login: node.Login,
+		}
+		*requestedReviewers = append(*requestedReviewers, user)
 	}
 
 	return &PullRequest{
@@ -84,19 +102,19 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 		Owner:         *pullRequest.Base.Repo.Owner.Login,
 		Repo:          *pullRequest.Base.Repo.Name,
 		HTMLURL:       *pullRequest.HTMLURL,
-		HeadBranch:    *pullRequest.Head.Ref,
+		BaseBranch:    *pullRequest.Base.Ref,
 
 		CreatedAt: *pullRequest.CreatedAt,
 		UpdatedAt: *pullRequest.UpdatedAt,
 		ClosedAt:  pullRequest.ClosedAt,
 		MergedAt:  pullRequest.MergedAt,
 
-		Merged:         *pullRequest.Merged,
-		Mergeable:      pullRequest.Mergeable,
-		MergeableState: pullRequest.MergeableState,
+		Merged:             *pullRequest.Merged,
+		MergeableState:     pullRequest.MergeableState,
+		CherryPickApproved: cherryPickApproved,
+		AlreadyReviewed:    alreadyReviwed,
 
 		Labels:             labels,
-		Assignee:           pullRequest.Assignee,
 		Assignees:          assignees,
 		RequestedReviewers: requestedReviewers,
 	}
@@ -105,23 +123,39 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 // ComposePullRequestFromV4
 // TODO: v4 implement by tony at 2022/02/14
 func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullRequest {
+	alreadyReviwed := false
+	cherryPickApproved := false
 	labels := &[]github.Label{}
-	for _, labelNode := range pullRequestField.Labels.Nodes {
+	for _, node := range pullRequestField.Labels.Nodes {
 		label := github.Label{
-			Name: github.String(string(labelNode.Name)),
+			Name: github.String(string(node.Name)),
 		}
 		*labels = append(*labels, label)
+
+		if *label.Name == git.CherryPickLabel {
+			cherryPickApproved = true
+		}
+		if *label.Name == git.LGT2Label {
+			alreadyReviwed = true
+		}
 	}
 	assignees := &[]github.User{}
-	for _, userNode := range pullRequestField.Assignees.Nodes {
+	for _, node := range pullRequestField.Assignees.Nodes {
 		user := github.User{
-			Login:     (*string)(&userNode.Login),
-			CreatedAt: (*github.Timestamp)(&userNode.CreatedAt),
+			Login: (*string)(&node.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
+	requestedReviewers := &[]github.User{}
+	for _, node := range pullRequestField.ReviewRequests.Nodes {
+		user := github.User{
+			Login: (*string)(&node.RequestedReviewer.Login),
+		}
+		*requestedReviewers = append(*requestedReviewers, user)
+	}
+	var mergeableState = string(pullRequestField.Mergeable)
 
-	return &PullRequest{
+	pr := &PullRequest{
 		PullRequestID: pullRequestField.ID.(string),
 		Number:        int(pullRequestField.Number),
 		State:         string(pullRequestField.State),
@@ -129,13 +163,34 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		Owner:         string(pullRequestField.Repository.Owner.Login),
 		Repo:          string(pullRequestField.Repository.Name),
 		HTMLURL:       string(pullRequestField.Url),
-		HeadBranch:    string(pullRequestField.BaseRefName),
-		CreatedAt:     pullRequestField.CreatedAt.Time,
-		UpdatedAt:     pullRequestField.UpdatedAt.Time,
-		Merged:        bool(pullRequestField.Merged),
-		Labels:        labels,
-		Assignees:     assignees,
+		BaseBranch:    string(pullRequestField.BaseRefName),
+
+		CreatedAt: pullRequestField.CreatedAt.Time,
+		UpdatedAt: pullRequestField.UpdatedAt.Time,
+
+		Merged:             bool(pullRequestField.Merged),
+		MergeableState:     &mergeableState,
+		CherryPickApproved: cherryPickApproved,
+		AlreadyReviewed:    alreadyReviwed,
+
+		Labels:             labels,
+		Assignees:          assignees,
+		RequestedReviewers: requestedReviewers,
 	}
+	if pullRequestField.ClosedAt != nil {
+		pr.ClosedAt = &pullRequestField.ClosedAt.Time
+	}
+	if pullRequestField.MergedAt != nil {
+		pr.MergedAt = &pullRequestField.MergedAt.Time
+	}
+	return pr
+}
+
+func ComposePullRequestWithoutTimelineFromV4(withoutTimeline *git.PullRequestFieldWithoutTimelineItems) *PullRequest {
+	pullRequestField := &git.PullRequestField{
+		PullRequestFieldWithoutTimelineItems: *withoutTimeline,
+	}
+	return ComposePullRequestFromV4(pullRequestField)
 }
 
 /**
@@ -150,20 +205,20 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	owner VARCHAR(255) COMMENT '仓库所有者',
 	repo VARCHAR(255) COMMENT '仓库名称',
 	html_url VARCHAR(1024) COMMENT '链接',
-	head_branch VARCHAR(255) COMMENT '链接',
+	base_branch VARCHAR(255) COMMENT '目标分支',
 
 	closed_at TIMESTAMP COMMENT '关闭时间',
 	created_at TIMESTAMP COMMENT '创建时间',
 	updated_at TIMESTAMP COMMENT '更新时间',
-
 	merged_at TIMESTAMP COMMENT '合入时间',
+
 	merged BOOLEAN COMMENT '是否已合入',
-	mergeable BOOLEAN COMMENT '是否可合入',
 	mergeable_state VARCHAR(32) COMMENT '可合入状态',
+	cherry_pick_approved BOOLEAN COMMENT '是否已进入版本',
+	already_reviewed BOOLEAN COMMENT '是否已代码评审',
 
 	source_pull_request_id VARCHAR(255) COMMENT '来源ID',
 	labels_string TEXT COMMENT '标签',
-	assignee_string TEXT COMMENT '处理人',
 	assignees_string TEXT COMMENT '处理人列表',
 	requested_reviewers_string TEXT COMMENT '处理人列表',
 

@@ -42,7 +42,7 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 			"limit":  githubv4.Int(limit),
 			"cursor": cursor,
 			"labels": ghLabels,
-			"since":  githubv4.String(since),
+			"since": githubv4.DateTime{Time: from.Add(-1 * time.Minute)},
 		}
 
 		err = client.client.Query(context.Background(), &query, param)

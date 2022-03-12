@@ -11,6 +11,7 @@ import AllColumns from "./ColumnDefs";
 dayjs.extend(relativeTime);
 
 export const IssueRow = ({ row, onlyVersion, columns }) => {
+  console.log("row data", row);
   return (
     <TableRow
       key={row.Number}
@@ -22,19 +23,19 @@ export const IssueRow = ({ row, onlyVersion, columns }) => {
         if (column.display) {
           switch (column.title) {
             case "Repo":
-              return <TableCell>tidb</TableCell>;
+              return <TableCell>{row.Issue.repo}</TableCell>;
             case "Issue":
               return (
                 <TableCell>
-                  <Link href={row.Url}>{row.Number}</Link>
+                  <Link href={row.Issue.number}>{row.Issue.html_url}</Link>
                 </TableCell>
               );
             case "Title":
-              return <TableCell>{row.Title}</TableCell>;
+              return <TableCell>{row.Issue.title}</TableCell>;
             case "Created":
               return (
                 <TableCell>
-                  {dayjs(row.CreatedAt).fromNow() || "Unknown"}
+                  {dayjs(row.Issue.created_at).fromNow() || "Unknown"}
                 </TableCell>
               );
             case "Severity":

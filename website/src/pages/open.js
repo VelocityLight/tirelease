@@ -19,6 +19,7 @@ import { useQuery } from "react-query";
 import AllColumns from "../components/issues/ColumnDefs";
 import TabPanel from "../components/issues/TablePanel";
 import { url } from "../utils";
+import { IssueGrid } from "../components/issues/IssueGrid";
 
 function a11yProps(index) {
   return {
@@ -56,22 +57,23 @@ function OpenedToday() {
   }
   console.log("fetched data", data);
   return (
-    <IssueTable
-      data={data}
-      columns={[
-        AllColumns.Repo,
-        AllColumns.Issue,
-        AllColumns.Title,
-        AllColumns.Created,
-        AllColumns.Severity,
-        AllColumns.Assignee,
-        AllColumns.LinkedPR,
-        {
-          ...AllColumns.Affects,
-          columns: [...AllColumns.Affects.columns],
-        },
-      ]}
-    ></IssueTable>
+    <IssueGrid></IssueGrid>
+    // <IssueTable
+    //   data={data.data}
+    //   columns={[
+    //     AllColumns.Repo,
+    //     AllColumns.Issue,
+    //     AllColumns.Title,
+    //     AllColumns.Created,
+    //     AllColumns.Severity,
+    //     AllColumns.Assignee,
+    //     AllColumns.LinkedPR,
+    //     // {
+    //     //   ...AllColumns.Affects,
+    //     //   columns: [...AllColumns.Affects.columns],
+    //     // },
+    //   ]}
+    // ></IssueTable>
   );
 }
 

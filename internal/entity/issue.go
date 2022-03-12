@@ -30,6 +30,8 @@ type Issue struct {
 	AssigneesString string `json:"assignees_string,omitempty"`
 
 	ClosedByPullRequestID string `json:"closed_by_pull_request_id,omitempty"`
+	SeverityLabel         string `json:"severity_label,omitempty"`
+	TypeLabel             string `json:"type_label,omitempty"`
 
 	// OutPut-Serial
 	Labels    *[]github.Label `json:"labels,omitempty" gorm:"-"`
@@ -44,6 +46,9 @@ type IssueOption struct {
 	State   string `json:"state,omitempty"`
 	Owner   string `json:"owner,omitempty"`
 	Repo    string `json:"repo,omitempty"`
+
+	SeverityLabel string `json:"severity_label,omitempty"`
+	TypeLabel     string `json:"type_label,omitempty"`
 }
 
 // DB-Table
@@ -53,13 +58,22 @@ func (Issue) TableName() string {
 
 // ComposeIssueFromV3
 func ComposeIssueFromV3(issue *github.Issue) *Issue {
+	severityLabel := ""
+	typeLabel := ""
 	labels := &[]github.Label{}
 	for _, node := range issue.Labels {
 		label := &github.Label{
-			ID:   node.ID,
-			Name: node.Name,
+			Name:  node.Name,
+			Color: node.Color,
 		}
 		*labels = append(*labels, *label)
+
+		if strings.HasPrefix(*label.Name, git.SeverityLabel) {
+			severityLabel = *label.Name
+		}
+		if strings.HasPrefix(*label.Name, git.TypeLabel) {
+			typeLabel = *label.Name
+		}
 	}
 	assignees := &[]github.User{}
 	for _, node := range issue.Assignees {
@@ -75,7 +89,7 @@ func ComposeIssueFromV3(issue *github.Issue) *Issue {
 	return &Issue{
 		IssueID: *issue.NodeID,
 		Number:  *issue.Number,
-		State:   *issue.State,
+		State:   strings.ToLower(*issue.State),
 		Title:   *issue.Title,
 		Owner:   owner,
 		Repo:    repo,
@@ -87,23 +101,38 @@ func ComposeIssueFromV3(issue *github.Issue) *Issue {
 
 		Labels:    labels,
 		Assignees: assignees,
+
+		SeverityLabel: severityLabel,
+		TypeLabel:     typeLabel,
 	}
 }
 
 // ComposeIssueFromV4
 // TODO: v4 implement by tony at 2022/02/14
 func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
+	severityLabel := ""
+	typeLabel := ""
 	labels := &[]github.Label{}
-	for _, labelNode := range issueFiled.Labels.Nodes {
+	for _, node := range issueFiled.Labels.Nodes {
 		label := github.Label{
-			Name: github.String(string(labelNode.Name)),
+			Name: github.String(string(node.Name)),
+		}
+		if node.Color != "" {
+			label.Color = github.String(string(node.Color))
 		}
 		*labels = append(*labels, label)
+
+		if strings.HasPrefix(*label.Name, git.SeverityLabel) {
+			severityLabel = *label.Name
+		}
+		if strings.HasPrefix(*label.Name, git.TypeLabel) {
+			typeLabel = *label.Name
+		}
 	}
 	assignees := &[]github.User{}
-	for _, userNode := range issueFiled.Assignees.Nodes {
+	for _, node := range issueFiled.Assignees.Nodes {
 		user := github.User{
-			Login: (*string)(&userNode.Login),
+			Login: (*string)(&node.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
@@ -120,7 +149,7 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 	issue := &Issue{
 		IssueID: issueFiled.ID.(string),
 		Number:  int(issueFiled.Number),
-		State:   string(issueFiled.State),
+		State:   strings.ToLower(string(issueFiled.State)),
 		Title:   string(issueFiled.Title),
 		Owner:   string(issueFiled.Repository.Owner.Login),
 		Repo:    string(issueFiled.Repository.Name),
@@ -133,6 +162,8 @@ func ComposeIssueFromV4(issueFiled *git.IssueField) *Issue {
 		Assignees: assignees,
 
 		ClosedByPullRequestID: closedByPrID,
+		SeverityLabel:         severityLabel,
+		TypeLabel:             typeLabel,
 	}
 	if issueFiled.ClosedAt != nil {
 		issue.ClosedAt = &issueFiled.ClosedAt.Time
@@ -161,12 +192,16 @@ CREATE TABLE IF NOT EXISTS issue (
 	assignees_string TEXT COMMENT '处理人列表',
 
 	closed_by_pull_request_id VARCHAR(255) COMMENT '处理的PR',
+	severity_label VARCHAR(255) COMMENT '严重等级',
+	type_label VARCHAR(255) COMMENT '类型',
 
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_issueid (issue_id),
 	INDEX idx_state (state),
 	INDEX idx_owner_repo (owner, repo),
-	INDEX idx_createdat (created_at)
+	INDEX idx_createdat (created_at),
+	INDEX idx_severitylabel (severity_label),
+	INDEX idx_typelabel (type_label)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'issue信息表';
 

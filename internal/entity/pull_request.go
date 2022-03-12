@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"strings"
 	"time"
 
 	"tirelease/commons/git"
@@ -67,7 +68,8 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 	labels := &[]github.Label{}
 	for _, node := range pullRequest.Labels {
 		label := github.Label{
-			Name: node.Name,
+			Name:  node.Name,
+			Color: node.Color,
 		}
 		*labels = append(*labels, label)
 
@@ -93,11 +95,12 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 		}
 		*requestedReviewers = append(*requestedReviewers, user)
 	}
+	mergeableState := strings.ToLower(*pullRequest.MergeableState)
 
 	return &PullRequest{
 		PullRequestID: *pullRequest.NodeID,
 		Number:        *pullRequest.Number,
-		State:         *pullRequest.State,
+		State:         strings.ToLower(*pullRequest.State),
 		Title:         *pullRequest.Title,
 		Owner:         *pullRequest.Base.Repo.Owner.Login,
 		Repo:          *pullRequest.Base.Repo.Name,
@@ -110,7 +113,7 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 		MergedAt:  pullRequest.MergedAt,
 
 		Merged:             *pullRequest.Merged,
-		MergeableState:     pullRequest.MergeableState,
+		MergeableState:     &mergeableState,
 		CherryPickApproved: cherryPickApproved,
 		AlreadyReviewed:    alreadyReviwed,
 
@@ -129,6 +132,9 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 	for _, node := range pullRequestField.Labels.Nodes {
 		label := github.Label{
 			Name: github.String(string(node.Name)),
+		}
+		if node.Color != "" {
+			label.Color = github.String(string(node.Color))
 		}
 		*labels = append(*labels, label)
 
@@ -153,12 +159,12 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		}
 		*requestedReviewers = append(*requestedReviewers, user)
 	}
-	var mergeableState = string(pullRequestField.Mergeable)
+	mergeableState := strings.ToLower(string(pullRequestField.Mergeable))
 
 	pr := &PullRequest{
 		PullRequestID: pullRequestField.ID.(string),
 		Number:        int(pullRequestField.Number),
-		State:         string(pullRequestField.State),
+		State:         strings.ToLower(string(pullRequestField.State)),
 		Title:         string(pullRequestField.Title),
 		Owner:         string(pullRequestField.Repository.Owner.Login),
 		Repo:          string(pullRequestField.Repository.Name),

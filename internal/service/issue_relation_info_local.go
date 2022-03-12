@@ -18,6 +18,9 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		State:   option.State,
 		Owner:   option.Owner,
 		Repo:    option.Repo,
+
+		SeverityLabel: option.SeverityLabel,
+		TypeLabel:     option.TypeLabel,
 	}
 	issues, err := repository.SelectIssue(issueOption)
 	if nil != err {

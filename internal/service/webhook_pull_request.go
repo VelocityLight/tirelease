@@ -11,12 +11,10 @@ import (
 )
 
 // Cron Job
-func CronRefreshPullRequestV4() error {
+func CronRefreshPullRequestV4(repos *[]entity.Repo) error {
 	// get repos
-	repoOption := &entity.RepoOption{}
-	repos, err := repository.SelectRepo(repoOption)
-	if err != nil {
-		return err
+	if repos == nil || len(*repos) == 0 {
+		return nil
 	}
 
 	// multi-batch refresh

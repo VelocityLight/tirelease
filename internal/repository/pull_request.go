@@ -38,18 +38,20 @@ func SelectPullRequest(option *entity.PullRequestOption) (*[]entity.PullRequest,
 }
 
 func SelectPullRequestUnique(option *entity.PullRequestOption) (*entity.PullRequest, error) {
-	var pr entity.PullRequest
-	if err := database.DBConn.DB.Where(option).First(&pr).Error; err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("find pull request unique: %+v failed", option))
+	// 查询
+	prs, err := SelectPullRequest(option)
+	if err != nil {
+		return nil, err
 	}
 
-	if pr.PullRequestID == "" {
+	// 校验
+	if len(*prs) == 0 {
 		return nil, errors.New(fmt.Sprintf("pull request not found: %+v", option))
 	}
-
-	// 加工
-	unSerializePullRequest(&pr)
-	return &pr, nil
+	if len(*prs) > 1 {
+		return nil, errors.New(fmt.Sprintf("more than one pull request found: %+v", option))
+	}
+	return &((*prs)[0]), nil
 }
 
 // func DeletePullRequest(pullRequest *entity.PullRequest) error {

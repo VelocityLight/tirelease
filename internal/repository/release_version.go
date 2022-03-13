@@ -50,19 +50,18 @@ func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.Releas
 	return &releaseVersions, nil
 }
 
-func SelectReleaseVersionUnique(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
+func SelectReleaseVersionLatest(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
 	// 查询
-	var releaseVersion entity.ReleaseVersion
-	if err := database.DBConn.DB.Where(option).Order("create_time desc").First(&releaseVersion).Error; err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("find release version unique: %+v failed", option))
-	}
+	releaseVersions, err := SelectReleaseVersion(option)
 
-	if releaseVersion.Name == "" {
+	// 校验
+	if err != nil {
+		return nil, err
+	}
+	if len(*releaseVersions) == 0 {
 		return nil, errors.New(fmt.Sprintf("find release version unique is nil: %+v failed", option))
 	}
-	// 加工
-	unSerializeReleaseVersion(&releaseVersion)
-	return &releaseVersion, nil
+	return &((*releaseVersions)[0]), nil
 }
 
 // 序列化和反序列化

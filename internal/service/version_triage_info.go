@@ -64,7 +64,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	if err != nil {
 		return nil, err
 	}
-	releaseVersion, err := repository.SelectReleaseVersionUnique(&entity.ReleaseVersionOption{
+	releaseVersion, err := repository.SelectReleaseVersionLatest(&entity.ReleaseVersionOption{
 		Name: query.VersionName,
 	})
 	if err != nil {
@@ -98,7 +98,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 }
 
 func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
-	releaseVersion, err := repository.SelectReleaseVersionUnique(option)
+	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
 	if err != nil {
 		return nil, err
 	}

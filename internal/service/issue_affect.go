@@ -9,6 +9,8 @@ import (
 	"tirelease/internal/repository"
 )
 
+// ============================================================================
+// ============================================================================ Restful API(From UI) Handler
 func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	// create or update
 	err := repository.CreateOrUpdateIssueAffect(issueAffect)
@@ -17,7 +19,7 @@ func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	}
 
 	// result operation
-	err = IssueAffectResultOperation(issueAffect)
+	err = OperateIssueAffectResult(issueAffect)
 	if err != nil {
 		return err
 	}
@@ -25,10 +27,17 @@ func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	return nil
 }
 
-func IssueAffectResultOperation(issueAffect *entity.IssueAffect) error {
+func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 	// param protection
-	if issueAffect.AffectResult != entity.AffectResultResultYes {
+	if issueAffect.AffectResult == "" {
 		return nil
+	}
+
+	// git add label
+	label := fmt.Sprintf(git.AffectsLabel, issueAffect.AffectVersion)
+	err := AddLabelByIssueID(issueAffect.IssueID, label)
+	if err != nil {
+		return err
 	}
 
 	// select latest version & insert cherry-pick
@@ -36,7 +45,7 @@ func IssueAffectResultOperation(issueAffect *entity.IssueAffect) error {
 		FatherReleaseVersionName: issueAffect.AffectVersion,
 		Status:                   entity.ReleaseVersionStatusOpen,
 	}
-	releaseVersion, err := repository.SelectReleaseVersionUnique(releaseVersionOption)
+	releaseVersion, err := repository.SelectReleaseVersionLatest(releaseVersionOption)
 	if err != nil {
 		return err
 	}
@@ -50,16 +59,11 @@ func IssueAffectResultOperation(issueAffect *entity.IssueAffect) error {
 		return err
 	}
 
-	// git add label
-	label := fmt.Sprintf(git.AffectsLabel, releaseVersion.Name)
-	err = AddLabelByIssueID(issueAffect.IssueID, label)
-	if err != nil {
-		return err
-	}
-
 	return nil
 }
 
+// ============================================================================
+// ============================================================================ Compose From DataBase & Return To UI
 func ComposeIssueAffectWithIssueID(issueID string) (*[]entity.IssueAffect, error) {
 	// Select Exist Issue Affect
 	issueAffectOption := &entity.IssueAffectOption{
@@ -100,6 +104,8 @@ func ComposeIssueAffectWithIssueID(issueID string) (*[]entity.IssueAffect, error
 	return issueAffects, nil
 }
 
+// ============================================================================
+// ============================================================================ Compose From Webhook (Save To DataBase)
 func ComposeIssueAffectWithIssueV4(issue *git.IssueField) (*[]entity.IssueAffect, error) {
 	if nil == issue || len(issue.Labels.Nodes) == 0 {
 		return nil, nil

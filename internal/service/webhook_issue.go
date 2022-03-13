@@ -5,29 +5,30 @@ import (
 
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
-	"tirelease/internal/repository"
 
 	"github.com/google/go-github/v41/github"
 )
 
 // Cron Job
-func CronRefreshIssuesV4() error {
+type RefreshIssueParams struct {
+	Repos       *[]entity.Repo `json:"repos"`
+	BeforeHours int64          `json:"before_hours"`
+	Batch       int            `json:"batch"`
+	Total       int            `json:"total"`
+}
+
+func CronRefreshIssuesV4(params *RefreshIssueParams) error {
 	// get repos
-	repoOption := &entity.RepoOption{}
-	repos, err := repository.SelectRepo(repoOption)
-	if err != nil {
-		return err
+	if params.Repos == nil || len(*params.Repos) == 0 {
+		return nil
 	}
 
 	// multi-batch refresh
-	fromTimeBefore := -96
-	batchLimit := 20
-	totalLimit := 500
-	for _, repo := range *repos {
+	for _, repo := range *params.Repos {
 		issues, err := git.ClientV4.GetIssuesByTimeRangeV4(
-			repo.Owner, repo.Repo, []string{git.BugTypeLabel},
-			time.Now().Add(time.Duration(fromTimeBefore)*time.Hour), time.Now(),
-			batchLimit, totalLimit)
+			repo.Owner, repo.Repo, nil,
+			time.Now().Add(time.Duration(params.BeforeHours)*time.Hour), time.Now(),
+			params.Batch, params.Total)
 		if err != nil {
 			return err
 		}

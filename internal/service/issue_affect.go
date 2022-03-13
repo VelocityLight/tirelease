@@ -2,12 +2,15 @@ package service
 
 import (
 	"fmt"
+	"strings"
 
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 )
 
+// ============================================================================
+// ============================================================================ Restful API(From UI) Handler
 func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	// create or update
 	err := repository.CreateOrUpdateIssueAffect(issueAffect)
@@ -16,7 +19,7 @@ func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	}
 
 	// result operation
-	err = IssueAffectResultOperation(issueAffect)
+	err = OperateIssueAffectResult(issueAffect)
 	if err != nil {
 		return err
 	}
@@ -24,41 +27,61 @@ func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	return nil
 }
 
-func IssueAffectResultOperation(issueAffect *entity.IssueAffect) error {
+func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 	// param protection
-	if issueAffect.AffectResult != entity.AffectResultResultYes {
+	if issueAffect.AffectResult == "" {
 		return nil
 	}
 
-	// select latest version & insert cherry-pick
-	releaseVersionOption := &entity.ReleaseVersionOption{
-		FatherReleaseVersionName: issueAffect.AffectVersion,
-		Status:                   entity.ReleaseVersionStatusOpen,
+	// operate git label
+	affectLabel := fmt.Sprintf(git.AffectsLabel, issueAffect.AffectVersion)
+	mayAffectLabel := fmt.Sprintf(git.MayAffectsLabel, issueAffect.AffectVersion)
+	if issueAffect.AffectResult != entity.AffectResultResultUnKnown {
+		err := RemoveLabelByIssueID(issueAffect.IssueID, mayAffectLabel)
+		if err != nil {
+			return err
+		}
 	}
-	releaseVersion, err := repository.SelectReleaseVersionUnique(releaseVersionOption)
-	if err != nil {
-		return err
+	if issueAffect.AffectResult == entity.AffectResultResultYes {
+		err := AddLabelByIssueID(issueAffect.IssueID, affectLabel)
+		if err != nil {
+			return err
+		}
 	}
-	versionTriage := &entity.VersionTriage{
-		IssueID:      issueAffect.IssueID,
-		VersionName:  releaseVersion.Name,
-		TriageResult: entity.VersionTriageResultUnKnown,
-	}
-	_, err = CreateOrUpdateVersionTriageInfo(versionTriage)
-	if err != nil {
-		return err
+	if issueAffect.AffectResult == entity.AffectResultResultNo {
+		err := RemoveLabelByIssueID(issueAffect.IssueID, affectLabel)
+		if err != nil {
+			return err
+		}
 	}
 
-	// git add label
-	label := fmt.Sprintf(git.AffectsLabel, releaseVersion.Name)
-	err = AddLabelByIssueID(issueAffect.IssueID, label)
-	if err != nil {
-		return err
+	// operate cherry-pick record: select latest version & insert cherry-pick
+	if issueAffect.AffectResult == entity.AffectResultResultYes {
+		releaseVersionOption := &entity.ReleaseVersionOption{
+			FatherReleaseVersionName: issueAffect.AffectVersion,
+			Status:                   entity.ReleaseVersionStatusOpen,
+			// Type:                     entity.ReleaseVersionTypePatch,
+		}
+		releaseVersion, err := repository.SelectReleaseVersionLatest(releaseVersionOption)
+		if err != nil {
+			return err
+		}
+		versionTriage := &entity.VersionTriage{
+			IssueID:      issueAffect.IssueID,
+			VersionName:  releaseVersion.Name,
+			TriageResult: entity.VersionTriageResultUnKnown,
+		}
+		_, err = CreateOrUpdateVersionTriageInfo(versionTriage)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
 }
 
+// ============================================================================
+// ============================================================================ Compose From DataBase & Return To UI
 func ComposeIssueAffectWithIssueID(issueID string) (*[]entity.IssueAffect, error) {
 	// Select Exist Issue Affect
 	issueAffectOption := &entity.IssueAffectOption{
@@ -97,4 +120,27 @@ func ComposeIssueAffectWithIssueID(issueID string) (*[]entity.IssueAffect, error
 		}
 	}
 	return issueAffects, nil
+}
+
+// ============================================================================
+// ============================================================================ Compose From Webhook (Save To DataBase)
+func ComposeIssueAffectWithIssueV4(issue *git.IssueField) (*[]entity.IssueAffect, error) {
+	if nil == issue || len(issue.Labels.Nodes) == 0 {
+		return nil, nil
+	}
+
+	issueAffects := make([]entity.IssueAffect, 0)
+	for _, label := range issue.Labels.Nodes {
+		labelName := string(label.Name)
+		if strings.HasPrefix(labelName, git.AffectsPrefixLabel) {
+			version := strings.Replace(labelName, git.AffectsPrefixLabel, "", -1)
+			issueAffect := entity.IssueAffect{
+				IssueID:       issue.ID.(string),
+				AffectVersion: version,
+				AffectResult:  entity.AffectResultResultYes,
+			}
+			issueAffects = append(issueAffects, issueAffect)
+		}
+	}
+	return &issueAffects, nil
 }

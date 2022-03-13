@@ -39,17 +39,19 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 
 func SelectIssueUnique(option *entity.IssueOption) (*entity.Issue, error) {
 	// 查询
-	var issue entity.Issue
-	if err := database.DBConn.DB.Where(option).First(&issue).Error; err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("find issue unique: %+v failed", option))
-	}
-	if issue.IssueID == "" {
-		return nil, errors.New(fmt.Sprintf("issue not found: %+v", option))
+	issues, err := SelectIssue(option)
+	if err != nil {
+		return nil, err
 	}
 
-	// 加工
-	unSerializeIssue(&issue)
-	return &issue, nil
+	// 校验
+	if len(*issues) == 0 {
+		return nil, errors.New(fmt.Sprintf("issue not found: %+v", option))
+	}
+	if len(*issues) > 1 {
+		return nil, errors.New(fmt.Sprintf("more than one issue found: %+v", option))
+	}
+	return &((*issues)[0]), nil
 }
 
 // func DeleteIssue(issue *entity.Issue) error {

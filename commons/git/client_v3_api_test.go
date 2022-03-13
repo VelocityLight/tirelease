@@ -140,3 +140,14 @@ func TestAddLabel(t *testing.T) {
 	// Assert
 	assert.Equal(t, true, err == nil)
 }
+
+func TestRemoveLabel(t *testing.T) {
+	// Connect
+	Connect(TestToken)
+
+	// Remove label
+	_, err := Client.RemoveLabel(TestOwner2, TestRepo2, TestPullRequestId2, CherryPickLabel)
+
+	// Assert
+	assert.Equal(t, true, err == nil)
+}

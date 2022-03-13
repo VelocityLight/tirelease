@@ -11,23 +11,25 @@ import (
 )
 
 // Cron Job
-func CronRefreshPullRequestV4() error {
+type RefreshPullRequestParams struct {
+	Repos       *[]entity.Repo `json:"repos"`
+	BeforeHours int64          `json:"before_hours"`
+	Batch       int            `json:"batch"`
+	Total       int            `json:"total"`
+}
+
+func CronRefreshPullRequestV4(params *RefreshPullRequestParams) error {
 	// get repos
-	repoOption := &entity.RepoOption{}
-	repos, err := repository.SelectRepo(repoOption)
-	if err != nil {
-		return err
+	if params.Repos == nil || len(*params.Repos) == 0 {
+		return nil
 	}
 
 	// multi-batch refresh
-	fromTimeBefore := -96
-	batchLimit := 20
-	totalLimit := 500
-	for _, repo := range *repos {
+	for _, repo := range *params.Repos {
 		prs, err := git.ClientV4.GetPullRequestsFromV4(
 			repo.Owner, repo.Repo,
-			time.Now().Add(time.Duration(fromTimeBefore)*time.Hour),
-			batchLimit, totalLimit)
+			time.Now().Add(time.Duration(params.BeforeHours)*time.Hour),
+			params.Batch, params.Total)
 		if err != nil {
 			return err
 		}

@@ -28,7 +28,7 @@ func GetIssueRelationInfoByIssueNumberV4(owner, repo string, number int) (*dto.I
 }
 
 func ComposeIssueRelationInfoByIssueV4(issue *git.IssueField) (*dto.IssueRelationInfo, error) {
-	issueAffects, err := ComposeIssueAffectWithIssueID(issue.ID.(string))
+	issueAffects, err := ComposeIssueAffectWithIssueV4(issue)
 	if nil != err {
 		return nil, err
 	}

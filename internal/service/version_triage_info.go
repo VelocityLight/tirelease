@@ -21,6 +21,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	if err != nil {
 		return nil, err
 	}
+	releaseBranch := releaseVersion.ReleaseBranch
 
 	// Create Or Update
 	var isFrozen bool = releaseVersion.Status == entity.ReleaseVersionStatusFrozen
@@ -33,10 +34,37 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	}
 
 	// Operate Git
-	if !isFrozen && isAccept {
-		err := AddLabelByIssueID(versionTriage.IssueID, git.CherryPickLabel)
-		if err != nil {
-			return nil, err
+	issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
+		IssueID:    versionTriage.IssueID,
+		BaseBranch: releaseBranch,
+	})
+	if err != nil {
+		return nil, err
+	}
+	if len(*issueRelationInfo.PullRequests) == 1 {
+		pr := (*issueRelationInfo.PullRequests)[0]
+		if !isFrozen && isAccept {
+			err := RemoveLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
+			if err != nil {
+				return nil, err
+			}
+
+			err = AddLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
+			if err != nil {
+				return nil, err
+			}
+		}
+		var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
+		if !isAccept && !isRelease {
+			err := RemoveLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
+			if err != nil {
+				return nil, err
+			}
+
+			err = AddLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -47,6 +75,8 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 		VersionTriage: versionTriage,
 		IsFrozen:      isFrozen,
 		IsAccept:      isAccept,
+
+		IssueRelationInfo: issueRelationInfo,
 	}, nil
 }
 
@@ -64,7 +94,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	if err != nil {
 		return nil, err
 	}
-	releaseVersion, err := repository.SelectReleaseVersionUnique(&entity.ReleaseVersionOption{
+	releaseVersion, err := repository.SelectReleaseVersionLatest(&entity.ReleaseVersionOption{
 		Name: query.VersionName,
 	})
 	if err != nil {
@@ -98,7 +128,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 }
 
 func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
-	releaseVersion, err := repository.SelectReleaseVersionUnique(option)
+	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
 	if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"strings"
 
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
@@ -97,4 +98,25 @@ func ComposeIssueAffectWithIssueID(issueID string) (*[]entity.IssueAffect, error
 		}
 	}
 	return issueAffects, nil
+}
+
+func ComposeIssueAffectWithIssueV4(issue *git.IssueField) (*[]entity.IssueAffect, error) {
+	if nil == issue || len(issue.Labels.Nodes) == 0 {
+		return nil, nil
+	}
+
+	issueAffects := make([]entity.IssueAffect, 0)
+	for _, label := range issue.Labels.Nodes {
+		labelName := string(label.Name)
+		if strings.HasPrefix(labelName, git.AffectsPrefixLabel) {
+			version := strings.Replace(labelName, git.AffectsPrefixLabel, "", -1)
+			issueAffect := entity.IssueAffect{
+				IssueID:       issue.ID.(string),
+				AffectVersion: version,
+				AffectResult:  entity.AffectResultResultYes,
+			}
+			issueAffects = append(issueAffects, issueAffect)
+		}
+	}
+	return &issueAffects, nil
 }

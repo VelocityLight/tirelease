@@ -29,6 +29,24 @@ func AddLabelByIssueID(issueID, label string) error {
 	return nil
 }
 
+func RemoveLabelByIssueID(issueID, label string) error {
+	// select issue by id
+	option := &entity.IssueOption{
+		IssueID: issueID,
+	}
+	issue, err := repository.SelectIssueUnique(option)
+	if nil != err {
+		return err
+	}
+
+	// remove issue label
+	_, err = git.Client.RemoveLabel(issue.Owner, issue.Repo, issue.Number, label)
+	if nil != err {
+		return err
+	}
+	return nil
+}
+
 // Query Issue From Github And Construct Issue Data Service
 func GetIssueByNumberFromV3(owner, repo string, number int) (*entity.Issue, error) {
 	issue, _, err := git.Client.GetIssueByNumber(owner, repo, number)

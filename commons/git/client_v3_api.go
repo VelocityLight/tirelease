@@ -49,3 +49,12 @@ func (client *GithubInfo) GetPullRequestByNumber(owner, name string, number int)
 func (client *GithubInfo) AddLabel(owner, name string, number int, label string) ([]*github.Label, *github.Response, error) {
 	return client.Client.Issues.AddLabelsToIssue(context.Background(), owner, name, number, []string{label})
 }
+
+func (client *GithubInfo) RemoveLabel(owner, name string, number int, label string) (*github.Response, error) {
+	res, err := client.Client.Issues.RemoveLabelForIssue(context.Background(), owner, name, number, label)
+	if res.Response.StatusCode == 404 {
+		// duplicate remove should return success
+		return res, nil
+	}
+	return res, err
+}

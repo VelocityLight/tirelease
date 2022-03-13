@@ -33,30 +33,47 @@ func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 		return nil
 	}
 
-	// git add label
-	label := fmt.Sprintf(git.AffectsLabel, issueAffect.AffectVersion)
-	err := AddLabelByIssueID(issueAffect.IssueID, label)
-	if err != nil {
-		return err
+	// operate git label
+	affectLabel := fmt.Sprintf(git.AffectsLabel, issueAffect.AffectVersion)
+	mayAffectLabel := fmt.Sprintf(git.MayAffectsLabel, issueAffect.AffectVersion)
+	if issueAffect.AffectResult != entity.AffectResultResultUnKnown {
+		err := RemoveLabelByIssueID(issueAffect.IssueID, mayAffectLabel)
+		if err != nil {
+			return err
+		}
+	}
+	if issueAffect.AffectResult == entity.AffectResultResultYes {
+		err := AddLabelByIssueID(issueAffect.IssueID, affectLabel)
+		if err != nil {
+			return err
+		}
+	}
+	if issueAffect.AffectResult == entity.AffectResultResultNo {
+		err := RemoveLabelByIssueID(issueAffect.IssueID, affectLabel)
+		if err != nil {
+			return err
+		}
 	}
 
-	// select latest version & insert cherry-pick
-	releaseVersionOption := &entity.ReleaseVersionOption{
-		FatherReleaseVersionName: issueAffect.AffectVersion,
-		Status:                   entity.ReleaseVersionStatusOpen,
-	}
-	releaseVersion, err := repository.SelectReleaseVersionLatest(releaseVersionOption)
-	if err != nil {
-		return err
-	}
-	versionTriage := &entity.VersionTriage{
-		IssueID:      issueAffect.IssueID,
-		VersionName:  releaseVersion.Name,
-		TriageResult: entity.VersionTriageResultUnKnown,
-	}
-	_, err = CreateOrUpdateVersionTriageInfo(versionTriage)
-	if err != nil {
-		return err
+	// operate cherry-pick record: select latest version & insert cherry-pick
+	if issueAffect.AffectResult == entity.AffectResultResultYes {
+		releaseVersionOption := &entity.ReleaseVersionOption{
+			FatherReleaseVersionName: issueAffect.AffectVersion,
+			Status:                   entity.ReleaseVersionStatusOpen,
+		}
+		releaseVersion, err := repository.SelectReleaseVersionLatest(releaseVersionOption)
+		if err != nil {
+			return err
+		}
+		versionTriage := &entity.VersionTriage{
+			IssueID:      issueAffect.IssueID,
+			VersionName:  releaseVersion.Name,
+			TriageResult: entity.VersionTriageResultUnKnown,
+		}
+		_, err = CreateOrUpdateVersionTriageInfo(versionTriage)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

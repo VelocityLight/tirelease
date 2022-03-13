@@ -34,7 +34,24 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 
 	// Operate Git
 	if !isFrozen && isAccept {
-		err := AddLabelByIssueID(versionTriage.IssueID, git.CherryPickLabel)
+		err := RemoveLabelByIssueID(versionTriage.IssueID, git.NotCheryyPickLabel)
+		if err != nil {
+			return nil, err
+		}
+
+		err = AddLabelByIssueID(versionTriage.IssueID, git.CherryPickLabel)
+		if err != nil {
+			return nil, err
+		}
+	}
+	var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
+	if !isAccept && !isRelease {
+		err := RemoveLabelByIssueID(versionTriage.IssueID, git.CherryPickLabel)
+		if err != nil {
+			return nil, err
+		}
+
+		err = AddLabelByIssueID(versionTriage.IssueID, git.NotCheryyPickLabel)
 		if err != nil {
 			return nil, err
 		}

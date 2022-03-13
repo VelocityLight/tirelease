@@ -20,9 +20,15 @@ func TestCronRefreshIssuesV4(t *testing.T) {
 		Repo:  git.TestRepo2,
 	}
 	repos := []entity.Repo{*repo}
+	params := &RefreshIssueParams{
+		Repos:       &repos,
+		BeforeHours: -4380,
+		Batch:       20,
+		Total:       3000,
+	}
 
 	// detail
-	err := CronRefreshIssuesV4(&repos)
+	err := CronRefreshIssuesV4(params)
 	assert.Equal(t, true, err == nil)
 }
 

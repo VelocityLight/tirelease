@@ -10,6 +10,16 @@ import (
 
 // ============================================================================ Others
 func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueField, err error) {
+	// var query struct {
+	// 	Repository struct {
+	// 		Issues struct {
+	// 			Edges []struct {
+	// 				Cursor githubv4.String
+	// 				Node   IssueField
+	// 			}
+	// 		} `graphql:"issues(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: ASC}, labels: $labels, filterBy: {since: $since})"`
+	// 	} `graphql:"repository(name: $name, owner: $owner)"`
+	// }
 	var query struct {
 		Repository struct {
 			Issues struct {
@@ -17,16 +27,16 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 					Cursor githubv4.String
 					Node   IssueField
 				}
-			} `graphql:"issues(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: ASC}, labels: $labels, filterBy: {since: $since})"`
+			} `graphql:"issues(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: DESC}, filterBy: {since: $since})"`
 		} `graphql:"repository(name: $name, owner: $owner)"`
 	}
 
 	cursor := (*githubv4.String)(nil)
 	total := 0
-	ghLabels := make([]githubv4.String, 0, len(labels))
-	for _, l := range labels {
-		ghLabels = append(ghLabels, githubv4.String(l))
-	}
+	// ghLabels := make([]githubv4.String, 0, len(labels))
+	// for _, l := range labels {
+	// 	ghLabels = append(ghLabels, githubv4.String(l))
+	// }
 
 	since := from.Add(-1 * time.Minute).Format(time.RFC3339)
 	log.Printf("fetching since %s", since)
@@ -41,8 +51,8 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 			"owner":  githubv4.String(owner),
 			"limit":  githubv4.Int(limit),
 			"cursor": cursor,
-			"labels": ghLabels,
-			"since":  githubv4.DateTime{Time: from.Add(-1 * time.Minute)},
+			// "labels": ghLabels,
+			"since": githubv4.DateTime{Time: from.Add(-1 * time.Minute)},
 		}
 
 		err = client.client.Query(context.Background(), &query, param)

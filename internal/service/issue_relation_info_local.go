@@ -64,28 +64,39 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 	return &issueRelationInfos, nil
 }
 
-func SaveIssueRelationInfo(triageRelationInfo *dto.IssueRelationInfo) error {
+func SaveIssueRelationInfo(issueRelationInfo *dto.IssueRelationInfo) error {
+
+	if issueRelationInfo == nil {
+		return nil
+	}
+
 	// Save Issue
-	if err := repository.CreateOrUpdateIssue(triageRelationInfo.Issue); nil != err {
-		return err
+	if issueRelationInfo.Issue != nil {
+		if err := repository.CreateOrUpdateIssue(issueRelationInfo.Issue); nil != err {
+			return err
+		}
 	}
 
 	// Save IssueAffects
-	for _, issueAffect := range *triageRelationInfo.IssueAffects {
-		if err := repository.CreateOrUpdateIssueAffect(&issueAffect); nil != err {
-			return err
+	if issueRelationInfo.IssueAffects != nil {
+		for _, issueAffect := range *issueRelationInfo.IssueAffects {
+			if err := repository.CreateOrUpdateIssueAffect(&issueAffect); nil != err {
+				return err
+			}
 		}
 	}
 
 	// Save IssuePrRelations
-	for _, issuePrRelation := range *triageRelationInfo.IssuePrRelations {
-		if err := repository.CreateIssuePrRelation(&issuePrRelation); nil != err {
-			return err
+	if issueRelationInfo.IssuePrRelations != nil {
+		for _, issuePrRelation := range *issueRelationInfo.IssuePrRelations {
+			if err := repository.CreateIssuePrRelation(&issuePrRelation); nil != err {
+				return err
+			}
 		}
 	}
 
 	// Save PullRequests
-	// for _, pullRequest := range *triageRelationInfo.PullRequests {
+	// for _, pullRequest := range *issueRelationInfo.PullRequests {
 	// 	if err := repository.CreateOrUpdatePullRequest(&pullRequest); nil != err {
 	// 		return err
 	// 	}

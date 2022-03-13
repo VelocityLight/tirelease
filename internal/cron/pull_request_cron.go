@@ -14,5 +14,11 @@ func PullRequestCron() {
 	if err != nil {
 		return
 	}
-	cron.Create("* */1 * * * *", func() { service.CronRefreshPullRequestV4(repos) })
+	params := &service.RefreshPullRequestParams{
+		Repos:       repos,
+		BeforeHours: -360,
+		Batch:       20,
+		Total:       3000,
+	}
+	cron.Create("* */1 * * * *", func() { service.CronRefreshPullRequestV4(params) })
 }

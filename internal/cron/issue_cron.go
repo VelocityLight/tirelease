@@ -14,5 +14,11 @@ func IssueCron() {
 	if err != nil {
 		return
 	}
-	cron.Create("* */1 * * * *", func() { service.CronRefreshIssuesV4(repos) })
+	params := &service.RefreshIssueParams{
+		Repos:       repos,
+		BeforeHours: -360,
+		Batch:       20,
+		Total:       3000,
+	}
+	cron.Create("* */1 * * * *", func() { service.CronRefreshIssuesV4(params) })
 }

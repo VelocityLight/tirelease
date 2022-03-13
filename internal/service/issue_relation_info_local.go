@@ -1,9 +1,13 @@
 package service
 
 import (
+	"fmt"
+
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
+
+	"github.com/pkg/errors"
 )
 
 // ============================================================================
@@ -64,6 +68,17 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 	return &issueRelationInfos, nil
 }
 
+func SelectIssueRelationInfoUnique(option *dto.IssueRelationInfoQuery) (*dto.IssueRelationInfo, error) {
+	infos, err := SelectIssueRelationInfo(option)
+	if nil != err {
+		return nil, err
+	}
+	if len(*infos) != 1 {
+		return nil, errors.New(fmt.Sprintf("more than one issue_relation found: %+v", option))
+	}
+	return &((*infos)[0]), nil
+}
+
 func SaveIssueRelationInfo(issueRelationInfo *dto.IssueRelationInfo) error {
 
 	if issueRelationInfo == nil {
@@ -96,11 +111,11 @@ func SaveIssueRelationInfo(issueRelationInfo *dto.IssueRelationInfo) error {
 	}
 
 	// Save PullRequests
-	// for _, pullRequest := range *issueRelationInfo.PullRequests {
-	// 	if err := repository.CreateOrUpdatePullRequest(&pullRequest); nil != err {
-	// 		return err
-	// 	}
-	// }
+	for _, pullRequest := range *issueRelationInfo.PullRequests {
+		if err := repository.CreateOrUpdatePullRequest(&pullRequest); nil != err {
+			return err
+		}
+	}
 
 	return nil
 }

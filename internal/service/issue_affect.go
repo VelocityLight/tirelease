@@ -60,6 +60,7 @@ func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 		releaseVersionOption := &entity.ReleaseVersionOption{
 			FatherReleaseVersionName: issueAffect.AffectVersion,
 			Status:                   entity.ReleaseVersionStatusOpen,
+			// Type:                     entity.ReleaseVersionTypePatch,
 		}
 		releaseVersion, err := repository.SelectReleaseVersionLatest(releaseVersionOption)
 		if err != nil {

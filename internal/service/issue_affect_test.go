@@ -5,8 +5,7 @@ import (
 
 	"tirelease/commons/database"
 	"tirelease/commons/git"
-
-	// "tirelease/internal/entity"
+	"tirelease/internal/entity"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -15,17 +14,28 @@ func TestComposeIssueAffectWithIssueID(t *testing.T) {
 	// Init
 	database.Connect(generateConfig())
 
-	// Insert
-	// issueAffect := &entity.IssueAffect{
-	// 	IssueID: git.TestIssueNodeID,
-	// 	AffectVersion: "5.4",
-	// 	AffectResult: entity.AffectResultResultYes,
-	// }
-	// err := UpdateIssueAffect(issueAffect)
-	// assert.Equal(t, true, err == nil)
-
 	// Test
 	issueAffects, err := ComposeIssueAffectWithIssueID(git.TestIssueNodeID)
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*issueAffects) > 0)
+}
+
+func TestCreateOrUpdateIssueAffect(t *testing.T) {
+	// init
+	git.Connect(git.TestToken)
+	git.ConnectV4(git.TestToken)
+	database.Connect(generateConfig())
+
+	// Test
+	issueAffect := &entity.IssueAffect{
+		IssueID:       git.TestIssueNodeID2,
+		AffectVersion: "5.4",
+		AffectResult:  entity.AffectResultResultYes,
+	}
+	err := CreateOrUpdateIssueAffect(issueAffect)
+	assert.Equal(t, true, err == nil)
+
+	issueAffect.AffectResult = entity.AffectResultResultNo
+	err = CreateOrUpdateIssueAffect(issueAffect)
+	assert.Equal(t, true, err == nil)
 }

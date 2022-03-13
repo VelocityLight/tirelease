@@ -44,3 +44,25 @@ func TestWebhookRefreshPullRequestV3(t *testing.T) {
 	err = WebhookRefreshPullRequestV3(pr)
 	assert.Equal(t, true, err == nil)
 }
+
+// func TestCronRefreshPullRequestV42(t *testing.T) {
+// 	// init
+// 	git.Connect(git.TestToken)
+// 	git.ConnectV4(git.TestToken)
+// 	database.Connect(generateConfig())
+// 	repo := &entity.Repo{
+// 		Owner: "pingcap",
+// 		Repo:  "tiflow",
+// 	}
+// 	repos := []entity.Repo{*repo}
+// 	params := &RefreshPullRequestParams{
+// 		Repos:       &repos,
+// 		BeforeHours: -4380,
+// 		Batch:       20,
+// 		Total:       3000,
+// 	}
+
+// 	// detail
+// 	err := CronRefreshPullRequestV4(params)
+// 	assert.Equal(t, true, err == nil)
+// }

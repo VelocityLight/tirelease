@@ -21,6 +21,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	if err != nil {
 		return nil, err
 	}
+	releaseBranch := releaseVersion.ReleaseBranch
 
 	// Create Or Update
 	var isFrozen bool = releaseVersion.Status == entity.ReleaseVersionStatusFrozen
@@ -33,27 +34,37 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	}
 
 	// Operate Git
-	if !isFrozen && isAccept {
-		err := RemoveLabelByIssueID(versionTriage.IssueID, git.NotCheryyPickLabel)
-		if err != nil {
-			return nil, err
-		}
-
-		err = AddLabelByIssueID(versionTriage.IssueID, git.CherryPickLabel)
-		if err != nil {
-			return nil, err
-		}
+	issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
+		IssueID:    versionTriage.IssueID,
+		BaseBranch: releaseBranch,
+	})
+	if err != nil {
+		return nil, err
 	}
-	var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
-	if !isAccept && !isRelease {
-		err := RemoveLabelByIssueID(versionTriage.IssueID, git.CherryPickLabel)
-		if err != nil {
-			return nil, err
-		}
+	if len(*issueRelationInfo.PullRequests) == 1 {
+		pr := (*issueRelationInfo.PullRequests)[0]
+		if !isFrozen && isAccept {
+			err := RemoveLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
+			if err != nil {
+				return nil, err
+			}
 
-		err = AddLabelByIssueID(versionTriage.IssueID, git.NotCheryyPickLabel)
-		if err != nil {
-			return nil, err
+			err = AddLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
+			if err != nil {
+				return nil, err
+			}
+		}
+		var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
+		if !isAccept && !isRelease {
+			err := RemoveLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
+			if err != nil {
+				return nil, err
+			}
+
+			err = AddLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
+			if err != nil {
+				return nil, err
+			}
 		}
 	}
 
@@ -64,6 +75,8 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 		VersionTriage: versionTriage,
 		IsFrozen:      isFrozen,
 		IsAccept:      isAccept,
+
+		IssueRelationInfo: issueRelationInfo,
 	}, nil
 }
 

@@ -33,9 +33,9 @@ func SelectIssueAffect(option *entity.IssueAffectOption) (*[]entity.IssueAffect,
 
 func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	// ignore useless create or update
-	if issueAffect.AffectResult == "" || issueAffect.AffectResult == entity.AffectResultResultUnKnown {
-		return nil
-	}
+	// if issueAffect.AffectResult == "" || issueAffect.AffectResult == entity.AffectResultResultUnKnown {
+	// 	return nil
+	// }
 
 	// update
 	issueAffect.CreateTime = time.Now()

@@ -36,20 +36,35 @@ func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 	// operate git label
 	affectLabel := fmt.Sprintf(git.AffectsLabel, issueAffect.AffectVersion)
 	mayAffectLabel := fmt.Sprintf(git.MayAffectsLabel, issueAffect.AffectVersion)
-	if issueAffect.AffectResult != entity.AffectResultResultUnKnown {
-		err := RemoveLabelByIssueID(issueAffect.IssueID, mayAffectLabel)
+	if issueAffect.AffectResult == entity.AffectResultResultUnKnown {
+		err := RemoveLabelByIssueID(issueAffect.IssueID, affectLabel)
+		if err != nil {
+			return err
+		}
+
+		err = AddLabelByIssueID(issueAffect.IssueID, mayAffectLabel)
 		if err != nil {
 			return err
 		}
 	}
 	if issueAffect.AffectResult == entity.AffectResultResultYes {
-		err := AddLabelByIssueID(issueAffect.IssueID, affectLabel)
+		err := RemoveLabelByIssueID(issueAffect.IssueID, mayAffectLabel)
+		if err != nil {
+			return err
+		}
+
+		err = AddLabelByIssueID(issueAffect.IssueID, affectLabel)
 		if err != nil {
 			return err
 		}
 	}
 	if issueAffect.AffectResult == entity.AffectResultResultNo {
-		err := RemoveLabelByIssueID(issueAffect.IssueID, affectLabel)
+		err := RemoveLabelByIssueID(issueAffect.IssueID, mayAffectLabel)
+		if err != nil {
+			return err
+		}
+
+		err = RemoveLabelByIssueID(issueAffect.IssueID, affectLabel)
 		if err != nil {
 			return err
 		}
@@ -130,6 +145,7 @@ func ComposeIssueAffectWithIssueV4(issue *git.IssueField) (*[]entity.IssueAffect
 	}
 
 	issueAffects := make([]entity.IssueAffect, 0)
+	// github affect label: set Yes or UnKnown
 	for _, label := range issue.Labels.Nodes {
 		labelName := string(label.Name)
 		if strings.HasPrefix(labelName, git.AffectsPrefixLabel) {
@@ -141,6 +157,42 @@ func ComposeIssueAffectWithIssueV4(issue *git.IssueField) (*[]entity.IssueAffect
 			}
 			issueAffects = append(issueAffects, issueAffect)
 		}
+		if strings.HasPrefix(labelName, git.MayAffectsPrefixLabel) {
+			version := strings.Replace(labelName, git.MayAffectsPrefixLabel, "", -1)
+			issueAffect := entity.IssueAffect{
+				IssueID:       issue.ID.(string),
+				AffectVersion: version,
+				AffectResult:  entity.AffectResultResultUnKnown,
+			}
+			issueAffects = append(issueAffects, issueAffect)
+		}
 	}
+
+	// github del affect label: set No
+	issueAffectOption := &entity.IssueAffectOption{
+		IssueID: issue.ID.(string),
+	}
+	oldAffects, err := repository.SelectIssueAffect(issueAffectOption)
+	if err != nil {
+		return nil, err
+	}
+	for _, oldAffect := range *oldAffects {
+		var isExist bool = false
+		for _, issueAffect := range issueAffects {
+			if issueAffect.AffectVersion == oldAffect.AffectVersion {
+				isExist = true
+				break
+			}
+		}
+		if !isExist {
+			issueAffect := entity.IssueAffect{
+				IssueID:       issue.ID.(string),
+				AffectVersion: oldAffect.AffectVersion,
+				AffectResult:  entity.AffectResultResultNo,
+			}
+			issueAffects = append(issueAffects, issueAffect)
+		}
+	}
+
 	return &issueAffects, nil
 }

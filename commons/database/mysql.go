@@ -5,6 +5,7 @@ package database
 
 import (
 	"fmt"
+	"time"
 
 	"tirelease/commons/configs"
 
@@ -32,11 +33,19 @@ func Connect(config *configs.ConfigYaml) {
 	)
 
 	// Connect
-	db, err := gorm.Open(mysql.Open(url), &gorm.Config{})
+	conn, err := gorm.Open(mysql.Open(url), &gorm.Config{})
 	if err != nil {
 		panic(err.Error())
 	}
-	DBConn.DB = db
+	sqlDB, err := conn.DB()
+	if err != nil {
+		panic(err.Error())
+	}
+	sqlDB.SetMaxIdleConns(20)
+	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetConnMaxLifetime(time.Second * 600)
+
+	DBConn.DB = conn
 
 	// Close(Delayed)
 	// defer db.Close()

@@ -59,7 +59,7 @@ func TestWebhookRefreshIssueV4(t *testing.T) {
 // 		Repos:       &repos,
 // 		BeforeHours: -4380,
 // 		Batch:       20,
-// 		Total:       3000,
+// 		Total:       1000,
 // 	}
 
 // 	// detail

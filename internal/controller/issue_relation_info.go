@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"fmt"
+
 	"tirelease/internal/dto"
 	"tirelease/internal/service"
 
@@ -10,7 +12,11 @@ import (
 func SelectIssueRelationInfos(c *gin.Context) {
 	// Params
 	option := dto.IssueRelationInfoQuery{}
-	c.ShouldBind(&option)
+	if err := c.ShouldBind(&option); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+	fmt.Println(option)
 
 	// Action
 	issueRelationInfos, err := service.SelectIssueRelationInfo(&option)

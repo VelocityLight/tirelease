@@ -7,19 +7,19 @@ import (
 // IssueRelationInfo Query Struct
 type IssueRelationInfoQuery struct {
 	// Issue
-	ID      int64  `json:"id,omitempty"`
-	IssueID string `json:"issue_id,omitempty"`
-	Number  int    `json:"number,omitempty"`
-	State   string `json:"state,omitempty"`
-	Owner   string `json:"owner,omitempty"`
-	Repo    string `json:"repo,omitempty"`
+	ID      int64  `form:"id,omitempty"`
+	IssueID string `form:"issue_id,omitempty"`
+	Number  int    `form:"number,omitempty"`
+	State   string `form:"state,omitempty"`
+	Owner   string `form:"owner,omitempty"`
+	Repo    string `form:"repo,omitempty"`
 
-	SeverityLabel string `json:"severity_label,omitempty"`
-	TypeLabel     string `json:"type_label,omitempty"`
+	SeverityLabel string `form:"severity_label,omitempty"`
+	TypeLabel     string `form:"type_label,omitempty"`
 
 	// Filter Option
-	AffectVersion string `json:"affect_version,omitempty"`
-	BaseBranch    string `json:"base_branch,omitempty"`
+	AffectVersion string `form:"affect_version,omitempty"`
+	BaseBranch    string `form:"base_branch,omitempty"`
 }
 
 // IssueRelationInfo ReturnBack Struct

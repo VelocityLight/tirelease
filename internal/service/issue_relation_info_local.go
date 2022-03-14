@@ -111,9 +111,11 @@ func SaveIssueRelationInfo(issueRelationInfo *dto.IssueRelationInfo) error {
 	}
 
 	// Save PullRequests
-	for _, pullRequest := range *issueRelationInfo.PullRequests {
-		if err := repository.CreateOrUpdatePullRequest(&pullRequest); nil != err {
-			return err
+	if issueRelationInfo.PullRequests != nil {
+		for _, pullRequest := range *issueRelationInfo.PullRequests {
+			if err := repository.CreateOrUpdatePullRequest(&pullRequest); nil != err {
+				return err
+			}
 		}
 	}
 

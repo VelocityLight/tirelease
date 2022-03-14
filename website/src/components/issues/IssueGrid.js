@@ -2,7 +2,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import Columns from "./GridColumns";
 
 const data = {
-  id: 1,
   Issue: {
     id: 1,
     issue_id: "I_kwDOGf5ce85E2TaX",
@@ -118,6 +117,12 @@ const data = {
 
 export function IssueGrid() {
   return (
-    <DataGrid columns={[Columns.title, Columns.repo]} rows={[data]}></DataGrid>
+    <DataGrid
+      columns={[Columns.title, Columns.repo]}
+      rows={[
+        { id: 0, ...data },
+        { id: 1, ...data },
+      ]}
+    ></DataGrid>
   );
 }

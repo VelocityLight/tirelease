@@ -97,7 +97,7 @@ func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 
 // ============================================================================
 // ============================================================================ Compose From DataBase & Return To UI
-func ComposeIssueAffectWithIssueID(issueID string) (*[]entity.IssueAffect, error) {
+func ComposeIssueAffectWithIssueID(issueID string, releaseVersions *[]entity.ReleaseVersion) (*[]entity.IssueAffect, error) {
 	// Select Exist Issue Affect
 	issueAffectOption := &entity.IssueAffectOption{
 		IssueID: issueID,
@@ -108,13 +108,15 @@ func ComposeIssueAffectWithIssueID(issueID string) (*[]entity.IssueAffect, error
 	}
 
 	// Implement New Issue Affect
-	releaseVersionOption := &entity.ReleaseVersionOption{
-		Type:   entity.ReleaseVersionTypeMinor,
-		Status: entity.ReleaseVersionStatusOpen,
-	}
-	releaseVersions, err := repository.SelectReleaseVersion(releaseVersionOption)
-	if nil != err {
-		return nil, err
+	if releaseVersions == nil {
+		releaseVersionOption := &entity.ReleaseVersionOption{
+			Type:   entity.ReleaseVersionTypeMinor,
+			Status: entity.ReleaseVersionStatusOpen,
+		}
+		releaseVersions, err = repository.SelectReleaseVersion(releaseVersionOption)
+		if nil != err {
+			return nil, err
+		}
 	}
 	for _, releaseVersion := range *releaseVersions {
 		var isExist bool = false

@@ -32,9 +32,17 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 	}
 
 	// From Issue to select IssueAffects & IssuePrRelations & PullRequests
+	releaseVersionOption := &entity.ReleaseVersionOption{
+		Type:   entity.ReleaseVersionTypeMinor,
+		Status: entity.ReleaseVersionStatusOpen,
+	}
+	releaseVersions, err := repository.SelectReleaseVersion(releaseVersionOption)
+	if nil != err {
+		return nil, err
+	}
 	alls := make([]dto.IssueRelationInfo, 0)
 	for _, issue := range *issues {
-		issueRelationInfo, err := ComposeRelationInfoByIssue(&issue)
+		issueRelationInfo, err := ComposeRelationInfoByIssue(&issue, releaseVersions)
 		if nil != err {
 			return nil, err
 		}
@@ -125,9 +133,9 @@ func SaveIssueRelationInfo(issueRelationInfo *dto.IssueRelationInfo) error {
 // ============================================================================
 // ============================================================================ Inner Function
 
-func ComposeRelationInfoByIssue(issue *entity.Issue) (*dto.IssueRelationInfo, error) {
+func ComposeRelationInfoByIssue(issue *entity.Issue, releaseVersions *[]entity.ReleaseVersion) (*dto.IssueRelationInfo, error) {
 	// Find IssueAffects
-	issueAffects, err := ComposeIssueAffectWithIssueID(issue.IssueID)
+	issueAffects, err := ComposeIssueAffectWithIssueID(issue.IssueID, releaseVersions)
 	if nil != err {
 		return nil, err
 	}

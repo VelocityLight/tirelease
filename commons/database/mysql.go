@@ -22,13 +22,14 @@ var DBConn = &MysqlInfo{}
 
 func Connect(config *configs.ConfigYaml) {
 	// Params
-	url := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true",
+	url := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=true&loc=Local",
 		config.Mysql.UserName,
 		config.Mysql.PassWord,
 		config.Mysql.Host,
 		config.Mysql.Port,
 		config.Mysql.DataBase,
-		config.Mysql.CharSet)
+		config.Mysql.CharSet,
+	)
 
 	// Connect
 	db, err := gorm.Open(mysql.Open(url), &gorm.Config{})

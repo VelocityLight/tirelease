@@ -42,3 +42,17 @@ func TestSelectIssueRelationInfo(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*issueRelationInfos) > 0)
 }
+
+func TestSelectIssueRelationInfoByState(t *testing.T) {
+	// Init
+	var config = generateConfig()
+	database.Connect(config)
+
+	// Select
+	option := &dto.IssueRelationInfoQuery{
+		State: "open",
+	}
+	issueRelationInfos, err := SelectIssueRelationInfo(option)
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, len(*issueRelationInfos) > 0)
+}

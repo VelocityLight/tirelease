@@ -15,7 +15,7 @@ func TestComposeIssueAffectWithIssueID(t *testing.T) {
 	database.Connect(generateConfig())
 
 	// Test
-	issueAffects, err := ComposeIssueAffectWithIssueID(git.TestIssueNodeID)
+	issueAffects, err := ComposeIssueAffectWithIssueID(git.TestIssueNodeID, nil)
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*issueAffects) > 0)
 }

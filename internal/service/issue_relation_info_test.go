@@ -18,7 +18,7 @@ func TestComposeIssuePrRelationsByIssue(t *testing.T) {
 	database.Connect(generateConfig())
 
 	// Test
-	triageRelationInfo, err := GetIssueRelationInfoByIssueNumberV4(git.TestOwner, git.TestRepo, git.TestIssueId)
+	triageRelationInfo, err := GetIssueRelationInfoByIssueIDV4(git.TestIssueNodeID)
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*triageRelationInfo.IssuePrRelations) > 0)
 	assert.Equal(t, true, len(*triageRelationInfo.PullRequests) > 0)
@@ -36,8 +36,7 @@ func TestSelectIssueRelationInfo(t *testing.T) {
 
 	// Select
 	option := &dto.IssueRelationInfoQuery{
-		Owner: git.TestOwner,
-		Repo:  git.TestRepo,
+		IssueID: git.TestIssueNodeID,
 	}
 	issueRelationInfos, err := SelectIssueRelationInfo(option)
 	assert.Equal(t, true, err == nil)

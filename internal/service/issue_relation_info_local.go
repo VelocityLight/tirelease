@@ -41,8 +41,8 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		return nil, err
 	}
 	alls := make([]dto.IssueRelationInfo, 0)
-	for _, issue := range *issues {
-		issueRelationInfo, err := ComposeRelationInfoByIssue(&issue, releaseVersions)
+	for i := range *issues {
+		issueRelationInfo, err := ComposeRelationInfoByIssue(&(*issues)[i], releaseVersions)
 		if nil != err {
 			return nil, err
 		}
@@ -51,21 +51,22 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 
 	// Filter & Result
 	issueRelationInfos := make([]dto.IssueRelationInfo, 0)
-	for _, issueRelationInfo := range alls {
+	for i := range alls {
 		var filter bool = false
-		for _, issueAffect := range *issueRelationInfo.IssueAffects {
+		for _, issueAffect := range *(alls[i].IssueAffects) {
 			if option.AffectVersion == "" || issueAffect.AffectVersion == option.AffectVersion {
 				filter = true
 				break
 			}
 		}
 		if filter {
-			issueRelationInfos = append(issueRelationInfos, issueRelationInfo)
+			issueRelationInfos = append(issueRelationInfos, alls[i])
 		}
 	}
 	for i := range issueRelationInfos {
 		pullRequests := make([]entity.PullRequest, 0)
-		for _, pr := range *(issueRelationInfos[i].PullRequests) {
+		for j := range *(issueRelationInfos[i].PullRequests) {
+			pr := (*(issueRelationInfos[i].PullRequests))[j]
 			if option.BaseBranch == "" || pr.BaseBranch == option.BaseBranch {
 				pullRequests = append(pullRequests, pr)
 			}
@@ -162,12 +163,22 @@ func ComposeRelationInfoByIssue(issue *entity.Issue, releaseVersions *[]entity.R
 		pullRequests = append(pullRequests, *pullRequest)
 	}
 
+	// Find VersionTriage
+	versionTriageOption := &entity.VersionTriageOption{
+		IssueID: issue.IssueID,
+	}
+	versionTriages, err := repository.SelectVersionTriage(versionTriageOption)
+	if nil != err {
+		return nil, err
+	}
+
 	// Construct IssueRelationInfo
 	issueRelationInfo := &dto.IssueRelationInfo{
 		Issue:            issue,
 		IssueAffects:     issueAffects,
 		IssuePrRelations: issuePrRelations,
 		PullRequests:     &pullRequests,
+		VersionTriages:   versionTriages,
 	}
 	return issueRelationInfo, nil
 }

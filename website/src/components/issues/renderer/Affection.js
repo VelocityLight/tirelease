@@ -1,4 +1,5 @@
 import { Chip } from "@mui/material";
+import AffectionSelect from "./AffectionSelect";
 
 export function getAffection(version) {
   return (params) => {
@@ -16,6 +17,16 @@ export function getAffection(version) {
 
 export function renderAffection(version) {
   return (params) => {
-    return <Chip label={getAffection(version)(params)}></Chip>;
+    const affection = getAffection(version)(params);
+    if (affection === "N/A") {
+      return <>N/A</>;
+    }
+    return (
+      <AffectionSelect
+        id={params.row.Issue.issue_id}
+        version={version}
+        affection={affection}
+      ></AffectionSelect>
+    );
   };
 }

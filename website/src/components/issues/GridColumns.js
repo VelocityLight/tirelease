@@ -100,6 +100,10 @@ function getPROnVersion(version) {
   };
 }
 
+function getPickOnVersion(version) {
+  const branch = "release-" + version;
+}
+
 const Columns = {
   id,
   repo,

@@ -29,7 +29,6 @@ function a11yProps(index) {
 }
 
 function OpenedToday() {
-  /*
   const { isLoading, error, data } = useQuery("openedToday", () => {
     return fetch(url("issue?state=open"))
       .then((res) => {
@@ -57,7 +56,6 @@ function OpenedToday() {
     );
   }
   console.log("fetched data", data);
-  */
   return (
     <IssueGrid data={sampleData.data}></IssueGrid>
     // <IssueTable

@@ -41,7 +41,7 @@ export function IssueGrid(props) {
           }),
         ]}
         onRowClick={(e) => {
-          openTriageDialog();
+          // openTriageDialog();
         }}
       ></DataGrid>
       <TriageDialog onClose={onClose} open={triage}></TriageDialog>

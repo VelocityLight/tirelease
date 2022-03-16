@@ -1,56 +1,162 @@
+const versionTriage = {
+  data: {
+    release_version: {
+      id: 2,
+      create_time: "2022-03-14T17:52:16Z",
+      update_time: "2022-03-14T17:52:16Z",
+      name: "5.4.1",
+      description: "Patch版本5.4.1",
+      owner: "JunChenYe",
+      type: "Patch",
+      status: "Open",
+      release_branch: "release-5.4",
+      father_release_version_name: "5.4",
+    },
+    version_triage_infos: [
+      {
+        release_version: {
+          id: 2,
+          create_time: "2022-03-14T17:52:16Z",
+          update_time: "2022-03-14T17:52:16Z",
+          name: "5.4.1",
+          description: "Patch版本5.4.1",
+          owner: "JunChenYe",
+          type: "Patch",
+          status: "Open",
+          release_branch: "release-5.4",
+          father_release_version_name: "5.4",
+        },
+        version_triage: {
+          id: 1,
+          create_time: "2022-03-16T23:02:52Z",
+          update_time: "2022-03-16T23:02:52Z",
+          version_name: "5.4.1",
+          issue_id: "I_kwDOAoCpQc5EYpDo",
+          triage_result: "UnKnown",
+        },
+        issue_relation_info: {
+          Issue: {
+            id: 60094,
+            issue_id: "I_kwDOAoCpQc5EYpDo",
+            number: 32545,
+            state: "open",
+            title: "Datetime output is different from Mysql ",
+            owner: "pingcap",
+            repo: "tidb",
+            html_url: "https://github.com/pingcap/tidb/issues/32545",
+            created_at: "2022-02-22T19:55:17Z",
+            updated_at: "2022-03-16T23:02:54Z",
+            labels_string:
+              '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/moderate","color":"fbca04"},{"name":"affects-5.0","color":"E99695"},{"name":"affects-5.1","color":"E99695"},{"name":"affects-5.2","color":"E99695"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"},{"name":"may-affects-4.0","color":"ededed"}]',
+            assignees_string: '[{"login":"birdstorm"}]',
+            severity_label: "severity/moderate",
+            type_label: "type/bug",
+            labels: [
+              { name: "type/bug", color: "fc2929" },
+              { name: "sig/execution", color: "e99695" },
+              { name: "severity/moderate", color: "fbca04" },
+              { name: "affects-5.0", color: "E99695" },
+              { name: "affects-5.1", color: "E99695" },
+              { name: "affects-5.2", color: "E99695" },
+              { name: "affects-5.3", color: "E99695" },
+              { name: "affects-5.4", color: "E99695" },
+              { name: "may-affects-4.0", color: "ededed" },
+            ],
+            assignees: [{ login: "birdstorm" }],
+          },
+          IssueAffects: [
+            {
+              id: 60296,
+              create_time: "2022-03-16T12:50:40Z",
+              update_time: "2022-03-16T23:02:54Z",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              affect_version: "4.0",
+              affect_result: "UnKnown",
+            },
+            {
+              id: 90329,
+              create_time: "2022-03-16T08:32:29Z",
+              update_time: "2022-03-16T23:02:54Z",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              affect_version: "5.0",
+              affect_result: "Yes",
+            },
+            {
+              id: 90330,
+              create_time: "2022-03-16T08:32:29Z",
+              update_time: "2022-03-16T23:02:54Z",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              affect_version: "5.1",
+              affect_result: "Yes",
+            },
+            {
+              id: 90331,
+              create_time: "2022-03-16T08:32:29Z",
+              update_time: "2022-03-16T23:02:54Z",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              affect_version: "5.2",
+              affect_result: "Yes",
+            },
+            {
+              id: 90332,
+              create_time: "2022-03-16T08:32:29Z",
+              update_time: "2022-03-16T23:02:54Z",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              affect_version: "5.3",
+              affect_result: "Yes",
+            },
+            {
+              id: 90333,
+              create_time: "2022-03-16T08:32:29Z",
+              update_time: "2022-03-16T23:02:54Z",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              affect_version: "5.4",
+              affect_result: "Yes",
+            },
+          ],
+          IssuePrRelations: [
+            {
+              id: 30072,
+              create_time: "2022-03-16T08:32:29Z",
+              update_time: "2022-03-16T08:32:29Z",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              pull_request_id: "PR_kwDOAoC2ds4zHcPv",
+            },
+          ],
+          PullRequests: [],
+          VersionTriages: [
+            {
+              id: 1,
+              create_time: "2022-03-16T23:02:52Z",
+              update_time: "2022-03-16T23:02:52Z",
+              version_name: "5.4.1",
+              issue_id: "I_kwDOAoCpQc5EYpDo",
+              triage_result: "UnKnown",
+            },
+          ],
+        },
+      },
+    ],
+  },
+};
+
 const data = {
   data: [
     {
       Issue: {
-        id: 60038,
-        issue_id: "I_kwDOAoCpQc5FsSwc",
-        number: 33068,
+        id: 60084,
+        issue_id: "I_kwDOAoCpQc5FxtUe",
+        number: 33141,
         state: "open",
-        title:
-          "Do not send `DeleteTiFlashPlacementRule` request to pd if TiDB hasn't set TiFlash replica before.",
+        title: "Clients with `mysql_native_password` cannot connect to TiDB",
         owner: "pingcap",
         repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33068",
-        created_at: "2022-03-15T06:26:41Z",
-        updated_at: "2022-03-15T06:26:44Z",
-        labels_string: '[{"name":"type/enhancement","color":"84b6eb"}]',
-        assignees_string: "[]",
-        type_label: "type/enhancement",
-        labels: [
-          {
-            name: "type/enhancement",
-            color: "84b6eb",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "I_kwDOAoCpQc5FsSwc",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 120007,
-        issue_id: "I_kwDOAoCpQc5Fr_FO",
-        number: 33067,
-        state: "open",
-        title: "wrong IndexRangeScan for bit column",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33067",
-        created_at: "2022-03-15T04:06:40Z",
-        updated_at: "2022-03-15T04:18:38Z",
+        html_url: "https://github.com/pingcap/tidb/issues/33141",
+        created_at: "2022-03-16T07:49:03Z",
+        updated_at: "2022-03-16T11:28:40Z",
         labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/planner","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"epic/plan-cache","color":"ecb7f7"},{"name":"may-affects-4.0","color":"ededed"},{"name":"may-affects-5.1","color":"ededed"},{"name":"may-affects-5.2","color":"ededed"},{"name":"may-affects-5.3","color":"ededed"},{"name":"may-affects-5.4","color":"ededed"},{"name":"may-affects-5.0","color":"ededed"}]',
-        assignees_string: '[{"login":"qw4990"}]',
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/sql-infra","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"compatibility-mysql8","color":"8FB8F6"}]',
+        assignees_string: "[]",
         severity_label: "severity/critical",
         type_label: "type/bug",
         labels: [
@@ -59,7 +165,7 @@ const data = {
             color: "fc2929",
           },
           {
-            name: "sig/planner",
+            name: "sig/sql-infra",
             color: "e99695",
           },
           {
@@ -67,8 +173,1992 @@ const data = {
             color: "fbca04",
           },
           {
-            name: "epic/plan-cache",
-            color: "ecb7f7",
+            name: "compatibility-mysql8",
+            color: "8FB8F6",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          id: 90280,
+          create_time: "2022-03-16T07:49:18Z",
+          update_time: "2022-03-16T11:28:40Z",
+          issue_id: "I_kwDOAoCpQc5FxtUe",
+          affect_version: "4.0",
+          affect_result: "No",
+        },
+        {
+          id: 90281,
+          create_time: "2022-03-16T07:49:18Z",
+          update_time: "2022-03-16T11:28:40Z",
+          issue_id: "I_kwDOAoCpQc5FxtUe",
+          affect_version: "5.1",
+          affect_result: "No",
+        },
+        {
+          id: 90282,
+          create_time: "2022-03-16T07:49:18Z",
+          update_time: "2022-03-16T11:28:40Z",
+          issue_id: "I_kwDOAoCpQc5FxtUe",
+          affect_version: "5.2",
+          affect_result: "No",
+        },
+        {
+          id: 90283,
+          create_time: "2022-03-16T07:49:18Z",
+          update_time: "2022-03-16T11:28:40Z",
+          issue_id: "I_kwDOAoCpQc5FxtUe",
+          affect_version: "5.3",
+          affect_result: "No",
+        },
+        {
+          id: 90284,
+          create_time: "2022-03-16T07:49:18Z",
+          update_time: "2022-03-16T11:28:40Z",
+          issue_id: "I_kwDOAoCpQc5FxtUe",
+          affect_version: "5.4",
+          affect_result: "No",
+        },
+        {
+          id: 90285,
+          create_time: "2022-03-16T07:49:18Z",
+          update_time: "2022-03-16T11:28:40Z",
+          issue_id: "I_kwDOAoCpQc5FxtUe",
+          affect_version: "5.0",
+          affect_result: "No",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 30071,
+          create_time: "2022-03-16T08:31:43Z",
+          update_time: "2022-03-16T08:31:43Z",
+          issue_id: "I_kwDOAoCpQc5FxtUe",
+          pull_request_id: "PR_kwDOAoCpQc40g6-g",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 32096,
+          pull_request_id: "PR_kwDOAoCpQc40g6-g",
+          number: 33142,
+          state: "open",
+          title:
+            'server: Revert "server: Improve compatibility with MySQL 5.5 and 5.6 clients …',
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/33142",
+          base_branch: "master",
+          created_at: "2022-03-16T07:57:23Z",
+          updated_at: "2022-03-16T12:08:21Z",
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/S","color":"77bb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"dveeden"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/S",
+              color: "77bb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "dveeden",
+            },
+          ],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 30053,
+        issue_id: "I_kwDOAoCpQc5FXKOT",
+        number: 32965,
+        state: "open",
+        title: "migrate test-infra to testify for ddl.testDBSuite5",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/32965",
+        created_at: "2022-03-09T09:34:21Z",
+        updated_at: "2022-03-16T09:21:08Z",
+        labels_string:
+          '[{"name":"type/enhancement","color":"84b6eb"},{"name":"help wanted","color":"159818"},{"name":"good first issue","color":"9ee26a"}]',
+        assignees_string: '[{"login":"tisonkun"}]',
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+          {
+            name: "help wanted",
+            color: "159818",
+          },
+          {
+            name: "good first issue",
+            color: "9ee26a",
+          },
+        ],
+        assignees: [
+          {
+            login: "tisonkun",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FXKOT",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60094,
+        issue_id: "I_kwDOAoCpQc5EYpDo",
+        number: 32545,
+        state: "open",
+        title: "Datetime output is different from Mysql ",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/32545",
+        created_at: "2022-02-22T19:55:17Z",
+        updated_at: "2022-03-16T08:32:26Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"affects-5.0","color":"E99695"},{"name":"affects-5.1","color":"E99695"},{"name":"affects-5.2","color":"E99695"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"}]',
+        assignees_string: '[{"login":"birdstorm"}]',
+        severity_label: "severity/critical",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "sig/execution",
+            color: "e99695",
+          },
+          {
+            name: "severity/critical",
+            color: "fbca04",
+          },
+          {
+            name: "affects-5.0",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.1",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.2",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.3",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.4",
+            color: "E99695",
+          },
+        ],
+        assignees: [
+          {
+            login: "birdstorm",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          id: 90329,
+          create_time: "2022-03-16T08:32:29Z",
+          update_time: "2022-03-16T08:32:29Z",
+          issue_id: "I_kwDOAoCpQc5EYpDo",
+          affect_version: "5.0",
+          affect_result: "Yes",
+        },
+        {
+          id: 90330,
+          create_time: "2022-03-16T08:32:29Z",
+          update_time: "2022-03-16T08:32:29Z",
+          issue_id: "I_kwDOAoCpQc5EYpDo",
+          affect_version: "5.1",
+          affect_result: "Yes",
+        },
+        {
+          id: 90331,
+          create_time: "2022-03-16T08:32:29Z",
+          update_time: "2022-03-16T08:32:29Z",
+          issue_id: "I_kwDOAoCpQc5EYpDo",
+          affect_version: "5.2",
+          affect_result: "Yes",
+        },
+        {
+          id: 90332,
+          create_time: "2022-03-16T08:32:29Z",
+          update_time: "2022-03-16T08:32:29Z",
+          issue_id: "I_kwDOAoCpQc5EYpDo",
+          affect_version: "5.3",
+          affect_result: "Yes",
+        },
+        {
+          id: 90333,
+          create_time: "2022-03-16T08:32:29Z",
+          update_time: "2022-03-16T08:32:29Z",
+          issue_id: "I_kwDOAoCpQc5EYpDo",
+          affect_version: "5.4",
+          affect_result: "Yes",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 30072,
+          create_time: "2022-03-16T08:32:29Z",
+          update_time: "2022-03-16T08:32:29Z",
+          issue_id: "I_kwDOAoCpQc5EYpDo",
+          pull_request_id: "PR_kwDOAoC2ds4zHcPv",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 314,
+          pull_request_id: "PR_kwDOAoC2ds4zHcPv",
+          number: 1585,
+          state: "open",
+          title: "Mysql-test->range_mrr_cost file ported from mysql server",
+          owner: "pingcap",
+          repo: "tidb-test",
+          html_url: "https://github.com/pingcap/tidb-test/pull/1585",
+          base_branch: "master",
+          created_at: "2022-02-18T19:45:28Z",
+          updated_at: "2022-02-24T16:49:55Z",
+          mergeable_state: "unknown",
+          labels_string: "[]",
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [],
+          assignees: [],
+          requested_reviewers: [],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 150045,
+        issue_id: "I_kwDOAoCpQc5Fxy0W",
+        number: 33145,
+        state: "open",
+        title: "[expression:1305]FUNCTION LowerUTF8 does not exist",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33145",
+        created_at: "2022-03-16T08:14:34Z",
+        updated_at: "2022-03-16T08:14:38Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"component/expression","color":"fbca04"},{"name":"component/executor","color":"ededed"},{"name":"affects-5.3","color":"E99695"}]',
+        assignees_string: "[]",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "component/expression",
+            color: "fbca04",
+          },
+          {
+            name: "component/executor",
+            color: "ededed",
+          },
+          {
+            name: "affects-5.3",
+            color: "E99695",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          id: 120154,
+          create_time: "2022-03-16T08:14:38Z",
+          update_time: "2022-03-16T08:14:38Z",
+          issue_id: "I_kwDOAoCpQc5Fxy0W",
+          affect_version: "5.3",
+          affect_result: "Yes",
+        },
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5Fxy0W",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 150044,
+        issue_id: "I_kwDOAoCpQc5FxyRa",
+        number: 33144,
+        state: "open",
+        title: "Revoke role from current_user results error.",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33144",
+        created_at: "2022-03-16T08:12:08Z",
+        updated_at: "2022-03-16T08:12:12Z",
+        labels_string: '[{"name":"type/bug","color":"fc2929"}]',
+        assignees_string: "[]",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FxyRa",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 180044,
+        issue_id: "I_kwDOAoCpQc5FxvCZ",
+        number: 33143,
+        state: "open",
+        title: "got incorrect result while using cross join",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33143",
+        created_at: "2022-03-16T07:57:30Z",
+        updated_at: "2022-03-16T07:57:33Z",
+        labels_string: '[{"name":"type/bug","color":"fc2929"}]',
+        assignees_string: "[]",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FxvCZ",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 180038,
+        issue_id: "I_kwDOAoCpQc5FxsOb",
+        number: 33140,
+        state: "open",
+        title: "Write design doc for the table cache feature",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33140",
+        created_at: "2022-03-16T07:43:23Z",
+        updated_at: "2022-03-16T07:44:58Z",
+        labels_string: '[{"name":"type/feature-request","color":"eface0"}]',
+        assignees_string: "[]",
+        type_label: "type/feature-request",
+        labels: [
+          {
+            name: "type/feature-request",
+            color: "eface0",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FxsOb",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 120023,
+          create_time: "2022-03-16T07:44:58Z",
+          update_time: "2022-03-16T07:44:58Z",
+          issue_id: "I_kwDOAoCpQc5FxsOb",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NjAzNTA5Mjk3",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 90169,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NjAzNTA5Mjk3",
+          number: 23673,
+          state: "open",
+          title: "docs: add small table caching proposal",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/23673",
+          base_branch: "master",
+          created_at: "2021-03-30T08:42:05Z",
+          updated_at: "2022-03-16T07:44:58Z",
+          mergeable_state: "mergeable",
+          labels_string:
+            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"size/L","color":"ee9900"},{"name":"do-not-merge/release-note-label-needed","color":"e11d21"}]',
+          assignees_string: "[]",
+          requested_reviewers_string:
+            '[{"login":"bb7133"},{"login":"bb7133"},{"login":"bb7133"}]',
+          labels: [
+            {
+              name: "status/LGT1",
+              color: "d4c5f9",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "do-not-merge/release-note-label-needed",
+              color: "e11d21",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "bb7133",
+            },
+            {
+              login: "bb7133",
+            },
+            {
+              login: "bb7133",
+            },
+          ],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 30044,
+        issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+        number: 25293,
+        state: "open",
+        title: "Optimizing hotspot small tables",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/25293",
+        created_at: "2021-06-09T07:09:46Z",
+        updated_at: "2022-03-16T07:41:57Z",
+        labels_string:
+          '[{"name":"type/enhancement","color":"84b6eb"},{"name":"challenge-program","color":"0e8a16"}]',
+        assignees_string: '[{"login":"JayL-zxl"},{"login":"JayL-zxl"}]',
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+          {
+            name: "challenge-program",
+            color: "0e8a16",
+          },
+        ],
+        assignees: [
+          {
+            login: "JayL-zxl",
+          },
+          {
+            login: "JayL-zxl",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 90016,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4tUjBE",
+        },
+        {
+          id: 90017,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NjAzNTA5Mjk3",
+        },
+        {
+          id: 90018,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4tfBtQ",
+        },
+        {
+          id: 90019,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4toqFy",
+        },
+        {
+          id: 90020,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4tqaX6",
+        },
+        {
+          id: 90021,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4ttxHg",
+        },
+        {
+          id: 90022,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4tuiso",
+        },
+        {
+          id: 90023,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4twAf7",
+        },
+        {
+          id: 90024,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4t2ilC",
+        },
+        {
+          id: 90025,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4uFRCz",
+        },
+        {
+          id: 90026,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4uFRIN",
+        },
+        {
+          id: 90027,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4uOgYs",
+        },
+        {
+          id: 90028,
+          create_time: "2022-03-15T23:36:46Z",
+          update_time: "2022-03-15T23:36:46Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4uSScV",
+        },
+        {
+          id: 90029,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4uZq9T",
+        },
+        {
+          id: 90030,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4uaLyN",
+        },
+        {
+          id: 90031,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4ulG2K",
+        },
+        {
+          id: 90032,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4u0CQy",
+        },
+        {
+          id: 90033,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4vBxEQ",
+        },
+        {
+          id: 90034,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOCYf-NM4vrS3v",
+        },
+        {
+          id: 90035,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4wL-N0",
+        },
+        {
+          id: 90036,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4wQtcm",
+        },
+        {
+          id: 90037,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4wUgp9",
+        },
+        {
+          id: 90038,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4wWq0w",
+        },
+        {
+          id: 90039,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOBAQ6YM4wY3Ur",
+        },
+        {
+          id: 90040,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4wZUTI",
+        },
+        {
+          id: 90041,
+          create_time: "2022-03-15T23:36:47Z",
+          update_time: "2022-03-15T23:36:47Z",
+          issue_id: "MDU6SXNzdWU5MTU4Njk2MzI=",
+          pull_request_id: "PR_kwDOAoCpQc4y3qrR",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 60129,
+          pull_request_id: "PR_kwDOAoCpQc4tUjBE",
+          number: 28922,
+          state: "merged",
+          title:
+            "parser: support the 'alter table xx cache' and 'alter table xx nocache'",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/28922",
+          base_branch: "master",
+          created_at: "2021-10-18T11:25:51Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-10-21T02:36:46Z",
+          merged_at: "2021-10-21T02:36:45Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"release-note","color":"1d76db"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XXL","color":"ee0000"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "release-note",
+              color: "1d76db",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 90169,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NjAzNTA5Mjk3",
+          number: 23673,
+          state: "open",
+          title: "docs: add small table caching proposal",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/23673",
+          base_branch: "master",
+          created_at: "2021-03-30T08:42:05Z",
+          updated_at: "2022-03-16T07:44:58Z",
+          mergeable_state: "mergeable",
+          labels_string:
+            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"size/L","color":"ee9900"},{"name":"do-not-merge/release-note-label-needed","color":"e11d21"}]',
+          assignees_string: "[]",
+          requested_reviewers_string:
+            '[{"login":"bb7133"},{"login":"bb7133"},{"login":"bb7133"}]',
+          labels: [
+            {
+              name: "status/LGT1",
+              color: "d4c5f9",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "do-not-merge/release-note-label-needed",
+              color: "e11d21",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "bb7133",
+            },
+            {
+              login: "bb7133",
+            },
+            {
+              login: "bb7133",
+            },
+          ],
+        },
+        {
+          id: 60131,
+          pull_request_id: "PR_kwDOAoCpQc4tfBtQ",
+          number: 29022,
+          state: "merged",
+          title: "ddl : support `alter table xx cache` operations",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29022",
+          base_branch: "master",
+          created_at: "2021-10-21T10:05:38Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-10-25T14:08:49Z",
+          merged_at: "2021-10-25T14:08:49Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60132,
+          pull_request_id: "PR_kwDOAoCpQc4toqFy",
+          number: 29082,
+          state: "closed",
+          title:
+            "ddl : add admin check table / checksum table compatibility for cache table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29082",
+          base_branch: "master",
+          created_at: "2021-10-25T16:16:13Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-10-26T05:12:13Z",
+          mergeable_state: "unknown",
+          labels_string:
+            '[{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":""}]',
+          labels: [
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "",
+            },
+          ],
+        },
+        {
+          id: 60133,
+          pull_request_id: "PR_kwDOAoCpQc4tqaX6",
+          number: 29096,
+          state: "merged",
+          title:
+            "ddl : add admin check table / checksum table compatibility for cache table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29096",
+          base_branch: "master",
+          created_at: "2021-10-26T05:56:43Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-10-26T12:26:49Z",
+          merged_at: "2021-10-26T12:26:48Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60134,
+          pull_request_id: "PR_kwDOAoCpQc4ttxHg",
+          number: 29152,
+          state: "merged",
+          title:
+            "table/tables: add `StateRemote` interface for the cached table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29152",
+          base_branch: "master",
+          created_at: "2021-10-27T01:59:02Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-25T06:17:51Z",
+          merged_at: "2021-11-25T06:17:51Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XL","color":"ee5500"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60135,
+          pull_request_id: "PR_kwDOAoCpQc4tuiso",
+          number: 29173,
+          state: "merged",
+          title:
+            "ddl : ddl forbid stale read  for cache table and support history read",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29173",
+          base_branch: "master",
+          created_at: "2021-10-27T08:36:54Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-10-29T09:08:50Z",
+          merged_at: "2021-10-29T09:08:50Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60136,
+          pull_request_id: "PR_kwDOAoCpQc4twAf7",
+          number: 29184,
+          state: "merged",
+          title: "dml : dml read operation for cache table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29184",
+          base_branch: "master",
+          created_at: "2021-10-27T15:54:19Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-04T04:07:02Z",
+          merged_at: "2021-11-04T04:07:02Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XL","color":"ee5500"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"djshow832"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "djshow832",
+            },
+          ],
+        },
+        {
+          id: 60137,
+          pull_request_id: "PR_kwDOAoCpQc4t2ilC",
+          number: 29256,
+          state: "merged",
+          title:
+            "ddl : ddl forbid partition table switch into cache and add view feature test",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29256",
+          base_branch: "master",
+          created_at: "2021-10-29T14:04:37Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-01T11:00:52Z",
+          merged_at: "2021-11-01T11:00:52Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60138,
+          pull_request_id: "PR_kwDOAoCpQc4uFRCz",
+          number: 29443,
+          state: "merged",
+          title: "*: fix staled table cache usage inside a transaction",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29443",
+          base_branch: "master",
+          created_at: "2021-11-04T09:01:14Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-11T10:23:06Z",
+          merged_at: "2021-11-11T10:23:06Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60139,
+          pull_request_id: "PR_kwDOAoCpQc4uFRIN",
+          number: 29444,
+          state: "merged",
+          title:
+            "plan,table : support write operator for cache table and mock lockwrite state",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29444",
+          base_branch: "master",
+          created_at: "2021-11-04T09:01:43Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-08T08:11:05Z",
+          merged_at: "2021-11-08T08:11:04Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XL","color":"ee5500"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60140,
+          pull_request_id: "PR_kwDOAoCpQc4uOgYs",
+          number: 29575,
+          state: "merged",
+          title:
+            "dml : cache table reads data from the original table in a new transaction",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29575",
+          base_branch: "master",
+          created_at: "2021-11-08T13:25:48Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-09T08:47:06Z",
+          merged_at: "2021-11-09T08:47:06Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60141,
+          pull_request_id: "PR_kwDOAoCpQc4uSScV",
+          number: 29621,
+          state: "merged",
+          title:
+            "ddl :  support  `alter table xx nocache` operations switch a table into uncacheable",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29621",
+          base_branch: "master",
+          created_at: "2021-11-09T13:30:24Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-11T09:19:07Z",
+          merged_at: "2021-11-11T09:19:07Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60142,
+          pull_request_id: "PR_kwDOAoCpQc4uZq9T",
+          number: 29703,
+          state: "merged",
+          title: "dml : Support point get / batch point get for cache table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29703",
+          base_branch: "master",
+          created_at: "2021-11-11T11:15:50Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-15T07:49:07Z",
+          merged_at: "2021-11-15T07:49:07Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"hawkingrei"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "hawkingrei",
+            },
+          ],
+        },
+        {
+          id: 60143,
+          pull_request_id: "PR_kwDOAoCpQc4uaLyN",
+          number: 29707,
+          state: "merged",
+          title:
+            "ddl : ddl forbid create / add / rename /drop index for cache table ",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29707",
+          base_branch: "master",
+          created_at: "2021-11-11T14:16:20Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-15T06:57:07Z",
+          merged_at: "2021-11-15T06:57:07Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60144,
+          pull_request_id: "PR_kwDOAoCpQc4ulG2K",
+          number: 29840,
+          state: "merged",
+          title: "*: support renew lease for read operation on cached table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29840",
+          base_branch: "master",
+          created_at: "2021-11-16T09:25:38Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-22T14:37:50Z",
+          merged_at: "2021-11-22T14:37:50Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string:
+            '[{"login":"hawkingrei"},{"login":"hawkingrei"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "hawkingrei",
+            },
+            {
+              login: "hawkingrei",
+            },
+          ],
+        },
+        {
+          id: 60145,
+          pull_request_id: "PR_kwDOAoCpQc4u0CQy",
+          number: 29963,
+          state: "merged",
+          title: "telemetry, session : add telemetry for cache table feature",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29963",
+          base_branch: "master",
+          created_at: "2021-11-21T13:24:57Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-11-22T06:03:50Z",
+          merged_at: "2021-11-22T06:03:50Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60146,
+          pull_request_id: "PR_kwDOAoCpQc4vBxEQ",
+          number: 30166,
+          state: "merged",
+          title:
+            "* : statement summary should know the slow write is blocked on read lock lease",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/30166",
+          base_branch: "master",
+          created_at: "2021-11-25T16:32:03Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-12-01T01:47:54Z",
+          merged_at: "2021-12-01T01:47:53Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60147,
+          pull_request_id: "PR_kwDOCYf-NM4vrS3v",
+          number: 392,
+          state: "merged",
+          title:
+            "txnkv/transaction: add a kv option for cached table lock lease",
+          owner: "tikv",
+          repo: "client-go",
+          html_url: "https://github.com/tikv/client-go/pull/392",
+          base_branch: "master",
+          created_at: "2021-12-10T12:33:31Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-12-14T09:37:16Z",
+          merged_at: "2021-12-14T09:37:15Z",
+          merged: true,
+          mergeable_state: "unknown",
+          labels_string: "[]",
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60148,
+          pull_request_id: "PR_kwDOAoCpQc4wL-N0",
+          number: 30951,
+          state: "merged",
+          title:
+            "executor: display 'show create table' and INFOSCHEMA for cached table correctly",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/30951",
+          base_branch: "master",
+          created_at: "2021-12-22T14:31:33Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-12-23T06:45:48Z",
+          merged_at: "2021-12-23T06:45:48Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/S","color":"77bb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/S",
+              color: "77bb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60149,
+          pull_request_id: "PR_kwDOAoCpQc4wQtcm",
+          number: 31018,
+          state: "merged",
+          title:
+            "*: add global variable @@tidb_cache_table_lease for cached table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31018",
+          base_branch: "master",
+          created_at: "2021-12-24T11:36:29Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2022-01-01T08:13:52Z",
+          merged_at: "2022-01-01T08:13:51Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60150,
+          pull_request_id: "PR_kwDOAoCpQc4wUgp9",
+          number: 31067,
+          state: "merged",
+          title: "ddl,table: add check for cached table size limit",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31067",
+          base_branch: "master",
+          created_at: "2021-12-28T02:48:05Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-12-30T09:39:51Z",
+          merged_at: "2021-12-30T09:39:51Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60151,
+          pull_request_id: "PR_kwDOAoCpQc4wWq0w",
+          number: 31106,
+          state: "merged",
+          title: "ddl: don't write binlog for 'ALTER TABLE t CACHE|NOCACHE'",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31106",
+          base_branch: "master",
+          created_at: "2021-12-29T03:45:58Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-12-30T01:59:51Z",
+          merged_at: "2021-12-30T01:59:50Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60152,
+          pull_request_id: "PR_kwDOBAQ6YM4wY3Ur",
+          number: 1115,
+          state: "merged",
+          title: "drainer: skip 'alter table cache|nocache' DDL jobs",
+          owner: "pingcap",
+          repo: "tidb-binlog",
+          html_url: "https://github.com/pingcap/tidb-binlog/pull/1115",
+          base_branch: "master",
+          created_at: "2021-12-30T07:32:34Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2021-12-31T07:21:51Z",
+          merged_at: "2021-12-31T07:21:51Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"55bce8"},{"name":"status/can-merge","color":"d4c5f9"},{"name":"size/M","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "55bce8",
+            },
+            {
+              name: "status/can-merge",
+              color: "d4c5f9",
+            },
+            {
+              name: "size/M",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60153,
+          pull_request_id: "PR_kwDOAoCpQc4wZUTI",
+          number: 31191,
+          state: "open",
+          title: "br: add a test for cached table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31191",
+          base_branch: "master",
+          created_at: "2021-12-30T12:08:39Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          mergeable_state: "unknown",
+          labels_string:
+            '[{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"3pointer"}]',
+          labels: [
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "3pointer",
+            },
+          ],
+        },
+        {
+          id: 60154,
+          pull_request_id: "PR_kwDOAoCpQc4y3qrR",
+          number: 32387,
+          state: "merged",
+          title:
+            "*: tiny refactor code to reduce txn conflict on 'table_cache_meta'",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32387",
+          base_branch: "master",
+          created_at: "2022-02-15T16:19:42Z",
+          updated_at: "2022-03-16T07:41:57Z",
+          closed_at: "2022-03-01T10:33:46Z",
+          merged_at: "2022-03-01T10:33:46Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 150004,
+        issue_id: "I_kwDOAoCpQc5Frlv8",
+        number: 33061,
+        state: "open",
+        title:
+          "inconsistent case insensitive behaviour  with GRANT and SET ROLE hostnames.",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33061",
+        created_at: "2022-03-15T00:40:14Z",
+        updated_at: "2022-03-16T07:25:02Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/sql-infra","color":"e99695"},{"name":"severity/major","color":"fbca04"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"},{"name":"may-affects-4.0","color":"ededed"},{"name":"may-affects-5.1","color":"ededed"},{"name":"may-affects-5.2","color":"ededed"},{"name":"may-affects-5.0","color":"ededed"}]',
+        assignees_string: '[{"login":"morgo"}]',
+        severity_label: "severity/major",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "sig/sql-infra",
+            color: "e99695",
+          },
+          {
+            name: "severity/major",
+            color: "fbca04",
+          },
+          {
+            name: "affects-5.3",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.4",
+            color: "E99695",
+          },
+          {
+            name: "may-affects-4.0",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.1",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.2",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.0",
+            color: "ededed",
+          },
+        ],
+        assignees: [
+          {
+            login: "morgo",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          id: 60077,
+          create_time: "2022-03-15T02:30:01Z",
+          update_time: "2022-03-16T07:25:02Z",
+          issue_id: "I_kwDOAoCpQc5Frlv8",
+          affect_version: "5.3",
+          affect_result: "Yes",
+        },
+        {
+          id: 60078,
+          create_time: "2022-03-15T02:30:01Z",
+          update_time: "2022-03-16T07:25:02Z",
+          issue_id: "I_kwDOAoCpQc5Frlv8",
+          affect_version: "5.4",
+          affect_result: "Yes",
+        },
+        {
+          id: 60079,
+          create_time: "2022-03-15T02:30:01Z",
+          update_time: "2022-03-16T07:25:02Z",
+          issue_id: "I_kwDOAoCpQc5Frlv8",
+          affect_version: "4.0",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 60080,
+          create_time: "2022-03-15T02:30:01Z",
+          update_time: "2022-03-16T07:25:02Z",
+          issue_id: "I_kwDOAoCpQc5Frlv8",
+          affect_version: "5.1",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 60081,
+          create_time: "2022-03-15T02:30:01Z",
+          update_time: "2022-03-16T07:25:02Z",
+          issue_id: "I_kwDOAoCpQc5Frlv8",
+          affect_version: "5.2",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 60082,
+          create_time: "2022-03-15T02:30:01Z",
+          update_time: "2022-03-16T07:25:02Z",
+          issue_id: "I_kwDOAoCpQc5Frlv8",
+          affect_version: "5.0",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 180010,
+        issue_id: "I_kwDOAoCpQc5FnVyz",
+        number: 33031,
+        state: "open",
+        title: "return wrong results when using plan-cache and dynamic-mode",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33031",
+        created_at: "2022-03-14T06:20:53Z",
+        updated_at: "2022-03-16T07:15:05Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/sql-infra","color":"e99695"},{"name":"severity/major","color":"fbca04"},{"name":"component/tablepartition","color":"D1F5BF"},{"name":"feature/developing","color":"5319e7"},{"name":"may-affects-4.0","color":"ededed"},{"name":"may-affects-5.1","color":"ededed"},{"name":"may-affects-5.2","color":"ededed"},{"name":"may-affects-5.3","color":"ededed"},{"name":"may-affects-5.4","color":"ededed"},{"name":"may-affects-5.0","color":"ededed"}]',
+        assignees_string: '[{"login":"mjonss"}]',
+        severity_label: "severity/major",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "sig/sql-infra",
+            color: "e99695",
+          },
+          {
+            name: "severity/major",
+            color: "fbca04",
+          },
+          {
+            name: "component/tablepartition",
+            color: "D1F5BF",
+          },
+          {
+            name: "feature/developing",
+            color: "5319e7",
           },
           {
             name: "may-affects-4.0",
@@ -97,79 +2187,132 @@ const data = {
         ],
         assignees: [
           {
-            login: "qw4990",
+            login: "mjonss",
           },
         ],
       },
       IssueAffects: [
         {
-          id: 150019,
-          create_time: "2022-03-15T04:06:44Z",
-          update_time: "2022-03-15T04:18:38Z",
-          issue_id: "I_kwDOAoCpQc5Fr_FO",
+          id: 120111,
+          create_time: "2022-03-16T07:15:03Z",
+          update_time: "2022-03-16T07:15:05Z",
+          issue_id: "I_kwDOAoCpQc5FnVyz",
           affect_version: "4.0",
           affect_result: "UnKnown",
         },
         {
-          id: 150020,
-          create_time: "2022-03-15T04:06:44Z",
-          update_time: "2022-03-15T04:18:38Z",
-          issue_id: "I_kwDOAoCpQc5Fr_FO",
+          id: 120112,
+          create_time: "2022-03-16T07:15:03Z",
+          update_time: "2022-03-16T07:15:05Z",
+          issue_id: "I_kwDOAoCpQc5FnVyz",
           affect_version: "5.1",
           affect_result: "UnKnown",
         },
         {
-          id: 150021,
-          create_time: "2022-03-15T04:06:44Z",
-          update_time: "2022-03-15T04:18:38Z",
-          issue_id: "I_kwDOAoCpQc5Fr_FO",
+          id: 120113,
+          create_time: "2022-03-16T07:15:03Z",
+          update_time: "2022-03-16T07:15:05Z",
+          issue_id: "I_kwDOAoCpQc5FnVyz",
           affect_version: "5.2",
           affect_result: "UnKnown",
         },
         {
-          id: 150022,
-          create_time: "2022-03-15T04:06:44Z",
-          update_time: "2022-03-15T04:18:38Z",
-          issue_id: "I_kwDOAoCpQc5Fr_FO",
+          id: 120114,
+          create_time: "2022-03-16T07:15:03Z",
+          update_time: "2022-03-16T07:15:05Z",
+          issue_id: "I_kwDOAoCpQc5FnVyz",
           affect_version: "5.3",
           affect_result: "UnKnown",
         },
         {
-          id: 150023,
-          create_time: "2022-03-15T04:06:44Z",
-          update_time: "2022-03-15T04:18:38Z",
-          issue_id: "I_kwDOAoCpQc5Fr_FO",
+          id: 120115,
+          create_time: "2022-03-16T07:15:03Z",
+          update_time: "2022-03-16T07:15:05Z",
+          issue_id: "I_kwDOAoCpQc5FnVyz",
           affect_version: "5.4",
           affect_result: "UnKnown",
         },
         {
-          id: 150024,
-          create_time: "2022-03-15T04:06:44Z",
-          update_time: "2022-03-15T04:18:38Z",
-          issue_id: "I_kwDOAoCpQc5Fr_FO",
+          id: 120116,
+          create_time: "2022-03-16T07:15:03Z",
+          update_time: "2022-03-16T07:15:05Z",
+          issue_id: "I_kwDOAoCpQc5FnVyz",
           affect_version: "5.0",
           affect_result: "UnKnown",
         },
       ],
-      IssuePrRelations: [],
-      PullRequests: [],
+      IssuePrRelations: [
+        {
+          id: 180026,
+          create_time: "2022-03-16T07:14:45Z",
+          update_time: "2022-03-16T07:14:45Z",
+          issue_id: "I_kwDOAoCpQc5FnVyz",
+          pull_request_id: "PR_kwDOAoCpQc40douS",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 31951,
+          pull_request_id: "PR_kwDOAoCpQc40douS",
+          number: 33098,
+          state: "open",
+          title:
+            "planner: Disable prepared plan cache for partitioned tables in dynamic prune mode",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/33098",
+          base_branch: "master",
+          created_at: "2022-03-15T13:28:49Z",
+          updated_at: "2022-03-16T07:15:09Z",
+          mergeable_state: "unstable",
+          labels_string:
+            '[{"name":"release-note","color":"1d76db"},{"name":"size/M","color":"eebb00"},{"name":"do-not-merge/needs-triage-completed","color":"D93F0B"}]',
+          assignees_string: "[]",
+          requested_reviewers_string:
+            '[{"login":"tiancaiamao"},{"login":"qw4990"}]',
+          labels: [
+            {
+              name: "release-note",
+              color: "1d76db",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "do-not-merge/needs-triage-completed",
+              color: "D93F0B",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "tiancaiamao",
+            },
+            {
+              login: "qw4990",
+            },
+          ],
+        },
+      ],
+      VersionTriages: [],
     },
     {
       Issue: {
-        id: 60004,
-        issue_id: "I_kwDOAoCpQc5FnlPt",
-        number: 33038,
+        id: 1051,
+        issue_id: "I_kwDOAoCpQc5FxlH-",
+        number: 33134,
         state: "open",
-        title: "the results is unstable",
+        title: "Some DDL queries are written incorrectly",
         owner: "pingcap",
         repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33038",
-        created_at: "2022-03-14T07:45:40Z",
-        updated_at: "2022-03-15T04:16:22Z",
+        html_url: "https://github.com/pingcap/tidb/issues/33134",
+        created_at: "2022-03-16T07:06:51Z",
+        updated_at: "2022-03-16T07:07:47Z",
         labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/sql-infra","color":"e99695"},{"name":"severity/major","color":"fbca04"},{"name":"affects-4.0","color":"E99695"},{"name":"affects-5.0","color":"E99695"},{"name":"affects-5.1","color":"E99695"},{"name":"affects-5.2","color":"E99695"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"}]',
+          '[{"name":"type/bug","color":"fc2929"},{"name":"severity/moderate","color":"fbca04"}]',
         assignees_string: "[]",
-        severity_label: "severity/major",
+        severity_label: "severity/moderate",
         type_label: "type/bug",
         labels: [
           {
@@ -177,16 +2320,169 @@ const data = {
             color: "fc2929",
           },
           {
-            name: "sig/sql-infra",
+            name: "severity/moderate",
+            color: "fbca04",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FxlH-",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 1862,
+          create_time: "2022-03-16T07:07:47Z",
+          update_time: "2022-03-16T07:07:47Z",
+          issue_id: "I_kwDOAoCpQc5FxlH-",
+          pull_request_id: "PR_kwDOAoCpQc40ciQ3",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 119,
+          pull_request_id: "PR_kwDOAoCpQc40ciQ3",
+          number: 33079,
+          state: "open",
+          title: "ddl: check DDL history job in test",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/33079",
+          base_branch: "master",
+          created_at: "2022-03-15T08:31:50Z",
+          updated_at: "2022-03-16T09:03:32Z",
+          mergeable_state: "unknown",
+          labels_string:
+            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT1",
+              color: "d4c5f9",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 120031,
+        issue_id: "I_kwDOAoCpQc5FxjLk",
+        number: 33132,
+        state: "open",
+        title: "Top SQL failed to report short DDL executions",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33132",
+        created_at: "2022-03-16T06:55:33Z",
+        updated_at: "2022-03-16T06:55:36Z",
+        labels_string: '[{"name":"type/bug","color":"fc2929"}]',
+        assignees_string: "[]",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FxjLk",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 90043,
+        issue_id: "I_kwDOAoCpQc5FxPKP",
+        number: 33124,
+        state: "open",
+        title: "create role and create user with gbk charset discrepancies ",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33124",
+        created_at: "2022-03-16T04:42:25Z",
+        updated_at: "2022-03-16T04:42:27Z",
+        labels_string: '[{"name":"type/bug","color":"fc2929"}]',
+        assignees_string: "[]",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FxPKP",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60011,
+        issue_id: "I_kwDOAoCpQc5FnuTG",
+        number: 33041,
+        state: "open",
+        title: "Merge Join executed incorrect resultset which missed -0",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33041",
+        created_at: "2022-03-14T08:26:32Z",
+        updated_at: "2022-03-16T03:57:43Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"affects-5.0","color":"E99695"},{"name":"affects-5.1","color":"E99695"},{"name":"affects-5.2","color":"E99695"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"},{"name":"may-affects-4.0","color":"ededed"}]',
+        assignees_string: '[{"login":"XuHuaiyu"}]',
+        severity_label: "severity/critical",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "sig/execution",
             color: "e99695",
           },
           {
-            name: "severity/major",
+            name: "severity/critical",
             color: "fbca04",
-          },
-          {
-            name: "affects-4.0",
-            color: "E99695",
           },
           {
             name: "affects-5.0",
@@ -208,133 +2504,572 @@ const data = {
             name: "affects-5.4",
             color: "E99695",
           },
+          {
+            name: "may-affects-4.0",
+            color: "ededed",
+          },
         ],
-        assignees: [],
+        assignees: [
+          {
+            login: "XuHuaiyu",
+          },
+        ],
       },
       IssueAffects: [
         {
-          id: 30024,
-          create_time: "2022-03-14T12:16:37Z",
-          update_time: "2022-03-15T04:16:22Z",
-          issue_id: "I_kwDOAoCpQc5FnlPt",
-          affect_version: "5.1",
-          affect_result: "Yes",
-        },
-        {
-          id: 30025,
-          create_time: "2022-03-14T12:16:37Z",
-          update_time: "2022-03-15T04:16:23Z",
-          issue_id: "I_kwDOAoCpQc5FnlPt",
-          affect_version: "5.3",
-          affect_result: "Yes",
-        },
-        {
-          id: 60008,
-          create_time: "2022-03-14T12:16:37Z",
-          update_time: "2022-03-15T04:16:22Z",
-          issue_id: "I_kwDOAoCpQc5FnlPt",
+          id: 90021,
+          create_time: "2022-03-14T11:50:32Z",
+          update_time: "2022-03-16T03:57:43Z",
+          issue_id: "I_kwDOAoCpQc5FnuTG",
           affect_version: "5.0",
           affect_result: "Yes",
         },
         {
-          id: 60009,
-          create_time: "2022-03-14T12:16:37Z",
-          update_time: "2022-03-15T04:16:22Z",
-          issue_id: "I_kwDOAoCpQc5FnlPt",
+          id: 90022,
+          create_time: "2022-03-14T11:50:32Z",
+          update_time: "2022-03-16T03:57:43Z",
+          issue_id: "I_kwDOAoCpQc5FnuTG",
+          affect_version: "5.1",
+          affect_result: "Yes",
+        },
+        {
+          id: 90023,
+          create_time: "2022-03-14T11:50:32Z",
+          update_time: "2022-03-16T03:57:43Z",
+          issue_id: "I_kwDOAoCpQc5FnuTG",
           affect_version: "5.2",
           affect_result: "Yes",
         },
         {
-          id: 60010,
-          create_time: "2022-03-14T12:16:37Z",
-          update_time: "2022-03-15T04:16:23Z",
-          issue_id: "I_kwDOAoCpQc5FnlPt",
+          id: 90024,
+          create_time: "2022-03-14T11:50:32Z",
+          update_time: "2022-03-16T03:57:43Z",
+          issue_id: "I_kwDOAoCpQc5FnuTG",
+          affect_version: "5.3",
+          affect_result: "Yes",
+        },
+        {
+          id: 90025,
+          create_time: "2022-03-14T11:50:32Z",
+          update_time: "2022-03-16T03:57:43Z",
+          issue_id: "I_kwDOAoCpQc5FnuTG",
           affect_version: "5.4",
           affect_result: "Yes",
         },
         {
-          id: 150005,
-          create_time: "2022-03-15T03:33:31Z",
-          update_time: "2022-03-15T04:16:22Z",
-          issue_id: "I_kwDOAoCpQc5FnlPt",
+          id: 90026,
+          create_time: "2022-03-14T11:50:32Z",
+          update_time: "2022-03-16T03:57:43Z",
+          issue_id: "I_kwDOAoCpQc5FnuTG",
           affect_version: "4.0",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 30001,
+        issue_id: "I_kwDOAoCpQc5Fn98z",
+        number: 33042,
+        state: "open",
+        title:
+          "Merge Join executed incorrect resultset which returned empty resultset",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33042",
+        created_at: "2022-03-14T09:28:06Z",
+        updated_at: "2022-03-16T03:57:04Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"affects-5.0","color":"E99695"},{"name":"affects-5.1","color":"E99695"},{"name":"affects-5.2","color":"E99695"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"},{"name":"may-affects-4.0","color":"ededed"}]',
+        assignees_string: '[{"login":"XuHuaiyu"}]',
+        severity_label: "severity/critical",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "sig/execution",
+            color: "e99695",
+          },
+          {
+            name: "severity/critical",
+            color: "fbca04",
+          },
+          {
+            name: "affects-5.0",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.1",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.2",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.3",
+            color: "E99695",
+          },
+          {
+            name: "affects-5.4",
+            color: "E99695",
+          },
+          {
+            name: "may-affects-4.0",
+            color: "ededed",
+          },
+        ],
+        assignees: [
+          {
+            login: "XuHuaiyu",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          id: 30001,
+          create_time: "2022-03-14T10:55:36Z",
+          update_time: "2022-03-16T03:57:04Z",
+          issue_id: "I_kwDOAoCpQc5Fn98z",
+          affect_version: "5.0",
           affect_result: "Yes",
+        },
+        {
+          id: 30002,
+          create_time: "2022-03-14T10:55:36Z",
+          update_time: "2022-03-16T03:57:04Z",
+          issue_id: "I_kwDOAoCpQc5Fn98z",
+          affect_version: "5.1",
+          affect_result: "Yes",
+        },
+        {
+          id: 30003,
+          create_time: "2022-03-14T10:55:36Z",
+          update_time: "2022-03-16T03:57:04Z",
+          issue_id: "I_kwDOAoCpQc5Fn98z",
+          affect_version: "5.2",
+          affect_result: "Yes",
+        },
+        {
+          id: 30004,
+          create_time: "2022-03-14T10:55:36Z",
+          update_time: "2022-03-16T03:57:04Z",
+          issue_id: "I_kwDOAoCpQc5Fn98z",
+          affect_version: "5.3",
+          affect_result: "Yes",
+        },
+        {
+          id: 30005,
+          create_time: "2022-03-14T10:55:36Z",
+          update_time: "2022-03-16T03:57:04Z",
+          issue_id: "I_kwDOAoCpQc5Fn98z",
+          affect_version: "5.4",
+          affect_result: "Yes",
+        },
+        {
+          id: 30006,
+          create_time: "2022-03-14T10:55:36Z",
+          update_time: "2022-03-16T03:57:05Z",
+          issue_id: "I_kwDOAoCpQc5Fn98z",
+          affect_version: "4.0",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 1043,
+        issue_id: "I_kwDOAoCpQc481ZPL",
+        number: 28636,
+        state: "open",
+        title: "migrate test-infra to testify for `ddl/db_test.go`",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/28636",
+        created_at: "2021-10-08T03:01:04Z",
+        updated_at: "2022-03-16T03:49:53Z",
+        labels_string:
+          '[{"name":"type/enhancement","color":"84b6eb"},{"name":"help wanted","color":"159818"},{"name":"good first issue","color":"9ee26a"}]',
+        assignees_string: '[{"login":"tisonkun"}]',
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+          {
+            name: "help wanted",
+            color: "159818",
+          },
+          {
+            name: "good first issue",
+            color: "9ee26a",
+          },
+        ],
+        assignees: [
+          {
+            login: "tisonkun",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc481ZPL",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
         },
       ],
       IssuePrRelations: [
         {
-          id: 120002,
-          create_time: "2022-03-15T03:33:31Z",
-          update_time: "2022-03-15T03:33:31Z",
-          issue_id: "I_kwDOAoCpQc5FnlPt",
-          pull_request_id: "PR_kwDOAoCpQc40ZS8A",
+          id: 1852,
+          create_time: "2022-03-16T03:49:57Z",
+          update_time: "2022-03-16T03:49:57Z",
+          issue_id: "I_kwDOAoCpQc481ZPL",
+          pull_request_id: "PR_kwDOAoCpQc4xvPlt",
+        },
+        {
+          id: 1853,
+          create_time: "2022-03-16T03:49:57Z",
+          update_time: "2022-03-16T03:49:57Z",
+          issue_id: "I_kwDOAoCpQc481ZPL",
+          pull_request_id: "PR_kwDOAoCpQc40KX4Q",
+        },
+        {
+          id: 1854,
+          create_time: "2022-03-16T03:49:57Z",
+          update_time: "2022-03-16T03:49:57Z",
+          issue_id: "I_kwDOAoCpQc481ZPL",
+          pull_request_id: "PR_kwDOAoCpQc40JZBZ",
         },
       ],
       PullRequests: [
         {
-          id: 36,
-          pull_request_id: "PR_kwDOAoCpQc40ZS8A",
-          number: 33050,
+          id: 31997,
+          pull_request_id: "PR_kwDOAoCpQc4xvPlt",
+          number: 32059,
           state: "open",
-          title:
-            "executor: fix a bug on generated column cause wrong read result",
+          title: "*: migrate test-infra to testify for db_test",
           owner: "pingcap",
           repo: "tidb",
-          html_url: "https://github.com/pingcap/tidb/pull/33050",
+          html_url: "https://github.com/pingcap/tidb/pull/32059",
           base_branch: "master",
-          created_at: "2022-03-14T13:18:40Z",
-          updated_at: "2022-03-15T05:35:16Z",
-          mergeable_state: "unstable",
+          created_at: "2022-01-28T13:49:10Z",
+          updated_at: "2022-02-07T21:54:52Z",
+          mergeable_state: "unknown",
           labels_string:
-            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"release-note","color":"1d76db"},{"name":"needs-cherry-pick-4.0","color":"000000"},{"name":"size/M","color":"eebb00"},{"name":"needs-cherry-pick-5.0","color":"000000"},{"name":"needs-cherry-pick-5.1","color":"000000"},{"name":"needs-cherry-pick-5.2","color":"000000"},{"name":"needs-cherry-pick-5.3","color":"000000"},{"name":"needs-cherry-pick-5.4","color":"000000"}]',
+            '[{"name":"do-not-merge/work-in-progress","color":"e11d21"},{"name":"needs-rebase","color":"e11d21"},{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
           assignees_string: "[]",
-          requested_reviewers_string: '[{"login":"wjhuang2016"}]',
+          requested_reviewers_string: "[]",
           labels: [
             {
-              name: "status/LGT1",
-              color: "d4c5f9",
+              name: "do-not-merge/work-in-progress",
+              color: "e11d21",
             },
             {
-              name: "release-note",
-              color: "1d76db",
+              name: "needs-rebase",
+              color: "e11d21",
             },
             {
-              name: "needs-cherry-pick-4.0",
-              color: "000000",
+              name: "size/XXL",
+              color: "ee0000",
             },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31998,
+          pull_request_id: "PR_kwDOAoCpQc40KX4Q",
+          number: 32971,
+          state: "merged",
+          title: "ddl: migrate test-infra to testify for rename tests ",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32971",
+          base_branch: "master",
+          created_at: "2022-03-09T10:16:41Z",
+          updated_at: "2022-03-09T15:00:16Z",
+          closed_at: "2022-03-09T14:49:50Z",
+          merged_at: "2022-03-09T14:49:50Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31999,
+          pull_request_id: "PR_kwDOAoCpQc40JZBZ",
+          number: 32940,
+          state: "open",
+          title: "ddl: refine cancel DDL in test",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32940",
+          base_branch: "master",
+          created_at: "2022-03-09T03:28:44Z",
+          updated_at: "2022-03-09T21:54:52Z",
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XL","color":"ee5500"},{"name":"needs-rebase","color":"e11d21"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+            {
+              name: "needs-rebase",
+              color: "e11d21",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60077,
+        issue_id: "I_kwDOAoCpQc5EjIKr",
+        number: 32623,
+        state: "open",
+        title:
+          "Tikv panic for the error of Multiplication resulted in NaN: FloatIsNan",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/32623",
+        created_at: "2022-02-25T05:26:52Z",
+        updated_at: "2022-03-16T03:35:04Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"severity/critical","color":"fbca04"},{"name":"may-affects-4.0","color":"ededed"},{"name":"may-affects-5.1","color":"ededed"},{"name":"may-affects-5.2","color":"ededed"},{"name":"may-affects-5.3","color":"ededed"},{"name":"may-affects-5.4","color":"ededed"},{"name":"may-affects-5.0","color":"ededed"}]',
+        assignees_string: '[{"login":"innerr"}]',
+        severity_label: "severity/critical",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "severity/critical",
+            color: "fbca04",
+          },
+          {
+            name: "may-affects-4.0",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.1",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.2",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.3",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.4",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.0",
+            color: "ededed",
+          },
+        ],
+        assignees: [
+          {
+            login: "innerr",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          id: 90256,
+          create_time: "2022-03-16T03:35:10Z",
+          update_time: "2022-03-16T03:35:10Z",
+          issue_id: "I_kwDOAoCpQc5EjIKr",
+          affect_version: "4.0",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90257,
+          create_time: "2022-03-16T03:35:10Z",
+          update_time: "2022-03-16T03:35:10Z",
+          issue_id: "I_kwDOAoCpQc5EjIKr",
+          affect_version: "5.1",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90258,
+          create_time: "2022-03-16T03:35:10Z",
+          update_time: "2022-03-16T03:35:10Z",
+          issue_id: "I_kwDOAoCpQc5EjIKr",
+          affect_version: "5.2",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90259,
+          create_time: "2022-03-16T03:35:10Z",
+          update_time: "2022-03-16T03:35:10Z",
+          issue_id: "I_kwDOAoCpQc5EjIKr",
+          affect_version: "5.3",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90260,
+          create_time: "2022-03-16T03:35:11Z",
+          update_time: "2022-03-16T03:35:11Z",
+          issue_id: "I_kwDOAoCpQc5EjIKr",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90261,
+          create_time: "2022-03-16T03:35:11Z",
+          update_time: "2022-03-16T03:35:11Z",
+          issue_id: "I_kwDOAoCpQc5EjIKr",
+          affect_version: "5.0",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 30067,
+          create_time: "2022-03-16T03:35:11Z",
+          update_time: "2022-03-16T03:35:11Z",
+          issue_id: "I_kwDOAoCpQc5EjIKr",
+          pull_request_id: "PR_kwDOAuklds4z35p3",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 255,
+          pull_request_id: "PR_kwDOAuklds4z35p3",
+          number: 12079,
+          state: "open",
+          title: "tidb_query_expr: another implementation of truncate_real",
+          owner: "tikv",
+          repo: "tikv",
+          html_url: "https://github.com/tikv/tikv/pull/12079",
+          base_branch: "master",
+          created_at: "2022-03-03T07:26:33Z",
+          updated_at: "2022-03-16T03:04:19Z",
+          mergeable_state: "mergeable",
+          labels_string:
+            '[{"name":"size/M","color":"eebb00"},{"name":"release-note","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"zhongzc"}]',
+          labels: [
             {
               name: "size/M",
               color: "eebb00",
             },
             {
-              name: "needs-cherry-pick-5.0",
-              color: "000000",
-            },
-            {
-              name: "needs-cherry-pick-5.1",
-              color: "000000",
-            },
-            {
-              name: "needs-cherry-pick-5.2",
-              color: "000000",
-            },
-            {
-              name: "needs-cherry-pick-5.3",
-              color: "000000",
-            },
-            {
-              name: "needs-cherry-pick-5.4",
-              color: "000000",
+              name: "release-note",
+              color: "ededed",
             },
           ],
           assignees: [],
           requested_reviewers: [
             {
-              login: "wjhuang2016",
+              login: "zhongzc",
             },
           ],
         },
       ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 150027,
+        issue_id: "I_kwDOAoCpQc5Fwgq4",
+        number: 33110,
+        state: "open",
+        title: "Support ALTER USER ... DEFAULT ROLE",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33110",
+        created_at: "2022-03-15T22:55:07Z",
+        updated_at: "2022-03-16T02:07:43Z",
+        labels_string: '[{"name":"type/feature-request","color":"eface0"}]',
+        assignees_string: "[]",
+        type_label: "type/feature-request",
+        labels: [
+          {
+            name: "type/feature-request",
+            color: "eface0",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5Fwgq4",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -347,10 +3082,10 @@ const data = {
         repo: "tidb",
         html_url: "https://github.com/pingcap/tidb/issues/32659",
         created_at: "2022-02-28T06:58:28Z",
-        updated_at: "2022-03-15T03:22:52Z",
+        updated_at: "2022-03-16T01:56:45Z",
         labels_string:
           '[{"name":"type/bug","color":"fc2929"},{"name":"help wanted","color":"159818"},{"name":"good first issue","color":"9ee26a"},{"name":"sig/sql-infra","color":"e99695"},{"name":"severity/minor","color":"fbca04"}]',
-        assignees_string: '[{"login":"rickzhen"}]',
+        assignees_string: "[]",
         severity_label: "severity/minor",
         type_label: "type/bug",
         labels: [
@@ -375,11 +3110,7 @@ const data = {
             color: "fbca04",
           },
         ],
-        assignees: [
-          {
-            login: "rickzhen",
-          },
-        ],
+        assignees: [],
       },
       IssueAffects: [
         {
@@ -392,6 +3123,2231 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 120022,
+        issue_id: "MDU6SXNzdWU0MDI2NTM5MTM=",
+        number: 9170,
+        state: "open",
+        title: "Set maximum global limit on TiDB memory usage",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/9170",
+        created_at: "2019-01-24T11:03:24Z",
+        updated_at: "2022-03-16T01:53:18Z",
+        labels_string:
+          '[{"name":"type/enhancement","color":"84b6eb"},{"name":"type/feature-request","color":"eface0"},{"name":"epic/memory-management","color":"ecb7f7"},{"name":"feature/accepted","color":"fbca04"}]',
+        assignees_string: "[]",
+        type_label: "type/feature-request",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+          {
+            name: "type/feature-request",
+            color: "eface0",
+          },
+          {
+            name: "epic/memory-management",
+            color: "ecb7f7",
+          },
+          {
+            name: "feature/accepted",
+            color: "fbca04",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU0MDI2NTM5MTM=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 1018,
+        issue_id: "I_kwDOAoCpQc5Fs4VV",
+        number: 33086,
+        state: "open",
+        title: "The order of system variables is messy.",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33086",
+        created_at: "2022-03-15T09:18:20Z",
+        updated_at: "2022-03-15T20:06:28Z",
+        labels_string: '[{"name":"type/enhancement","color":"84b6eb"}]',
+        assignees_string: '[{"login":"CbcWestwolf"}]',
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+        ],
+        assignees: [
+          {
+            login: "CbcWestwolf",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5Fs4VV",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60070,
+        issue_id: "I_kwDOAoCpQc5Fu6rl",
+        number: 33109,
+        state: "open",
+        title:
+          "parser: track memory usage of the parser for `tidb_mem_quota_query`",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33109",
+        created_at: "2022-03-15T16:45:34Z",
+        updated_at: "2022-03-15T16:45:38Z",
+        labels_string: '[{"name":"type/enhancement","color":"84b6eb"}]',
+        assignees_string: "[]",
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5Fu6rl",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 180023,
+        issue_id: "I_kwDOAoCpQc5FuNF1",
+        number: 33108,
+        state: "open",
+        title: "(*Handle).HandleUpdateStats can trigger data race",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33108",
+        created_at: "2022-03-15T14:20:06Z",
+        updated_at: "2022-03-15T14:21:18Z",
+        labels_string: '[{"name":"type/bug","color":"fc2929"}]',
+        assignees_string: "[]",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FuNF1",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 150024,
+        issue_id: "I_kwDOAoCpQc5FtAon",
+        number: 33089,
+        state: "open",
+        title: "tpch query execute failed cause by tidb panic",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33089",
+        created_at: "2022-03-15T09:50:28Z",
+        updated_at: "2022-03-15T13:01:14Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/major","color":"fbca04"},{"name":"may-affects-4.0","color":"ededed"},{"name":"may-affects-5.1","color":"ededed"},{"name":"may-affects-5.2","color":"ededed"},{"name":"may-affects-5.3","color":"ededed"},{"name":"may-affects-5.4","color":"ededed"},{"name":"may-affects-5.0","color":"ededed"}]',
+        assignees_string: "[]",
+        severity_label: "severity/major",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "sig/execution",
+            color: "e99695",
+          },
+          {
+            name: "severity/major",
+            color: "fbca04",
+          },
+          {
+            name: "may-affects-4.0",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.1",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.2",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.3",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.4",
+            color: "ededed",
+          },
+          {
+            name: "may-affects-5.0",
+            color: "ededed",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          id: 90217,
+          create_time: "2022-03-15T11:04:00Z",
+          update_time: "2022-03-15T13:01:14Z",
+          issue_id: "I_kwDOAoCpQc5FtAon",
+          affect_version: "4.0",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90218,
+          create_time: "2022-03-15T11:04:00Z",
+          update_time: "2022-03-15T13:01:14Z",
+          issue_id: "I_kwDOAoCpQc5FtAon",
+          affect_version: "5.1",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90219,
+          create_time: "2022-03-15T11:04:00Z",
+          update_time: "2022-03-15T13:01:14Z",
+          issue_id: "I_kwDOAoCpQc5FtAon",
+          affect_version: "5.2",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90220,
+          create_time: "2022-03-15T11:04:00Z",
+          update_time: "2022-03-15T13:01:14Z",
+          issue_id: "I_kwDOAoCpQc5FtAon",
+          affect_version: "5.3",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90221,
+          create_time: "2022-03-15T11:04:00Z",
+          update_time: "2022-03-15T13:01:14Z",
+          issue_id: "I_kwDOAoCpQc5FtAon",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+        {
+          id: 90222,
+          create_time: "2022-03-15T11:04:00Z",
+          update_time: "2022-03-15T13:01:14Z",
+          issue_id: "I_kwDOAoCpQc5FtAon",
+          affect_version: "5.0",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60066,
+        issue_id: "I_kwDOAoCpQc5EGtEc",
+        number: 32466,
+        state: "open",
+        title: "Optimize the usage of the bind cache",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/32466",
+        created_at: "2022-02-18T08:17:11Z",
+        updated_at: "2022-03-15T12:02:37Z",
+        labels_string:
+          '[{"name":"type/enhancement","color":"84b6eb"},{"name":"sig/planner","color":"e99695"},{"name":"epic/sql-plan-management","color":"ecb7f7"}]',
+        assignees_string: '[{"login":"Reminiscent"}]',
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+          {
+            name: "sig/planner",
+            color: "e99695",
+          },
+          {
+            name: "epic/sql-plan-management",
+            color: "ecb7f7",
+          },
+        ],
+        assignees: [
+          {
+            login: "Reminiscent",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 30030,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc4y-6JV",
+        },
+        {
+          id: 30031,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc4zVKSd",
+        },
+        {
+          id: 30032,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc4zZESb",
+        },
+        {
+          id: 30033,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc4zpb0q",
+        },
+        {
+          id: 30034,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc4z4Kvw",
+        },
+        {
+          id: 30035,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc4z7pJH",
+        },
+        {
+          id: 30036,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc40BWsb",
+        },
+        {
+          id: 30037,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc40Bn8E",
+        },
+        {
+          id: 30038,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc40OoiN",
+        },
+        {
+          id: 30039,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc40ZUEQ",
+        },
+        {
+          id: 30040,
+          create_time: "2022-03-15T12:01:56Z",
+          update_time: "2022-03-15T12:01:56Z",
+          issue_id: "I_kwDOAoCpQc5EGtEc",
+          pull_request_id: "PR_kwDOAoCpQc40dIsA",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 165,
+          pull_request_id: "PR_kwDOAoCpQc4y-6JV",
+          number: 32439,
+          state: "merged",
+          title: "bindInfo: support the LRU for the bindCache",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32439",
+          base_branch: "master",
+          created_at: "2022-02-17T11:08:08Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-02T06:51:46Z",
+          merged_at: "2022-03-02T06:51:46Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"epic/sql-plan-management","color":"ecb7f7"},{"name":"size/XL","color":"ee5500"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "epic/sql-plan-management",
+              color: "ecb7f7",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 120012,
+          pull_request_id: "PR_kwDOAoCpQc4zVKSd",
+          number: 32567,
+          state: "merged",
+          title: "bindinfo: support 'show binding_cache status'",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32567",
+          base_branch: "master",
+          created_at: "2022-02-23T09:06:45Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-15T06:27:53Z",
+          merged_at: "2022-03-15T06:27:52Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"epic/sql-plan-management","color":"ecb7f7"},{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "epic/sql-plan-management",
+              color: "ecb7f7",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 167,
+          pull_request_id: "PR_kwDOAoCpQc4zZESb",
+          number: 32613,
+          state: "merged",
+          title:
+            "*: add a global system variable to control the memory quota for the bindCache",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32613",
+          base_branch: "master",
+          created_at: "2022-02-24T08:56:35Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-01T03:37:45Z",
+          merged_at: "2022-03-01T03:37:45Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/S","color":"77bb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/S",
+              color: "77bb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 168,
+          pull_request_id: "PR_kwDOAoCpQc4zpb0q",
+          number: 32661,
+          state: "merged",
+          title: "parser: support 'set binding status for stmt'",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32661",
+          base_branch: "master",
+          created_at: "2022-02-28T07:40:51Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-02T06:27:46Z",
+          merged_at: "2022-03-02T06:27:46Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"component/parser","color":"fbca04"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "component/parser",
+              color: "fbca04",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 169,
+          pull_request_id: "PR_kwDOAoCpQc4z4Kvw",
+          number: 32801,
+          state: "merged",
+          title: "bindinfo: rename Using status to Enabled status",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32801",
+          base_branch: "master",
+          created_at: "2022-03-03T09:03:52Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-07T09:21:49Z",
+          merged_at: "2022-03-07T09:21:49Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"epic/sql-plan-management","color":"ecb7f7"},{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "epic/sql-plan-management",
+              color: "ecb7f7",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31842,
+          pull_request_id: "PR_kwDOAoCpQc4z7pJH",
+          number: 32819,
+          state: "closed",
+          title: "bindinfo: support disabled status for binding",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32819",
+          base_branch: "master",
+          created_at: "2022-03-04T02:59:09Z",
+          updated_at: "2022-03-16T07:45:55Z",
+          closed_at: "2022-03-16T07:45:53Z",
+          merged_at: "2022-03-16T07:45:52Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"epic/sql-plan-management","color":"ecb7f7"},{"name":"size/XL","color":"ee5500"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "epic/sql-plan-management",
+              color: "ecb7f7",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 90074,
+          pull_request_id: "PR_kwDOAoCpQc40BWsb",
+          number: 32866,
+          state: "merged",
+          title:
+            "bindinfo: add warning message when the memory usage of the cache exceeds its capacity",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32866",
+          base_branch: "master",
+          created_at: "2022-03-07T07:04:56Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-15T08:15:53Z",
+          merged_at: "2022-03-15T08:15:53Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"epic/sql-plan-management","color":"ecb7f7"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "epic/sql-plan-management",
+              color: "ecb7f7",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 172,
+          pull_request_id: "PR_kwDOAoCpQc40Bn8E",
+          number: 32872,
+          state: "merged",
+          title: "telemetry: add telemetry for auto capture",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32872",
+          base_branch: "master",
+          created_at: "2022-03-07T08:36:02Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-14T04:45:52Z",
+          merged_at: "2022-03-14T04:45:52Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 173,
+          pull_request_id: "PR_kwDOAoCpQc40OoiN",
+          number: 32994,
+          state: "merged",
+          title: "planner: add more test cases for auto-capture",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/32994",
+          base_branch: "master",
+          created_at: "2022-03-10T10:35:43Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-14T03:37:51Z",
+          merged_at: "2022-03-14T03:37:51Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"time-and-fate"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "time-and-fate",
+            },
+          ],
+        },
+        {
+          id: 60023,
+          pull_request_id: "PR_kwDOAoCpQc40ZUEQ",
+          number: 33051,
+          state: "merged",
+          title:
+            "planner: add more test cases for auto-capture and support to capture more hints",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/33051",
+          base_branch: "master",
+          created_at: "2022-03-14T13:22:00Z",
+          updated_at: "2022-03-15T12:02:37Z",
+          closed_at: "2022-03-15T12:01:52Z",
+          merged_at: "2022-03-15T12:01:51Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/S","color":"77bb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/S",
+              color: "77bb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 120057,
+          pull_request_id: "PR_kwDOAoCpQc40dIsA",
+          number: 33094,
+          state: "closed",
+          title: "bindinfo: refactor some codes in bindinfo package",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/33094",
+          base_branch: "master",
+          created_at: "2022-03-15T11:09:07Z",
+          updated_at: "2022-03-15T12:55:27Z",
+          closed_at: "2022-03-15T12:55:24Z",
+          merged_at: "2022-03-15T12:55:24Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"component/bindinfo","color":"99d8e5"},{"name":"epic/sql-plan-management","color":"ecb7f7"},{"name":"size/L","color":"ee9900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"rebelice"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "component/bindinfo",
+              color: "99d8e5",
+            },
+            {
+              name: "epic/sql-plan-management",
+              color: "ecb7f7",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "rebelice",
+            },
+          ],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60038,
+        issue_id: "I_kwDOAoCpQc5FsSwc",
+        number: 33068,
+        state: "open",
+        title:
+          "Do not send `DeleteTiFlashPlacementRule` request to pd if TiDB hasn't set TiFlash replica before",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33068",
+        created_at: "2022-03-15T06:26:41Z",
+        updated_at: "2022-03-15T11:42:44Z",
+        labels_string: '[{"name":"type/enhancement","color":"84b6eb"}]',
+        assignees_string: "[]",
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FsSwc",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 30041,
+        issue_id: "I_kwDOAoCpQc5FtHyH",
+        number: 33091,
+        state: "open",
+        title: "br/stream: Support truncate unnecessary files via CLI",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33091",
+        created_at: "2022-03-15T10:11:10Z",
+        updated_at: "2022-03-15T10:11:13Z",
+        labels_string: '[{"name":"type/enhancement","color":"84b6eb"}]',
+        assignees_string: "[]",
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FtHyH",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 180017,
+        issue_id: "I_kwDOAoCpQc4-UM5K",
+        number: 29501,
+        state: "open",
+        title:
+          "Development Tasks for Log-based Increment Backup, directly on TiKV",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/29501",
+        created_at: "2021-11-05T06:14:06Z",
+        updated_at: "2022-03-15T10:08:45Z",
+        labels_string:
+          '[{"name":"type/feature-request","color":"eface0"},{"name":"component/br","color":"FBCA04"}]',
+        assignees_string: "[]",
+        type_label: "type/feature-request",
+        labels: [
+          {
+            name: "type/feature-request",
+            color: "eface0",
+          },
+          {
+            name: "component/br",
+            color: "FBCA04",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc4-UM5K",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 150015,
+          create_time: "2022-03-15T09:42:31Z",
+          update_time: "2022-03-15T09:42:31Z",
+          issue_id: "I_kwDOAoCpQc4-UM5K",
+          pull_request_id: "PR_kwDOAoCpQc4xYFKf",
+        },
+        {
+          id: 150016,
+          create_time: "2022-03-15T09:42:31Z",
+          update_time: "2022-03-15T09:42:31Z",
+          issue_id: "I_kwDOAoCpQc4-UM5K",
+          pull_request_id: "PR_kwDOAzJOCM40A9Ny",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 150094,
+          pull_request_id: "PR_kwDOAoCpQc4xYFKf",
+          number: 31888,
+          state: "open",
+          title: "backup: add design doc of stream backup",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31888",
+          base_branch: "master",
+          created_at: "2022-01-21T10:40:13Z",
+          updated_at: "2022-03-15T10:08:45Z",
+          mergeable_state: "unknown",
+          labels_string:
+            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"size/XL","color":"ee5500"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT1",
+              color: "d4c5f9",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 150095,
+          pull_request_id: "PR_kwDOAzJOCM40A9Ny",
+          number: 878,
+          state: "open",
+          title: "implement br stream backup",
+          owner: "pingcap",
+          repo: "kvproto",
+          html_url: "https://github.com/pingcap/kvproto/pull/878",
+          base_branch: "master",
+          created_at: "2022-03-07T03:55:05Z",
+          updated_at: "2022-03-15T10:08:45Z",
+          mergeable_state: "conflicting",
+          labels_string: "[]",
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [],
+          assignees: [],
+          requested_reviewers: [],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 30040,
+        issue_id: "MDU6SXNzdWU5MjY3NTQ1OTM=",
+        number: 25642,
+        state: "open",
+        title:
+          "unstable test `testPlanSerialSuite.TestPartitionWithVariedDatasources`",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/25642",
+        created_at: "2021-06-22T02:11:38Z",
+        updated_at: "2022-03-15T10:08:36Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"help wanted","color":"159818"},{"name":"good first issue","color":"9ee26a"},{"name":"sig/planner","color":"e99695"},{"name":"severity/major","color":"fbca04"}]',
+        assignees_string: '[{"login":"qw4990"}]',
+        severity_label: "severity/major",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "help wanted",
+            color: "159818",
+          },
+          {
+            name: "good first issue",
+            color: "9ee26a",
+          },
+          {
+            name: "sig/planner",
+            color: "e99695",
+          },
+          {
+            name: "severity/major",
+            color: "fbca04",
+          },
+        ],
+        assignees: [
+          {
+            login: "qw4990",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU5MjY3NTQ1OTM=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 90010,
+          create_time: "2022-03-15T10:08:39Z",
+          update_time: "2022-03-15T10:08:39Z",
+          issue_id: "MDU6SXNzdWU5MjY3NTQ1OTM=",
+          pull_request_id: "PR_kwDOAoCpQc4uY302",
+        },
+        {
+          id: 90011,
+          create_time: "2022-03-15T10:08:39Z",
+          update_time: "2022-03-15T10:08:39Z",
+          issue_id: "MDU6SXNzdWU5MjY3NTQ1OTM=",
+          pull_request_id: "PR_kwDOAoCpQc4u_uNF",
+        },
+        {
+          id: 90012,
+          create_time: "2022-03-15T10:08:39Z",
+          update_time: "2022-03-15T10:08:39Z",
+          issue_id: "MDU6SXNzdWU5MjY3NTQ1OTM=",
+          pull_request_id: "PR_kwDOAoCpQc4u594w",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 60081,
+          pull_request_id: "PR_kwDOAoCpQc4uY302",
+          number: 29688,
+          state: "merged",
+          title: "table/tables: make CI stable for table/tables package",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/29688",
+          base_branch: "master",
+          created_at: "2021-11-11T06:35:12Z",
+          updated_at: "2021-11-11T07:31:30Z",
+          closed_at: "2021-11-11T07:28:24Z",
+          merged_at: "2021-11-11T07:28:24Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XS","color":"009900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XS",
+              color: "009900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 60082,
+          pull_request_id: "PR_kwDOAoCpQc4u_uNF",
+          number: 30139,
+          state: "merged",
+          title:
+            "planner: fix the unstable test `TestPartitionWithVariedDatasources`",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/30139",
+          base_branch: "master",
+          created_at: "2021-11-25T02:49:12Z",
+          updated_at: "2021-11-25T03:11:54Z",
+          closed_at: "2021-11-25T03:11:54Z",
+          merged_at: "2021-11-25T03:11:52Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"type/bug-fix","color":"fc2929"},{"name":"sig/planner","color":"e99695"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/S","color":"77bb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"rebelice"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "type/bug-fix",
+              color: "fc2929",
+            },
+            {
+              name: "sig/planner",
+              color: "e99695",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/S",
+              color: "77bb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "rebelice",
+            },
+          ],
+        },
+        {
+          id: 60083,
+          pull_request_id: "PR_kwDOAoCpQc4u594w",
+          number: 30066,
+          state: "merged",
+          title:
+            "*: use the real StateRemote interface implementation for cached table",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/30066",
+          base_branch: "master",
+          created_at: "2021-11-23T12:56:26Z",
+          updated_at: "2021-12-10T09:01:41Z",
+          closed_at: "2021-12-10T08:55:58Z",
+          merged_at: "2021-12-10T08:55:58Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"hawkingrei"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "hawkingrei",
+            },
+          ],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 180018,
+        issue_id: "I_kwDOAoCpQc5Fs-l3",
+        number: 33087,
+        state: "open",
+        title: "Add a check before starts log backup.",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33087",
+        created_at: "2022-03-15T09:42:33Z",
+        updated_at: "2022-03-15T09:45:31Z",
+        labels_string: "[]",
+        assignees_string: "[]",
+        labels: [],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5Fs-l3",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 1021,
+        issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+        number: 18030,
+        state: "open",
+        title: "Define the placement of data by SQL statements",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/18030",
+        created_at: "2020-06-15T09:22:19Z",
+        updated_at: "2022-03-15T09:39:54Z",
+        labels_string:
+          '[{"name":"type/feature-request","color":"eface0"},{"name":"feature/accepted","color":"fbca04"}]',
+        assignees_string:
+          '[{"login":"djshow832"},{"login":"djshow832"},{"login":"djshow832"}]',
+        type_label: "type/feature-request",
+        labels: [
+          {
+            name: "type/feature-request",
+            color: "eface0",
+          },
+          {
+            name: "feature/accepted",
+            color: "fbca04",
+          },
+        ],
+        assignees: [
+          {
+            login: "djshow832",
+          },
+          {
+            login: "djshow832",
+          },
+          {
+            login: "djshow832",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 1823,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NDQ5NDQ2MjU2",
+        },
+        {
+          id: 1824,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NTEwNzYyMzcy",
+        },
+        {
+          id: 1825,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0Njg5NDY4MzMz",
+        },
+        {
+          id: 1826,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NzI5NTU0NDc5",
+        },
+        {
+          id: 1827,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NzI5NTg2NzEz",
+        },
+        {
+          id: 1828,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NzMyMTk4NTkz",
+        },
+        {
+          id: 1829,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOAoCpQc4sXkpO",
+        },
+        {
+          id: 1830,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOA9B-Cs4tLKdY",
+        },
+        {
+          id: 1831,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOAoCpQc4tSEXe",
+        },
+        {
+          id: 1832,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOAoCpQc4tS1Jc",
+        },
+        {
+          id: 1833,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOAoCpQc4tK81B",
+        },
+        {
+          id: 1834,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOAoCpQc4wQE9-",
+        },
+        {
+          id: 1835,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOAoCpQc4woMMB",
+        },
+        {
+          id: 1836,
+          create_time: "2022-03-15T09:40:00Z",
+          update_time: "2022-03-15T09:40:00Z",
+          issue_id: "MDU6SXNzdWU2Mzg2ODY5NzA=",
+          pull_request_id: "PR_kwDOAoCpQc4xBb9L",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 31900,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NDQ5NDQ2MjU2",
+          number: 931,
+          state: "merged",
+          title: "parser: more meaningful words for placement rules",
+          owner: "pingcap",
+          repo: "parser",
+          html_url: "https://github.com/pingcap/parser/pull/931",
+          base_branch: "master",
+          created_at: "2020-07-15T12:22:26Z",
+          updated_at: "2020-07-27T05:15:40Z",
+          closed_at: "2020-07-22T10:19:06Z",
+          merged_at: "2020-07-22T10:19:06Z",
+          merged: true,
+          mergeable_state: "unknown",
+          labels_string: '[{"name":"status/LGT1","color":"d4c5f9"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT1",
+              color: "d4c5f9",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31901,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NTEwNzYyMzcy",
+          number: 328,
+          state: "merged",
+          title:
+            "update memberlist for sig-DDL, promote xhebox as the commiter.",
+          owner: "pingcap",
+          repo: "community",
+          html_url: "https://github.com/pingcap/community/pull/328",
+          base_branch: "master",
+          created_at: "2020-10-27T13:41:12Z",
+          updated_at: "2021-09-01T11:56:39Z",
+          closed_at: "2020-10-28T10:48:11Z",
+          merged_at: "2020-10-28T10:48:11Z",
+          merged: true,
+          mergeable_state: "unknown",
+          labels_string: "[]",
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31902,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0Njg5NDY4MzMz",
+          number: 26221,
+          state: "merged",
+          title: "docs: Proposed changes to Placement Rules in SQL syntax",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/26221",
+          base_branch: "master",
+          created_at: "2021-07-13T23:36:02Z",
+          updated_at: "2021-09-13T03:13:36Z",
+          closed_at: "2021-08-29T19:42:12Z",
+          merged_at: "2021-08-29T19:42:12Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XXL","color":"ee0000"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31903,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NzI5NTU0NDc5",
+          number: 1334,
+          state: "merged",
+          title:
+            "DDL: Add support for placement feature id(/*T![placement]... */).",
+          owner: "pingcap",
+          repo: "parser",
+          html_url: "https://github.com/pingcap/parser/pull/1334",
+          base_branch: "master",
+          created_at: "2021-09-08T11:24:05Z",
+          updated_at: "2021-09-15T16:00:43Z",
+          closed_at: "2021-09-15T16:00:43Z",
+          merged_at: "2021-09-15T16:00:42Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"contribution","color":"c5f780"},{"name":"status/can-merge","color":"2cbe4e"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "contribution",
+              color: "c5f780",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31904,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NzI5NTg2NzEz",
+          number: 27894,
+          state: "merged",
+          title: "ddl: Support ALTER DATABASE Placement Policy/ DirectOptions",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/27894",
+          base_branch: "master",
+          created_at: "2021-09-08T12:10:47Z",
+          updated_at: "2021-10-09T06:25:26Z",
+          closed_at: "2021-10-09T06:25:26Z",
+          merged_at: "2021-10-09T06:25:25Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"release-note","color":"1d76db"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XL","color":"ee5500"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "release-note",
+              color: "1d76db",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31905,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NzMyMTk4NTkz",
+          number: 27969,
+          state: "merged",
+          title: "ddl: add schema placement rules",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/27969",
+          base_branch: "master",
+          created_at: "2021-09-12T17:31:08Z",
+          updated_at: "2021-10-08T05:52:36Z",
+          closed_at: "2021-09-22T22:52:46Z",
+          merged_at: "2021-09-22T22:52:46Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"release-note","color":"1d76db"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XL","color":"ee5500"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "release-note",
+              color: "1d76db",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XL",
+              color: "ee5500",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31906,
+          pull_request_id: "PR_kwDOAoCpQc4sXkpO",
+          number: 28450,
+          state: "merged",
+          title: "placement: refine the bundle contruction logic",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/28450",
+          base_branch: "master",
+          created_at: "2021-09-28T04:47:34Z",
+          updated_at: "2021-10-29T10:26:46Z",
+          closed_at: "2021-10-02T00:36:48Z",
+          merged_at: "2021-10-02T00:36:48Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XXL","color":"ee0000"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31907,
+          pull_request_id: "PR_kwDOA9B-Cs4tLKdY",
+          number: 6618,
+          state: "merged",
+          title: "Add docs for placement rules in SQL",
+          owner: "pingcap",
+          repo: "docs",
+          html_url: "https://github.com/pingcap/docs/pull/6618",
+          base_branch: "master",
+          created_at: "2021-10-14T01:53:56Z",
+          updated_at: "2021-11-09T08:26:27Z",
+          closed_at: "2021-11-09T02:15:05Z",
+          merged_at: "2021-11-09T02:15:05Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"translation/done","color":"ffbfd4"},{"name":"status/can-merge","color":"0ffa16"},{"name":"status/LGT2","color":"00ff00"},{"name":"size/XXL","color":"ee0000"},{"name":"area/sql-infra","color":"e99695"},{"name":"v5.3","color":"eb885f"}]',
+          assignees_string: '[{"login":"TomShawn"}]',
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "translation/done",
+              color: "ffbfd4",
+            },
+            {
+              name: "status/can-merge",
+              color: "0ffa16",
+            },
+            {
+              name: "status/LGT2",
+              color: "00ff00",
+            },
+            {
+              name: "size/XXL",
+              color: "ee0000",
+            },
+            {
+              name: "area/sql-infra",
+              color: "e99695",
+            },
+            {
+              name: "v5.3",
+              color: "eb885f",
+            },
+          ],
+          assignees: [
+            {
+              login: "TomShawn",
+            },
+          ],
+          requested_reviewers: [],
+        },
+        {
+          id: 31908,
+          pull_request_id: "PR_kwDOAoCpQc4tSEXe",
+          number: 28892,
+          state: "merged",
+          title: "docs: Add infoschema changes to Placement Rules in SQL",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/28892",
+          base_branch: "master",
+          created_at: "2021-10-16T19:27:04Z",
+          updated_at: "2021-10-25T08:42:49Z",
+          closed_at: "2021-10-25T08:42:49Z",
+          merged_at: "2021-10-25T08:42:49Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"xhebox"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "xhebox",
+            },
+          ],
+        },
+        {
+          id: 31909,
+          pull_request_id: "PR_kwDOAoCpQc4tS1Jc",
+          number: 28896,
+          state: "merged",
+          title: "infoschema: remove is.placement_policy (#28890)",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/28896",
+          base_branch: "master",
+          created_at: "2021-10-17T20:57:43Z",
+          updated_at: "2022-03-03T16:49:10Z",
+          closed_at: "2021-10-18T15:10:45Z",
+          merged_at: "2021-10-18T15:10:44Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"release-note","color":"1d76db"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"compatibility-breaker","color":"bf1531"},{"name":"size/L","color":"ee9900"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "release-note",
+              color: "1d76db",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "compatibility-breaker",
+              color: "bf1531",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31910,
+          pull_request_id: "PR_kwDOAoCpQc4tK81B",
+          number: 28798,
+          state: "merged",
+          title:
+            "executor: add placement policy name / direct placement to is.tables/partitions",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/28798",
+          base_branch: "master",
+          created_at: "2021-10-13T23:38:11Z",
+          updated_at: "2021-10-19T10:24:18Z",
+          closed_at: "2021-10-18T16:32:43Z",
+          merged_at: "2021-10-18T16:32:43Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"release-note","color":"1d76db"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "release-note",
+              color: "1d76db",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31911,
+          pull_request_id: "PR_kwDOAoCpQc4wQE9-",
+          number: 31000,
+          state: "merged",
+          title: "placement: give default 2 followers for non-sugar syntax",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31000",
+          base_branch: "master",
+          created_at: "2021-12-24T04:12:18Z",
+          updated_at: "2022-01-11T05:58:30Z",
+          closed_at: "2021-12-24T06:55:48Z",
+          merged_at: "2021-12-24T06:55:47Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/M",
+              color: "eebb00",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+        {
+          id: 31912,
+          pull_request_id: "PR_kwDOAoCpQc4woMMB",
+          number: 31423,
+          state: "merged",
+          title: "docs: Remove direct placement option",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31423",
+          base_branch: "master",
+          created_at: "2022-01-06T21:06:35Z",
+          updated_at: "2022-01-12T04:22:10Z",
+          closed_at: "2022-01-11T17:25:42Z",
+          merged_at: "2022-01-11T17:25:42Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"release-note","color":"1d76db"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/L","color":"ee9900"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"lcwangchao"}]',
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "release-note",
+              color: "1d76db",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/L",
+              color: "ee9900",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "lcwangchao",
+            },
+          ],
+        },
+        {
+          id: 31913,
+          pull_request_id: "PR_kwDOAoCpQc4xBb9L",
+          number: 31700,
+          state: "merged",
+          title:
+            "*: Add `LEARNERS` row to `information_schema.placement_policies` in design doc",
+          owner: "pingcap",
+          repo: "tidb",
+          html_url: "https://github.com/pingcap/tidb/pull/31700",
+          base_branch: "master",
+          created_at: "2022-01-14T10:11:00Z",
+          updated_at: "2022-01-17T14:39:46Z",
+          closed_at: "2022-01-17T14:39:45Z",
+          merged_at: "2022-01-17T14:39:45Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/LGT2","color":"5319e7"},{"name":"status/can-merge","color":"2cbe4e"},{"name":"size/XS","color":"009900"},{"name":"release-note-none","color":"ededed"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: "[]",
+          labels: [
+            {
+              name: "status/LGT2",
+              color: "5319e7",
+            },
+            {
+              name: "status/can-merge",
+              color: "2cbe4e",
+            },
+            {
+              name: "size/XS",
+              color: "009900",
+            },
+            {
+              name: "release-note-none",
+              color: "ededed",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [],
+        },
+      ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60050,
+        issue_id: "I_kwDOAoCpQc5FssnQ",
+        number: 33078,
+        state: "open",
+        title: "enhance the testability of DDL",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33078",
+        created_at: "2022-03-15T08:30:47Z",
+        updated_at: "2022-03-15T08:30:50Z",
+        labels_string: '[{"name":"type/enhancement","color":"84b6eb"}]',
+        assignees_string: "[]",
+        type_label: "type/enhancement",
+        labels: [
+          {
+            name: "type/enhancement",
+            color: "84b6eb",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FssnQ",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 1015,
+        issue_id: "I_kwDOAoCpQc5Fscxs",
+        number: 33072,
+        state: "open",
+        title: "support window function push down to tiflash ",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33072",
+        created_at: "2022-03-15T07:22:21Z",
+        updated_at: "2022-03-15T07:22:24Z",
+        labels_string: '[{"name":"type/feature-request","color":"eface0"}]',
+        assignees_string: "[]",
+        type_label: "type/feature-request",
+        labels: [
+          {
+            name: "type/feature-request",
+            color: "eface0",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5Fscxs",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 60047,
+        issue_id: "I_kwDOAoCpQc5FsWir",
+        number: 33070,
+        state: "open",
+        title: "invalid memory address or nil pointer dereference",
+        owner: "pingcap",
+        repo: "tidb",
+        html_url: "https://github.com/pingcap/tidb/issues/33070",
+        created_at: "2022-03-15T06:47:45Z",
+        updated_at: "2022-03-15T06:47:50Z",
+        labels_string:
+          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/planner","color":"e99695"},{"name":"severity/moderate","color":"fbca04"}]',
+        assignees_string: "[]",
+        severity_label: "severity/moderate",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "fc2929",
+          },
+          {
+            name: "sig/planner",
+            color: "e99695",
+          },
+          {
+            name: "severity/moderate",
+            color: "fbca04",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "I_kwDOAoCpQc5FsWir",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -432,6 +5388,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -472,6 +5429,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -508,6 +5466,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -585,117 +5544,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
-    },
-    {
-      Issue: {
-        id: 150004,
-        issue_id: "I_kwDOAoCpQc5Frlv8",
-        number: 33061,
-        state: "open",
-        title:
-          "inconsistent case insensitive behaviour  with GRANT and SET ROLE hostnames.",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33061",
-        created_at: "2022-03-15T00:40:14Z",
-        updated_at: "2022-03-15T02:30:03Z",
-        labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/sql-infra","color":"e99695"},{"name":"severity/major","color":"fbca04"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"},{"name":"may-affects-4.0","color":"ededed"},{"name":"may-affects-5.1","color":"ededed"},{"name":"may-affects-5.2","color":"ededed"},{"name":"may-affects-5.0","color":"ededed"}]',
-        assignees_string: "[]",
-        severity_label: "severity/major",
-        type_label: "type/bug",
-        labels: [
-          {
-            name: "type/bug",
-            color: "fc2929",
-          },
-          {
-            name: "sig/sql-infra",
-            color: "e99695",
-          },
-          {
-            name: "severity/major",
-            color: "fbca04",
-          },
-          {
-            name: "affects-5.3",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.4",
-            color: "E99695",
-          },
-          {
-            name: "may-affects-4.0",
-            color: "ededed",
-          },
-          {
-            name: "may-affects-5.1",
-            color: "ededed",
-          },
-          {
-            name: "may-affects-5.2",
-            color: "ededed",
-          },
-          {
-            name: "may-affects-5.0",
-            color: "ededed",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          id: 60077,
-          create_time: "2022-03-15T02:30:01Z",
-          update_time: "2022-03-15T02:30:03Z",
-          issue_id: "I_kwDOAoCpQc5Frlv8",
-          affect_version: "5.3",
-          affect_result: "Yes",
-        },
-        {
-          id: 60078,
-          create_time: "2022-03-15T02:30:01Z",
-          update_time: "2022-03-15T02:30:03Z",
-          issue_id: "I_kwDOAoCpQc5Frlv8",
-          affect_version: "5.4",
-          affect_result: "Yes",
-        },
-        {
-          id: 60079,
-          create_time: "2022-03-15T02:30:01Z",
-          update_time: "2022-03-15T02:30:03Z",
-          issue_id: "I_kwDOAoCpQc5Frlv8",
-          affect_version: "4.0",
-          affect_result: "UnKnown",
-        },
-        {
-          id: 60080,
-          create_time: "2022-03-15T02:30:01Z",
-          update_time: "2022-03-15T02:30:03Z",
-          issue_id: "I_kwDOAoCpQc5Frlv8",
-          affect_version: "5.1",
-          affect_result: "UnKnown",
-        },
-        {
-          id: 60081,
-          create_time: "2022-03-15T02:30:01Z",
-          update_time: "2022-03-15T02:30:03Z",
-          issue_id: "I_kwDOAoCpQc5Frlv8",
-          affect_version: "5.2",
-          affect_result: "UnKnown",
-        },
-        {
-          id: 60082,
-          create_time: "2022-03-15T02:30:01Z",
-          update_time: "2022-03-15T02:30:03Z",
-          issue_id: "I_kwDOAoCpQc5Frlv8",
-          affect_version: "5.0",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -731,6 +5580,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -840,13 +5690,17 @@ const data = {
           html_url: "https://github.com/pingcap/tidb/pull/33060",
           base_branch: "master",
           created_at: "2022-03-14T20:38:51Z",
-          updated_at: "2022-03-15T02:14:54Z",
+          updated_at: "2022-03-15T09:53:57Z",
           mergeable_state: "unstable",
           labels_string:
-            '[{"name":"size/XS","color":"009900"},{"name":"release-note-none","color":"ededed"}]',
+            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"size/XS","color":"009900"},{"name":"release-note-none","color":"ededed"}]',
           assignees_string: "[]",
           requested_reviewers_string: '[{"login":"mjonss"}]',
           labels: [
+            {
+              name: "status/LGT1",
+              color: "d4c5f9",
+            },
             {
               name: "size/XS",
               color: "009900",
@@ -864,148 +5718,7 @@ const data = {
           ],
         },
       ],
-    },
-    {
-      Issue: {
-        id: 150006,
-        issue_id: "I_kwDOAoCpQc5Fru8N",
-        number: 33062,
-        state: "open",
-        title: "Unstable test in the TestNotifyErrorWaitGroupWrapper",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33062",
-        created_at: "2022-03-15T01:58:39Z",
-        updated_at: "2022-03-15T02:01:21Z",
-        labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"component/test","color":"6494f4"},{"name":"severity/minor","color":"fbca04"}]',
-        assignees_string: "[]",
-        severity_label: "severity/minor",
-        type_label: "type/bug",
-        labels: [
-          {
-            name: "type/bug",
-            color: "fc2929",
-          },
-          {
-            name: "component/test",
-            color: "6494f4",
-          },
-          {
-            name: "severity/minor",
-            color: "fbca04",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "I_kwDOAoCpQc5Fru8N",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [
-        {
-          id: 180002,
-          create_time: "2022-03-15T02:01:13Z",
-          update_time: "2022-03-15T02:01:13Z",
-          issue_id: "I_kwDOAoCpQc5Fru8N",
-          pull_request_id: "PR_kwDOAoCpQc40buIG",
-        },
-      ],
-      PullRequests: [
-        {
-          id: 180022,
-          pull_request_id: "PR_kwDOAoCpQc40buIG",
-          number: 33063,
-          state: "open",
-          title:
-            "util: fix unstable test in the TestNotifyErrorWaitGroupWrapper",
-          owner: "pingcap",
-          repo: "tidb",
-          html_url: "https://github.com/pingcap/tidb/pull/33063",
-          base_branch: "master",
-          created_at: "2022-03-15T02:00:53Z",
-          updated_at: "2022-03-15T02:24:32Z",
-          mergeable_state: "unstable",
-          labels_string:
-            '[{"name":"size/XS","color":"009900"},{"name":"release-note-none","color":"ededed"}]',
-          assignees_string: "[]",
-          requested_reviewers_string: "[]",
-          labels: [
-            {
-              name: "size/XS",
-              color: "009900",
-            },
-            {
-              name: "release-note-none",
-              color: "ededed",
-            },
-          ],
-          assignees: [],
-          requested_reviewers: [],
-        },
-      ],
-    },
-    {
-      Issue: {
-        id: 180010,
-        issue_id: "I_kwDOAoCpQc5FnVyz",
-        number: 33031,
-        state: "open",
-        title: "return wrong results when using plan-cache and dynamic-mode",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33031",
-        created_at: "2022-03-14T06:20:53Z",
-        updated_at: "2022-03-15T00:30:11Z",
-        labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/sql-infra","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"component/tablepartition","color":"D1F5BF"},{"name":"feature/developing","color":"5319e7"}]',
-        assignees_string: '[{"login":"mjonss"}]',
-        severity_label: "severity/critical",
-        type_label: "type/bug",
-        labels: [
-          {
-            name: "type/bug",
-            color: "fc2929",
-          },
-          {
-            name: "sig/sql-infra",
-            color: "e99695",
-          },
-          {
-            name: "severity/critical",
-            color: "fbca04",
-          },
-          {
-            name: "component/tablepartition",
-            color: "D1F5BF",
-          },
-          {
-            name: "feature/developing",
-            color: "5319e7",
-          },
-        ],
-        assignees: [
-          {
-            login: "mjonss",
-          },
-        ],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "I_kwDOAoCpQc5FnVyz",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -1041,6 +5754,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -1940,6 +6654,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -1981,6 +6696,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -2092,6 +6808,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -2179,6 +6896,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -2289,131 +7007,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 60017,
-        issue_id: "I_kwDOAoCpQc5FBdgZ",
-        number: 32783,
-        state: "open",
-        title:
-          "query CLUSTER_STATEMENTS_SUMMARY table meet error: [expression:1305]FUNCTION RegexpUTF8Sig does not exist",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/32783",
-        created_at: "2022-03-03T06:08:17Z",
-        updated_at: "2022-03-14T13:28:21Z",
-        labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/critical","color":"fbca04"}]',
-        assignees_string: '[{"login":"djshow832"}]',
-        severity_label: "severity/critical",
-        type_label: "type/bug",
-        labels: [
-          {
-            name: "type/bug",
-            color: "fc2929",
-          },
-          {
-            name: "sig/execution",
-            color: "e99695",
-          },
-          {
-            name: "severity/critical",
-            color: "fbca04",
-          },
-        ],
-        assignees: [
-          {
-            login: "djshow832",
-          },
-        ],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "I_kwDOAoCpQc5FBdgZ",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [
-        {
-          id: 30007,
-          create_time: "2022-03-14T13:28:20Z",
-          update_time: "2022-03-14T13:28:20Z",
-          issue_id: "I_kwDOAoCpQc5FBdgZ",
-          pull_request_id: "PR_kwDODcJyXs40ZFZE",
-        },
-        {
-          id: 30008,
-          create_time: "2022-03-14T13:28:20Z",
-          update_time: "2022-03-14T13:28:20Z",
-          issue_id: "I_kwDOAoCpQc5FBdgZ",
-          pull_request_id: "PR_kwDOAoCpQc40ZVzo",
-        },
-      ],
-      PullRequests: [
-        {
-          id: 49,
-          pull_request_id: "PR_kwDODcJyXs40ZFZE",
-          number: 1196,
-          state: "open",
-          title: "Add E2E test for Statement",
-          owner: "pingcap",
-          repo: "tidb-dashboard",
-          html_url: "https://github.com/pingcap/tidb-dashboard/pull/1196",
-          base_branch: "master",
-          created_at: "2022-03-14T12:23:28Z",
-          updated_at: "2022-03-14T13:28:21Z",
-          mergeable_state: "mergeable",
-          labels_string: "[]",
-          assignees_string: "[]",
-          requested_reviewers_string: "[]",
-          labels: [],
-          assignees: [],
-          requested_reviewers: [],
-        },
-        {
-          id: 45,
-          pull_request_id: "PR_kwDOAoCpQc40ZVzo",
-          number: 33052,
-          state: "open",
-          title:
-            "expression: fix querying cluster tables reports `regexp` is not supported",
-          owner: "pingcap",
-          repo: "tidb",
-          html_url: "https://github.com/pingcap/tidb/pull/33052",
-          base_branch: "master",
-          created_at: "2022-03-14T13:27:30Z",
-          updated_at: "2022-03-15T04:33:16Z",
-          mergeable_state: "unknown",
-          labels_string:
-            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"size/M","color":"eebb00"},{"name":"release-note-none","color":"ededed"}]',
-          assignees_string: "[]",
-          requested_reviewers_string: '[{"login":"crazycs520"}]',
-          labels: [
-            {
-              name: "status/LGT1",
-              color: "d4c5f9",
-            },
-            {
-              name: "size/M",
-              color: "eebb00",
-            },
-            {
-              name: "release-note-none",
-              color: "ededed",
-            },
-          ],
-          assignees: [],
-          requested_reviewers: [
-            {
-              login: "crazycs520",
-            },
-          ],
-        },
-      ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -2524,227 +7118,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 60011,
-        issue_id: "I_kwDOAoCpQc5FnuTG",
-        number: 33041,
-        state: "open",
-        title: "Merge Join executed incorrect resultset which missed -0",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33041",
-        created_at: "2022-03-14T08:26:32Z",
-        updated_at: "2022-03-14T11:50:29Z",
-        labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"affects-5.0","color":"E99695"},{"name":"affects-5.1","color":"E99695"},{"name":"affects-5.2","color":"E99695"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"},{"name":"may-affects-4.0","color":"ededed"}]',
-        assignees_string: "[]",
-        severity_label: "severity/critical",
-        type_label: "type/bug",
-        labels: [
-          {
-            name: "type/bug",
-            color: "fc2929",
-          },
-          {
-            name: "sig/execution",
-            color: "e99695",
-          },
-          {
-            name: "severity/critical",
-            color: "fbca04",
-          },
-          {
-            name: "affects-5.0",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.1",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.2",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.3",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.4",
-            color: "E99695",
-          },
-          {
-            name: "may-affects-4.0",
-            color: "ededed",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          id: 90021,
-          create_time: "2022-03-14T11:50:32Z",
-          update_time: "2022-03-14T11:50:32Z",
-          issue_id: "I_kwDOAoCpQc5FnuTG",
-          affect_version: "5.0",
-          affect_result: "Yes",
-        },
-        {
-          id: 90022,
-          create_time: "2022-03-14T11:50:32Z",
-          update_time: "2022-03-14T11:50:32Z",
-          issue_id: "I_kwDOAoCpQc5FnuTG",
-          affect_version: "5.1",
-          affect_result: "Yes",
-        },
-        {
-          id: 90023,
-          create_time: "2022-03-14T11:50:32Z",
-          update_time: "2022-03-14T11:50:32Z",
-          issue_id: "I_kwDOAoCpQc5FnuTG",
-          affect_version: "5.2",
-          affect_result: "Yes",
-        },
-        {
-          id: 90024,
-          create_time: "2022-03-14T11:50:32Z",
-          update_time: "2022-03-14T11:50:32Z",
-          issue_id: "I_kwDOAoCpQc5FnuTG",
-          affect_version: "5.3",
-          affect_result: "Yes",
-        },
-        {
-          id: 90025,
-          create_time: "2022-03-14T11:50:32Z",
-          update_time: "2022-03-14T11:50:32Z",
-          issue_id: "I_kwDOAoCpQc5FnuTG",
-          affect_version: "5.4",
-          affect_result: "Yes",
-        },
-        {
-          id: 90026,
-          create_time: "2022-03-14T11:50:32Z",
-          update_time: "2022-03-14T11:50:32Z",
-          issue_id: "I_kwDOAoCpQc5FnuTG",
-          affect_version: "4.0",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 30001,
-        issue_id: "I_kwDOAoCpQc5Fn98z",
-        number: 33042,
-        state: "open",
-        title:
-          "Merge Join executed incorrect resultset which returned empty resultset",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/33042",
-        created_at: "2022-03-14T09:28:06Z",
-        updated_at: "2022-03-14T11:50:02Z",
-        labels_string:
-          '[{"name":"type/bug","color":"fc2929"},{"name":"sig/execution","color":"e99695"},{"name":"severity/critical","color":"fbca04"},{"name":"affects-5.0","color":"E99695"},{"name":"affects-5.1","color":"E99695"},{"name":"affects-5.2","color":"E99695"},{"name":"affects-5.3","color":"E99695"},{"name":"affects-5.4","color":"E99695"},{"name":"may-affects-4.0","color":"ededed"}]',
-        assignees_string: "[]",
-        severity_label: "severity/critical",
-        type_label: "type/bug",
-        labels: [
-          {
-            name: "type/bug",
-            color: "fc2929",
-          },
-          {
-            name: "sig/execution",
-            color: "e99695",
-          },
-          {
-            name: "severity/critical",
-            color: "fbca04",
-          },
-          {
-            name: "affects-5.0",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.1",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.2",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.3",
-            color: "E99695",
-          },
-          {
-            name: "affects-5.4",
-            color: "E99695",
-          },
-          {
-            name: "may-affects-4.0",
-            color: "ededed",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          id: 30001,
-          create_time: "2022-03-14T10:55:36Z",
-          update_time: "2022-03-14T11:50:02Z",
-          issue_id: "I_kwDOAoCpQc5Fn98z",
-          affect_version: "5.0",
-          affect_result: "Yes",
-        },
-        {
-          id: 30002,
-          create_time: "2022-03-14T10:55:36Z",
-          update_time: "2022-03-14T11:50:02Z",
-          issue_id: "I_kwDOAoCpQc5Fn98z",
-          affect_version: "5.1",
-          affect_result: "Yes",
-        },
-        {
-          id: 30003,
-          create_time: "2022-03-14T10:55:36Z",
-          update_time: "2022-03-14T11:50:02Z",
-          issue_id: "I_kwDOAoCpQc5Fn98z",
-          affect_version: "5.2",
-          affect_result: "Yes",
-        },
-        {
-          id: 30004,
-          create_time: "2022-03-14T10:55:36Z",
-          update_time: "2022-03-14T11:50:02Z",
-          issue_id: "I_kwDOAoCpQc5Fn98z",
-          affect_version: "5.3",
-          affect_result: "Yes",
-        },
-        {
-          id: 30005,
-          create_time: "2022-03-14T10:55:36Z",
-          update_time: "2022-03-14T11:50:02Z",
-          issue_id: "I_kwDOAoCpQc5Fn98z",
-          affect_version: "5.4",
-          affect_result: "Yes",
-        },
-        {
-          id: 30006,
-          create_time: "2022-03-14T10:55:36Z",
-          update_time: "2022-03-14T11:50:02Z",
-          issue_id: "I_kwDOAoCpQc5Fn98z",
-          affect_version: "4.0",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -2850,6 +7224,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -2964,6 +7339,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3011,6 +7387,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3058,6 +7435,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3105,6 +7483,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3406,6 +7785,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3457,6 +7837,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3504,126 +7885,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 60001,
-        issue_id: "I_kwDOAoCpQc5DkMr7",
-        number: 32290,
-        state: "open",
-        title: "BR support for placement rules",
-        owner: "pingcap",
-        repo: "tidb",
-        html_url: "https://github.com/pingcap/tidb/issues/32290",
-        created_at: "2022-02-12T02:41:54Z",
-        updated_at: "2022-03-14T10:30:13Z",
-        labels_string: '[{"name":"type/feature-request","color":"eface0"}]',
-        assignees_string: '[{"login":"3pointer"}]',
-        type_label: "type/feature-request",
-        labels: [
-          {
-            name: "type/feature-request",
-            color: "eface0",
-          },
-        ],
-        assignees: [
-          {
-            login: "3pointer",
-          },
-        ],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "I_kwDOAoCpQc5DkMr7",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [
-        {
-          id: 30001,
-          create_time: "2022-03-14T10:30:10Z",
-          update_time: "2022-03-14T10:30:10Z",
-          issue_id: "I_kwDOAoCpQc5DkMr7",
-          pull_request_id: "PR_kwDOAzJOCM40RvTW",
-        },
-        {
-          id: 30002,
-          create_time: "2022-03-14T10:30:10Z",
-          update_time: "2022-03-14T10:30:10Z",
-          issue_id: "I_kwDOAoCpQc5DkMr7",
-          pull_request_id: "PR_kwDOAoCpQc40R7Xr",
-        },
-      ],
-      PullRequests: [
-        {
-          id: 13,
-          pull_request_id: "PR_kwDOAzJOCM40RvTW",
-          number: 881,
-          state: "open",
-          title: "backup: add policy info for backupMeta",
-          owner: "pingcap",
-          repo: "kvproto",
-          html_url: "https://github.com/pingcap/kvproto/pull/881",
-          base_branch: "master",
-          created_at: "2022-03-11T04:25:17Z",
-          updated_at: "2022-03-14T10:30:13Z",
-          mergeable_state: "mergeable",
-          labels_string: "[]",
-          assignees_string: "[]",
-          requested_reviewers_string: "[]",
-          labels: [],
-          assignees: [],
-          requested_reviewers: [],
-        },
-        {
-          id: 2,
-          pull_request_id: "PR_kwDOAoCpQc40R7Xr",
-          number: 33007,
-          state: "open",
-          title: "br: implement backup & restore policy info",
-          owner: "pingcap",
-          repo: "tidb",
-          html_url: "https://github.com/pingcap/tidb/pull/33007",
-          base_branch: "master",
-          created_at: "2022-03-11T06:15:40Z",
-          updated_at: "2022-03-14T21:55:01Z",
-          mergeable_state: "unstable",
-          labels_string:
-            '[{"name":"status/LGT1","color":"d4c5f9"},{"name":"release-note","color":"1d76db"},{"name":"type/feature-request","color":"eface0"},{"name":"size/XXL","color":"ee0000"}]',
-          assignees_string: '[{"login":"lcwangchao"},{"login":"bb7133"}]',
-          requested_reviewers_string: "[]",
-          labels: [
-            {
-              name: "status/LGT1",
-              color: "d4c5f9",
-            },
-            {
-              name: "release-note",
-              color: "1d76db",
-            },
-            {
-              name: "type/feature-request",
-              color: "eface0",
-            },
-            {
-              name: "size/XXL",
-              color: "ee0000",
-            },
-          ],
-          assignees: [
-            {
-              login: "lcwangchao",
-            },
-            {
-              login: "bb7133",
-            },
-          ],
-          requested_reviewers: [],
-        },
-      ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3663,6 +7925,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -3771,6 +8034,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4027,6 +8291,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4061,6 +8326,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4104,45 +8370,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 22,
-        issue_id: "MDU6SXNzdWU2ODE0OTgwMDU=",
-        number: 859,
-        state: "open",
-        title: "Hide sensitive information in cdc log",
-        owner: "pingcap",
-        repo: "tiflow",
-        html_url: "https://github.com/pingcap/tiflow/issues/859",
-        created_at: "2020-08-19T10:25:05Z",
-        updated_at: "2022-03-12T15:09:18Z",
-        labels_string:
-          '[{"name":"help wanted","color":"006b75"},{"name":"component/metrics-logging","color":"d1fad7"}]',
-        assignees_string: "[]",
-        labels: [
-          {
-            name: "help wanted",
-            color: "006b75",
-          },
-          {
-            name: "component/metrics-logging",
-            color: "d1fad7",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "MDU6SXNzdWU2ODE0OTgwMDU=",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4194,6 +8422,47 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 22,
+        issue_id: "MDU6SXNzdWU2ODE0OTgwMDU=",
+        number: 859,
+        state: "open",
+        title: "Hide sensitive information in cdc log",
+        owner: "pingcap",
+        repo: "tiflow",
+        html_url: "https://github.com/pingcap/tiflow/issues/859",
+        created_at: "2020-08-19T10:25:05Z",
+        updated_at: "2022-03-12T15:09:18Z",
+        labels_string:
+          '[{"name":"help wanted","color":"006b75"},{"name":"component/metrics-logging","color":"d1fad7"}]',
+        assignees_string: "[]",
+        labels: [
+          {
+            name: "help wanted",
+            color: "006b75",
+          },
+          {
+            name: "component/metrics-logging",
+            color: "d1fad7",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU2ODE0OTgwMDU=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4241,60 +8510,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 26,
-        issue_id: "MDU6SXNzdWU5NzE1OTM5ODM=",
-        number: 2543,
-        state: "open",
-        title:
-          "cdc  add multiple duplicated index when add an index without specifying a name in upstream",
-        owner: "pingcap",
-        repo: "tiflow",
-        html_url: "https://github.com/pingcap/tiflow/issues/2543",
-        created_at: "2021-08-16T18:29:53Z",
-        updated_at: "2022-03-12T15:08:07Z",
-        labels_string:
-          '[{"name":"type/bug","color":"d73a4a"},{"name":"component/ddl","color":"d1fad7"},{"name":"difficulty/hard","color":"92cefc"},{"name":"severity/moderate","color":"fbca04"},{"name":"area/ticdc","color":"d1fad7"}]',
-        assignees_string: "[]",
-        severity_label: "severity/moderate",
-        type_label: "type/bug",
-        labels: [
-          {
-            name: "type/bug",
-            color: "d73a4a",
-          },
-          {
-            name: "component/ddl",
-            color: "d1fad7",
-          },
-          {
-            name: "difficulty/hard",
-            color: "92cefc",
-          },
-          {
-            name: "severity/moderate",
-            color: "fbca04",
-          },
-          {
-            name: "area/ticdc",
-            color: "d1fad7",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "MDU6SXNzdWU5NzE1OTM5ODM=",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4414,6 +8630,62 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 26,
+        issue_id: "MDU6SXNzdWU5NzE1OTM5ODM=",
+        number: 2543,
+        state: "open",
+        title:
+          "cdc  add multiple duplicated index when add an index without specifying a name in upstream",
+        owner: "pingcap",
+        repo: "tiflow",
+        html_url: "https://github.com/pingcap/tiflow/issues/2543",
+        created_at: "2021-08-16T18:29:53Z",
+        updated_at: "2022-03-12T15:08:07Z",
+        labels_string:
+          '[{"name":"type/bug","color":"d73a4a"},{"name":"component/ddl","color":"d1fad7"},{"name":"difficulty/hard","color":"92cefc"},{"name":"severity/moderate","color":"fbca04"},{"name":"area/ticdc","color":"d1fad7"}]',
+        assignees_string: "[]",
+        severity_label: "severity/moderate",
+        type_label: "type/bug",
+        labels: [
+          {
+            name: "type/bug",
+            color: "d73a4a",
+          },
+          {
+            name: "component/ddl",
+            color: "d1fad7",
+          },
+          {
+            name: "difficulty/hard",
+            color: "92cefc",
+          },
+          {
+            name: "severity/moderate",
+            color: "fbca04",
+          },
+          {
+            name: "area/ticdc",
+            color: "d1fad7",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU5NzE1OTM5ODM=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4470,6 +8742,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4514,6 +8787,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4543,6 +8817,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4572,6 +8847,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4601,6 +8877,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4630,6 +8907,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4703,6 +8981,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4772,6 +9051,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4925,6 +9205,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -4987,6 +9268,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5078,6 +9360,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5247,6 +9530,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5290,6 +9574,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5335,6 +9620,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5500,6 +9786,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5585,6 +9872,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5620,6 +9908,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5660,6 +9949,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5747,6 +10037,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5781,6 +10072,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5847,6 +10139,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -5937,6 +10230,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6026,6 +10320,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6132,6 +10427,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6320,6 +10616,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6360,6 +10657,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6589,6 +10887,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6673,6 +10972,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6772,6 +11072,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6816,6 +11117,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6877,6 +11179,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -6944,6 +11247,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7188,6 +11492,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7228,6 +11533,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7266,6 +11572,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7295,6 +11602,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7416,6 +11724,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7526,6 +11835,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7711,6 +12021,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -7793,6 +12104,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8481,6 +12793,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8636,6 +12949,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8688,6 +13002,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8717,6 +13032,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8751,6 +13067,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8780,6 +13097,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8934,6 +13252,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -8974,6 +13293,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -9012,6 +13332,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -9105,6 +13426,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -9134,6 +13456,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -9182,6 +13505,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -9502,6 +13826,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -9722,6 +14047,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -9881,6 +14207,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -10481,6 +14808,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -10681,6 +15009,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -10726,6 +15055,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -10771,6 +15101,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -10816,6 +15147,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -10863,6 +15195,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -10912,6 +15245,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11000,6 +15334,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11047,6 +15382,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11159,6 +15495,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11198,6 +15535,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11309,6 +15647,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11342,6 +15681,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11375,6 +15715,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11408,6 +15749,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11533,6 +15875,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11686,6 +16029,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11729,6 +16073,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -11985,6 +16330,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12123,6 +16469,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12336,6 +16683,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12379,6 +16727,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12444,6 +16793,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12482,6 +16832,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12596,6 +16947,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12695,6 +17047,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -12794,6 +17147,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13081,6 +17435,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13115,6 +17470,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13155,6 +17511,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13273,6 +17630,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13363,6 +17721,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13412,6 +17771,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13455,6 +17815,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13920,6 +18281,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -13955,6 +18317,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -14589,6 +18952,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -14630,6 +18994,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -14674,6 +19039,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -14827,6 +19193,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -14985,6 +19352,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -15018,6 +19386,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -15281,6 +19650,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -15425,6 +19795,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -15465,6 +19836,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16003,6 +20375,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16115,6 +20488,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16169,6 +20543,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16718,6 +21093,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16757,6 +21133,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16824,6 +21201,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16878,6 +21256,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16928,6 +21307,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -16985,6 +21365,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17031,6 +21412,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17080,6 +21462,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17114,6 +21497,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17163,6 +21547,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17280,6 +21665,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17334,6 +21720,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17539,6 +21926,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -17980,6 +22368,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18019,6 +22408,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18058,6 +22448,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18169,6 +22560,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18266,6 +22658,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18375,6 +22768,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18489,6 +22883,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18559,6 +22954,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18599,6 +22995,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18648,6 +23045,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18687,6 +23085,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18716,6 +23115,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18755,6 +23155,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -18789,6 +23190,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19392,6 +23794,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19431,6 +23834,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19470,6 +23874,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19520,6 +23925,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19569,6 +23975,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19664,6 +24071,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19703,6 +24111,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19859,6 +24268,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19908,6 +24318,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19947,6 +24358,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -19990,6 +24402,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -20044,6 +24457,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -20610,6 +25024,105 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 715,
+        issue_id: "MDU6SXNzdWU3OTE3NzQzODE=",
+        number: 1328,
+        state: "open",
+        title: "Some usability issues",
+        owner: "pingcap",
+        repo: "tiflow",
+        html_url: "https://github.com/pingcap/tiflow/issues/1328",
+        created_at: "2021-01-22T15:32:53Z",
+        updated_at: "2022-01-04T15:46:24Z",
+        labels_string: '[{"name":"subject/new-feature","color":"fbca04"}]',
+        assignees_string: "[]",
+        labels: [
+          {
+            name: "subject/new-feature",
+            color: "fbca04",
+          },
+        ],
+        assignees: [],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU3OTE3NzQzODE=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [
+        {
+          id: 1343,
+          create_time: "2022-03-14T18:09:21Z",
+          update_time: "2022-03-14T18:09:21Z",
+          issue_id: "MDU6SXNzdWU3OTE3NzQzODE=",
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NTQ1MzA0NzIy",
+        },
+      ],
+      PullRequests: [
+        {
+          id: 30176,
+          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NTQ1MzA0NzIy",
+          number: 1236,
+          state: "merged",
+          title: "owner: prevent table start-ts regressions",
+          owner: "pingcap",
+          repo: "tiflow",
+          html_url: "https://github.com/pingcap/tiflow/pull/1236",
+          base_branch: "master",
+          created_at: "2020-12-24T20:29:44Z",
+          updated_at: "2022-03-14T18:09:21Z",
+          closed_at: "2021-01-22T18:17:37Z",
+          merged_at: "2021-01-22T18:17:37Z",
+          merged: true,
+          mergeable_state: "unknown",
+          already_reviewed: true,
+          labels_string:
+            '[{"name":"status/ptal","color":"e89ddc"},{"name":"type/bugfix","color":"d73a4a"},{"name":"component/replica-model","color":"d1fad7"},{"name":"status/LGT2","color":"00ff00"},{"name":"status/can-merge","color":"0ffa16"},{"name":"needs-cherry-pick-release-4.0","color":"000000"}]',
+          assignees_string: "[]",
+          requested_reviewers_string: '[{"login":"leoppro"}]',
+          labels: [
+            {
+              name: "status/ptal",
+              color: "e89ddc",
+            },
+            {
+              name: "type/bugfix",
+              color: "d73a4a",
+            },
+            {
+              name: "component/replica-model",
+              color: "d1fad7",
+            },
+            {
+              name: "status/LGT2",
+              color: "00ff00",
+            },
+            {
+              name: "status/can-merge",
+              color: "0ffa16",
+            },
+            {
+              name: "needs-cherry-pick-release-4.0",
+              color: "000000",
+            },
+          ],
+          assignees: [],
+          requested_reviewers: [
+            {
+              login: "leoppro",
+            },
+          ],
+        },
+      ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -20747,6 +25260,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -20781,142 +25295,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
-    },
-    {
-      Issue: {
-        id: 715,
-        issue_id: "MDU6SXNzdWU3OTE3NzQzODE=",
-        number: 1328,
-        state: "open",
-        title: "Some usability issues",
-        owner: "pingcap",
-        repo: "tiflow",
-        html_url: "https://github.com/pingcap/tiflow/issues/1328",
-        created_at: "2021-01-22T15:32:53Z",
-        updated_at: "2022-01-04T15:46:24Z",
-        labels_string: '[{"name":"subject/new-feature","color":"fbca04"}]',
-        assignees_string: "[]",
-        labels: [
-          {
-            name: "subject/new-feature",
-            color: "fbca04",
-          },
-        ],
-        assignees: [],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "MDU6SXNzdWU3OTE3NzQzODE=",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [
-        {
-          id: 1343,
-          create_time: "2022-03-14T18:09:21Z",
-          update_time: "2022-03-14T18:09:21Z",
-          issue_id: "MDU6SXNzdWU3OTE3NzQzODE=",
-          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NTQ1MzA0NzIy",
-        },
-      ],
-      PullRequests: [
-        {
-          id: 30176,
-          pull_request_id: "MDExOlB1bGxSZXF1ZXN0NTQ1MzA0NzIy",
-          number: 1236,
-          state: "merged",
-          title: "owner: prevent table start-ts regressions",
-          owner: "pingcap",
-          repo: "tiflow",
-          html_url: "https://github.com/pingcap/tiflow/pull/1236",
-          base_branch: "master",
-          created_at: "2020-12-24T20:29:44Z",
-          updated_at: "2022-03-14T18:09:21Z",
-          closed_at: "2021-01-22T18:17:37Z",
-          merged_at: "2021-01-22T18:17:37Z",
-          merged: true,
-          mergeable_state: "unknown",
-          already_reviewed: true,
-          labels_string:
-            '[{"name":"status/ptal","color":"e89ddc"},{"name":"type/bugfix","color":"d73a4a"},{"name":"component/replica-model","color":"d1fad7"},{"name":"status/LGT2","color":"00ff00"},{"name":"status/can-merge","color":"0ffa16"},{"name":"needs-cherry-pick-release-4.0","color":"000000"}]',
-          assignees_string: "[]",
-          requested_reviewers_string: '[{"login":"leoppro"}]',
-          labels: [
-            {
-              name: "status/ptal",
-              color: "e89ddc",
-            },
-            {
-              name: "type/bugfix",
-              color: "d73a4a",
-            },
-            {
-              name: "component/replica-model",
-              color: "d1fad7",
-            },
-            {
-              name: "status/LGT2",
-              color: "00ff00",
-            },
-            {
-              name: "status/can-merge",
-              color: "0ffa16",
-            },
-            {
-              name: "needs-cherry-pick-release-4.0",
-              color: "000000",
-            },
-          ],
-          assignees: [],
-          requested_reviewers: [
-            {
-              login: "leoppro",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      Issue: {
-        id: 716,
-        issue_id: "MDU6SXNzdWU3OTA2Mzc2ODA=",
-        number: 1321,
-        state: "open",
-        title:
-          "Improve open-protocol-based secondary development documentation and standard processes",
-        owner: "pingcap",
-        repo: "tiflow",
-        html_url: "https://github.com/pingcap/tiflow/issues/1321",
-        created_at: "2021-01-21T10:52:10Z",
-        updated_at: "2022-01-04T15:46:23Z",
-        labels_string: '[{"name":"subject/new-feature","color":"fbca04"}]',
-        assignees_string: '[{"login":"leoppro"}]',
-        labels: [
-          {
-            name: "subject/new-feature",
-            color: "fbca04",
-          },
-        ],
-        assignees: [
-          {
-            login: "leoppro",
-          },
-        ],
-      },
-      IssueAffects: [
-        {
-          create_time: "0001-01-01T00:00:00Z",
-          update_time: "0001-01-01T00:00:00Z",
-          issue_id: "MDU6SXNzdWU3OTA2Mzc2ODA=",
-          affect_version: "5.4",
-          affect_result: "UnKnown",
-        },
-      ],
-      IssuePrRelations: [],
-      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -20965,6 +25344,47 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
+    },
+    {
+      Issue: {
+        id: 716,
+        issue_id: "MDU6SXNzdWU3OTA2Mzc2ODA=",
+        number: 1321,
+        state: "open",
+        title:
+          "Improve open-protocol-based secondary development documentation and standard processes",
+        owner: "pingcap",
+        repo: "tiflow",
+        html_url: "https://github.com/pingcap/tiflow/issues/1321",
+        created_at: "2021-01-21T10:52:10Z",
+        updated_at: "2022-01-04T15:46:23Z",
+        labels_string: '[{"name":"subject/new-feature","color":"fbca04"}]',
+        assignees_string: '[{"login":"leoppro"}]',
+        labels: [
+          {
+            name: "subject/new-feature",
+            color: "fbca04",
+          },
+        ],
+        assignees: [
+          {
+            login: "leoppro",
+          },
+        ],
+      },
+      IssueAffects: [
+        {
+          create_time: "0001-01-01T00:00:00Z",
+          update_time: "0001-01-01T00:00:00Z",
+          issue_id: "MDU6SXNzdWU3OTA2Mzc2ODA=",
+          affect_version: "5.4",
+          affect_result: "UnKnown",
+        },
+      ],
+      IssuePrRelations: [],
+      PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -21012,6 +25432,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -21171,6 +25592,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -21301,6 +25723,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -21876,6 +26299,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -22219,6 +26643,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -22773,6 +27198,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -22812,6 +27238,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -22841,6 +27268,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -22887,6 +27315,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -22936,6 +27365,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23029,6 +27459,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23131,6 +27562,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23180,6 +27612,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23229,6 +27662,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23278,6 +27712,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23327,6 +27762,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23374,6 +27810,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23419,6 +27856,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23458,6 +27896,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23497,6 +27936,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23555,6 +27995,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23598,6 +28039,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23753,6 +28195,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23796,6 +28239,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23839,6 +28283,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23882,6 +28327,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23940,6 +28386,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -23986,6 +28433,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24032,6 +28480,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24078,6 +28527,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24127,6 +28577,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24232,6 +28683,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24286,6 +28738,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24335,6 +28788,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24388,6 +28842,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24446,6 +28901,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24496,6 +28952,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24550,6 +29007,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24604,6 +29062,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24662,6 +29121,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24766,6 +29226,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24807,6 +29268,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24846,6 +29308,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24896,6 +29359,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24946,6 +29410,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -24996,6 +29461,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25036,6 +29502,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25082,6 +29549,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25132,6 +29600,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25175,6 +29644,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25224,6 +29694,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25273,6 +29744,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25319,6 +29791,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25363,6 +29836,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25419,6 +29893,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25458,6 +29933,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25502,6 +29978,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25752,6 +30229,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25851,6 +30329,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -25901,6 +30380,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26002,6 +30482,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26087,6 +30568,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26141,6 +30623,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26186,6 +30669,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26231,6 +30715,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26276,6 +30761,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26326,6 +30812,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26380,6 +30867,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26737,6 +31225,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26783,6 +31272,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26840,6 +31330,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26886,6 +31377,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26936,6 +31428,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -26994,6 +31487,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27054,6 +31548,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27100,6 +31595,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27206,6 +31702,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27255,6 +31752,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27301,6 +31799,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27354,6 +31853,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27414,6 +31914,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27455,6 +31956,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27495,6 +31997,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27536,6 +32039,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27570,6 +32074,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27610,6 +32115,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27767,6 +32273,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27801,6 +32308,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27899,6 +32407,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -27944,6 +32453,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28396,6 +32906,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28439,6 +32950,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28486,6 +32998,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28525,6 +33038,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28615,6 +33129,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28778,6 +33293,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28818,6 +33334,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28857,6 +33374,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -28896,6 +33414,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29048,6 +33567,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29135,6 +33655,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29174,6 +33695,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29264,6 +33786,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29687,6 +34210,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29776,6 +34300,7 @@ const data = {
           requested_reviewers: [],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29879,6 +34404,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29919,6 +34445,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -29958,6 +34485,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30080,6 +34608,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30125,6 +34654,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30168,6 +34698,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30208,6 +34739,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30242,6 +34774,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30276,6 +34809,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30396,6 +34930,7 @@ const data = {
           ],
         },
       ],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30439,6 +34974,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30479,6 +35015,7 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
     {
       Issue: {
@@ -30513,9 +35050,11 @@ const data = {
       ],
       IssuePrRelations: [],
       PullRequests: [],
+      VersionTriages: [],
     },
   ],
 };
+
 // const data = {
 //   Number: 30918,
 //   Title: "DATA RACE in the SessionVars.InRestrictedSQL",

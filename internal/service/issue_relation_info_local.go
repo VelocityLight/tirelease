@@ -163,12 +163,22 @@ func ComposeRelationInfoByIssue(issue *entity.Issue, releaseVersions *[]entity.R
 		pullRequests = append(pullRequests, *pullRequest)
 	}
 
+	// Find VersionTriage
+	versionTriageOption := &entity.VersionTriageOption{
+		IssueID: issue.IssueID,
+	}
+	versionTriages, err := repository.SelectVersionTriage(versionTriageOption)
+	if nil != err {
+		return nil, err
+	}
+
 	// Construct IssueRelationInfo
 	issueRelationInfo := &dto.IssueRelationInfo{
 		Issue:            issue,
 		IssueAffects:     issueAffects,
 		IssuePrRelations: issuePrRelations,
 		PullRequests:     &pullRequests,
+		VersionTriages:   versionTriages,
 	}
 	return issueRelationInfo, nil
 }

@@ -28,4 +28,5 @@ type IssueRelationInfo struct {
 	IssueAffects     *[]entity.IssueAffect
 	IssuePrRelations *[]entity.IssuePrRelation
 	PullRequests     *[]entity.PullRequest
+	VersionTriages   *[]entity.VersionTriage
 }

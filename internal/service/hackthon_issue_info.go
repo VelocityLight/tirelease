@@ -74,12 +74,12 @@ func FilterIssueInfo(minorVersion string) ([]*IssueInfo, error) {
 	if err != nil {
 		return resp, err
 	}
-	for _, issue := range issues {
-		for _, affect := range issue.Affects {
+	for i := range issues {
+		for _, affect := range issues[i].Affects {
 			if affect.Version == minorVersion {
 				if affect.Affect == "unknown" || affect.Affect == "yes" {
 					if affect.Release.TriageStatus == "" || affect.Release.TriageStatus == "unknown" || affect.Release.TriageStatus == "accept" {
-						resp = append(resp, issue)
+						resp = append(resp, issues[i])
 					}
 				}
 			}

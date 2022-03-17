@@ -62,9 +62,9 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 		}
 		edges := query.Repository.Issues.Edges
 
-		for _, edge := range edges {
-			issues = append(issues, edge.Node)
-			log.Printf("%06d %s %s\n", edge.Node.Number, edge.Node.UpdatedAt.Format(time.RFC3339), edge.Node.Title)
+		for i := range edges {
+			issues = append(issues, edges[i].Node)
+			log.Printf("%06d %s %s\n", edges[i].Node.Number, edges[i].Node.UpdatedAt.Format(time.RFC3339), edges[i].Node.Title)
 		}
 
 		cnt := len(edges)
@@ -125,9 +125,9 @@ func (client *GithubInfoV4) GetPullRequestsFromV4(owner, name string, from time.
 		}
 		edges := query.Repository.PullRequests.Edges
 
-		for _, edge := range edges {
-			prs = append(prs, edge.Node)
-			log.Printf("%06d %s %s\n", edge.Node.Number, edge.Node.UpdatedAt.Format(time.RFC3339), edge.Node.Title)
+		for i := range edges {
+			prs = append(prs, edges[i].Node)
+			log.Printf("%06d %s %s\n", edges[i].Node.Number, edges[i].Node.UpdatedAt.Format(time.RFC3339), edges[i].Node.Title)
 		}
 
 		cnt := len(edges)

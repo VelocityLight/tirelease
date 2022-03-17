@@ -42,7 +42,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 	}
 	alls := make([]dto.IssueRelationInfo, 0)
 	for i := range *issues {
-		issueRelationInfo, err := ComposeRelationInfoByIssue(&(*issues)[i], releaseVersions)
+		issueRelationInfo, err := ComposeRelationInfoByIssue(&((*issues)[i]), releaseVersions)
 		if nil != err {
 			return nil, err
 		}

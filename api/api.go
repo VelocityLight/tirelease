@@ -101,6 +101,11 @@ func routeRestAPI(router *gin.Engine) {
 		releaseVersion.PATCH("", controller.UpdateReleaseVersion)
 	}
 
+	repo := router.Group("repo")
+	{
+		repo.GET("", controller.SelectRepo)
+	}
+
 	webhook := router.Group("/webhook")
 	{
 		webhook.POST("", controller.GithubWebhookHandler)

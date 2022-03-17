@@ -12,6 +12,9 @@ import (
 func Routers(file string) (router *gin.Engine) {
 	router = gin.Default()
 
+	// Error
+	routeError(router)
+
 	// Cors
 	routeCors(router)
 
@@ -22,6 +25,10 @@ func Routers(file string) (router *gin.Engine) {
 	routeRestAPI(router)
 
 	return router
+}
+
+func routeError(router *gin.Engine) {
+	router.Use(APIErrorJSONReporter())
 }
 
 func routeCors(router *gin.Engine) {
@@ -69,7 +76,9 @@ func routeRestAPI(router *gin.Engine) {
 	ping := router.Group("/ping")
 	{
 		ping.GET("", controller.TestPingPongGet)
+		ping.GET("/error", controller.TestPingError)
 		ping.POST("", controller.TestPingPongPost)
+		ping.POST("/:name", controller.TestPingPongPost)
 	}
 
 	issue := router.Group("/issue")

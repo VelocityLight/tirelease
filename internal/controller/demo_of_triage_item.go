@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"net/http"
+
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 	"tirelease/internal/service"
@@ -26,57 +28,57 @@ func InsertTriageItems(c *gin.Context) {
 	// Params
 	triageOption := TriageOption{}
 	if err := c.ShouldBindWith(&triageOption, binding.JSON); err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	// Action
 	triageItems, err := service.CollectTriageItemByRepo(triageOption.Owner, triageOption.Repo)
 	if nil != err {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	err2 := service.SavaTriageItems(triageItems)
 	if nil != err2 {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
-	c.JSON(200, gin.H{"status": "ok"})
+	c.JSON(http.StatusOK, gin.H{"status": "ok"})
 }
 
 func SelectTriageItems(c *gin.Context) {
 	// Params
 	option := entity.TriageItemOption{}
 	if err := c.ShouldBindWith(&option, binding.JSON); err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	// Action
 	triageItems, err := repository.TriageItemSelect(&option)
 	if err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
-	c.JSON(200, gin.H{"data": triageItems})
+	c.JSON(http.StatusOK, gin.H{"data": triageItems})
 }
 
 func AddLabelsToIssue(c *gin.Context) {
 	// Params
 	operate := TriageOprate{}
 	if err := c.ShouldBindWith(&operate, binding.JSON); err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	// Action
 	err := service.AddLabelOfAccept(operate.Owner, operate.Repo, operate.Number, operate.Lables)
 	if err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
-	c.JSON(200, gin.H{"status": "ok"})
+	c.JSON(http.StatusOK, gin.H{"status": "ok"})
 }

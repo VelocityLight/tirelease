@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"net/http"
+
 	"tirelease/internal/dto"
 	"tirelease/internal/service"
 
@@ -12,16 +14,16 @@ func SelectIssueRelationInfos(c *gin.Context) {
 	// Params
 	option := dto.IssueRelationInfoQuery{}
 	if err := c.ShouldBindWith(&option, binding.Form); err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	// Action
 	issueRelationInfos, err := service.SelectIssueRelationInfo(&option)
 	if err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
-	c.JSON(200, gin.H{"data": issueRelationInfos})
+	c.JSON(http.StatusOK, gin.H{"data": issueRelationInfos})
 }

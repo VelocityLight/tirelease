@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"net/http"
+
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
 	"tirelease/internal/service"
@@ -13,14 +15,14 @@ func CreateOrUpdateVersionTriage(c *gin.Context) {
 	// Params
 	versionTriage := entity.VersionTriage{}
 	if err := c.ShouldBindWith(&versionTriage, binding.JSON); err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	// Action
 	versionTriageInfo, err := service.CreateOrUpdateVersionTriageInfo(&versionTriage)
 	if nil != err {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
@@ -36,19 +38,19 @@ func SelectVersionTriageInfos(c *gin.Context) {
 	// Params
 	versionTriageInfoQuery := dto.VersionTriageInfoQuery{}
 	if err := c.ShouldBindWith(versionTriageInfoQuery, binding.Form); err != nil {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	// Action
 	versionTriageInfos, err := service.SelectVersionTriageInfo(&versionTriageInfoQuery)
 	if nil != err {
-		c.JSON(500, err.Error())
+		c.Error(err)
 		return
 	}
 
 	// Response
-	c.JSON(200, gin.H{"data": versionTriageInfos})
+	c.JSON(http.StatusOK, gin.H{"data": versionTriageInfos})
 }
 
 func SelectVersionTriageResult(c *gin.Context) {
@@ -68,5 +70,5 @@ func SelectVersionTriageResult(c *gin.Context) {
 		VersionTriageResultReleased:     entity.VersionTriageResultReleased,
 	}
 
-	c.JSON(200, gin.H{"data": enumResult})
+	c.JSON(http.StatusOK, gin.H{"data": enumResult})
 }

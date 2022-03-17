@@ -129,6 +129,9 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 }
 
 func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
+	if option == nil || option.Name == "" {
+		return nil, errors.New(fmt.Sprintf("CheckReleaseVersion params invalid: %+v failed", option))
+	}
 	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
 	if err != nil {
 		return nil, err

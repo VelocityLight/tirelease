@@ -6,12 +6,13 @@ import (
 	"tirelease/internal/service"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 func SelectIssueAffect(c *gin.Context) {
 	// Params
 	option := entity.IssueAffectOption{}
-	c.ShouldBind(&option)
+	c.ShouldBindWith(&option, binding.JSON)
 
 	// Action
 	issueAffects, err := repository.SelectIssueAffect(&option)
@@ -40,7 +41,7 @@ func SelectIssueAffectResult(c *gin.Context) {
 func CreateOrUpdateIssueAffect(c *gin.Context) {
 	// Params
 	issueAffect := entity.IssueAffect{}
-	c.ShouldBind(&issueAffect)
+	c.ShouldBindWith(&issueAffect, binding.JSON)
 
 	// Action
 	err := service.CreateOrUpdateIssueAffect(&issueAffect)

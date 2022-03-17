@@ -7,12 +7,13 @@ import (
 	"tirelease/internal/service"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 func SelectIssueRelationInfos(c *gin.Context) {
 	// Params
 	option := dto.IssueRelationInfoQuery{}
-	if err := c.ShouldBind(&option); err != nil {
+	if err := c.ShouldBindWith(&option, binding.JSON); err != nil {
 		c.JSON(500, err.Error())
 		return
 	}

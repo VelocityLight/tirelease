@@ -6,6 +6,7 @@ import (
 	"tirelease/internal/service"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 type TriageOption struct {
@@ -23,8 +24,8 @@ type TriageOprate struct {
 // Rest-API controller
 func InsertTriageItems(c *gin.Context) {
 	// Params
-	triageOption := &TriageOption{}
-	c.BindJSON(triageOption)
+	triageOption := TriageOption{}
+	c.ShouldBindWith(&triageOption, binding.JSON)
 
 	// Action
 	triageItems, err := service.CollectTriageItemByRepo(triageOption.Owner, triageOption.Repo)
@@ -45,7 +46,7 @@ func InsertTriageItems(c *gin.Context) {
 func SelectTriageItems(c *gin.Context) {
 	// Params
 	option := entity.TriageItemOption{}
-	c.ShouldBind(&option)
+	c.ShouldBindWith(&option, binding.JSON)
 
 	// Action
 	triageItems, err := repository.TriageItemSelect(&option)
@@ -60,7 +61,7 @@ func SelectTriageItems(c *gin.Context) {
 func AddLabelsToIssue(c *gin.Context) {
 	// Params
 	operate := TriageOprate{}
-	c.ShouldBind(&operate)
+	c.ShouldBindWith(&operate, binding.JSON)
 
 	// Action
 	err := service.AddLabelOfAccept(operate.Owner, operate.Repo, operate.Number, operate.Lables)

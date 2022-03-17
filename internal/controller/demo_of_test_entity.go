@@ -5,12 +5,13 @@ import (
 	"tirelease/internal/repository"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // Rest-API controller
 func TestEntityInsert(c *gin.Context) {
 	testEntity := entity.TestEntity{}
-	c.BindJSON(&testEntity)
+	c.ShouldBindWith(&testEntity, binding.JSON)
 	if err := repository.TestEntityInsert(&testEntity); err != nil {
 		c.JSON(500, err.Error())
 		return
@@ -20,7 +21,7 @@ func TestEntityInsert(c *gin.Context) {
 
 func TestEntitySelect(c *gin.Context) {
 	option := entity.TestEntityOption{}
-	c.BindJSON(&option)
+	c.ShouldBindWith(&option, binding.JSON)
 
 	testEntities, err := repository.TestEntitySelect(&option)
 	if err != nil {

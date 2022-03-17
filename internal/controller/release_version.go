@@ -5,15 +5,16 @@ import (
 	"tirelease/internal/repository"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 func CreateReleaseVersion(c *gin.Context) {
 	// Params
-	releaseVersion := &entity.ReleaseVersion{}
-	c.ShouldBind(releaseVersion)
+	releaseVersion := entity.ReleaseVersion{}
+	c.ShouldBindWith(&releaseVersion, binding.JSON)
 
 	// Action
-	err := repository.CreateReleaseVersion(releaseVersion)
+	err := repository.CreateReleaseVersion(&releaseVersion)
 	if nil != err {
 		c.JSON(500, err.Error())
 		return
@@ -24,11 +25,11 @@ func CreateReleaseVersion(c *gin.Context) {
 
 func UpdateReleaseVersion(c *gin.Context) {
 	// Params
-	releaseVersion := &entity.ReleaseVersion{}
-	c.ShouldBind(releaseVersion)
+	releaseVersion := entity.ReleaseVersion{}
+	c.ShouldBindWith(&releaseVersion, binding.JSON)
 
 	// Action
-	err := repository.UpdateReleaseVersion(releaseVersion)
+	err := repository.UpdateReleaseVersion(&releaseVersion)
 	if nil != err {
 		c.JSON(500, err.Error())
 		return
@@ -40,7 +41,7 @@ func UpdateReleaseVersion(c *gin.Context) {
 func SelectReleaseVersion(c *gin.Context) {
 	// Params
 	option := entity.ReleaseVersionOption{}
-	c.ShouldBind(&option)
+	c.ShouldBindWith(&option, binding.JSON)
 
 	// Action
 	releaseVersions, err := repository.SelectReleaseVersion(&option)

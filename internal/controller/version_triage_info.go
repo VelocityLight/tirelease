@@ -6,15 +6,16 @@ import (
 	"tirelease/internal/service"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 func CreateOrUpdateVersionTriage(c *gin.Context) {
 	// Params
-	versionTriage := &entity.VersionTriage{}
-	c.ShouldBind(versionTriage)
+	versionTriage := entity.VersionTriage{}
+	c.ShouldBindWith(&versionTriage, binding.JSON)
 
 	// Action
-	versionTriageInfo, err := service.CreateOrUpdateVersionTriageInfo(versionTriage)
+	versionTriageInfo, err := service.CreateOrUpdateVersionTriageInfo(&versionTriage)
 	if nil != err {
 		c.JSON(500, err.Error())
 		return
@@ -30,11 +31,11 @@ func CreateOrUpdateVersionTriage(c *gin.Context) {
 
 func SelectVersionTriageInfos(c *gin.Context) {
 	// Params
-	versionTriageInfoQuery := &dto.VersionTriageInfoQuery{}
-	c.ShouldBind(versionTriageInfoQuery)
+	versionTriageInfoQuery := dto.VersionTriageInfoQuery{}
+	c.ShouldBindWith(versionTriageInfoQuery, binding.JSON)
 
 	// Action
-	versionTriageInfos, err := service.SelectVersionTriageInfo(versionTriageInfoQuery)
+	versionTriageInfos, err := service.SelectVersionTriageInfo(&versionTriageInfoQuery)
 	if nil != err {
 		c.JSON(500, err.Error())
 		return

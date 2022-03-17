@@ -96,11 +96,9 @@ func routeRestAPI(router *gin.Engine) {
 
 	releaseVersion := router.Group("/version")
 	{
-		releaseVersion.GET("/list", controller.SelectReleaseVersion)
-		releaseVersion.POST("/insert", controller.CreateReleaseVersion)
-		releaseVersion.PATCH("/update", controller.UpdateReleaseVersion)
-		releaseVersion.DELETE("/status", controller.SelectReleaseVersionStatus)
-		releaseVersion.DELETE("/type", controller.SelectReleaseVersionType)
+		releaseVersion.GET("", controller.SelectReleaseVersion)
+		releaseVersion.POST("", controller.CreateReleaseVersion)
+		releaseVersion.PATCH("", controller.UpdateReleaseVersion)
 	}
 
 	webhook := router.Group("/webhook")

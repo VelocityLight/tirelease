@@ -1,140 +1,108 @@
-import * as React from "react";
-import Container from "@mui/material/Container";
-import Layout from "../layout/Layout";
-import { IssueTable } from "../components/issues/IssueTable";
-import { useQuery } from "react-query";
-
-import Tab from "@mui/material/Tab";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Link,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { AccordionDetails, AccordionSummary, Container } from "@mui/material";
+import React from "react";
+import { Layout } from "../layout/Layout";
+import Accordion from "@mui/material/Accordion";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import Tabs from "@mui/material/Tabs";
-import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import { IssueGrid } from "../components/issues/IssueGrid";
+import Columns from "../components/issues/GridColumns";
+import { currentVersions, url } from "../utils";
+import { useQuery } from "react-query";
+import {
+  OR,
+  severity,
+  state,
+  type,
+  closedByPRIn24h,
+  closedByPRSince,
+} from "../components/issues/filter/index";
 
-import PropTypes from "prop-types";
-import Typography from "@mui/material/Typography";
-import { sampleData } from "../components/issues/SampleData";
-import AllColumns from "../components/issues/ColumnDefs";
+function PickTriage() {
+  const filters = [
+    type("bug"),
+    OR([severity("critical"), severity("major")]),
+    state("closed"),
+  ];
+  const pickColumns = [];
+  for (const version of currentVersions) {
+    pickColumns.push(
+      Columns.getAffectionOnVersion(version),
+      Columns.getPROnVersion(version),
+      Columns.getPickOnVersion(version)
+    );
+  }
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const [tab, setTab] = React.useState(0);
+  const tabs = ["Closed in 24h", "Closed in 7d", "Closed in 30d", "ALL"];
+  switch (tab) {
+    case 0:
+      filters.push(closedByPRIn24h());
+      break;
+    case 1:
+      filters.push(
+        closedByPRSince(new Date().getTime() - 60 * 60 * 1000 * 24 * 7)
+      );
+      break;
+    case 2:
+      filters.push(
+        closedByPRSince(new Date().getTime() - 60 * 60 * 1000 * 24 * 30)
+      );
+      break;
+    case 3:
+      break;
+    default:
+      break;
+  }
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+  const handleChange = (event, newValue) => {
+    setTab(newValue);
   };
-}
-
-function ClosedToday() {
-  const { isLoading, error, data } = useQuery("closedToday", () => {
-    return fetch("http://172.16.5.65:30750/issue")
+  const { isLoading, error, data } = useQuery("issue", () => {
+    return fetch(url("issue"))
       .then((res) => {
         const data = res.json();
-        console.log(data);
         return data;
       })
       .catch((e) => {
         console.log(e);
       });
   });
-  console.log(isLoading, error, data);
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
-  console.log(data);
-  return (
-    <IssueTable
-      data={data}
-      columns={[
-        AllColumns.Repo,
-        AllColumns.Issue,
-        AllColumns.Title,
-        AllColumns.ClosedAt,
-        AllColumns.Assignee,
-        AllColumns.Severity,
-        AllColumns.ClosedBy,
-        AllColumns.Affects,
-      ]}
-    ></IssueTable>
-  );
-}
-
-const RecentClose = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   return (
     <Layout>
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
         <Accordion defaultExpanded={true}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Recent Close{" "}
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            Cherrypick Triage
           </AccordionSummary>
           <AccordionDetails>
-            <Box sx={{ width: "100%" }}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  aria-label="basic tabs example"
-                >
-                  <Tab label="Closed Today" {...a11yProps(0)} />
-                  <Tab label="Closed This Week" {...a11yProps(1)} />
-                  <Tab label="Closed This Month" {...a11yProps(2)} />
-                  <Tab label="All Closed Issues" {...a11yProps(2)} />
-                </Tabs>
-              </Box>
-              <TabPanel value={value} index={0}>
-                <ClosedToday></ClosedToday>
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                Item Two
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                Item Three
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                Item Three
-              </TabPanel>
-            </Box>
+            <Tabs value={tab} onChange={handleChange}>
+              {tabs.map((v) => (
+                <Tab label={v}></Tab>
+              ))}
+            </Tabs>
+            {isLoading && <p>Loading...</p>}
+            {error && <p>Error: {error.message}</p>}
+            {data && (
+              <IssueGrid
+                columns={[
+                  Columns.repo,
+                  Columns.number,
+                  Columns.title,
+                  Columns.type,
+                  Columns.severity,
+                  Columns.state,
+                  ...pickColumns,
+                ]}
+                data={data.data}
+                filters={filters}
+              ></IssueGrid>
+            )}
           </AccordionDetails>
         </Accordion>
       </Container>
     </Layout>
   );
-};
+}
 
-export default RecentClose;
+export default PickTriage;

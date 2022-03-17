@@ -1,22 +1,24 @@
 import { Stack } from "@mui/material";
 import VersionSelector from "./VersionSelector";
 import { useState } from "react";
-import { IssueTable } from "../issues/IssueTable";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import AllColumns from "../issues/ColumnDefs";
 import { useQuery } from "react-query";
+import { url } from "../../utils";
+import { IssueGrid } from "../issues/IssueGrid";
+import Columns from "../issues/GridColumns";
+import { OR } from "../issues/filter";
+import { affectUnknown, affectYes, pick } from "../issues/filter/index";
 
 function ReleaseCandidates({ version }) {
-  const { isLoading, error, data } = useQuery("releaseCandidates", () => {
-    return fetch("/issue/filter?version=" + version)
+  const { isLoading, error, data } = useQuery(`release-${version}`, () => {
+    return fetch(url(`issue/cherrypick/${version}`))
       .then((res) => {
         const data = res.json();
-        console.log(data);
         return data;
       })
       .catch((e) => {
@@ -30,22 +32,25 @@ function ReleaseCandidates({ version }) {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-  console.log(data);
+  const filters = [
+    OR([affectUnknown(version), affectYes(version)]),
+    pick(version, "unknown"),
+  ];
+  const rows = data.data.version_triage_infos.map(
+    (item) => item.issue_relation_info
+  );
+  console.log(data, rows);
   return (
-    <IssueTable
-      data={data}
+    <IssueGrid
+      data={rows}
       columns={[
-        AllColumns.Repo,
-        AllColumns.Issue,
-        AllColumns.Title,
-        AllColumns.ClosedAt,
-        AllColumns.Assignee,
-        AllColumns.Severity,
-        AllColumns.ClosedBy,
-        AllColumns.Affects,
+        ...Columns.issueBasicInfo,
+        Columns.getAffectionOnVersion(version),
+        Columns.getPROnVersion(version),
+        Columns.getPickOnVersion(version),
       ]}
-      onlyVersion={version}
-    ></IssueTable>
+      filters={filters}
+    ></IssueGrid>
   );
 }
 

@@ -7,17 +7,35 @@ import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import BugReportIcon from "@mui/icons-material/BugReport";
-import ColorizeIcon from '@mui/icons-material/Colorize';
-import AdUnitsIcon from '@mui/icons-material/AdUnits';
+import ColorizeIcon from "@mui/icons-material/Colorize";
+import AdUnitsIcon from "@mui/icons-material/AdUnits";
 
 export const mainListItems = (
   <div>
     <ListSubheader inset>Data Center</ListSubheader>
+    <ListItem button component={Link} to="/home/all">
+      <ListItemIcon>
+        <AdUnitsIcon />
+      </ListItemIcon>
+      <ListItemText primary="All Issues" />
+    </ListItem>
     <ListItem button component={Link} to="/home/open">
       <ListItemIcon>
         <AdUnitsIcon />
       </ListItemIcon>
-      <ListItemText primary="Issues" />
+      <ListItemText primary="Open Issues" />
+    </ListItem>
+    <ListItem button component={Link} to="/home/affection">
+      <ListItemIcon>
+        <AdUnitsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Affection Triage" />
+    </ListItem>
+    <ListItem button component={Link} to="/home/close">
+      <ListItemIcon>
+        <AdUnitsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Closed Issues" />
     </ListItem>
   </div>
 );

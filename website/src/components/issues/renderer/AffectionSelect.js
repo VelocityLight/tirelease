@@ -1,22 +1,21 @@
 import * as React from "react";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { url } from "../../utils";
+import { url } from "../../../utils";
 
-export default function AffectsSelector({
+export default function AffectionSelect({
   id,
   version = "master",
-  affectsProp = "unknown",
+  affection = "unknown",
   onChange = () => {},
 }) {
   const mutation = useMutation((newAffect) => {
-    return axios.post(url(`issue/${id}/affect/${version}`), newAffect);
+    return axios.patch(url(`issue/${id}/affect/${version}`), newAffect);
   });
-  const [affects, setAffects] = React.useState(affectsProp || "unknown");
+  const [affects, setAffects] = React.useState(affection || "unknown");
 
   const handleChange = (event) => {
     mutation.mutate({
@@ -39,22 +38,19 @@ export default function AffectsSelector({
           {mutation.isError ? (
             <div>An error occurred: {mutation.error.message}</div>
           ) : null}
-          <FormControl component="fieldset">
-            <RadioGroup
-              row
-              aria-label="affects"
-              name="row-radio-buttons-group"
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <Select
+              id="demo-simple-select-standard"
               value={affects}
               onChange={handleChange}
+              label="Affection"
             >
-              <FormControlLabel value="yes" control={<Radio />} label="yes" />
-              <FormControlLabel value="no" control={<Radio />} label="no" />
-              <FormControlLabel
-                value="unknown"
-                control={<Radio />}
-                label="unknown"
-              />
-            </RadioGroup>
+              <MenuItem value="unknown">
+                <em>unknown</em>
+              </MenuItem>
+              <MenuItem value={"no"}>no</MenuItem>
+              <MenuItem value={"yes"}>yes</MenuItem>
+            </Select>
           </FormControl>
         </>
       )}

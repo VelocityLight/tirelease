@@ -34,8 +34,8 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 	cursor := (*githubv4.String)(nil)
 	total := 0
 	// ghLabels := make([]githubv4.String, 0, len(labels))
-	// for _, l := range labels {
-	// 	ghLabels = append(ghLabels, githubv4.String(l))
+	// for i := range labels {
+	// 	ghLabels = append(ghLabels, githubv4.String(labels[i]))
 	// }
 
 	since := from.Add(-1 * time.Minute).Format(time.RFC3339)

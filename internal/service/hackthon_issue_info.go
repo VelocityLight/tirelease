@@ -24,7 +24,8 @@ func ListIssueInfo(state string) ([]*IssueInfo, error) {
 		return resp, err
 	}
 	minorPatchVersionMap := map[string]string{}
-	for _, patchVersion := range *patchVersions {
+	for i := range *patchVersions {
+		patchVersion := (*patchVersions)[i]
 		minorPatchVersionMap[patchVersion.FatherReleaseVersionName] = patchVersion.Name
 	}
 
@@ -34,7 +35,8 @@ func ListIssueInfo(state string) ([]*IssueInfo, error) {
 		return resp, err
 	}
 
-	for _, issue := range *issues {
+	for i := range *issues {
+		issue := (*issues)[i]
 		if issue.Labels == nil {
 			issue.Labels = &[]github.Label{}
 		}
@@ -106,7 +108,8 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 		}
 		cherryPickToPrs = *results
 	}
-	for _, issueAffect := range *issueAffects {
+	for i := range *issueAffects {
+		issueAffect := (*issueAffects)[i]
 		triagestatus := "unknown"
 		for _, versionTraige := range *versionTraiges {
 			if versionTraige.VersionName == minorPatchVersionMap[issueAffect.AffectVersion] {
@@ -126,7 +129,8 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 			Patch:        patch,
 		}
 		pr := Pr{}
-		for _, cpr := range cherryPickToPrs {
+		for j := range cherryPickToPrs {
+			cpr := cherryPickToPrs[j]
 			if cpr.MergedAt == nil {
 				cpr.MergedAt = &time.Time{}
 			}

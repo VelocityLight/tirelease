@@ -2,6 +2,7 @@ import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { currentVersions } from "../../utils";
 
 const VersionSelector = ({ versionProp, onChange }) => {
   const [version, setVersion] = React.useState(versionProp || "none");
@@ -10,8 +11,6 @@ const VersionSelector = ({ versionProp, onChange }) => {
     setVersion(event.target.value);
     onChange(event.target.value);
   };
-
-  const items = ["5.4", "5.3", "5.2", "5.1", "5.0", "4.0"];
 
   return (
     <>
@@ -25,7 +24,7 @@ const VersionSelector = ({ versionProp, onChange }) => {
           <MenuItem value="none">
             <em>none</em>
           </MenuItem>
-          {items.map((item) => (
+          {currentVersions.map((item) => (
             <MenuItem value={item}>{item}</MenuItem>
           ))}
         </Select>

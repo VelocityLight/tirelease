@@ -17,7 +17,13 @@ export const mainListItems = (
       <ListItemIcon>
         <AdUnitsIcon />
       </ListItemIcon>
-      <ListItemText primary="Issues" />
+      <ListItemText primary="All Issues" />
+    </ListItem>
+    <ListItem button component={Link} to="/home/open">
+      <ListItemIcon>
+        <AdUnitsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Open Issues" />
     </ListItem>
     <ListItem button component={Link} to="/home/affection">
       <ListItemIcon>
@@ -29,7 +35,7 @@ export const mainListItems = (
       <ListItemIcon>
         <AdUnitsIcon />
       </ListItemIcon>
-      <ListItemText primary="Cherrypick Triage" />
+      <ListItemText primary="Closed Issues" />
     </ListItem>
   </div>
 );

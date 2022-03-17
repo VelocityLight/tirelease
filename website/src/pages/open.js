@@ -1,7 +1,6 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Layout from "../layout/Layout";
-import { IssueTable } from "../components/issues/IssueTable";
 
 import Tab from "@mui/material/Tab";
 import {
@@ -14,26 +13,24 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Tabs from "@mui/material/Tabs";
 import Box from "@mui/material/Box";
 
-import { sampleData } from "../components/issues/SampleData";
 import { useQuery } from "react-query";
-import AllColumns from "../components/issues/ColumnDefs";
-import TabPanel from "../components/issues/TablePanel";
 import { url } from "../utils";
 import { IssueGrid } from "../components/issues/IssueGrid";
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+import Columns from "../components/issues/GridColumns";
+import {
+  affectState,
+  repo,
+  severity,
+  state,
+  hasPR,
+  noPR,
+} from "../components/issues/filter/index";
 
 function OpenedToday() {
-  const { isLoading, error, data } = useQuery("openedToday", () => {
-    return fetch(url("issue?state=open"))
+  const { isLoading, error, data } = useQuery("issue", () => {
+    return fetch(url("issue"))
       .then((res) => {
         const data = res.json();
-        console.log(data);
         return data;
       })
       .catch((e) => {
@@ -57,23 +54,45 @@ function OpenedToday() {
   }
   console.log("fetched data", data);
   return (
-    <IssueGrid data={sampleData.data}></IssueGrid>
-    // <IssueTable
-    //   data={data.data}
-    //   columns={[
-    //     AllColumns.Repo,
-    //     AllColumns.Issue,
-    //     AllColumns.Title,
-    //     AllColumns.Created,
-    //     AllColumns.Severity,
-    //     AllColumns.Assignee,
-    //     AllColumns.LinkedPR,
-    //     // {
-    //     //   ...AllColumns.Affects,
-    //     //   columns: [...AllColumns.Affects.columns],
-    //     // },
-    //   ]}
-    // ></IssueTable>
+    <IssueGrid
+      data={data.data}
+      columns={[
+        Columns.repo,
+        Columns.number,
+        Columns.title,
+        Columns.state,
+        Columns.pr,
+        Columns.type,
+        Columns.severity,
+        Columns.labels,
+        Columns.getAffectionOnVersion("5.4"),
+        Columns.getPROnVersion("5.4"),
+        Columns.getPickOnVersion("5.4"),
+        Columns.getAffectionOnVersion("5.3"),
+        Columns.getPROnVersion("5.3"),
+        Columns.getPickOnVersion("5.3"),
+        Columns.getAffectionOnVersion("5.2"),
+        Columns.getPROnVersion("5.2"),
+        Columns.getPickOnVersion("5.2"),
+        Columns.getAffectionOnVersion("5.1"),
+        Columns.getPROnVersion("5.1"),
+        Columns.getPickOnVersion("5.1"),
+        Columns.getAffectionOnVersion("5.0"),
+        Columns.getPROnVersion("5.0"),
+        Columns.getPickOnVersion("5.0"),
+        Columns.getAffectionOnVersion("4.0"),
+        Columns.getPROnVersion("4.0"),
+        Columns.getPickOnVersion("4.0"),
+      ]}
+      filters={[
+        repo("tidb"),
+        state("closed"),
+        // severity("critical"),
+        affectState("5.3", "yes"),
+        hasPR("master"),
+        hasPR("release-5.3"),
+      ]}
+    ></IssueGrid>
   );
 }
 
@@ -99,24 +118,13 @@ const RecentOpen = () => {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="Opened Today" {...a11yProps(0)} />
-                  <Tab label="Opened This Week" {...a11yProps(1)} />
-                  <Tab label="Opened This Month" {...a11yProps(2)} />
-                  <Tab label="All Open Issues" {...a11yProps(2)} />
+                  <Tab label="Opened Today" />
+                  <Tab label="Opened This Week" />
+                  <Tab label="Opened This Month" />
+                  <Tab label="All Open Issues" />
                 </Tabs>
               </Box>
-              <TabPanel value={value} index={0}>
-                <OpenedToday />
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                Item Two
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                Item Three
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                Item Four
-              </TabPanel>
+              <OpenedToday />
             </Box>
           </AccordionDetails>
         </Accordion>

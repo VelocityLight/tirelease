@@ -1,5 +1,7 @@
 import config from "./config";
 
+export const currentVersions = ["5.4", "5.3", "5.2", "5.1", "5.0", "4.0"];
+
 export function url(url) {
   return `${config.SERVER_HOST}${url}`;
 }

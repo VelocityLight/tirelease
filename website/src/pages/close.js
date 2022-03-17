@@ -17,7 +17,6 @@ import Box from "@mui/material/Box";
 
 import PropTypes from "prop-types";
 import Typography from "@mui/material/Typography";
-import { sampleData } from "../components/issues/SampleData";
 import AllColumns from "../components/issues/ColumnDefs";
 
 function TabPanel(props) {

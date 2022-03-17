@@ -1,9 +1,13 @@
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Columns from "./GridColumns";
 import TriageDialog from "./TriageDialog";
 import { useState } from "react";
 
-export function IssueGrid(props) {
+export function IssueGrid({
+  data,
+  filters = [],
+  columns = [Columns.number, Columns.title],
+}) {
   const [triage, setTriage] = useState(false);
   const onClose = () => {
     setTriage(false);
@@ -12,39 +16,32 @@ export function IssueGrid(props) {
     setTriage(true);
   };
   return (
-    <div style={{ height: 600, width: "100%" }}>
-      <DataGrid
-        columns={[
-          Columns.repo,
-          Columns.number,
-          Columns.title,
-          Columns.state,
-          Columns.pr,
-          Columns.type,
-          Columns.labels,
-          Columns.getAffectionOnVersion("5.4"),
-          Columns.getPROnVersion("5.4"),
-          Columns.getAffectionOnVersion("5.3"),
-          Columns.getPROnVersion("5.3"),
-          Columns.getAffectionOnVersion("5.2"),
-          Columns.getPROnVersion("5.2"),
-          Columns.getAffectionOnVersion("5.1"),
-          Columns.getPROnVersion("5.1"),
-          Columns.getAffectionOnVersion("5.0"),
-          Columns.getPROnVersion("5.0"),
-          Columns.getAffectionOnVersion("4.0"),
-          Columns.getPROnVersion("4.0"),
-        ]}
-        rows={[
-          ...props.data.map((item) => {
-            return { ...item, id: item.Issue.issue_id };
-          }),
-        ]}
-        onRowClick={(e) => {
-          // openTriageDialog();
-        }}
-      ></DataGrid>
-      <TriageDialog onClose={onClose} open={triage}></TriageDialog>
-    </div>
+    <>
+      <div style={{ height: 600, width: "100%" }}>
+        <DataGrid
+          density="compact"
+          columns={columns}
+          rows={[
+            ...data
+              .map((item) => {
+                return { ...item, id: item.Issue.issue_id };
+              })
+              .filter((item) => {
+                for (const filter of filters) {
+                  if (!filter(item)) {
+                    return false;
+                  }
+                }
+                return true;
+              }),
+          ]}
+          onRowClick={(e) => {
+            // openTriageDialog();
+          }}
+          components={{ Toolbar: GridToolbar }}
+        ></DataGrid>
+        <TriageDialog onClose={onClose} open={triage}></TriageDialog>
+      </div>
+    </>
   );
 }

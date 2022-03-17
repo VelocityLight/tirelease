@@ -3,6 +3,7 @@ import { renderAssignee } from "./renderer/Assignee";
 import { getAffection, renderAffection } from "./renderer/Affection";
 import { getPullRequest, renderPullRequest } from "./renderer/PullRequest";
 import { getLabelValue, renderLabel } from "./renderer/Label";
+import { getPickTriageValue, renderPickTriage } from "./renderer/PickTriage";
 
 const id = {
   field: "id",
@@ -47,6 +48,20 @@ const type = {
   ),
 };
 
+const severity = {
+  field: "severity",
+  headerName: "Severity",
+  width: 120,
+  valueGetter: getLabelValue(
+    (label) => label.name.startsWith("severity/"),
+    (label) => label.replace("severity/", "")
+  ),
+  renderCell: renderLabel(
+    (label) => label.name.startsWith("severity/"),
+    (label) => label.replace("severity/", "")
+  ),
+};
+
 const state = {
   field: "state",
   headerName: "State",
@@ -64,6 +79,7 @@ const assignee = {
 
 const labelFilter = (label) =>
   !label.name.startsWith("type/") &&
+  !label.name.startsWith("severity/") &&
   !label.name.startsWith("affects-") &&
   !label.name.startsWith("may-affect-");
 
@@ -101,7 +117,13 @@ function getPROnVersion(version) {
 }
 
 function getPickOnVersion(version) {
-  const branch = "release-" + version;
+  return {
+    field: "pick_" + version,
+    headerName: "Pick to " + version,
+    width: 240,
+    valueGetter: getPickTriageValue(version),
+    renderCell: renderPickTriage(version),
+  };
 }
 
 const Columns = {
@@ -113,9 +135,12 @@ const Columns = {
   type,
   labels,
   assignee,
+  severity,
   pr,
   getAffectionOnVersion,
   getPROnVersion,
+  getPickOnVersion,
+  issueBasicInfo: [id, repo, number, title],
 };
 
 export default Columns;

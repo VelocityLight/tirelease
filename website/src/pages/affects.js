@@ -8,14 +8,52 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import React from "react";
-import TabPanel from "../components/issues/TablePanel";
+import { IssueGrid } from "../components/issues/IssueGrid";
+import { useQuery } from "react-query";
+import { url, currentVersions } from "../utils";
+import Columns from "../components/issues/GridColumns";
+import {
+  repo,
+  state,
+  affectState,
+  severity,
+  hasPR,
+  OR,
+} from "../components/issues/filter/index";
 
 const AffectTriage = () => {
-  const [value, setValue] = React.useState(0);
+  const [tab, setTab] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    setTab(newValue);
   };
+
+  const { isLoading, error, data } = useQuery("issue", () => {
+    return fetch(url("issue"))
+      .then((res) => {
+        const data = res.json();
+        return data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  });
+
+  const affectColumns = [];
+  if (tab === 0) {
+    affectColumns.push(...currentVersions.map(Columns.getAffectionOnVersion));
+  } else {
+    affectColumns.push(Columns.getAffectionOnVersion(currentVersions[tab - 1]));
+  }
+
+  const filters = [OR([severity("critical"), severity("major")])];
+  if (tab === 0) {
+    filters.push(
+      OR(currentVersions.map((version) => affectState(version, "unknown")))
+    );
+  } else {
+    filters.push(affectState(currentVersions[tab - 1], "unknown"));
+  }
 
   return (
     <Layout>
@@ -28,28 +66,33 @@ const AffectTriage = () => {
             <Box sx={{ width: "100%" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
-                  value={value}
+                  value={tab}
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="Opened Today" />
-                  <Tab label="Opened This Week" />
-                  <Tab label="Opened This Month" />
-                  <Tab label="All Open Issues" />
+                  <Tab label="All" />
+                  {currentVersions.map((v) => (
+                    <Tab label={v}></Tab>
+                  ))}
                 </Tabs>
               </Box>
-              <TabPanel value={value} index={0}>
-                Item One
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                Item Two
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                Item Three
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                Item Four
-              </TabPanel>
+              {isLoading && <p>Loading...</p>}
+              {error && <p>Error: {error.message}</p>}
+              {data && (
+                <IssueGrid
+                  data={data.data}
+                  columns={[
+                    Columns.repo,
+                    Columns.number,
+                    Columns.title,
+                    Columns.state,
+                    Columns.type,
+                    Columns.severity,
+                    ...affectColumns,
+                  ]}
+                  filters={filters}
+                ></IssueGrid>
+              )}
             </Box>
           </AccordionDetails>
         </Accordion>

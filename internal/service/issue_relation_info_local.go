@@ -152,7 +152,8 @@ func ComposeRelationInfoByIssue(issue *entity.Issue, releaseVersions *[]entity.R
 
 	// Find PullRequests
 	pullRequests := make([]entity.PullRequest, 0)
-	for _, issuePrRelation := range *issuePrRelations {
+	for i := range *issuePrRelations {
+		issuePrRelation := (*issuePrRelations)[i]
 		pullRequestOption := &entity.PullRequestOption{
 			PullRequestID: issuePrRelation.PullRequestID,
 		}

@@ -103,7 +103,8 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 
 	// Compose
 	versionTriageInfos := make([]dto.VersionTriageInfo, 0)
-	for _, versionTriage := range *versionTriages {
+	for i := range *versionTriages {
+		versionTriage := (*versionTriages)[i]
 		issueRelationInfos, err := SelectIssueRelationInfo(&dto.IssueRelationInfoQuery{
 			IssueID:    versionTriage.IssueID,
 			BaseBranch: releaseVersion.ReleaseBranch,

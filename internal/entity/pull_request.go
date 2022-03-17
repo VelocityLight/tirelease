@@ -66,7 +66,8 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 	alreadyReviwed := false
 	cherryPickApproved := false
 	labels := &[]github.Label{}
-	for _, node := range pullRequest.Labels {
+	for i := range pullRequest.Labels {
+		node := pullRequest.Labels[i]
 		label := github.Label{
 			Name:  node.Name,
 			Color: node.Color,
@@ -82,14 +83,16 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 
 	}
 	assignees := &[]github.User{}
-	for _, node := range pullRequest.Assignees {
+	for i := range pullRequest.Assignees {
+		node := pullRequest.Assignees[i]
 		user := github.User{
 			Login: node.Login,
 		}
 		*assignees = append(*assignees, user)
 	}
 	requestedReviewers := &[]github.User{}
-	for _, node := range pullRequest.RequestedReviewers {
+	for i := range pullRequest.RequestedReviewers {
+		node := pullRequest.RequestedReviewers[i]
 		user := github.User{
 			Login: node.Login,
 		}
@@ -129,7 +132,8 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 	alreadyReviwed := false
 	cherryPickApproved := false
 	labels := &[]github.Label{}
-	for _, node := range pullRequestField.Labels.Nodes {
+	for i := range pullRequestField.Labels.Nodes {
+		node := pullRequestField.Labels.Nodes[i]
 		label := github.Label{
 			Name: github.String(string(node.Name)),
 		}
@@ -146,14 +150,16 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		}
 	}
 	assignees := &[]github.User{}
-	for _, node := range pullRequestField.Assignees.Nodes {
+	for i := range pullRequestField.Assignees.Nodes {
+		node := pullRequestField.Assignees.Nodes[i]
 		user := github.User{
 			Login: (*string)(&node.Login),
 		}
 		*assignees = append(*assignees, user)
 	}
 	requestedReviewers := &[]github.User{}
-	for _, node := range pullRequestField.ReviewRequests.Nodes {
+	for i := range pullRequestField.ReviewRequests.Nodes {
+		node := pullRequestField.ReviewRequests.Nodes[i]
 		user := github.User{
 			Login: (*string)(&node.RequestedReviewer.Login),
 		}

@@ -1,14 +1,12 @@
 import { Stack } from "@mui/material";
 import VersionSelector from "./VersionSelector";
 import { useState } from "react";
-import { IssueTable } from "../issues/IssueTable";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import AllColumns from "../issues/ColumnDefs";
 import { useQuery } from "react-query";
 import { url } from "../../utils";
 import { IssueGrid } from "../issues/IssueGrid";

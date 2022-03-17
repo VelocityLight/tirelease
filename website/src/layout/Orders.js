@@ -13,7 +13,7 @@ import AdUnitsIcon from "@mui/icons-material/AdUnits";
 export const mainListItems = (
   <div>
     <ListSubheader inset>Data Center</ListSubheader>
-    <ListItem button component={Link} to="/home/open">
+    <ListItem button component={Link} to="/home/all">
       <ListItemIcon>
         <AdUnitsIcon />
       </ListItemIcon>
@@ -31,7 +31,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Affection Triage" />
     </ListItem>
-    <ListItem button component={Link} to="/home/cherrypick">
+    <ListItem button component={Link} to="/home/close">
       <ListItemIcon>
         <AdUnitsIcon />
       </ListItemIcon>

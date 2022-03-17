@@ -82,6 +82,21 @@ export function OR(filters) {
   };
 }
 
+export function AND(filters) {
+  return (item) => {
+    for (const filter of filters) {
+      if (!filter(item)) {
+        return false;
+      }
+    }
+    return true;
+  };
+}
+
+export function NOT(filter) {
+  return (item) => !filter(item);
+}
+
 export function closedByPRDuring(from, to) {
   const f = new Date(from);
   const t = new Date(to);
@@ -101,4 +116,21 @@ export function closedByPRSince(from) {
 
 export function closedByPRIn24h() {
   return closedByPRSince(new Date(new Date().getTime() - 24 * 60 * 60 * 1000));
+}
+
+export function openDuring(from, to) {
+  const f = new Date(from);
+  const t = new Date(to);
+  return (item) => {
+    const createdAt = new Date(item.Issue.created_at);
+    return createdAt - f >= 0 && t - createdAt > 0;
+  };
+}
+
+export function openSince(from) {
+  return openDuring(from, new Date());
+}
+
+export function openIn24h() {
+  return openSince(new Date(new Date().getTime() - 24 * 60 * 60 * 1000));
 }

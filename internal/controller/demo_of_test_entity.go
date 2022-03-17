@@ -42,7 +42,8 @@ func TestEntitySelect(c *gin.Context) {
 }
 
 type TestPingPongStruct struct {
-	Name string `json:"name" form:"name"`
+	Name  string `json:"name" form:"name"`
+	Other string `json:"other" form:"other"`
 }
 
 func TestPingPongGet(c *gin.Context) {

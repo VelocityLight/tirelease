@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"fmt"
+
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 
@@ -11,7 +13,11 @@ import (
 // Rest-API controller
 func TestEntityInsert(c *gin.Context) {
 	testEntity := entity.TestEntity{}
-	c.ShouldBindWith(&testEntity, binding.JSON)
+	if err := c.ShouldBindWith(&testEntity, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+
 	if err := repository.TestEntityInsert(&testEntity); err != nil {
 		c.JSON(500, err.Error())
 		return
@@ -21,7 +27,10 @@ func TestEntityInsert(c *gin.Context) {
 
 func TestEntitySelect(c *gin.Context) {
 	option := entity.TestEntityOption{}
-	c.ShouldBindWith(&option, binding.JSON)
+	if err := c.ShouldBindWith(&option, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	testEntities, err := repository.TestEntitySelect(&option)
 	if err != nil {
@@ -32,6 +41,28 @@ func TestEntitySelect(c *gin.Context) {
 	c.JSON(200, gin.H{"data": testEntities})
 }
 
-func TestPingPong(c *gin.Context) {
-	c.JSON(200, gin.H{"data": "PingPong"})
+type TestPingPongStruct struct {
+	Name string `json:"name" form:"name"`
+}
+
+func TestPingPongGet(c *gin.Context) {
+	param := TestPingPongStruct{}
+	if err := c.ShouldBindWith(&param, binding.Form); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+	fmt.Println(param)
+
+	c.JSON(200, gin.H{"status": "OK", "data": param})
+}
+
+func TestPingPongPost(c *gin.Context) {
+	param := TestPingPongStruct{}
+	if err := c.ShouldBindWith(&param, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
+	fmt.Println(param)
+
+	c.JSON(200, gin.H{"status": "OK", "data": param})
 }

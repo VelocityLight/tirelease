@@ -12,7 +12,10 @@ import (
 func SelectIssueAffect(c *gin.Context) {
 	// Params
 	option := entity.IssueAffectOption{}
-	c.ShouldBindWith(&option, binding.JSON)
+	if err := c.ShouldBindWith(&option, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	issueAffects, err := repository.SelectIssueAffect(&option)
@@ -41,7 +44,10 @@ func SelectIssueAffectResult(c *gin.Context) {
 func CreateOrUpdateIssueAffect(c *gin.Context) {
 	// Params
 	issueAffect := entity.IssueAffect{}
-	c.ShouldBindWith(&issueAffect, binding.JSON)
+	if err := c.ShouldBindWith(&issueAffect, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	err := service.CreateOrUpdateIssueAffect(&issueAffect)

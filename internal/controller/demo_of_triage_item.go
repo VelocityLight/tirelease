@@ -10,22 +10,25 @@ import (
 )
 
 type TriageOption struct {
-	Owner string `json:"owner"`
-	Repo  string `json:"repo"`
+	Owner string `json:"owner" form:"owner"`
+	Repo  string `json:"repo" form:"repo"`
 }
 
 type TriageOprate struct {
-	Owner  string   `json:"owner"`
-	Repo   string   `json:"repo"`
-	Number int      `json:"number"`
-	Lables []string `json:"labels"`
+	Owner  string   `json:"owner" form:"owner"`
+	Repo   string   `json:"repo" form:"repo"`
+	Number int      `json:"number" form:"number"`
+	Lables []string `json:"labels" form:"labels"`
 }
 
 // Rest-API controller
 func InsertTriageItems(c *gin.Context) {
 	// Params
 	triageOption := TriageOption{}
-	c.ShouldBindWith(&triageOption, binding.JSON)
+	if err := c.ShouldBindWith(&triageOption, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	triageItems, err := service.CollectTriageItemByRepo(triageOption.Owner, triageOption.Repo)
@@ -46,7 +49,10 @@ func InsertTriageItems(c *gin.Context) {
 func SelectTriageItems(c *gin.Context) {
 	// Params
 	option := entity.TriageItemOption{}
-	c.ShouldBindWith(&option, binding.JSON)
+	if err := c.ShouldBindWith(&option, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	triageItems, err := repository.TriageItemSelect(&option)
@@ -61,7 +67,10 @@ func SelectTriageItems(c *gin.Context) {
 func AddLabelsToIssue(c *gin.Context) {
 	// Params
 	operate := TriageOprate{}
-	c.ShouldBindWith(&operate, binding.JSON)
+	if err := c.ShouldBindWith(&operate, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	err := service.AddLabelOfAccept(operate.Owner, operate.Repo, operate.Number, operate.Lables)

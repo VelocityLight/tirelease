@@ -68,7 +68,8 @@ func routeRestAPI(router *gin.Engine) {
 
 	ping := router.Group("/ping")
 	{
-		ping.GET("", controller.TestPingPong)
+		ping.GET("", controller.TestPingPongGet)
+		ping.POST("", controller.TestPingPongPost)
 	}
 
 	issue := router.Group("/issue")

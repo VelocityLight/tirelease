@@ -11,7 +11,10 @@ import (
 func CreateReleaseVersion(c *gin.Context) {
 	// Params
 	releaseVersion := entity.ReleaseVersion{}
-	c.ShouldBindWith(&releaseVersion, binding.JSON)
+	if err := c.ShouldBindWith(&releaseVersion, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	err := repository.CreateReleaseVersion(&releaseVersion)
@@ -26,7 +29,10 @@ func CreateReleaseVersion(c *gin.Context) {
 func UpdateReleaseVersion(c *gin.Context) {
 	// Params
 	releaseVersion := entity.ReleaseVersion{}
-	c.ShouldBindWith(&releaseVersion, binding.JSON)
+	if err := c.ShouldBindWith(&releaseVersion, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	err := repository.UpdateReleaseVersion(&releaseVersion)
@@ -41,7 +47,10 @@ func UpdateReleaseVersion(c *gin.Context) {
 func SelectReleaseVersion(c *gin.Context) {
 	// Params
 	option := entity.ReleaseVersionOption{}
-	c.ShouldBindWith(&option, binding.JSON)
+	if err := c.ShouldBindWith(&option, binding.Form); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	releaseVersions, err := repository.SelectReleaseVersion(&option)

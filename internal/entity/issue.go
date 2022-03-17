@@ -40,15 +40,15 @@ type Issue struct {
 
 // List Option
 type IssueOption struct {
-	ID      int64  `json:"id"`
-	IssueID string `json:"issue_id,omitempty"`
-	Number  int    `json:"number,omitempty"`
-	State   string `json:"state,omitempty"`
-	Owner   string `json:"owner,omitempty"`
-	Repo    string `json:"repo,omitempty"`
+	ID      int64  `json:"id" form:"id"`
+	IssueID string `json:"issue_id,omitempty" form:"issue_id"`
+	Number  int    `json:"number,omitempty" form:"number"`
+	State   string `json:"state,omitempty" form:"state"`
+	Owner   string `json:"owner,omitempty" form:"owner"`
+	Repo    string `json:"repo,omitempty" form:"repo"`
 
-	SeverityLabel string `json:"severity_label,omitempty"`
-	TypeLabel     string `json:"type_label,omitempty"`
+	SeverityLabel string `json:"severity_label,omitempty" form:"severity_label"`
+	TypeLabel     string `json:"type_label,omitempty" form:"type_label"`
 }
 
 // DB-Table

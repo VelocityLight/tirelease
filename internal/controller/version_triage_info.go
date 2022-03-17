@@ -12,7 +12,10 @@ import (
 func CreateOrUpdateVersionTriage(c *gin.Context) {
 	// Params
 	versionTriage := entity.VersionTriage{}
-	c.ShouldBindWith(&versionTriage, binding.JSON)
+	if err := c.ShouldBindWith(&versionTriage, binding.JSON); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	versionTriageInfo, err := service.CreateOrUpdateVersionTriageInfo(&versionTriage)
@@ -32,7 +35,10 @@ func CreateOrUpdateVersionTriage(c *gin.Context) {
 func SelectVersionTriageInfos(c *gin.Context) {
 	// Params
 	versionTriageInfoQuery := dto.VersionTriageInfoQuery{}
-	c.ShouldBindWith(versionTriageInfoQuery, binding.JSON)
+	if err := c.ShouldBindWith(versionTriageInfoQuery, binding.Form); err != nil {
+		c.JSON(500, err.Error())
+		return
+	}
 
 	// Action
 	versionTriageInfos, err := service.SelectVersionTriageInfo(&versionTriageInfoQuery)

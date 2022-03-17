@@ -33,10 +33,12 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 
 	cursor := (*githubv4.String)(nil)
 	total := 0
-	// ghLabels := make([]githubv4.String, 0, len(labels))
-	// for i := range labels {
-	// 	ghLabels = append(ghLabels, githubv4.String(labels[i]))
-	// }
+	ghLabels := make([]githubv4.String, 0, len(labels))
+	if len(labels) > 0 {
+		for i := range labels {
+			ghLabels = append(ghLabels, githubv4.String(labels[i]))
+		}
+	}
 
 	since := from.Add(-1 * time.Minute).Format(time.RFC3339)
 	log.Printf("fetching since %s", since)
@@ -51,8 +53,10 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 			"owner":  githubv4.String(owner),
 			"limit":  githubv4.Int(limit),
 			"cursor": cursor,
-			// "labels": ghLabels,
-			"since": githubv4.DateTime{Time: from.Add(-1 * time.Minute)},
+			"since":  githubv4.DateTime{Time: from.Add(-1 * time.Minute)},
+		}
+		if len(ghLabels) > 0 {
+			param["labels"] = ghLabels
 		}
 
 		err = client.client.Query(context.Background(), &query, param)

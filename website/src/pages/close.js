@@ -92,6 +92,7 @@ function PickTriage() {
                   Columns.type,
                   Columns.severity,
                   Columns.state,
+                  Columns.pr,
                   ...pickColumns,
                 ]}
                 data={data.data}

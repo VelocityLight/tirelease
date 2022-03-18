@@ -36,10 +36,11 @@ function ReleaseCandidates({ version }) {
     OR([affectUnknown(version), affectYes(version)]),
     pick(version, "unknown"),
   ];
+  console.log("version", data);
   const rows = data.data.version_triage_infos.map(
     (item) => item.issue_relation_info
   );
-  console.log(data, rows);
+  console.log("version", rows);
   return (
     <IssueGrid
       data={rows}

@@ -2,7 +2,12 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Layout from "../layout/Layout";
 
-import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Chip,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 

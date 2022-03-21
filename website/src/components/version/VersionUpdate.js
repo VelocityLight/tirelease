@@ -19,45 +19,6 @@ import { url } from "../../utils";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
 
-function aggregate(values) {
-  const dedup = [...new Set(values)];
-  const sorted = dedup.sort();
-  const next = sorted.length === 0 ? 0 : sorted[sorted.length - 1] + 1;
-  console.log("agg", values, dedup, sorted, next);
-  return { sorted, next };
-}
-
-function getMajors(versions) {
-  const majors = [];
-  for (const version of versions) {
-    const [major] = version.split(".");
-    majors.push(parseInt(major));
-  }
-  return aggregate(majors);
-}
-
-function getMinors(versions, targetMajor) {
-  const minors = [];
-  for (const version of versions) {
-    const [major, minor] = version.split(".");
-    if (parseInt(major) === targetMajor) {
-      minors.push(parseInt(minor));
-    }
-  }
-  return aggregate(minors);
-}
-
-function getPatches(versions, targetMajor, targetMinor) {
-  const patches = [];
-  for (const version of versions) {
-    const [major, minor, patch] = version.split(".");
-    if (parseInt(major) === targetMajor && parseInt(minor) === targetMinor) {
-      patches.push(parseInt(patch));
-    }
-  }
-  return aggregate(patches);
-}
-
 export const VersionUpdate = ({ open, onClose, row }) => {
   const queryClient = useQueryClient();
   const [description, setDescription] = React.useState(row.description);

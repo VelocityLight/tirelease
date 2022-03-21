@@ -1,5 +1,23 @@
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
+
+function TriageButton() {
+  const navigate = useNavigate();
+  return (
+    <Button
+      variant="contained"
+      color="secondary"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigate("/home/triage");
+      }}
+    >
+      Triage
+    </Button>
+  );
+}
 
 const VersionTableColumns = [
   {
@@ -143,11 +161,9 @@ const VersionTableColumns = [
     headerName: "Triage",
     headerAlign: "left",
     hide: false,
-    renderCell: (params) => (
-      <Button variant="contained" color="secondary">
-        Triage
-      </Button>
-    ),
+    renderCell: (params) => {
+      return <TriageButton version={params.row.name}></TriageButton>;
+    },
   },
 ];
 

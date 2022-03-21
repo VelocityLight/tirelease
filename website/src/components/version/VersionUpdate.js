@@ -58,23 +58,21 @@ function getPatches(versions, targetMajor, targetMinor) {
   return aggregate(patches);
 }
 
-export const VersionAdd = ({ open, onClose, versions }) => {
+export const VersionUpdate = ({ open, onClose, row }) => {
   const queryClient = useQueryClient();
-  const [major, setMajor] = React.useState(-1);
-  const [minor, setMinor] = React.useState(-1);
-  const [patch, setPatch] = React.useState(-1);
-  const [addition, setAddition] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [owner, setOwner] = React.useState("");
+  const [description, setDescription] = React.useState(row.description);
+  const [owner, setOwner] = React.useState(row.owner);
+  const [eta, setETA] = React.useState(new Date(row.plan_release_time));
 
-  const majorData = getMajors(versions);
-  const [minorData, setMinorData] = React.useState({ sorted: [], next: 0 });
-  const [patchData, setPatchData] = React.useState({ sorted: [], next: 0 });
+  const [major, minor, patch] = row.name.split(".");
+  const [_, parsedAddition] = row.name.split("-");
+  const [addition, setAddition] = React.useState(
+    parsedAddition === undefined ? "" : parsedAddition
+  );
 
-  const [eta, setETA] = React.useState(new Date());
   const create = useMutation(
     (data) => {
-      return axios.post(url("version"), data);
+      return axios.patch(url("version"), data);
     },
     {
       onSuccess: () => {
@@ -88,7 +86,7 @@ export const VersionAdd = ({ open, onClose, versions }) => {
   );
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Create Version</DialogTitle>
+      <DialogTitle>Update Version</DialogTitle>
       <DialogContent>
         <Stack direction="column" spacing={4}>
           <DialogContentText>
@@ -99,75 +97,51 @@ export const VersionAdd = ({ open, onClose, versions }) => {
           </DialogContentText>
           <Stack direction="row" spacing={2} alignItems="flex-end">
             <FormControl fullWidth>
-              <InputLabel id="create-version">Major *</InputLabel>
+              <InputLabel id="create-version">Major</InputLabel>
               <Select
                 labelId="create-version"
                 id="create-version-select"
-                value={major === -1 ? "" : major}
+                value={major}
                 label="Version"
-                onChange={(e) => {
-                  setMajor(e.target.value);
-                  setMinorData(getMinors(versions, e.target.value));
-                }}
+                disabled
                 autoWidth
               >
-                {majorData.sorted.map((v) => (
-                  <MenuItem value={v}>{v}</MenuItem>
-                ))}
-                <MenuItem value={majorData.next}>
-                  <b>{majorData.next}</b> (next major)
-                </MenuItem>
+                <MenuItem value={major}>{major}</MenuItem>
               </Select>
             </FormControl>
             <Typography fontSize={"2em"}>.</Typography>
             <FormControl fullWidth>
-              <InputLabel id="create-version">Minor *</InputLabel>
+              <InputLabel id="create-version">Minor</InputLabel>
               <Select
                 labelId="create-version"
                 id="create-version-select"
                 value={minor === -1 ? "" : minor}
                 label="Version"
-                onChange={(e) => {
-                  setMinor(e.target.value);
-                  setPatchData(getPatches(versions, major, e.target.value));
-                }}
                 autoWidth
-                disabled={major === -1}
+                disabled
               >
-                {minorData.sorted.map((v) => (
-                  <MenuItem value={v}>{v}</MenuItem>
-                ))}
-                <MenuItem value={minorData.next}>
-                  <b>{minorData.next}</b> (next minor)
-                </MenuItem>
+                <MenuItem value={minor}>{minor}</MenuItem>
               </Select>
             </FormControl>
             <Typography fontSize={"2em"}>.</Typography>
             <FormControl fullWidth>
-              <InputLabel id="create-version">Patch *</InputLabel>
+              <InputLabel id="create-version">Patch</InputLabel>
               <Select
                 labelId="create-version"
                 id="create-version-select"
                 value={patch === -1 ? "" : patch}
                 label="Version"
-                onChange={(e) => {
-                  setPatch(e.target.value);
-                }}
                 autoWidth
-                disabled={minor === -1}
+                disabled
               >
-                {patchData.sorted.map((v) => (
-                  <MenuItem value={v}>{v}</MenuItem>
-                ))}
-                <MenuItem value={patchData.next}>
-                  <b>{patchData.next}</b> (next patch)
-                </MenuItem>
+                <MenuItem value={patch}>{patch}</MenuItem>
               </Select>
             </FormControl>
             <Typography fontSize={"2em"}>-</Typography>
             <FormControl fullWidth>
               <TextField
                 label="Addition"
+                value={addition}
                 onChange={(e) => setAddition(e.target.value)}
               ></TextField>
             </FormControl>
@@ -216,13 +190,8 @@ export const VersionAdd = ({ open, onClose, versions }) => {
         <Button onClick={onClose}>Close</Button>
         <Button
           onClick={() => {
-            if (major === -1 || minor === -1 || patch === -1) {
-              alert(
-                "Version is not complete, major, minor and patch are required"
-              );
-              return;
-            }
             create.mutate({
+              id: row.id,
               name: `${major}.${minor}.${patch}${
                 addition === "" ? "" : "-" + addition
               }`,
@@ -237,7 +206,7 @@ export const VersionAdd = ({ open, onClose, versions }) => {
           }}
           variant="contained"
         >
-          Save
+          Update
         </Button>
       </DialogActions>
     </Dialog>

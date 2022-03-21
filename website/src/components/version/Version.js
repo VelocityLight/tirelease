@@ -41,12 +41,15 @@ export default function Version() {
           <VersionTable data={data.data} />
         </Stack>
       )}
-      <VersionAdd
-        open={createVersion}
-        onClose={() => {
-          setCreateVersion(false);
-        }}
-      />
+      {data && createVersion && (
+        <VersionAdd
+          open={createVersion}
+          onClose={() => {
+            setCreateVersion(false);
+          }}
+          versions={data.data.map((version) => version.name)}
+        />
+      )}
     </>
   );
 }

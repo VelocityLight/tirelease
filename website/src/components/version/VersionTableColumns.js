@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
-function TriageButton() {
+function TriageButton({ version }) {
   const navigate = useNavigate();
   return (
     <Button
@@ -11,7 +11,7 @@ function TriageButton() {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        navigate("/home/triage");
+        navigate(`/home/triage/${version}`);
       }}
     >
       Triage

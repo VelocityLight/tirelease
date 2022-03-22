@@ -72,9 +72,11 @@ func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 
 	// operate cherry-pick record: select latest version & insert cherry-pick
 	if issueAffect.AffectResult == entity.AffectResultResultYes {
+		major, minor, _, _ := ComposeVersionAtom(issueAffect.AffectVersion)
 		releaseVersionOption := &entity.ReleaseVersionOption{
-			FatherReleaseVersionName: issueAffect.AffectVersion,
-			Status:                   entity.ReleaseVersionStatusOpen,
+			Major:  major,
+			Minor:  minor,
+			Status: entity.ReleaseVersionStatusUpcoming,
 			// Type:                     entity.ReleaseVersionTypePatch,
 		}
 		releaseVersion, err := repository.SelectReleaseVersionLatest(releaseVersionOption)
@@ -110,8 +112,7 @@ func ComposeIssueAffectWithIssueID(issueID string, releaseVersions *[]entity.Rel
 	// Implement New Issue Affect
 	if releaseVersions == nil {
 		releaseVersionOption := &entity.ReleaseVersionOption{
-			Type:   entity.ReleaseVersionTypeMinor,
-			Status: entity.ReleaseVersionStatusOpen,
+			Status: entity.ReleaseVersionStatusUpcoming,
 		}
 		releaseVersions, err = repository.SelectReleaseVersion(releaseVersionOption)
 		if nil != err {
@@ -122,7 +123,8 @@ func ComposeIssueAffectWithIssueID(issueID string, releaseVersions *[]entity.Rel
 		releaseVersion := (*releaseVersions)[i]
 		var isExist bool = false
 		for _, issueAffect := range *issueAffects {
-			if issueAffect.AffectVersion == releaseVersion.Name {
+			major, minor, _, _ := ComposeVersionAtom(issueAffect.AffectVersion)
+			if major == releaseVersion.Major && minor == releaseVersion.Minor {
 				isExist = true
 				break
 			}
@@ -131,7 +133,7 @@ func ComposeIssueAffectWithIssueID(issueID string, releaseVersions *[]entity.Rel
 		if !isExist {
 			newAffect := &entity.IssueAffect{
 				IssueID:       issueID,
-				AffectVersion: releaseVersion.Name,
+				AffectVersion: ComposeVersionMinorName(&releaseVersion),
 				AffectResult:  entity.AffectResultResultUnKnown,
 			}
 			(*issueAffects) = append((*issueAffects), *newAffect)

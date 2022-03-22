@@ -2,23 +2,26 @@ package service
 
 import (
 	"fmt"
-	"strings"
 	"strconv"
+	"strings"
 
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
+
+	"github.com/deckarep/golang-set"
 )
 
 func CreateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
-	releaseVersion.Name = ComposeVersionName(releaseVersion.Major, releaseVersion.Minor, releaseVersion.Patch, releaseVersion.Addition)
-	releaseVersion.Type = ComposeVersionType(releaseVersion.Major, releaseVersion.Minor, releaseVersion.Patch, releaseVersion.Addition)
+	releaseVersion.Name = ComposeVersionName(releaseVersion)
+	releaseVersion.Type = ComposeVersionType(releaseVersion)
 	releaseVersion.Status = ComposeVersionStatus(releaseVersion.Type)
+	releaseVersion.ReleaseBranch = ComposeVersionBranch(releaseVersion)
 	return repository.CreateReleaseVersion(releaseVersion)
 }
 
 func UpdateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
-	releaseVersion.Name = ComposeVersionName(releaseVersion.Major, releaseVersion.Minor, releaseVersion.Patch, releaseVersion.Addition)
-	releaseVersion.Type = ComposeVersionType(releaseVersion.Major, releaseVersion.Minor, releaseVersion.Patch, releaseVersion.Addition)
+	releaseVersion.Name = ComposeVersionName(releaseVersion)
+	releaseVersion.Type = ComposeVersionType(releaseVersion)
 	err := repository.UpdateReleaseVersion(releaseVersion)
 	if nil != err {
 		return err
@@ -51,18 +54,57 @@ func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.Releas
 	return repository.SelectReleaseVersion(option)
 }
 
+func SelectReleaseVersionMaintained() (*[]string, error) {
+	option := &entity.ReleaseVersionOption{
+		Status: entity.ReleaseVersionStatusUpcoming,
+	}
+	versions, err := repository.SelectReleaseVersion(option)
+	if nil != err {
+		return nil, err
+	}
+	set := mapset.NewSet()
+	for _, version := range *versions {
+		set.Add(ComposeVersionMinorName(&version))
+	}
+	var res []string
+	for _, v := range set.ToSlice() {
+		res = append(res, v.(string))
+	}
+	return &res, nil
+}
+
 // ====================================================
 // ==================================================== Compose Function
-func ComposeVersionName(major, minor, patch int, addition string) string {
-	if "" == addition {
-		return fmt.Sprintf("%d.%d.%d", major, minor, patch)
+func ComposeVersionName(version *entity.ReleaseVersion) string {
+	if version.Addition == "" {
+		return fmt.Sprintf("%d.%d.%d", version.Major, version.Minor, version.Patch)
 	} else {
-		return fmt.Sprintf("%d.%d.%d-%s", major, minor, patch, addition)
+		return fmt.Sprintf("%d.%d.%d-%s", version.Major, version.Minor, version.Patch, version.Addition)
 	}
 }
 
 func ComposeVersionMinorName(version *entity.ReleaseVersion) string {
 	return fmt.Sprintf("%d.%d", version.Major, version.Minor)
+}
+
+func ComposeVersionBranch(version *entity.ReleaseVersion) string {
+	return fmt.Sprintf("release-%d.%d", version.Major, version.Minor)
+}
+
+func ComposeVersionType(version *entity.ReleaseVersion) entity.ReleaseVersionType {
+	if version.Addition != "" {
+		return entity.ReleaseVersionTypeHotfix
+	} else {
+		if version.Patch != 0 {
+			return entity.ReleaseVersionTypePatch
+		} else {
+			if version.Minor != 0 {
+				return entity.ReleaseVersionTypeMinor
+			} else {
+				return entity.ReleaseVersionTypeMajor
+			}
+		}
+	}
 }
 
 func ComposeVersionAtom(version string) (major, minor, patch int, addition string) {
@@ -86,29 +128,13 @@ func ComposeVersionAtom(version string) (major, minor, patch int, addition strin
 	if len(slice) >= 3 {
 		patch, _ = strconv.Atoi(slice[2])
 	}
-	
+
 	return major, minor, patch, addition
 }
 
-func ComposeVersionType(major, minor, patch int, addition string) entity.ReleaseVersionType {
-	if "" != addition {
-		return entity.ReleaseVersionTypeHotfix
-	} else {
-		if patch != 0 {
-			return entity.ReleaseVersionTypePatch
-		} else {
-			if minor != 0 {
-				return entity.ReleaseVersionTypeMinor
-			} else {
-				return entity.ReleaseVersionTypeMajor
-			}
-		}
-	}
-}
-
-func ComposeVersionStatus(vt entity.ReleaseVersionType)  entity.ReleaseVersionStatus {
+func ComposeVersionStatus(vt entity.ReleaseVersionType) entity.ReleaseVersionStatus {
 	if entity.ReleaseVersionTypePatch == vt {
-		return entity.ReleaseVersionStatusPlanning
+		return entity.ReleaseVersionStatusPlanned
 	} else {
 		return entity.ReleaseVersionStatusUpcoming
 	}

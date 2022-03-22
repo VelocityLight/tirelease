@@ -14,9 +14,11 @@ import (
 
 func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.VersionTriageInfo, error) {
 	// Check
+	major, minor, _, _ := ComposeVersionAtom(versionTriage.VersionName)
 	releaseVersionOption := &entity.ReleaseVersionOption{
-		FatherReleaseVersionName: versionTriage.VersionName,
-		Status:                   entity.ReleaseVersionStatusOpen,
+		Major:  major,
+		Minor:  minor,
+		Status: entity.ReleaseVersionStatusUpcoming,
 	}
 	releaseVersion, err := CheckReleaseVersion(releaseVersionOption)
 	if err != nil {
@@ -140,8 +142,8 @@ func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVe
 	if err != nil {
 		return nil, err
 	}
-	if releaseVersion.Status == entity.ReleaseVersionStatusReleased || releaseVersion.Status == entity.ReleaseVersionStatusClosed {
-		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already closed or released: %+v failed", releaseVersion))
+	if releaseVersion.Status == entity.ReleaseVersionStatusReleased || releaseVersion.Status == entity.ReleaseVersionStatusCancelled {
+		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already released or cancelled: %+v failed", releaseVersion))
 	}
 	return releaseVersion, nil
 }

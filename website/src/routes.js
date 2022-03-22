@@ -27,6 +27,7 @@ const MyRoutes = () => {
         <Route path="/home/tifc" element={<TiFC />} />
         <Route path="/home/version" element={<VersionPage />} />
         <Route path="/home/triage" element={<Release />} />
+        <Route path="/home/triage/:version" element={<Release />} />
       </Routes>
     </BrowserRouter>
   );

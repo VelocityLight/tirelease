@@ -13,6 +13,7 @@ import { IssueGrid } from "../issues/IssueGrid";
 import Columns from "../issues/GridColumns";
 import { OR } from "../issues/filter";
 import { affectUnknown, affectYes, pick } from "../issues/filter/index";
+import { useParams } from "react-router-dom";
 
 function ReleaseCandidates({ version }) {
   const { isLoading, error, data } = useQuery(`release-${version}`, () => {
@@ -37,6 +38,9 @@ function ReleaseCandidates({ version }) {
     pick(version, "unknown"),
   ];
   console.log("version", data);
+  if (data.data === undefined) {
+    return <p>data is wrong, maybe your version is incorrect</p>;
+  }
   const rows = data.data.version_triage_infos.map(
     (item) => item.issue_relation_info
   );
@@ -56,7 +60,11 @@ function ReleaseCandidates({ version }) {
 }
 
 const ReleaseTable = () => {
-  const [version, setVersion] = useState("none");
+  const params = useParams();
+  console.log(params.version);
+  const [version, setVersion] = useState(
+    params.version === undefined ? "none" : params.version
+  );
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {

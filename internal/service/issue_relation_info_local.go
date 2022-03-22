@@ -33,8 +33,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 
 	// From Issue to select IssueAffects & IssuePrRelations & PullRequests
 	releaseVersionOption := &entity.ReleaseVersionOption{
-		Type:   entity.ReleaseVersionTypeMinor,
-		Status: entity.ReleaseVersionStatusOpen,
+		Status: entity.ReleaseVersionStatusUpcoming,
 	}
 	releaseVersions, err := repository.SelectReleaseVersion(releaseVersionOption)
 	if nil != err {

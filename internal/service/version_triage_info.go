@@ -14,16 +14,25 @@ import (
 
 func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.VersionTriageInfo, error) {
 	// Check
-	releaseVersionOption := &entity.ReleaseVersionOption{
-		FatherReleaseVersionName: versionTriage.VersionName,
-		Status:                   entity.ReleaseVersionStatusOpen,
+	shortType := ComposeVersionShortType(versionTriage.VersionName)
+	major, minor, patch, _ := ComposeVersionAtom(versionTriage.VersionName)
+	releaseVersionOption := &entity.ReleaseVersionOption{}
+	if shortType == entity.ReleaseVersionShortTypeMinor {
+		releaseVersionOption.Major = major
+		releaseVersionOption.Minor = minor
+		releaseVersionOption.Status = entity.ReleaseVersionStatusUpcoming
+	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
+		releaseVersionOption.Major = major
+		releaseVersionOption.Minor = minor
+		releaseVersionOption.Patch = patch
+	} else {
+		return nil, errors.New(fmt.Sprintf("CreateOrUpdateVersionTriageInfo params invalid: %+v failed", versionTriage))
 	}
 	releaseVersion, err := CheckReleaseVersion(releaseVersionOption)
 	if err != nil {
 		return nil, err
 	}
 	releaseBranch := releaseVersion.ReleaseBranch
-	// TODO: hack here, try to think more comfortable
 	versionTriage.VersionName = releaseVersion.Name
 
 	// Create Or Update
@@ -140,8 +149,8 @@ func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVe
 	if err != nil {
 		return nil, err
 	}
-	if releaseVersion.Status == entity.ReleaseVersionStatusReleased || releaseVersion.Status == entity.ReleaseVersionStatusClosed {
-		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already closed or released: %+v failed", releaseVersion))
+	if releaseVersion.Status == entity.ReleaseVersionStatusReleased || releaseVersion.Status == entity.ReleaseVersionStatusCancelled {
+		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already released or cancelled: %+v failed", releaseVersion))
 	}
 	return releaseVersion, nil
 }

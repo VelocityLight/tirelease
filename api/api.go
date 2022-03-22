@@ -97,6 +97,7 @@ func routeRestAPI(router *gin.Engine) {
 	releaseVersion := router.Group("/version")
 	{
 		releaseVersion.GET("", controller.SelectReleaseVersion)
+		releaseVersion.GET("/maintained", controller.SelectReleaseVersionMaintained)
 		releaseVersion.POST("", controller.CreateReleaseVersion)
 		releaseVersion.PATCH("", controller.UpdateReleaseVersion)
 	}

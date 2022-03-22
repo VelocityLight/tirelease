@@ -54,6 +54,17 @@ const (
 	ReleaseVersionTypeHotfix = ReleaseVersionType("Hotfix")
 )
 
+// Enum short type
+type ReleaseVersionShortType string
+
+const (
+	ReleaseVersionShortTypeMajor   = ReleaseVersionShortType("%d")
+	ReleaseVersionShortTypeMinor   = ReleaseVersionShortType("%d.%d")
+	ReleaseVersionShortTypePatch   = ReleaseVersionShortType("%d.%d.%d")
+	ReleaseVersionShortTypeHotfix  = ReleaseVersionShortType("%d.%d.%d-%s")
+	ReleaseVersionShortTypeUnKnown = ReleaseVersionShortType("unknown")
+)
+
 // List Option
 type ReleaseVersionOption struct {
 	ID       int64                `json:"id" form:"id"`

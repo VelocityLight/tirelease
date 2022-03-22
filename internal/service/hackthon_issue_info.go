@@ -5,8 +5,7 @@ import (
 	"time"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
-
-	"github.com/google/go-github/v41/github"
+	// "github.com/google/go-github/v41/github"
 )
 
 var MinorVersionList = []string{"4.0", "5.0", "5.1", "5.2", "5.3", "5.4"}
@@ -160,35 +159,35 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 	return resp, nil
 }
 
-func getIssueType(labels []github.Label) string {
-	resp := ""
-	for _, label := range labels {
-		if strings.HasPrefix(*label.Name, "type/") {
-			resp = strings.ReplaceAll(*label.Name, "type/", "")
-			return resp
-		}
-	}
-	return resp
-}
+// func getIssueType(labels []github.Label) string {
+// 	resp := ""
+// 	for _, label := range labels {
+// 		if strings.HasPrefix(*label.Name, "type/") {
+// 			resp = strings.ReplaceAll(*label.Name, "type/", "")
+// 			return resp
+// 		}
+// 	}
+// 	return resp
+// }
 
-func getIssueSeverity(labels []github.Label) string {
-	resp := ""
-	for _, label := range labels {
-		if strings.HasPrefix(*label.Name, "severity/") {
-			resp = strings.ReplaceAll(*label.Name, "severity/", "")
-			return resp
-		}
-	}
-	return resp
-}
+// func getIssueSeverity(labels []github.Label) string {
+// 	resp := ""
+// 	for _, label := range labels {
+// 		if strings.HasPrefix(*label.Name, "severity/") {
+// 			resp = strings.ReplaceAll(*label.Name, "severity/", "")
+// 			return resp
+// 		}
+// 	}
+// 	return resp
+// }
 
-func getAssignee(users []github.User) string {
-	resp := ""
-	for _, user := range users {
-		resp = *user.Name
-	}
-	return resp
-}
+// func getAssignee(users []github.User) string {
+// 	resp := ""
+// 	for _, user := range users {
+// 		resp = *user.Name
+// 	}
+// 	return resp
+// }
 
 type IssueInfo struct {
 	IssueID   string

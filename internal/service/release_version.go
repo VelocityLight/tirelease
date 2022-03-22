@@ -107,6 +107,26 @@ func ComposeVersionType(version *entity.ReleaseVersion) entity.ReleaseVersionTyp
 	}
 }
 
+func ComposeVersionShortType(version string) entity.ReleaseVersionShortType {
+	// todo: regexp later
+	slice := strings.Split(version, "-")
+	if len(slice) >= 2 {
+		return entity.ReleaseVersionShortTypeHotfix
+	}
+
+	slice = strings.Split(slice[0], ".")
+	if len(slice) == 3 {
+		return entity.ReleaseVersionShortTypePatch
+	}
+	if len(slice) == 2 {
+		return entity.ReleaseVersionShortTypeMinor
+	}
+	if len(slice) == 1 {
+		return entity.ReleaseVersionShortTypeMajor
+	}
+	return entity.ReleaseVersionShortTypeUnKnown
+}
+
 func ComposeVersionAtom(version string) (major, minor, patch int, addition string) {
 	major = 0
 	minor = 0

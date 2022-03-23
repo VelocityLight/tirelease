@@ -7,6 +7,7 @@ import (
 	"tirelease/commons/git"
 
 	"tirelease/internal/dto"
+	"tirelease/internal/entity"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -36,7 +37,9 @@ func TestSelectIssueRelationInfo(t *testing.T) {
 
 	// Select
 	option := &dto.IssueRelationInfoQuery{
-		IssueID: git.TestIssueNodeID,
+		IssueOption: entity.IssueOption{
+			IssueID: git.TestIssueNodeID,
+		},
 	}
 	issueRelationInfos, err := SelectIssueRelationInfo(option)
 	assert.Equal(t, true, err == nil)
@@ -50,7 +53,9 @@ func TestSelectIssueRelationInfoByState(t *testing.T) {
 
 	// Select
 	option := &dto.IssueRelationInfoQuery{
-		State: "open",
+		IssueOption: entity.IssueOption{
+			State: "open",
+		},
 	}
 	issueRelationInfos, err := SelectIssueRelationInfo(option)
 	assert.Equal(t, true, err == nil)

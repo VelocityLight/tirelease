@@ -37,7 +37,9 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 
 	// basic info
 	issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
-		IssueID:    versionTriage.IssueID,
+		IssueOption: entity.IssueOption{
+			IssueID: versionTriage.IssueID,
+		},
 		BaseBranch: releaseBranch,
 	})
 	if err != nil {
@@ -124,7 +126,9 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	for i := range *versionTriages {
 		versionTriage := (*versionTriages)[i]
 		issueRelationInfos, err := SelectIssueRelationInfo(&dto.IssueRelationInfoQuery{
-			IssueID:    versionTriage.IssueID,
+			IssueOption: entity.IssueOption{
+				IssueID: versionTriage.IssueID,
+			},
 			BaseBranch: releaseVersion.ReleaseBranch,
 		})
 		if err != nil {

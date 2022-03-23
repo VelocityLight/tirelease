@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSelectIssue(t *testing.T) {
+func TestSelectIssueRaw(t *testing.T) {
 	// Init
 	var config = generateConfig()
 	database.Connect(config)

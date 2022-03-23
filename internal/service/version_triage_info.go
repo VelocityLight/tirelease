@@ -13,7 +13,7 @@ import (
 )
 
 func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.VersionTriageInfo, error) {
-	// Check
+	// check
 	shortType := ComposeVersionShortType(versionTriage.VersionName)
 	major, minor, patch, _ := ComposeVersionAtom(versionTriage.VersionName)
 	releaseVersionOption := &entity.ReleaseVersionOption{}
@@ -35,17 +35,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	releaseBranch := releaseVersion.ReleaseBranch
 	versionTriage.VersionName = releaseVersion.Name
 
-	// Create Or Update
-	var isFrozen bool = releaseVersion.Status == entity.ReleaseVersionStatusFrozen
-	var isAccept bool = versionTriage.TriageResult == entity.VersionTriageResultAccept
-	if isFrozen && isAccept {
-		versionTriage.TriageResult = entity.VersionTriageResultAcceptFrozen
-	}
-	if err := repository.CreateOrUpdateVersionTriage(versionTriage); err != nil {
-		return nil, err
-	}
-
-	// Operate Git
+	// basic info
 	issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
 		IssueID:    versionTriage.IssueID,
 		BaseBranch: releaseBranch,
@@ -53,6 +43,21 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	if err != nil {
 		return nil, err
 	}
+
+	// create or update
+	var isFrozen bool = releaseVersion.Status == entity.ReleaseVersionStatusFrozen
+	var isAccept bool = versionTriage.TriageResult == entity.VersionTriageResultAccept
+	if isFrozen && isAccept {
+		versionTriage.TriageResult = entity.VersionTriageResultAcceptFrozen
+	}
+	if issueRelationInfo.Issue.SeverityLabel == git.SeverityCriticalLabel {
+		versionTriage.BlockVersionRelease = entity.BlockVersionReleaseResultBlock
+	}
+	if err := repository.CreateOrUpdateVersionTriage(versionTriage); err != nil {
+		return nil, err
+	}
+
+	// remote operation
 	if len(*issueRelationInfo.PullRequests) == 1 {
 		pr := (*issueRelationInfo.PullRequests)[0]
 		if !isFrozen && isAccept {

@@ -11,6 +11,7 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // Mysql handler infomation
@@ -34,7 +35,9 @@ func Connect(config *configs.ConfigYaml) {
 	)
 
 	// Connect
-	conn, err := gorm.Open(mysql.Open(url), &gorm.Config{})
+	conn, err := gorm.Open(mysql.Open(url), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		panic(err.Error())
 	}

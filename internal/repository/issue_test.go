@@ -2,44 +2,26 @@ package repository
 
 import (
 	"testing"
-	"time"
 
 	"tirelease/commons/configs"
 	"tirelease/commons/database"
+	"tirelease/commons/git"
 	"tirelease/internal/entity"
 
-	"github.com/google/go-github/v41/github"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIssue(t *testing.T) {
+func TestSelectIssue(t *testing.T) {
 	// Init
 	var config = generateConfig()
 	database.Connect(config)
 
-	// Create
-	assignee := &github.User{Login: github.String("jcye")}
-	var assignees = &([]github.User{*assignee})
-	var issue = &entity.Issue{
-		IssueID:   "100",
-		Number:    100,
-		State:     "open",
-		Title:     "first",
-		Repo:      "ff",
-		HTMLURL:   "json",
-		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
-		Assignees: assignees,
-	}
-	err := CreateOrUpdateIssue(issue)
-	// Assert
-	assert.Equal(t, true, err == nil)
-
 	// Select
 	var option = &entity.IssueOption{
-		IssueID: "100",
+		IssueID:  git.TestIssueNodeID2,
+		IssueIDs: []string{git.TestIssueNodeID, git.TestIssueNodeID2},
 	}
-	issues, err := SelectIssue(option)
+	issues, err := SelectIssueRaw(option)
 	// Assert
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*issues) > 0)

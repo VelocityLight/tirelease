@@ -37,6 +37,22 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 	return &issues, nil
 }
 
+func SelectIssueRaw(option *entity.IssueOption) (*[]entity.Issue, error) {
+	// 查询
+	var issues []entity.Issue
+	sql, equal := SelectIssueSQL("select * from issue where 1=1", option)
+	if equal {
+		if err := database.DBConn.DB.Raw(sql).Order("updated_at desc").Find(&issues).Error; err != nil {
+			return nil, errors.Wrap(err, fmt.Sprintf("select issue by raw failed, option: %+v", option))
+		}
+	} else {
+		if err := database.DBConn.DB.Raw(sql, option).Order("updated_at desc").Find(&issues).Error; err != nil {
+			return nil, errors.Wrap(err, fmt.Sprintf("select issue by raw failed, option: %+v", option))
+		}
+	}
+	return &issues, nil
+}
+
 func SelectIssueUnique(option *entity.IssueOption) (*entity.Issue, error) {
 	// 查询
 	issues, err := SelectIssue(option)
@@ -97,4 +113,18 @@ func unSerializeIssue(issue *entity.Issue) {
 		json.Unmarshal([]byte(issue.LabelsString), &labels)
 		issue.Labels = &labels
 	}
+}
+
+func SelectIssueSQL(sql string, option *entity.IssueOption) (string, bool) {
+	newSql := string(sql)
+	if option.ID != 0 {
+		sql += " and id = @ID"
+	}
+	if option.IssueID != "" {
+		sql += " and issue_id = @IssueID"
+	}
+	if option.IssueIDs != nil && len(option.IssueIDs) > 0 {
+		sql += " and issue_id in @IssueIDs"
+	}
+	return sql, newSql == sql
 }

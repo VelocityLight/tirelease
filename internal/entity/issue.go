@@ -49,7 +49,11 @@ type IssueOption struct {
 	SeverityLabel string `json:"severity_label,omitempty" form:"severity_label"`
 	TypeLabel     string `json:"type_label,omitempty" form:"type_label"`
 
-	IssueIDs []string `json:"issue_ids,omitempty" form:"issue_ids"`
+	IssueIDs          []string `json:"issue_ids,omitempty" form:"issue_ids"`
+	SeverityLabels    []string `json:"severity_labels,omitempty" form:"severity_labels"`
+	NotSeverityLabels []string `json:"not_severity_labels,omitempty" form:"not_severity_labels"`
+
+	ListOption
 }
 
 // DB-Table

@@ -18,13 +18,22 @@ func TestSelectIssue(t *testing.T) {
 
 	// Select
 	var option = &entity.IssueOption{
-		IssueID:  git.TestIssueNodeID2,
 		IssueIDs: []string{git.TestIssueNodeID, git.TestIssueNodeID2},
+
+		ListOption: entity.ListOption{
+			Page:    1,
+			PerPage: 10,
+
+			OrderBy: "id",
+			Order:   "desc",
+		},
 	}
 	issues, err := SelectIssueRaw(option)
+	count, _ := CountIssueRaw(option)
 	// Assert
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*issues) > 0)
+	assert.Equal(t, true, count > 0)
 }
 
 func generateConfig() *configs.ConfigYaml {

@@ -38,19 +38,24 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 }
 
 func SelectIssueRaw(option *entity.IssueOption) (*[]entity.Issue, error) {
+	sql := "select * from issue where 1=1" + IssueWhere(option) + IssueOrderBy(option) + IssueLimit(option)
+
 	// 查询
 	var issues []entity.Issue
-	sql, equal := SelectIssueSQL("select * from issue where 1=1", option)
-	if equal {
-		if err := database.DBConn.DB.Raw(sql).Order("updated_at desc").Find(&issues).Error; err != nil {
-			return nil, errors.Wrap(err, fmt.Sprintf("select issue by raw failed, option: %+v", option))
-		}
-	} else {
-		if err := database.DBConn.DB.Raw(sql, option).Order("updated_at desc").Find(&issues).Error; err != nil {
-			return nil, errors.Wrap(err, fmt.Sprintf("select issue by raw failed, option: %+v", option))
-		}
+	if err := database.DBConn.RawWrapper(sql, option).Find(&issues).Error; err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("select issue by raw failed, option: %+v", option))
 	}
 	return &issues, nil
+}
+
+func CountIssueRaw(option *entity.IssueOption) (int64, error) {
+	sql := "select count(*) from issue where 1=1" + IssueWhere(option) + IssueOrderBy(option) + IssueLimit(option)
+
+	var count int64
+	if err := database.DBConn.RawWrapper(sql, option).Count(&count).Error; err != nil {
+		return 0, errors.Wrap(err, fmt.Sprintf("count issue by raw failed, option: %+v", option))
+	}
+	return count, nil
 }
 
 func SelectIssueUnique(option *entity.IssueOption) (*entity.Issue, error) {
@@ -115,16 +120,66 @@ func unSerializeIssue(issue *entity.Issue) {
 	}
 }
 
-func SelectIssueSQL(sql string, option *entity.IssueOption) (string, bool) {
-	newSql := string(sql)
+func IssueWhere(option *entity.IssueOption) string {
+	sql := ""
+
 	if option.ID != 0 {
 		sql += " and id = @ID"
 	}
 	if option.IssueID != "" {
 		sql += " and issue_id = @IssueID"
 	}
+	if option.Number != 0 {
+		sql += " and number = @Number"
+	}
+	if option.State != "" {
+		sql += " and state = @State"
+	}
+	if option.Owner != "" {
+		sql += " and owner = @Owner"
+	}
+	if option.Repo != "" {
+		sql += " and repo = @Repo"
+	}
+	if option.SeverityLabel != "" {
+		sql += " and severity_label = @SeverityLabel"
+	}
+	if option.TypeLabel != "" {
+		sql += " and type_label = @TypeLabel"
+	}
 	if option.IssueIDs != nil && len(option.IssueIDs) > 0 {
 		sql += " and issue_id in @IssueIDs"
 	}
-	return sql, newSql == sql
+	if option.SeverityLabels != nil && len(option.SeverityLabels) > 0 {
+		sql += " and severity_label in @SeverityLabels"
+	}
+	if option.NotSeverityLabels != nil && len(option.NotSeverityLabels) > 0 {
+		sql += " and severity_label not in @NotSeverityLabels"
+	}
+
+	return sql
+}
+
+func IssueOrderBy(option *entity.IssueOption) string {
+	sql := ""
+
+	if option.OrderBy != "" {
+		sql += " order by " + option.OrderBy
+	}
+	if option.Order != "" {
+		sql += " " + option.Order
+	}
+
+	return sql
+}
+
+func IssueLimit(option *entity.IssueOption) string {
+	sql := ""
+
+	if option.Page != 0 && option.PerPage != 0 {
+		option.ListOption.CalcOffset()
+		sql += " limit @Offset,@PerPage"
+	}
+
+	return sql
 }

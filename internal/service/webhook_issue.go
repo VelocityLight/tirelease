@@ -5,6 +5,7 @@ import (
 
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
+	"tirelease/internal/repository"
 
 	"github.com/google/go-github/v41/github"
 )
@@ -69,5 +70,26 @@ func WebhookRefreshIssueV4(issue *github.Issue) error {
 		return err
 	}
 
+	return nil
+}
+
+// Service Function
+func RefreshIssueLabel(label string, option *entity.IssueOption) error {
+	// select issues
+	issues, err := repository.SelectIssueRaw(option)
+	if err != nil {
+		return err
+	}
+	if len(*issues) == 0 {
+		return nil
+	}
+
+	// refresh label
+	for _, issue := range *issues {
+		_, _, err := git.Client.AddLabel(issue.Owner, issue.Repo, issue.Number, label)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }

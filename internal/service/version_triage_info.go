@@ -254,8 +254,7 @@ func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions
 			if releaseVersion.Status != entity.ReleaseVersionStatusReleased {
 				continue
 			}
-			if releaseVersion.Major != major || releaseVersion.Minor != minor ||
-				releaseVersion.ReleaseBranch != releaseBranch {
+			if releaseVersion.Major != major || releaseVersion.Minor != minor || releaseVersion.ReleaseBranch != releaseBranch {
 				continue
 			}
 			if releaseVersion.ActualReleaseTime.After(*(pr.MergedAt)) {

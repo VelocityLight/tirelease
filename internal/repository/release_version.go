@@ -13,8 +13,12 @@ import (
 
 func CreateReleaseVersion(version *entity.ReleaseVersion) error {
 	// 加工
-	version.CreateTime = time.Now()
-	version.UpdateTime = time.Now()
+	if version.CreateTime.IsZero() {
+		version.CreateTime = time.Now()
+	}
+	if version.UpdateTime.IsZero() {
+		version.UpdateTime = time.Now()
+	}
 	serializeReleaseVersion(version)
 
 	// 存储
@@ -26,7 +30,9 @@ func CreateReleaseVersion(version *entity.ReleaseVersion) error {
 
 func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 	// 加工
-	version.UpdateTime = time.Now()
+	if version.UpdateTime.IsZero() {
+		version.UpdateTime = time.Now()
+	}
 	serializeReleaseVersion(version)
 
 	// 更新
@@ -39,7 +45,7 @@ func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 func SelectReleaseVersion(option *entity.ReleaseVersionOption) (*[]entity.ReleaseVersion, error) {
 	// 查询
 	var releaseVersions []entity.ReleaseVersion
-	if err := database.DBConn.DB.Where(option).Order("create_time desc").Find(&releaseVersions).Error; err != nil {
+	if err := database.DBConn.DB.Where(option).Order("major desc, minor desc, patch desc, create_time desc").Find(&releaseVersions).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version: %+v failed", option))
 	}
 

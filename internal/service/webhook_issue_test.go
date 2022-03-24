@@ -6,6 +6,7 @@ import (
 	"tirelease/commons/database"
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
+	// "tirelease/internal/repository"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -22,9 +23,10 @@ func TestCronRefreshIssuesV4(t *testing.T) {
 	repos := []entity.Repo{*repo}
 	params := &RefreshIssueParams{
 		Repos:       &repos,
-		BeforeHours: -4380,
+		BeforeHours: -25,
 		Batch:       20,
-		Total:       3000,
+		Total:       500,
+		IsHistory:   false,
 	}
 
 	// detail
@@ -50,19 +52,25 @@ func TestWebhookRefreshIssueV4(t *testing.T) {
 // 	git.Connect(git.TestToken)
 // 	git.ConnectV4(git.TestToken)
 // 	database.Connect(generateConfig())
-// 	repo := &entity.Repo{
-// 		Owner: "pingcap",
-// 		Repo:  "tiflow",
+// 	repos, err := repository.SelectRepo(&entity.RepoOption{})
+// 	if err != nil {
+// 		return
 // 	}
-// 	repos := []entity.Repo{*repo}
+// 	releaseVersions, err := repository.SelectReleaseVersion(&entity.ReleaseVersionOption{})
+// 	if err != nil {
+// 		return
+// 	}
+
 // 	params := &RefreshIssueParams{
-// 		Repos:       &repos,
-// 		BeforeHours: -4380,
-// 		Batch:       20,
-// 		Total:       1000,
+// 		Repos:           repos,
+// 		BeforeHours:     -4380,
+// 		Batch:           20,
+// 		Total:           1000,
+// 		IsHistory:       true,
+// 		ReleaseVersions: releaseVersions,
 // 	}
 
 // 	// detail
-// 	err := CronRefreshIssuesV4(params)
+// 	err = CronRefreshIssuesV4(params)
 // 	assert.Equal(t, true, err == nil)
 // }

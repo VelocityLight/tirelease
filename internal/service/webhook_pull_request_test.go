@@ -22,9 +22,9 @@ func TestCronRefreshPullRequestV4(t *testing.T) {
 	repos := []entity.Repo{*repo}
 	params := &RefreshPullRequestParams{
 		Repos:       &repos,
-		BeforeHours: -4380,
+		BeforeHours: -25,
 		Batch:       20,
-		Total:       3000,
+		Total:       500,
 	}
 
 	// detail

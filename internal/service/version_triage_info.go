@@ -178,6 +178,39 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	}, nil
 }
 
+func InheritVersionTriage(fromVersion string, toVersion string) error {
+	// Select
+	versionTriageOption := &entity.VersionTriageOption{
+		VersionName: fromVersion,
+	}
+	versionTriages, err := repository.SelectVersionTriage(versionTriageOption)
+	if err != nil {
+		return err
+	}
+	if len(*versionTriages) == 0 {
+		return nil
+	}
+
+	// Migrate
+	for i := range *versionTriages {
+		versionTriage := (*versionTriages)[i]
+		switch versionTriage.TriageResult {
+		case entity.VersionTriageResultAccept:
+			versionTriage.TriageResult = entity.VersionTriageResultReleased
+		case entity.VersionTriageResultUnKnown:
+			versionTriage.VersionName = toVersion
+		case entity.VersionTriageResultLater, entity.VersionTriageResultAcceptFrozen:
+			versionTriage.VersionName = toVersion
+			versionTriage.TriageResult = entity.VersionTriageResultAccept
+		}
+		if err := repository.CreateOrUpdateVersionTriage(&versionTriage); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
 	if option == nil || option.Name == "" {
 		return nil, errors.New(fmt.Sprintf("CheckReleaseVersion params invalid: %+v failed", option))

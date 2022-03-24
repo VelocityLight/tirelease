@@ -46,6 +46,10 @@ func UpdateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
 		if nil != err {
 			return err
 		}
+		err = InheritVersionTriage(releaseVersion.Name, lastVersion.Name)
+		if nil != err {
+			return err
+		}
 	}
 	return nil
 }

@@ -22,5 +22,5 @@ func PullRequestCron() {
 	}
 	cron.Create("0 0 */1 * * ?", func() { service.CronRefreshPullRequestV4(params) })
 
-	cron.Create("0 0 */2 * * ?", func() { service.CronMergeRetryPullRequestV3() })
+	// cron.Create("0 0 */2 * * ?", func() { service.CronMergeRetryPullRequestV3() })
 }

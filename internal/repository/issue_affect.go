@@ -38,8 +38,12 @@ func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	// }
 
 	// update
-	issueAffect.CreateTime = time.Now()
-	issueAffect.UpdateTime = time.Now()
+	if issueAffect.CreateTime.IsZero() {
+		issueAffect.CreateTime = time.Now()
+	}
+	if issueAffect.UpdateTime.IsZero() {
+		issueAffect.UpdateTime = time.Now()
+	}
 	if err := database.DBConn.DB.Clauses(clause.OnConflict{
 		DoUpdates: clause.AssignmentColumns([]string{"update_time", "affect_result"}),
 	}).Create(&issueAffect).Error; err != nil {

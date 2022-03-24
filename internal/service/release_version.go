@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	// "tirelease/commons/git"
+	"tirelease/commons/git"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 
@@ -109,7 +109,7 @@ func ComposeVersionMinorName(version *entity.ReleaseVersion) string {
 }
 
 func ComposeVersionBranch(version *entity.ReleaseVersion) string {
-	return fmt.Sprintf("release-%d.%d", version.Major, version.Minor)
+	return fmt.Sprintf("%s%d.%d", git.ReleaseBranchPrefix, version.Major, version.Minor)
 }
 
 func ComposeVersionType(version *entity.ReleaseVersion) entity.ReleaseVersionType {

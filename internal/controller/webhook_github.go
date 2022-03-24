@@ -51,7 +51,8 @@ func GithubWebhookHandler(c *gin.Context) {
 		}
 
 	default:
-
+		c.JSON(http.StatusAccepted, gin.H{"status": "accepted but not supported"})
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "ok"})

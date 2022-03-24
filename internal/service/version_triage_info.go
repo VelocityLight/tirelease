@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"strings"
 
 	// "tirelease/commons/git"
 	"tirelease/commons/git"
@@ -223,4 +224,67 @@ func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVe
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already released or cancelled: %+v failed", releaseVersion))
 	}
 	return releaseVersion, nil
+}
+
+// Export history data (Only database operation, no remote operation)
+func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions *[]entity.ReleaseVersion) error {
+	// param check
+	if info == nil || releaseVersions == nil {
+		return errors.New("ExportHistoryVersionTriageInfo params invalid")
+	}
+	if len(*info.PullRequests) == 0 {
+		return nil
+	}
+
+	// insert version triage
+	for i := range *info.PullRequests {
+		pr := (*info.PullRequests)[i]
+		if !pr.Merged || !pr.CherryPickApproved ||
+			!strings.HasPrefix(pr.BaseBranch, git.ReleaseBranchPrefix) {
+			continue
+		}
+		releaseBranch := string(pr.BaseBranch)
+		branchVersion := strings.Replace(pr.BaseBranch, git.ReleaseBranchPrefix, "", -1)
+		major, minor, _, _ := ComposeVersionAtom(branchVersion)
+
+		// search version in time section
+		// release version is already sorted desc
+		for i := len(*releaseVersions) - 1; i >= 0; i-- {
+			releaseVersion := (*releaseVersions)[i]
+			if releaseVersion.Status != entity.ReleaseVersionStatusReleased {
+				continue
+			}
+			if releaseVersion.Major != major || releaseVersion.Minor != minor ||
+				releaseVersion.ReleaseBranch != releaseBranch {
+				continue
+			}
+			if releaseVersion.ActualReleaseTime.After(*(pr.MergedAt)) {
+				versionTriage := &entity.VersionTriage{
+					IssueID:      info.Issue.IssueID,
+					VersionName:  releaseVersion.Name,
+					TriageResult: entity.VersionTriageResultAccept,
+					CreateTime:   *(pr.MergedAt),
+					UpdateTime:   *(pr.MergedAt),
+				}
+				if err := repository.CreateOrUpdateVersionTriage(versionTriage); err != nil {
+					return err
+				}
+
+				issueAffect := &entity.IssueAffect{
+					IssueID:       info.Issue.IssueID,
+					AffectVersion: branchVersion,
+					AffectResult:  entity.AffectResultResultYes,
+					CreateTime:    *(pr.MergedAt),
+					UpdateTime:    *(pr.MergedAt),
+				}
+				if err := repository.CreateOrUpdateIssueAffect(issueAffect); err != nil {
+					return err
+				}
+
+				break
+			}
+		}
+	}
+
+	return nil
 }

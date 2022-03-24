@@ -14,34 +14,8 @@ func TestReleaseVersion(t *testing.T) {
 	var config = generateConfig()
 	database.Connect(config)
 
-	// Create
-	var version = &entity.ReleaseVersion{
-		Name:        "5.4.1",
-		Major:       5,
-		Minor:       4,
-		Patch:       1,
-		Description: "Patch版本5.4.1",
-		Owner:       "jcye",
-		Type:        entity.ReleaseVersionTypePatch,
-		Status:      entity.ReleaseVersionStatusPlanned,
-
-		Repos:  &[]string{"pingcap/tidb"},
-		Labels: &[]string{"affects-5.4"},
-	}
-	err := CreateReleaseVersion(version)
-	// Assert
-	assert.Equal(t, true, err == nil)
-
-	// Update
-	version.Status = entity.ReleaseVersionStatusReleased
-	err = UpdateReleaseVersion(version)
-	// Assert
-	assert.Equal(t, true, err == nil)
-
 	// Select
-	var option = &entity.ReleaseVersionOption{
-		Name: "5.4.1",
-	}
+	var option = &entity.ReleaseVersionOption{}
 	versions, err := SelectReleaseVersion(option)
 	// Assert
 	assert.Equal(t, true, err == nil)

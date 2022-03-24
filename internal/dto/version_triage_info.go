@@ -18,8 +18,10 @@ type VersionTriageInfo struct {
 	IsFrozen       bool                   `json:"is_frozen,omitempty"`
 	IsAccept       bool                   `json:"is_accept,omitempty"`
 
-	VersionTriage     *entity.VersionTriage `json:"version_triage,omitempty"`
-	IssueRelationInfo *IssueRelationInfo    `json:"issue_relation_info,omitempty"`
+	VersionTriage            *entity.VersionTriage           `json:"version_triage,omitempty"`
+	VersionTriageMergeStatus entity.VersionTriageMergeStatus `json:"version_triage_merge_status,omitempty"`
+
+	IssueRelationInfo *IssueRelationInfo `json:"issue_relation_info,omitempty"`
 }
 
 type VersionTriageInfoWrap struct {

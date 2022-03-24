@@ -32,6 +32,16 @@ func TestCronRefreshPullRequestV4(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 }
 
+func TestCronMergeRetryPullRequestV3(t *testing.T) {
+	// init
+	git.Connect(git.TestToken)
+	database.Connect(generateConfig())
+
+	// detail
+	err := CronMergeRetryPullRequestV3()
+	assert.Equal(t, true, err == nil)
+}
+
 func TestWebhookRefreshPullRequestV3(t *testing.T) {
 	// init
 	git.Connect(git.TestToken)

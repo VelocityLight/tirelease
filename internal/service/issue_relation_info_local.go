@@ -15,21 +15,14 @@ import (
 
 func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRelationInfo, error) {
 	// Select Issues
-	issueOption := &entity.IssueOption{
-		ID:      option.ID,
-		IssueID: option.IssueID,
-		Number:  option.Number,
-		State:   option.State,
-		Owner:   option.Owner,
-		Repo:    option.Repo,
-
-		SeverityLabel: option.SeverityLabel,
-		TypeLabel:     option.TypeLabel,
-	}
-	issues, err := repository.SelectIssue(issueOption)
+	issues, err := repository.SelectIssueRaw(&option.IssueOption)
 	if nil != err {
 		return nil, err
 	}
+	// count, err := repository.CountIssueRaw(&option.IssueOption)
+	// if nil != err {
+	// 	return nil, err
+	// }
 
 	// From Issue to select IssueAffects & IssuePrRelations & PullRequests
 	releaseVersionOption := &entity.ReleaseVersionOption{

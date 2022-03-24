@@ -39,6 +39,17 @@ const (
 	BlockVersionReleaseResultNoneBlock = BlockVersionReleaseResult("None Block")
 )
 
+// Enum type
+type VersionTriageMergeStatus string
+
+const (
+	VersionTriageMergeStatusPr        = VersionTriageMergeStatus("need pr")
+	VersionTriageMergeStatusApprove   = VersionTriageMergeStatus("need approve")
+	VersionTriageMergeStatusReview    = VersionTriageMergeStatus("need review")
+	VersionTriageMergeStatusCITesting = VersionTriageMergeStatus("ci testing")
+	VersionTriageMergeStatusMerged    = VersionTriageMergeStatus("finished")
+)
+
 // List Option
 type VersionTriageOption struct {
 	ID           int64               `json:"id" form:"id"`

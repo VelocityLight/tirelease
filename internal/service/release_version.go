@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	// "tirelease/commons/git"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 
@@ -16,7 +17,23 @@ func CreateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
 	releaseVersion.Type = ComposeVersionType(releaseVersion)
 	releaseVersion.Status = ComposeVersionStatus(releaseVersion.Type)
 	releaseVersion.ReleaseBranch = ComposeVersionBranch(releaseVersion)
-	return repository.CreateReleaseVersion(releaseVersion)
+	err := repository.CreateReleaseVersion(releaseVersion)
+	if nil != err {
+		return err
+	}
+
+	// if releaseVersion.Type == entity.ReleaseVersionTypeMinor {
+	// 	option := &entity.IssueOption {
+	// 		State: git.OpenStatus,
+	// 		SeverityLabels: []string{git.SeverityCriticalLabel, git.SeverityMajorLabel},
+	// 	}
+	// 	label := fmt.Sprintf(git.AffectsLabel, ComposeVersionMinorName(releaseVersion))
+	// 	err = RefreshIssueLabel(label, option)
+	// 	if nil != err {
+	// 		return err
+	// 	}
+	// }
+	return nil
 }
 
 func UpdateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
@@ -43,6 +60,10 @@ func UpdateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
 		}
 		lastVersion.Status = entity.ReleaseVersionStatusUpcoming
 		err = repository.UpdateReleaseVersion(lastVersion)
+		if nil != err {
+			return err
+		}
+		err = InheritVersionTriage(releaseVersion.Name, lastVersion.Name)
 		if nil != err {
 			return err
 		}

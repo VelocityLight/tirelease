@@ -35,8 +35,16 @@ func TestRepo(t *testing.T) {
 /**
 sql:
 
-INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tiflow','pingcap/tiflow', 'https://github.com/pingcap/tiflow', 'tiflow源码库');
 INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tidb','pingcap/tidb', 'https://github.com/pingcap/tidb', 'tidb源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tiflash','pingcap/tiflash', 'https://github.com/pingcap/tiflash', 'tiflash源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tidb-binlog','pingcap/tidb-binlog', 'https://github.com/pingcap/tidb-binlog', 'tidb-binlog源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','br','pingcap/br', 'https://github.com/pingcap/br', 'br源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tidb-tools','pingcap/tidb-tools', 'https://github.com/pingcap/tidb-tools', 'tidb-tools源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','tiflow','pingcap/tiflow', 'https://github.com/pingcap/tiflow', 'tiflow源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','dumpling','pingcap/dumpling', 'https://github.com/pingcap/dumpling', 'dumpling源码库');
+
 INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'tikv','tikv','tikv/tikv', 'https://github.com/tikv/tikv', 'tikv源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'tikv','pd','tikv/pd', 'https://github.com/tikv/pd', 'pd源码库');
+INSERT INTO repo (created_at, updated_at, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'tikv','importer','tikv/importer', 'https://github.com/tikv/importer', 'importer源码库');
 
 **/

@@ -12,10 +12,12 @@ import (
 
 // Cron Job
 type RefreshIssueParams struct {
-	Repos       *[]entity.Repo `json:"repos"`
-	BeforeHours int64          `json:"before_hours"`
-	Batch       int            `json:"batch"`
-	Total       int            `json:"total"`
+	Repos           *[]entity.Repo           `json:"repos"`
+	BeforeHours     int64                    `json:"before_hours"`
+	Batch           int                      `json:"batch"`
+	Total           int                      `json:"total"`
+	IsHistory       bool                     `json:"is_history"`
+	ReleaseVersions *[]entity.ReleaseVersion `json:"release_versions"`
 }
 
 func CronRefreshIssuesV4(params *RefreshIssueParams) error {
@@ -42,6 +44,13 @@ func CronRefreshIssuesV4(params *RefreshIssueParams) error {
 			err = SaveIssueRelationInfo(issueRelation)
 			if err != nil {
 				return err
+			}
+
+			if params.IsHistory {
+				err := ExportHistoryVersionTriageInfo(issueRelation, params.ReleaseVersions)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}

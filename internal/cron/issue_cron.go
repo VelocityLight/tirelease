@@ -19,6 +19,7 @@ func IssueCron() {
 		BeforeHours: -25,
 		Batch:       20,
 		Total:       500,
+		IsHistory:   false,
 	}
 	cron.Create("0 0 */1 * * ?", func() { service.CronRefreshIssuesV4(params) })
 }

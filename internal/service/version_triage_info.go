@@ -60,40 +60,68 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	}
 
 	// remote operation
-	if len(*issueRelationInfo.PullRequests) == 1 {
-		pr := (*issueRelationInfo.PullRequests)[0]
-		if !isFrozen && isAccept {
-			err := RemoveLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
-			if err != nil {
-				return nil, err
-			}
+	if len(*issueRelationInfo.PullRequests) > 0 {
+		for i := range *issueRelationInfo.PullRequests {
+			pr := (*issueRelationInfo.PullRequests)[i]
+			if !isFrozen && isAccept {
+				err := RemoveLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
+				if err != nil {
+					return nil, err
+				}
 
-			err = AddLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
-			if err != nil {
-				return nil, err
+				err = AddLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
+				if err != nil {
+					return nil, err
+				}
 			}
-		}
-		var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
-		if !isAccept && !isRelease {
-			err := RemoveLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
-			if err != nil {
-				return nil, err
-			}
+			var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
+			if !isAccept && !isRelease {
+				err := RemoveLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
+				if err != nil {
+					return nil, err
+				}
 
-			err = AddLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
-			if err != nil {
-				return nil, err
+				err = AddLabelByPullRequestID(pr.PullRequestID, git.NotCheryyPickLabel)
+				if err != nil {
+					return nil, err
+				}
 			}
 		}
 	}
 
-	// Return
+	// status
+	var status entity.VersionTriageMergeStatus
+	if len(*issueRelationInfo.PullRequests) == 0 {
+		status = entity.VersionTriageMergeStatusPr
+	} else {
+		allMerge := true
+		for _, pr := range *issueRelationInfo.PullRequests {
+			if !pr.CherryPickApproved {
+				status = entity.VersionTriageMergeStatusApprove
+				break
+			} else if !pr.AlreadyReviewed {
+				status = entity.VersionTriageMergeStatusReview
+				break
+			} else if !pr.Merged {
+				allMerge = false
+				break
+			}
+		}
+		if allMerge {
+			status = entity.VersionTriageMergeStatusMerged
+		} else {
+			status = entity.VersionTriageMergeStatusCITesting
+		}
+	}
+
+	// return
 	return &dto.VersionTriageInfo{
 		ReleaseVersion: releaseVersion,
+		IsFrozen:       isFrozen,
+		IsAccept:       isAccept,
 
-		VersionTriage: versionTriage,
-		IsFrozen:      isFrozen,
-		IsAccept:      isAccept,
+		VersionTriage:            versionTriage,
+		VersionTriageMergeStatus: status,
 
 		IssueRelationInfo: issueRelationInfo,
 	}, nil

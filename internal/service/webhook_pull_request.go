@@ -44,6 +44,30 @@ func CronRefreshPullRequestV4(params *RefreshPullRequestParams) error {
 	return nil
 }
 
+func CronMergeRetryPullRequestV3() error {
+	// select no merge PRs
+	option := &entity.PullRequestOption{
+		State:              git.PullRequestOpenStatus,
+		Merged:             false,
+		MergeableState:     &git.MergeableStateMergeable,
+		CherryPickApproved: true,
+		AlreadyReviewed:    true,
+	}
+	prs, err := repository.SelectPullRequest(option)
+	if err != nil {
+		return err
+	}
+
+	// retry
+	for _, pr := range *prs {
+		_, _, err := git.Client.CreateCommentByNumber(pr.Owner, pr.Repo, pr.Number, git.MergeRetryComment)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // Git Webhook
 // Webhook param only support v3 (v4 has no webhook right now)
 func WebhookRefreshPullRequestV3(pr *github.PullRequest) error {

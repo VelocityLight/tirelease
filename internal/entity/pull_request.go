@@ -54,6 +54,11 @@ type PullRequestOption struct {
 	Repo                string `json:"repo,omitempty" form:"repo"`
 	BaseBranch          string `json:"base_branch,omitempty" form:"base_branch"`
 	SourcePullRequestID string `json:"source_pull_request_id,omitempty" form:"source_pull_request_id"`
+
+	Merged             bool    `json:"merged,omitempty"`
+	MergeableState     *string `json:"mergeable_state,omitempty"`
+	CherryPickApproved bool    `json:"cherry_pick_approved,omitempty"`
+	AlreadyReviewed    bool    `json:"already_reviewed,omitempty"`
 }
 
 // DB-Table

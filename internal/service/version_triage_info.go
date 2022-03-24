@@ -261,7 +261,7 @@ func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions
 				versionTriage := &entity.VersionTriage{
 					IssueID:      info.Issue.IssueID,
 					VersionName:  releaseVersion.Name,
-					TriageResult: entity.VersionTriageResultAccept,
+					TriageResult: entity.VersionTriageResultReleased,
 					CreateTime:   *(pr.MergedAt),
 					UpdateTime:   *(pr.MergedAt),
 				}

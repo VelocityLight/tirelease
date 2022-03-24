@@ -232,7 +232,7 @@ func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions
 	if info == nil || releaseVersions == nil {
 		return errors.New("ExportHistoryVersionTriageInfo params invalid")
 	}
-	if len(*info.PullRequests) == 0 {
+	if info.PullRequests == nil || len(*info.PullRequests) == 0 {
 		return nil
 	}
 

@@ -63,9 +63,9 @@ func TestCronRefreshIssuesV42(t *testing.T) {
 
 	params := &RefreshIssueParams{
 		Repos:           repos,
-		BeforeHours:     -25,
-		Batch:           20,
-		Total:           500,
+		BeforeHours:     -8760,
+		Batch:           90,
+		Total:           1000,
 		IsHistory:       true,
 		ReleaseVersions: releaseVersions,
 	}

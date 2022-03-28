@@ -124,37 +124,37 @@ func IssueWhere(option *entity.IssueOption) string {
 	sql := ""
 
 	if option.ID != 0 {
-		sql += " and id = @ID"
+		sql += " and issue.id = @ID"
 	}
 	if option.IssueID != "" {
-		sql += " and issue_id = @IssueID"
+		sql += " and issue.issue_id = @IssueID"
 	}
 	if option.Number != 0 {
-		sql += " and number = @Number"
+		sql += " and issue.number = @Number"
 	}
 	if option.State != "" {
-		sql += " and state = @State"
+		sql += " and issue.state = @State"
 	}
 	if option.Owner != "" {
-		sql += " and owner = @Owner"
+		sql += " and issue.owner = @Owner"
 	}
 	if option.Repo != "" {
-		sql += " and repo = @Repo"
+		sql += " and issue.repo = @Repo"
 	}
 	if option.SeverityLabel != "" {
-		sql += " and severity_label = @SeverityLabel"
+		sql += " and issue.severity_label = @SeverityLabel"
 	}
 	if option.TypeLabel != "" {
-		sql += " and type_label = @TypeLabel"
+		sql += " and issue.type_label = @TypeLabel"
 	}
 	if option.IssueIDs != nil && len(option.IssueIDs) > 0 {
-		sql += " and issue_id in @IssueIDs"
+		sql += " and issue.issue_id in @IssueIDs"
 	}
 	if option.SeverityLabels != nil && len(option.SeverityLabels) > 0 {
-		sql += " and severity_label in @SeverityLabels"
+		sql += " and issue.severity_label in @SeverityLabels"
 	}
 	if option.NotSeverityLabels != nil && len(option.NotSeverityLabels) > 0 {
-		sql += " and severity_label not in @NotSeverityLabels"
+		sql += " and issue.severity_label not in @NotSeverityLabels"
 	}
 
 	return sql

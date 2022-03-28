@@ -64,6 +64,9 @@ func IssueAffectWhere(option *entity.IssueAffectOption) string {
 	if option.AffectVersion != "" {
 		sql += " and issue_affect.affect_version = @AffectVersion"
 	}
+	if option.AffectResult != "" {
+		sql += " and issue_affect.affect_result = @AffectResult"
+	}
 
 	return sql
 }

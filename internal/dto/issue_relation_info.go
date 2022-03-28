@@ -1,7 +1,6 @@
 package dto
 
 import (
-	"time"
 	"tirelease/internal/entity"
 )
 
@@ -28,28 +27,8 @@ type IssueRelationInfo struct {
 // Join IssueRelationInfo
 type IssueRelationInfoByJoin struct {
 	// issue
-	entity.Issue
+	IssueID string `json:"issue_id,omitempty"`
 
 	// issue_affect
-	IssueAffectJoin
-}
-
-type IssueAffectJoin struct {
-	AffectID      int64                     `json:"affect_id,omitempty"`
-	CreateTime    time.Time                 `json:"create_time"`
-	UpdateTime    time.Time                 `json:"update_time"`
-	AffectVersion string                    `json:"affect_version,omitempty"`
-	AffectResult  entity.AffectResultResult `json:"affect_result,omitempty"`
-}
-
-func ComposeIssueAffectFromJoin(join *IssueRelationInfoByJoin) *entity.IssueAffect {
-	return &entity.IssueAffect{
-		ID:         join.IssueAffectJoin.AffectID,
-		CreateTime: join.IssueAffectJoin.CreateTime,
-		UpdateTime: join.IssueAffectJoin.UpdateTime,
-
-		IssueID:       join.Issue.IssueID,
-		AffectVersion: join.IssueAffectJoin.AffectVersion,
-		AffectResult:  join.IssueAffectJoin.AffectResult,
-	}
+	IssueAffectIDs string `json:"issue_affect_ids,omitempty"`
 }

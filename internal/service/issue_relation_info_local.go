@@ -2,6 +2,8 @@ package service
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
@@ -64,6 +66,89 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 			}
 		}
 		issueRelationInfos[i].PullRequests = &pullRequests
+	}
+
+	return &issueRelationInfos, nil
+}
+
+func SelectIssueRelationInfoByJoin(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRelationInfo, error) {
+	// select join
+	joins, err := repository.SelectIssueRelationInfoByJoin(option)
+	if nil != err {
+		return nil, err
+	}
+
+	// compose
+	issueRelationInfos := make([]dto.IssueRelationInfo, 0)
+	for _, join := range *joins {
+		// issue
+		issueOption := &entity.IssueOption{
+			IssueID: join.IssueID,
+		}
+		issues, err := repository.SelectIssueRaw(issueOption)
+		if nil != err {
+			return nil, err
+		}
+		if issues != nil && len(*issues) != 1 {
+			continue
+		}
+		issue := (*issues)[0]
+
+		// issue_affects
+		issueAffects := make([]entity.IssueAffect, 0)
+		if join.IssueAffectIDs != "" {
+			ids := strings.Split(join.IssueAffectIDs, ",")
+			for _, id := range ids {
+				idint, _ := strconv.Atoi(id)
+				issueAffectOption := &entity.IssueAffectOption{
+					ID: (int64)(idint),
+				}
+				issueAffect, err := repository.SelectIssueAffect(issueAffectOption)
+				if nil != err {
+					return nil, err
+				}
+				if issueAffect != nil && len(*issueAffect) != 0 {
+					issueAffects = append(issueAffects, (*issueAffect)...)
+				}
+			}
+		}
+
+		// issue_pr_relations
+		issuePrRelationOption := &entity.IssuePrRelationOption{
+			IssueID: issue.IssueID,
+		}
+		issuePrRelations, err := repository.SelectIssuePrRelation(issuePrRelationOption)
+		if nil != err {
+			return nil, err
+		}
+
+		// prs
+		pullRequests := make([]entity.PullRequest, 0)
+		for _, issuePrRelation := range *issuePrRelations {
+			pullRequestOption := &entity.PullRequestOption{
+				PullRequestID: issuePrRelation.PullRequestID,
+			}
+			if option.BaseBranch != "" {
+				pullRequestOption.BaseBranch = option.BaseBranch
+			}
+
+			pullRequest, err := repository.SelectPullRequest(pullRequestOption)
+			if nil != err {
+				return nil, err
+			}
+			if pullRequest != nil && len(*pullRequest) != 0 {
+				pullRequests = append(pullRequests, (*pullRequest)...)
+			}
+		}
+
+		// return
+		issueRelationInfo := &dto.IssueRelationInfo{
+			Issue:            &issue,
+			IssueAffects:     &issueAffects,
+			IssuePrRelations: issuePrRelations,
+			PullRequests:     &pullRequests,
+		}
+		issueRelationInfos = append(issueRelationInfos, *issueRelationInfo)
 	}
 
 	return &issueRelationInfos, nil

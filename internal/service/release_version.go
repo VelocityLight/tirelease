@@ -156,7 +156,12 @@ func ComposeVersionAtom(version string) (major, minor, patch int, addition strin
 
 	slice := strings.Split(version, "-")
 	if len(slice) >= 2 {
-		addition = slice[1]
+		for _, v := range slice[1:] {
+			addition += v
+			if v != slice[len(slice)-1] {
+				addition += "-"
+			}
+		}
 	}
 
 	slice = strings.Split(slice[0], ".")

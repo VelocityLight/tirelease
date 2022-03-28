@@ -25,9 +25,10 @@ const (
 
 // List Option
 type IssueAffectOption struct {
-	ID            int64  `json:"id,omitempty" form:"id"`
-	IssueID       string `json:"issue_id,omitempty" form:"issue_id"`
-	AffectVersion string `json:"affect_version,omitempty" form:"affect_version"`
+	ID            int64              `json:"id,omitempty" form:"id"`
+	IssueID       string             `json:"issue_id,omitempty" form:"issue_id"`
+	AffectVersion string             `json:"affect_version,omitempty" form:"affect_version"`
+	AffectResult  AffectResultResult `json:"affect_result,omitempty" form:"affect_result"`
 }
 
 // Update Option

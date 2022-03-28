@@ -16,7 +16,7 @@ func PullRequestCron() {
 	}
 	params := &service.RefreshPullRequestParams{
 		Repos:       repos,
-		BeforeHours: -25,
+		BeforeHours: -2,
 		Batch:       20,
 		Total:       500,
 	}

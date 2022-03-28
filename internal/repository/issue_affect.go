@@ -51,3 +51,22 @@ func CreateOrUpdateIssueAffect(issueAffect *entity.IssueAffect) error {
 	}
 	return nil
 }
+
+func IssueAffectWhere(option *entity.IssueAffectOption) string {
+	sql := ""
+
+	if option.ID != 0 {
+		sql += " and issue_affect.id = @ID"
+	}
+	if option.IssueID != "" {
+		sql += " and issue_affect.issue_id = @IssueID"
+	}
+	if option.AffectVersion != "" {
+		sql += " and issue_affect.affect_version = @AffectVersion"
+	}
+	if option.AffectResult != "" {
+		sql += " and issue_affect.affect_result = @AffectResult"
+	}
+
+	return sql
+}

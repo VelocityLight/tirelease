@@ -232,7 +232,7 @@ func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions
 	if info == nil || releaseVersions == nil {
 		return errors.New("ExportHistoryVersionTriageInfo params invalid")
 	}
-	if len(*info.PullRequests) == 0 {
+	if info.PullRequests == nil || len(*info.PullRequests) == 0 {
 		return nil
 	}
 
@@ -254,15 +254,14 @@ func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions
 			if releaseVersion.Status != entity.ReleaseVersionStatusReleased {
 				continue
 			}
-			if releaseVersion.Major != major || releaseVersion.Minor != minor ||
-				releaseVersion.ReleaseBranch != releaseBranch {
+			if releaseVersion.Major != major || releaseVersion.Minor != minor || releaseVersion.ReleaseBranch != releaseBranch {
 				continue
 			}
 			if releaseVersion.ActualReleaseTime.After(*(pr.MergedAt)) {
 				versionTriage := &entity.VersionTriage{
 					IssueID:      info.Issue.IssueID,
 					VersionName:  releaseVersion.Name,
-					TriageResult: entity.VersionTriageResultAccept,
+					TriageResult: entity.VersionTriageResultReleased,
 					CreateTime:   *(pr.MergedAt),
 					UpdateTime:   *(pr.MergedAt),
 				}

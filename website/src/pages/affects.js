@@ -10,36 +10,36 @@ import Tab from "@mui/material/Tab";
 import React from "react";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import { useQuery } from "react-query";
-import { url, currentVersions } from "../utils";
 import Columns from "../components/issues/GridColumns";
-import {
-  repo,
-  state,
-  affectState,
-  severity,
-  hasPR,
-  OR,
-} from "../components/issues/filter/index";
+import { affectState, severity, OR } from "../components/issues/filter/index";
+import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
+import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
 
-const AffectTriage = () => {
+const VersionTabs = () => {
   const [tab, setTab] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
   };
 
-  const { isLoading, error, data } = useQuery("issue", () => {
-    return fetch(url("issue"))
-      .then((res) => {
-        const data = res.json();
-        return data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
-
+  const versionQuery = useQuery(["version", "maintained"], fetchVersion);
+  const issueQuery = useQuery("issue", fetchIssue);
+  if (issueQuery.isLoading || versionQuery.isLoading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+  if (issueQuery.isError || versionQuery.isError) {
+    return (
+      <div>
+        <p>{issueQuery.error || versionQuery.error}</p>
+      </div>
+    );
+  }
   const affectColumns = [];
+  const currentVersions = versionQuery.data;
   if (tab === 0) {
     affectColumns.push(...currentVersions.map(Columns.getAffectionOnVersion));
   } else {
@@ -56,6 +56,32 @@ const AffectTriage = () => {
   }
 
   return (
+    <>
+      <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
+        <Tab label="All" />
+        {currentVersions.map((v) => (
+          <Tab label={v}></Tab>
+        ))}
+      </Tabs>
+      <IssueGrid
+        data={issueQuery.data.data}
+        columns={[
+          Columns.repo,
+          Columns.number,
+          Columns.title,
+          Columns.state,
+          Columns.type,
+          Columns.severity,
+          ...affectColumns,
+        ]}
+        filters={filters}
+      ></IssueGrid>
+    </>
+  );
+};
+
+const AffectTriage = () => {
+  return (
     <Layout>
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
         <Accordion defaultExpanded={true}>
@@ -64,35 +90,8 @@ const AffectTriage = () => {
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{ width: "100%" }}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                  value={tab}
-                  onChange={handleChange}
-                  aria-label="basic tabs example"
-                >
-                  <Tab label="All" />
-                  {currentVersions.map((v) => (
-                    <Tab label={v}></Tab>
-                  ))}
-                </Tabs>
-              </Box>
-              {isLoading && <p>Loading...</p>}
-              {error && <p>Error: {error.message}</p>}
-              {data && (
-                <IssueGrid
-                  data={data.data}
-                  columns={[
-                    Columns.repo,
-                    Columns.number,
-                    Columns.title,
-                    Columns.state,
-                    Columns.type,
-                    Columns.severity,
-                    ...affectColumns,
-                  ]}
-                  filters={filters}
-                ></IssueGrid>
-              )}
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}></Box>
+              <VersionTabs></VersionTabs>
             </Box>
           </AccordionDetails>
         </Accordion>

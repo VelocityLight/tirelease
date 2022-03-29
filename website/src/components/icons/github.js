@@ -23,7 +23,7 @@ export function GithubIcon(props) {
           ></path>
           <path
             fill={props.fill || "#fff"}
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z"
           ></path>
         </>
@@ -36,7 +36,7 @@ export function GithubIcon(props) {
           ></path>
           <path
             fill={props.fill || "#fff"}
-            fill-rule="evenodd"
+            fillRule="evenodd"
             d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-1.5 0a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"
           ></path>
         </>
@@ -48,7 +48,7 @@ export function GithubIcon(props) {
 export function MergedIcon(props) {
   return (
     <SvgIcon viewBox="0 0 16 16" {...props}>
-      <path fill={props.fill || "#fff"} fill-rule="evenodd"></path>
+      <path fill={props.fill || "#fff"} fillRule="evenodd"></path>
     </SvgIcon>
   );
 }

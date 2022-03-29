@@ -24,7 +24,7 @@ export function type(issueType) {
 
 export function affectState(version, state) {
   return (item) => {
-    const affect = item.IssueAffects.filter(
+    const affect = item.IssueAffects?.filter(
       (affects) => affects.affect_version === version
     )[0];
     if (affect === undefined) {
@@ -46,7 +46,7 @@ export function affectUnknown(version) {
 
 export function PR(branch, has) {
   return (item) => {
-    const pr = item.PullRequests.filter((pr) => pr.base_branch === branch)[0];
+    const pr = item.PullRequests?.filter((pr) => pr.base_branch === branch)[0];
     return (pr === undefined) !== has;
   };
 }
@@ -61,7 +61,7 @@ export function noPR(branch) {
 
 export function pick(version, state) {
   return (item) => {
-    const pick = item.VersionTriages.filter((t) =>
+    const pick = item.VersionTriages?.filter((t) =>
       t.version_name.startsWith(version)
     )[0];
     if (pick === undefined && state === "unknown") {
@@ -101,7 +101,9 @@ export function closedByPRDuring(from, to) {
   const f = new Date(from);
   const t = new Date(to);
   return (item) => {
-    const pr = item.PullRequests.filter((pr) => pr.base_branch === "master")[0];
+    const pr = item.PullRequests?.filter(
+      (pr) => pr.base_branch === "master"
+    )[0];
     if (pr === undefined || pr.merged_at === undefined) {
       return false;
     }

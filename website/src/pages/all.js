@@ -12,37 +12,29 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 
 import { useQuery } from "react-query";
-import { url, currentVersions } from "../utils";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
+import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
+import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
 
 function Table() {
-  const { isLoading, error, data } = useQuery("issue", () => {
-    return fetch(url("issue"))
-      .then((res) => {
-        const data = res.json();
-        return data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
-  console.log(isLoading, error, data);
-  if (isLoading) {
+  const issueQuery = useQuery("issue", fetchIssue);
+  const versionQuery = useQuery(["version", "maintained"], fetchVersion);
+  if (issueQuery.isLoading || versionQuery.isLoading) {
     return (
       <div>
         <p>Loading...</p>
       </div>
     );
   }
-  if (error) {
+  if (issueQuery.error || versionQuery.error) {
     return (
       <div>
-        <p>Error: {error.message}</p>
+        <p>Error: {issueQuery.error || versionQuery.error}</p>
       </div>
     );
   }
-  console.log("fetched data", data);
+
   const columns = [
     Columns.repo,
     Columns.number,
@@ -53,7 +45,7 @@ function Table() {
     Columns.severity,
     Columns.labels,
   ];
-  for (const version of currentVersions) {
+  for (const version of versionQuery.data) {
     columns.push(
       Columns.getAffectionOnVersion(version),
       Columns.getPROnVersion(version),
@@ -61,7 +53,11 @@ function Table() {
     );
   }
   return (
-    <IssueGrid data={data.data} columns={columns} filters={[]}></IssueGrid>
+    <IssueGrid
+      data={issueQuery.data.data}
+      columns={columns}
+      filters={[]}
+    ></IssueGrid>
   );
 }
 

@@ -7,8 +7,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
-import { currentVersions, url } from "../utils";
 import { useQuery } from "react-query";
+import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
+import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
 import {
   OR,
   severity,
@@ -18,23 +19,37 @@ import {
   closedByPRSince,
 } from "../components/issues/filter/index";
 
-function PickTriage() {
+const Table = ({ tab }) => {
   const filters = [
     type("bug"),
     OR([severity("critical"), severity("major")]),
     state("closed"),
   ];
   const pickColumns = [];
-  for (const version of currentVersions) {
+
+  const versionQuery = useQuery(["version", "maintained"], fetchVersion);
+  const issueQuery = useQuery("issue", fetchIssue);
+  if (issueQuery.isLoading || versionQuery.isLoading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+  if (versionQuery.isError || issueQuery.isError) {
+    return (
+      <div>
+        <p>Error: {versionQuery.error || issueQuery.error}</p>
+      </div>
+    );
+  }
+  for (const version of versionQuery.data) {
     pickColumns.push(
       Columns.getAffectionOnVersion(version),
       Columns.getPROnVersion(version),
       Columns.getPickOnVersion(version)
     );
   }
-
-  const [tab, setTab] = React.useState(0);
-  const tabs = ["Closed in 24h", "Closed in 7d", "Closed in 30d", "ALL"];
   switch (tab) {
     case 0:
       filters.push(closedByPRIn24h());
@@ -54,20 +69,31 @@ function PickTriage() {
     default:
       break;
   }
+  return (
+    <IssueGrid
+      columns={[
+        Columns.repo,
+        Columns.number,
+        Columns.title,
+        Columns.type,
+        Columns.severity,
+        Columns.state,
+        Columns.pr,
+        ...pickColumns,
+      ]}
+      data={issueQuery.data.data}
+      filters={filters}
+    ></IssueGrid>
+  );
+};
+
+function PickTriage() {
+  const [tab, setTab] = React.useState(0);
+  const tabs = ["Closed in 24h", "Closed in 7d", "Closed in 30d", "ALL"];
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
   };
-  const { isLoading, error, data } = useQuery("issue", () => {
-    return fetch(url("issue"))
-      .then((res) => {
-        const data = res.json();
-        return data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
   return (
     <Layout>
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
@@ -81,24 +107,7 @@ function PickTriage() {
                 <Tab label={v}></Tab>
               ))}
             </Tabs>
-            {isLoading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
-            {data && (
-              <IssueGrid
-                columns={[
-                  Columns.repo,
-                  Columns.number,
-                  Columns.title,
-                  Columns.type,
-                  Columns.severity,
-                  Columns.state,
-                  Columns.pr,
-                  ...pickColumns,
-                ]}
-                data={data.data}
-                filters={filters}
-              ></IssueGrid>
-            )}
+            <Table tab={tab}></Table>
           </AccordionDetails>
         </Accordion>
       </Container>

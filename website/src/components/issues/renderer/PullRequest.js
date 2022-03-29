@@ -2,7 +2,7 @@ import { Chip } from "@mui/material";
 import { GithubIcon } from "../../icons/github.js";
 
 function filter(params, branch) {
-  return params.row.PullRequests.filter((pr) => pr.base_branch === branch)[0];
+  return params.row.PullRequests?.filter((pr) => pr.base_branch === branch)[0];
 }
 
 export function getPullRequest(branch) {

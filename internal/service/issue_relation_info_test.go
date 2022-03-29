@@ -41,8 +41,9 @@ func TestSelectIssueRelationInfo(t *testing.T) {
 			IssueID: git.TestIssueNodeID,
 		},
 	}
-	issueRelationInfos, err := SelectIssueRelationInfo(option)
+	issueRelationInfos, response, err := SelectIssueRelationInfo(option)
 	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, response.TotalCount > 0)
 	assert.Equal(t, true, len(*issueRelationInfos) > 0)
 }
 
@@ -57,7 +58,8 @@ func TestSelectIssueRelationInfoByState(t *testing.T) {
 			State: "open",
 		},
 	}
-	issueRelationInfos, err := SelectIssueRelationInfo(option)
+	issueRelationInfos, response, err := SelectIssueRelationInfo(option)
 	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, response.TotalCount > 0)
 	assert.Equal(t, true, len(*issueRelationInfos) > 0)
 }

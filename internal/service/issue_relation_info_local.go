@@ -14,12 +14,23 @@ import (
 
 // ============================================================================
 // ============================================================================ CURD Of IssueRelationInfo
-func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRelationInfo, error) {
+func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRelationInfo, *entity.ListResponse, error) {
 	// select join
 	joins, err := repository.SelectIssueRelationInfoByJoin(option)
 	if nil != err {
-		return nil, err
+		return nil, nil, err
 	}
+
+	count, err := repository.CountIssueRelationInfoByJoin(option)
+	if nil != err {
+		return nil, nil, err
+	}
+	listResponse := &entity.ListResponse{
+		TotalCount: count,
+		Page:       option.IssueOption.Page,
+		PerPage:    option.IssueOption.PerPage,
+	}
+	listResponse.CalcTotalPage()
 
 	// compose
 	issueRelationInfos := make([]dto.IssueRelationInfo, 0)
@@ -32,7 +43,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		}
 		issue, err := repository.SelectIssueUnique(issueOption)
 		if nil != err {
-			return nil, err
+			return nil, nil, err
 		}
 		issueRelationInfo.Issue = issue
 
@@ -50,7 +61,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 			}
 			issueAffects, err := repository.SelectIssueAffect(issueAffectOption)
 			if nil != err {
-				return nil, err
+				return nil, nil, err
 			}
 			issueRelationInfo.IssueAffects = issueAffects
 		}
@@ -61,7 +72,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		}
 		issuePrRelations, err := repository.SelectIssuePrRelation(issuePrRelationOption)
 		if nil != err {
-			return nil, err
+			return nil, nil, err
 		}
 		issueRelationInfo.IssuePrRelations = issuePrRelations
 
@@ -80,7 +91,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 			}
 			pullRequests, err := repository.SelectPullRequest(pullRequestOption)
 			if nil != err {
-				return nil, err
+				return nil, nil, err
 			}
 			issueRelationInfo.PullRequests = pullRequests
 		}
@@ -89,11 +100,11 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		issueRelationInfos = append(issueRelationInfos, *issueRelationInfo)
 	}
 
-	return &issueRelationInfos, nil
+	return &issueRelationInfos, listResponse, nil
 }
 
 func SelectIssueRelationInfoUnique(option *dto.IssueRelationInfoQuery) (*dto.IssueRelationInfo, error) {
-	infos, err := SelectIssueRelationInfo(option)
+	infos, _, err := SelectIssueRelationInfo(option)
 	if nil != err {
 		return nil, err
 	}

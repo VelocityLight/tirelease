@@ -154,7 +154,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	versionTriageInfos := make([]dto.VersionTriageInfo, 0)
 	for i := range *versionTriages {
 		versionTriage := (*versionTriages)[i]
-		issueRelationInfos, err := SelectIssueRelationInfo(&dto.IssueRelationInfoQuery{
+		issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
 			IssueOption: entity.IssueOption{
 				IssueID: versionTriage.IssueID,
 			},
@@ -166,9 +166,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 
 		versionTriageInfo := dto.VersionTriageInfo{}
 		versionTriageInfo.VersionTriage = &versionTriage
-		if len(*issueRelationInfos) == 1 {
-			versionTriageInfo.IssueRelationInfo = &(*issueRelationInfos)[0]
-		}
+		versionTriageInfo.IssueRelationInfo = issueRelationInfo
 		versionTriageInfo.ReleaseVersion = releaseVersion
 		versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
 	}

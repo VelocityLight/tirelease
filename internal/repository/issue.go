@@ -12,32 +12,7 @@ import (
 	"gorm.io/gorm/clause"
 )
 
-// func CreateIssue(issue *entity.Issue) error {
-// 	// 加工
-// 	serializeIssue(issue)
-
-// 	// 存储
-// 	if err := database.DBConn.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&issue).Error; err != nil {
-// 		return errors.Wrap(err, fmt.Sprintf("create issue: %+v failed", issue))
-// 	}
-// 	return nil
-// }
-
 func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
-	// 查询
-	var issues []entity.Issue
-	if err := database.DBConn.DB.Where(option).Order("updated_at desc").Find(&issues).Error; err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("find issue: %+v failed", option))
-	}
-
-	// 加工
-	for i := 0; i < len(issues); i++ {
-		unSerializeIssue(&issues[i])
-	}
-	return &issues, nil
-}
-
-func SelectIssueRaw(option *entity.IssueOption) (*[]entity.Issue, error) {
 	sql := "select * from issue where 1=1" + IssueWhere(option) + IssueOrderBy(option) + IssueLimit(option)
 
 	// 查询
@@ -45,16 +20,23 @@ func SelectIssueRaw(option *entity.IssueOption) (*[]entity.Issue, error) {
 	if err := database.DBConn.RawWrapper(sql, option).Find(&issues).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("select issue by raw failed, option: %+v", option))
 	}
+
+	// 加工
+	for i := 0; i < len(issues); i++ {
+		unSerializeIssue(&issues[i])
+	}
+
 	return &issues, nil
 }
 
-func CountIssueRaw(option *entity.IssueOption) (int64, error) {
+func CountIssue(option *entity.IssueOption) (int64, error) {
 	sql := "select count(*) from issue where 1=1" + IssueWhere(option) + IssueOrderBy(option) + IssueLimit(option)
 
 	var count int64
 	if err := database.DBConn.RawWrapper(sql, option).Count(&count).Error; err != nil {
 		return 0, errors.Wrap(err, fmt.Sprintf("count issue by raw failed, option: %+v", option))
 	}
+
 	return count, nil
 }
 
@@ -72,15 +54,9 @@ func SelectIssueUnique(option *entity.IssueOption) (*entity.Issue, error) {
 	if len(*issues) > 1 {
 		return nil, errors.New(fmt.Sprintf("more than one issue found: %+v", option))
 	}
+
 	return &((*issues)[0]), nil
 }
-
-// func DeleteIssue(issue *entity.Issue) error {
-// 	if err := database.DBConn.DB.Delete(issue).Error; err != nil {
-// 		return errors.Wrap(err, fmt.Sprintf("delete issue: %+v failed", issue))
-// 	}
-// 	return nil
-// }
 
 func CreateOrUpdateIssue(issue *entity.Issue) error {
 	// 加工
@@ -92,8 +68,27 @@ func CreateOrUpdateIssue(issue *entity.Issue) error {
 	}).Omit("Labels", "Assignees").Create(&issue).Error; err != nil {
 		return errors.Wrap(err, fmt.Sprintf("create or update issue: %+v failed", issue))
 	}
+
 	return nil
 }
+
+// func DeleteIssue(issue *entity.Issue) error {
+// 	if err := database.DBConn.DB.Delete(issue).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("delete issue: %+v failed", issue))
+// 	}
+// 	return nil
+// }
+
+// func CreateIssue(issue *entity.Issue) error {
+// 	// 加工
+// 	serializeIssue(issue)
+
+// 	// 存储
+// 	if err := database.DBConn.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&issue).Error; err != nil {
+// 		return errors.Wrap(err, fmt.Sprintf("create issue: %+v failed", issue))
+// 	}
+// 	return nil
+// }
 
 // 序列化和反序列化
 func serializeIssue(issue *entity.Issue) {

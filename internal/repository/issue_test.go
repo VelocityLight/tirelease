@@ -28,8 +28,8 @@ func TestSelectIssueRaw(t *testing.T) {
 			Order:   "desc",
 		},
 	}
-	issues, err := SelectIssueRaw(option)
-	count, _ := CountIssueRaw(option)
+	issues, err := SelectIssue(option)
+	count, _ := CountIssue(option)
 	// Assert
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(*issues) > 0)

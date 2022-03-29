@@ -14,64 +14,7 @@ import (
 
 // ============================================================================
 // ============================================================================ CURD Of IssueRelationInfo
-
 func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRelationInfo, error) {
-	// Select Issues
-	issues, err := repository.SelectIssueRaw(&option.IssueOption)
-	if nil != err {
-		return nil, err
-	}
-	// count, err := repository.CountIssueRaw(&option.IssueOption)
-	// if nil != err {
-	// 	return nil, err
-	// }
-
-	// From Issue to select IssueAffects & IssuePrRelations & PullRequests
-	releaseVersionOption := &entity.ReleaseVersionOption{
-		Status: entity.ReleaseVersionStatusUpcoming,
-	}
-	releaseVersions, err := repository.SelectReleaseVersion(releaseVersionOption)
-	if nil != err {
-		return nil, err
-	}
-	alls := make([]dto.IssueRelationInfo, 0)
-	for i := range *issues {
-		issueRelationInfo, err := ComposeRelationInfoByIssue(&((*issues)[i]), releaseVersions)
-		if nil != err {
-			return nil, err
-		}
-		alls = append(alls, *issueRelationInfo)
-	}
-
-	// Filter & Result
-	issueRelationInfos := make([]dto.IssueRelationInfo, 0)
-	for i := range alls {
-		var filter bool = false
-		for _, issueAffect := range *(alls[i].IssueAffects) {
-			if option.AffectVersion == "" || issueAffect.AffectVersion == option.AffectVersion {
-				filter = true
-				break
-			}
-		}
-		if filter {
-			issueRelationInfos = append(issueRelationInfos, alls[i])
-		}
-	}
-	for i := range issueRelationInfos {
-		pullRequests := make([]entity.PullRequest, 0)
-		for j := range *(issueRelationInfos[i].PullRequests) {
-			pr := (*(issueRelationInfos[i].PullRequests))[j]
-			if option.BaseBranch == "" || pr.BaseBranch == option.BaseBranch {
-				pullRequests = append(pullRequests, pr)
-			}
-		}
-		issueRelationInfos[i].PullRequests = &pullRequests
-	}
-
-	return &issueRelationInfos, nil
-}
-
-func SelectIssueRelationInfoByJoin(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRelationInfo, error) {
 	// select join
 	joins, err := repository.SelectIssueRelationInfoByJoin(option)
 	if nil != err {
@@ -81,36 +24,35 @@ func SelectIssueRelationInfoByJoin(option *dto.IssueRelationInfoQuery) (*[]dto.I
 	// compose
 	issueRelationInfos := make([]dto.IssueRelationInfo, 0)
 	for _, join := range *joins {
+		issueRelationInfo := &dto.IssueRelationInfo{}
+
 		// issue
 		issueOption := &entity.IssueOption{
 			IssueID: join.IssueID,
 		}
-		issues, err := repository.SelectIssueRaw(issueOption)
+		issue, err := repository.SelectIssueUnique(issueOption)
 		if nil != err {
 			return nil, err
 		}
-		if issues != nil && len(*issues) != 1 {
-			continue
-		}
-		issue := (*issues)[0]
+		issueRelationInfo.Issue = issue
 
 		// issue_affects
-		issueAffects := make([]entity.IssueAffect, 0)
 		if join.IssueAffectIDs != "" {
+			idList := make([]int64, 0)
 			ids := strings.Split(join.IssueAffectIDs, ",")
 			for _, id := range ids {
 				idint, _ := strconv.Atoi(id)
-				issueAffectOption := &entity.IssueAffectOption{
-					ID: (int64)(idint),
-				}
-				issueAffect, err := repository.SelectIssueAffect(issueAffectOption)
-				if nil != err {
-					return nil, err
-				}
-				if issueAffect != nil && len(*issueAffect) != 0 {
-					issueAffects = append(issueAffects, (*issueAffect)...)
-				}
+				idList = append(idList, int64(idint))
 			}
+
+			issueAffectOption := &entity.IssueAffectOption{
+				IDs: idList,
+			}
+			issueAffects, err := repository.SelectIssueAffect(issueAffectOption)
+			if nil != err {
+				return nil, err
+			}
+			issueRelationInfo.IssueAffects = issueAffects
 		}
 
 		// issue_pr_relations
@@ -121,33 +63,29 @@ func SelectIssueRelationInfoByJoin(option *dto.IssueRelationInfoQuery) (*[]dto.I
 		if nil != err {
 			return nil, err
 		}
+		issueRelationInfo.IssuePrRelations = issuePrRelations
 
 		// prs
-		pullRequests := make([]entity.PullRequest, 0)
-		for _, issuePrRelation := range *issuePrRelations {
+		if issuePrRelations != nil && len(*issuePrRelations) > 0 {
+			pullRequestIDs := make([]string, 0)
+			for _, issuePrRelation := range *issuePrRelations {
+				pullRequestIDs = append(pullRequestIDs, string(issuePrRelation.PullRequestID))
+			}
+
 			pullRequestOption := &entity.PullRequestOption{
-				PullRequestID: issuePrRelation.PullRequestID,
+				PullRequestIDs: pullRequestIDs,
 			}
 			if option.BaseBranch != "" {
 				pullRequestOption.BaseBranch = option.BaseBranch
 			}
-
-			pullRequest, err := repository.SelectPullRequest(pullRequestOption)
+			pullRequests, err := repository.SelectPullRequest(pullRequestOption)
 			if nil != err {
 				return nil, err
 			}
-			if pullRequest != nil && len(*pullRequest) != 0 {
-				pullRequests = append(pullRequests, (*pullRequest)...)
-			}
+			issueRelationInfo.PullRequests = pullRequests
 		}
 
 		// return
-		issueRelationInfo := &dto.IssueRelationInfo{
-			Issue:            &issue,
-			IssueAffects:     &issueAffects,
-			IssuePrRelations: issuePrRelations,
-			PullRequests:     &pullRequests,
-		}
 		issueRelationInfos = append(issueRelationInfos, *issueRelationInfo)
 	}
 
@@ -206,57 +144,4 @@ func SaveIssueRelationInfo(issueRelationInfo *dto.IssueRelationInfo) error {
 	}
 
 	return nil
-}
-
-// ============================================================================
-// ============================================================================ Inner Function
-
-func ComposeRelationInfoByIssue(issue *entity.Issue, releaseVersions *[]entity.ReleaseVersion) (*dto.IssueRelationInfo, error) {
-	// Find IssueAffects
-	issueAffects, err := ComposeIssueAffectWithIssueID(issue.IssueID, releaseVersions)
-	if nil != err {
-		return nil, err
-	}
-
-	// Find IssuePrRelations
-	issuePrRelationOption := &entity.IssuePrRelationOption{
-		IssueID: issue.IssueID,
-	}
-	issuePrRelations, err := repository.SelectIssuePrRelation(issuePrRelationOption)
-	if nil != err {
-		return nil, err
-	}
-
-	// Find PullRequests
-	pullRequests := make([]entity.PullRequest, 0)
-	for i := range *issuePrRelations {
-		issuePrRelation := (*issuePrRelations)[i]
-		pullRequestOption := &entity.PullRequestOption{
-			PullRequestID: issuePrRelation.PullRequestID,
-		}
-		pullRequest, err := repository.SelectPullRequestUnique(pullRequestOption)
-		if nil != err {
-			return nil, err
-		}
-		pullRequests = append(pullRequests, *pullRequest)
-	}
-
-	// Find VersionTriage
-	versionTriageOption := &entity.VersionTriageOption{
-		IssueID: issue.IssueID,
-	}
-	versionTriages, err := repository.SelectVersionTriage(versionTriageOption)
-	if nil != err {
-		return nil, err
-	}
-
-	// Construct IssueRelationInfo
-	issueRelationInfo := &dto.IssueRelationInfo{
-		Issue:            issue,
-		IssueAffects:     issueAffects,
-		IssuePrRelations: issuePrRelations,
-		PullRequests:     &pullRequests,
-		VersionTriages:   versionTriages,
-	}
-	return issueRelationInfo, nil
 }

@@ -19,7 +19,7 @@ func SelectIssueRelationInfos(c *gin.Context) {
 	}
 
 	// Action
-	issueRelationInfos, err := service.SelectIssueRelationInfoByJoin(&option)
+	issueRelationInfos, err := service.SelectIssueRelationInfo(&option)
 	if err != nil {
 		c.Error(err)
 		return

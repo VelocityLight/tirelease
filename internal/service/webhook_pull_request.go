@@ -46,12 +46,15 @@ func CronRefreshPullRequestV4(params *RefreshPullRequestParams) error {
 
 func CronMergeRetryPullRequestV3() error {
 	// select no merge PRs
+	merged := false
+	cherryPickApproved := true
+	alreadyReviewed := true
 	option := &entity.PullRequestOption{
 		State:              git.OpenStatus,
-		Merged:             false,
+		Merged:             &merged,
 		MergeableState:     &git.MergeableStateMergeable,
-		CherryPickApproved: true,
-		AlreadyReviewed:    true,
+		CherryPickApproved: &cherryPickApproved,
+		AlreadyReviewed:    &alreadyReviewed,
 	}
 	prs, err := repository.SelectPullRequest(option)
 	if err != nil {

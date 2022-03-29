@@ -46,19 +46,22 @@ type PullRequest struct {
 
 // List Option
 type PullRequestOption struct {
-	ID                  int64  `json:"id" form:"id"`
-	PullRequestID       string `json:"pull_request_id,omitempty" form:"pull_request_id"`
-	Number              int    `json:"number,omitempty" form:"number"`
-	State               string `json:"state,omitempty" form:"state"`
-	Owner               string `json:"owner,omitempty" form:"owner"`
-	Repo                string `json:"repo,omitempty" form:"repo"`
-	BaseBranch          string `json:"base_branch,omitempty" form:"base_branch"`
-	SourcePullRequestID string `json:"source_pull_request_id,omitempty" form:"source_pull_request_id"`
+	ID                  int64   `json:"id" form:"id"`
+	PullRequestID       string  `json:"pull_request_id,omitempty" form:"pull_request_id"`
+	Number              int     `json:"number,omitempty" form:"number"`
+	State               string  `json:"state,omitempty" form:"state"`
+	Owner               string  `json:"owner,omitempty" form:"owner"`
+	Repo                string  `json:"repo,omitempty" form:"repo"`
+	BaseBranch          string  `json:"base_branch,omitempty" form:"base_branch"`
+	SourcePullRequestID string  `json:"source_pull_request_id,omitempty" form:"source_pull_request_id"`
+	Merged              *bool   `json:"merged,omitempty"`
+	MergeableState      *string `json:"mergeable_state,omitempty"`
+	CherryPickApproved  *bool   `json:"cherry_pick_approved,omitempty"`
+	AlreadyReviewed     *bool   `json:"already_reviewed,omitempty"`
 
-	Merged             bool    `json:"merged,omitempty"`
-	MergeableState     *string `json:"mergeable_state,omitempty"`
-	CherryPickApproved bool    `json:"cherry_pick_approved,omitempty"`
-	AlreadyReviewed    bool    `json:"already_reviewed,omitempty"`
+	PullRequestIDs []string `json:"pull_request_ids,omitempty" form:"pull_request_ids"`
+
+	ListOption
 }
 
 // DB-Table

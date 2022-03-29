@@ -29,6 +29,10 @@ type IssueAffectOption struct {
 	IssueID       string             `json:"issue_id,omitempty" form:"issue_id"`
 	AffectVersion string             `json:"affect_version,omitempty" form:"affect_version"`
 	AffectResult  AffectResultResult `json:"affect_result,omitempty" form:"affect_result"`
+
+	IDs []int64 `json:"ids,omitempty" form:"ids"`
+
+	ListOption
 }
 
 // Update Option

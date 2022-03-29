@@ -49,9 +49,12 @@ type IssueOption struct {
 	SeverityLabel string `json:"severity_label,omitempty" form:"severity_label"`
 	TypeLabel     string `json:"type_label,omitempty" form:"type_label"`
 
-	IssueIDs          []string `json:"issue_ids,omitempty" form:"issue_ids"`
-	SeverityLabels    []string `json:"severity_labels,omitempty" form:"severity_labels"`
-	NotSeverityLabels []string `json:"not_severity_labels,omitempty" form:"not_severity_labels"`
+	CreatedAt         time.Time `json:"created_at,omitempty"`
+	UpdatedAt         time.Time `json:"updated_at,omitempty"`
+	ClosedAt          time.Time `json:"closed_at,omitempty"`
+	IssueIDs          []string  `json:"issue_ids,omitempty" form:"issue_ids"`
+	SeverityLabels    []string  `json:"severity_labels,omitempty" form:"severity_labels"`
+	NotSeverityLabels []string  `json:"not_severity_labels,omitempty" form:"not_severity_labels"`
 
 	ListOption
 }
@@ -209,6 +212,8 @@ CREATE TABLE IF NOT EXISTS issue (
 	INDEX idx_state (state),
 	INDEX idx_owner_repo (owner, repo),
 	INDEX idx_createdat (created_at),
+	INDEX idx_updatedat (updated_at),
+	INDEX idx_closedat (closed_at),
 	INDEX idx_severitylabel (severity_label),
 	INDEX idx_typelabel (type_label)
 )

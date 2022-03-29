@@ -17,13 +17,19 @@ func SelectIssueRelationInfos(c *gin.Context) {
 		c.Error(err)
 		return
 	}
+	if option.Page == 0 {
+		option.Page = 1
+	}
+	if option.PerPage == 0 {
+		option.PerPage = 10
+	}
 
 	// Action
-	issueRelationInfos, err := service.SelectIssueRelationInfo(&option)
+	issueRelationInfos, response, err := service.SelectIssueRelationInfo(&option)
 	if err != nil {
 		c.Error(err)
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": issueRelationInfos})
+	c.JSON(http.StatusOK, gin.H{"data": issueRelationInfos, "response": response})
 }

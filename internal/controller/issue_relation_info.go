@@ -23,6 +23,7 @@ func SelectIssueRelationInfos(c *gin.Context) {
 	if option.PerPage == 0 {
 		option.PerPage = 10
 	}
+	option.ParamFill()
 
 	// Action
 	issueRelationInfos, response, err := service.SelectIssueRelationInfo(&option)

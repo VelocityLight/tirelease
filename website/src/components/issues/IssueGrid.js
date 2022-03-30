@@ -1,20 +1,40 @@
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Columns from "./GridColumns";
 import TriageDialog from "./TriageDialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery, useQueryClient } from "react-query";
+import { fetchIssue } from "./fetcher/fetchIssue";
 
 export function IssueGrid({
-  data,
   filters = [],
   columns = [Columns.number, Columns.title],
-  paginationMode = "client",
-  rowCount = -1,
-  page = 0,
-  pageSize = 100,
-  onPageChange = (page, details) => {},
-  onPageSizeChange = (pageSize, details) => {},
 }) {
-  console.log("IssueGrid", paginationMode, rowCount);
+  const queryClient = useQueryClient();
+  const [rowCount, setRowCount] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(100);
+  const [currentPage, setCurrentPage] = useState(0);
+  const issueQuery = useQuery(
+    ["issue", ...filters, rowsPerPage, currentPage],
+    () => fetchIssue({ filters, page: currentPage, perPage: rowsPerPage }),
+    {
+      onSuccess: (data) => {
+        console.log("setRowCount", rowCount, data.response.total_count);
+        setRowCount(data.response.total_count);
+      },
+      keepPreviousData: true,
+      staleTime: 5000,
+    }
+  );
+  // prefetch next page
+  useEffect(() => {
+    if (issueQuery.data?.response.total_page > currentPage) {
+      queryClient.prefetchQuery(
+        ["issue", ...filters, rowsPerPage, currentPage + 1],
+        () =>
+          fetchIssue({ filters, page: currentPage + 1, perPage: rowsPerPage })
+      );
+    }
+  });
   const [triage, setTriage] = useState(false);
   const onClose = () => {
     setTriage(false);
@@ -22,8 +42,24 @@ export function IssueGrid({
   const openTriageDialog = () => {
     setTriage(true);
   };
+
+  if (issueQuery.isLoading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+  if (issueQuery.isError) {
+    return (
+      <div>
+        <p>error: {issueQuery.error}</p>
+      </div>
+    );
+  }
+
   const rows = [
-    ...data
+    ...issueQuery.data?.data
       .map((item) => {
         return { ...item, id: item.Issue.issue_id };
       })
@@ -36,9 +72,6 @@ export function IssueGrid({
         return true;
       }),
   ];
-  if (rowCount === -1) {
-    rowCount = rows.length;
-  }
   return (
     <>
       <div style={{ height: 600, width: "100%" }}>
@@ -50,12 +83,17 @@ export function IssueGrid({
             // openTriageDialog();
           }}
           components={{ Toolbar: GridToolbar }}
-          paginationMode={paginationMode}
+          paginationMode={"server"}
           rowCount={rowCount}
-          page={page}
-          pageSize={pageSize}
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange}
+          page={currentPage}
+          pageSize={rowsPerPage}
+          onPageChange={(page, details) => {
+            console.log(page, details);
+            setCurrentPage(page);
+          }}
+          onPageSizeChange={(pageSize, details) => {
+            setRowsPerPage(pageSize);
+          }}
         ></DataGrid>
         <TriageDialog onClose={onClose} open={triage}></TriageDialog>
       </div>

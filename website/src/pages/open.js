@@ -21,25 +21,18 @@ import {
 } from "../components/issues/filter/index";
 
 const Table = ({ tab }) => {
-  const queryClient = useQueryClient();
-  const [rowCount, setRowCount] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(100);
-  const [currentPage, setCurrentPage] = React.useState(0);
   const versionQuery = useQuery(["version", "maintained"], fetchVersion);
-  const issueQuery = useQuery(["issue", "open"], () =>
-    fetchIssue({ state: "open" })
-  );
-  if (issueQuery.isLoading || versionQuery.isLoading) {
+  if (versionQuery.isLoading) {
     return (
       <div>
         <p>Loading...</p>
       </div>
     );
   }
-  if (issueQuery.isError || versionQuery.isError) {
+  if (versionQuery.isError) {
     return (
       <div>
-        <p>{issueQuery.error || versionQuery.error}</p>
+        <p>{versionQuery.error}</p>
       </div>
     );
   }
@@ -78,7 +71,6 @@ const Table = ({ tab }) => {
         Columns.state,
         ...pickColumns,
       ]}
-      data={issueQuery.data.data}
       filters={filters}
     ></IssueGrid>
   );

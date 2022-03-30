@@ -1,9 +1,11 @@
 import { url } from "../../../utils";
 
-export function fetchIssue({ page = 0, perPage = 100, state = undefined }) {
+export function fetchIssue({ page = 0, perPage = 100, filters = [] }) {
   return fetch(
     url(
-      `issue?page=${page}&per_page=${perPage}${state ? `&state=${state}` : ""}`
+      `issue?page=${page}&per_page=${perPage}${filters
+        .map((filter) => "&" + filter)
+        .join("")}`
     )
   )
     .then(async (res) => {

@@ -1,5 +1,11 @@
 package entity
 
+import (
+// "time"
+)
+
+// ================================================================
+// ================================================================ Struct
 type ListOption struct {
 	// offset
 	Page    int64 `json:"page,omitempty" form:"page"`
@@ -18,6 +24,14 @@ type ListResponse struct {
 	PerPage    int64 `json:"per_page"`
 }
 
+// type JSONTime struct {
+// 	time.Time
+// }
+
+// const TimeFormat = "2006-01-02T15:04:05Z07:00" // 这是个奇葩,必须是这个时间点, 据说是go诞生之日
+
+// ================================================================
+// ================================================================ Function
 func (option *ListOption) CalcOffset() {
 	if option.Page == 0 || option.PerPage == 0 {
 		option.Offset = 0
@@ -34,3 +48,16 @@ func (response *ListResponse) CalcTotalPage() {
 		response.TotalPage = response.TotalPage + 1
 	}
 }
+
+// func (t *JSONTime) MarshalJSON() ([]byte, error) {
+// 	return []byte(t.Format(TimeFormat)), nil
+// }
+
+// func (t *JSONTime) UnmarshalJSON(data []byte) error {
+// 	var err error
+// 	t.Time, err = time.Parse(TimeFormat, string(data))
+// 	if err != nil {
+// 		return err
+// 	}
+// 	return nil
+// }

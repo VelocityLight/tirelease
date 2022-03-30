@@ -2,23 +2,42 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Layout from "../layout/Layout";
 
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Chip,
-} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
 import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
 import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
 
 function Table() {
-  const issueQuery = useQuery("issue", fetchIssue);
+  const queryClient = useQueryClient();
+  const [rowCount, setRowCount] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100);
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const issueQuery = useQuery(
+    ["issue", rowsPerPage, currentPage],
+    () => fetchIssue({ page: currentPage, perPage: rowsPerPage }),
+    {
+      onSuccess: (data) => {
+        console.log("setRowCount", rowCount, data.response.total_count);
+        setRowCount(data.response.total_count);
+      },
+      keepPreviousData: true,
+      staleTime: 5000,
+    }
+  );
+  // prefetch next page
+  React.useEffect(() => {
+    if (issueQuery.data?.response.total_page > currentPage) {
+      queryClient.prefetchQuery(
+        ["issue", rowsPerPage, currentPage + 1],
+        fetchIssue
+      );
+    }
+  });
   const versionQuery = useQuery(["version", "maintained"], fetchVersion);
   if (issueQuery.isLoading || versionQuery.isLoading) {
     return (
@@ -56,6 +75,17 @@ function Table() {
     <IssueGrid
       data={issueQuery.data.data}
       columns={columns}
+      paginationMode={"server"}
+      rowCount={rowCount}
+      onPageChange={(page, details) => {
+        console.log(page, details);
+        setCurrentPage(page);
+      }}
+      onPageSizeChange={(pageSize, details) => {
+        setRowsPerPage(pageSize);
+      }}
+      pageSize={rowsPerPage}
+      page={currentPage}
       filters={[]}
     ></IssueGrid>
   );

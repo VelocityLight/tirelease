@@ -7,7 +7,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
 import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
 import {
@@ -21,8 +21,14 @@ import {
 } from "../components/issues/filter/index";
 
 const Table = ({ tab }) => {
+  const queryClient = useQueryClient();
+  const [rowCount, setRowCount] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100);
+  const [currentPage, setCurrentPage] = React.useState(0);
   const versionQuery = useQuery(["version", "maintained"], fetchVersion);
-  const issueQuery = useQuery("issue", fetchIssue);
+  const issueQuery = useQuery(["issue", "open"], () =>
+    fetchIssue({ state: "open" })
+  );
   if (issueQuery.isLoading || versionQuery.isLoading) {
     return (
       <div>

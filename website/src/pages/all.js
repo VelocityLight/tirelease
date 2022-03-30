@@ -2,47 +2,33 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Layout from "../layout/Layout";
 
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Chip,
-} from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 
-import { useQuery } from "react-query";
-import { url, currentVersions } from "../utils";
+import { useQuery, useQueryClient } from "react-query";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
+import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
+import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
 
 function Table() {
-  const { isLoading, error, data } = useQuery("issue", () => {
-    return fetch(url("issue"))
-      .then((res) => {
-        const data = res.json();
-        return data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  });
-  console.log(isLoading, error, data);
-  if (isLoading) {
+  const versionQuery = useQuery(["version", "maintained"], fetchVersion);
+  if (versionQuery.isLoading) {
     return (
       <div>
         <p>Loading...</p>
       </div>
     );
   }
-  if (error) {
+  if (versionQuery.error) {
     return (
       <div>
-        <p>Error: {error.message}</p>
+        <p>Error: {versionQuery.error}</p>
       </div>
     );
   }
-  console.log("fetched data", data);
+
   const columns = [
     Columns.repo,
     Columns.number,
@@ -53,16 +39,14 @@ function Table() {
     Columns.severity,
     Columns.labels,
   ];
-  for (const version of currentVersions) {
+  for (const version of versionQuery.data) {
     columns.push(
       Columns.getAffectionOnVersion(version),
       Columns.getPROnVersion(version),
       Columns.getPickOnVersion(version)
     );
   }
-  return (
-    <IssueGrid data={data.data} columns={columns} filters={[]}></IssueGrid>
-  );
+  return <IssueGrid columns={columns} filters={[]}></IssueGrid>;
 }
 
 const AllIssues = () => {

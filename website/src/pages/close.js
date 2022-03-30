@@ -8,38 +8,32 @@ import Tab from "@mui/material/Tab";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
 import { useQuery } from "react-query";
-import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
 import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
-import {
-  OR,
-  severity,
-  state,
-  type,
-  closedByPRIn24h,
-  closedByPRSince,
-} from "../components/issues/filter/index";
+import { nextHour } from "../utils";
 
 const Table = ({ tab }) => {
   const filters = [
-    type("bug"),
-    OR([severity("critical"), severity("major")]),
-    state("closed"),
+    "type_label=type/bug",
+    "state=closed",
+    "severity_labels=severity/major",
+    "severity_labels=severity/critical",
+    // type("bug"),
+    // OR([severity("critical"), severity("major")]),
+    // state("closed"),
   ];
   const pickColumns = [];
-
   const versionQuery = useQuery(["version", "maintained"], fetchVersion);
-  const issueQuery = useQuery("issue", fetchIssue);
-  if (issueQuery.isLoading || versionQuery.isLoading) {
+  if (versionQuery.isLoading) {
     return (
       <div>
         <p>Loading...</p>
       </div>
     );
   }
-  if (versionQuery.isError || issueQuery.isError) {
+  if (versionQuery.isError) {
     return (
       <div>
-        <p>Error: {versionQuery.error || issueQuery.error}</p>
+        <p>Error: {versionQuery.error}</p>
       </div>
     );
   }
@@ -50,18 +44,19 @@ const Table = ({ tab }) => {
       Columns.getPickOnVersion(version)
     );
   }
+  const dt = nextHour();
   switch (tab) {
     case 0:
-      filters.push(closedByPRIn24h());
+      filters.push(`closed_at=${(dt.getTime() - 60 * 60 * 1000 * 24) / 1000}`);
       break;
     case 1:
       filters.push(
-        closedByPRSince(new Date().getTime() - 60 * 60 * 1000 * 24 * 7)
+        `closed_at=${(dt.getTime() - 60 * 60 * 1000 * 24 * 7) / 1000}`
       );
       break;
     case 2:
       filters.push(
-        closedByPRSince(new Date().getTime() - 60 * 60 * 1000 * 24 * 30)
+        `closed_at=${(dt.getTime() - 60 * 60 * 1000 * 24 * 30) / 1000}`
       );
       break;
     case 3:
@@ -69,6 +64,7 @@ const Table = ({ tab }) => {
     default:
       break;
   }
+
   return (
     <IssueGrid
       columns={[
@@ -81,7 +77,6 @@ const Table = ({ tab }) => {
         Columns.pr,
         ...pickColumns,
       ]}
-      data={issueQuery.data.data}
       filters={filters}
     ></IssueGrid>
   );

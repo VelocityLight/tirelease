@@ -11,9 +11,7 @@ import React from "react";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import { useQuery } from "react-query";
 import Columns from "../components/issues/GridColumns";
-import { affectState, severity, OR } from "../components/issues/filter/index";
 import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
-import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
 
 const VersionTabs = () => {
   const [tab, setTab] = React.useState(0);
@@ -23,18 +21,17 @@ const VersionTabs = () => {
   };
 
   const versionQuery = useQuery(["version", "maintained"], fetchVersion);
-  const issueQuery = useQuery("issue", fetchIssue);
-  if (issueQuery.isLoading || versionQuery.isLoading) {
+  if (versionQuery.isLoading) {
     return (
       <div>
         <p>Loading...</p>
       </div>
     );
   }
-  if (issueQuery.isError || versionQuery.isError) {
+  if (versionQuery.isError) {
     return (
       <div>
-        <p>{issueQuery.error || versionQuery.error}</p>
+        <p>{versionQuery.error}</p>
       </div>
     );
   }
@@ -46,14 +43,20 @@ const VersionTabs = () => {
     affectColumns.push(Columns.getAffectionOnVersion(currentVersions[tab - 1]));
   }
 
-  const filters = [OR([severity("critical"), severity("major")])];
-  if (tab === 0) {
-    filters.push(
-      OR(currentVersions.map((version) => affectState(version, "unknown")))
-    );
-  } else {
-    filters.push(affectState(currentVersions[tab - 1], "unknown"));
-  }
+  const filters = [
+    // "type_label=type/bug",
+    // "state=open",
+    "severity_labels=severity/major",
+    "severity_labels=severity/critical",
+    // OR([severity("critical"), severity("major")]),
+  ];
+  // if (tab === 0) {
+  //   filters.push(
+  //     OR(currentVersions.map((version) => affectState(version, "unknown")))
+  //   );
+  // } else {
+  //   filters.push(affectState(currentVersions[tab - 1], "unknown"));
+  // }
 
   return (
     <>
@@ -64,7 +67,6 @@ const VersionTabs = () => {
         ))}
       </Tabs>
       <IssueGrid
-        data={issueQuery.data.data}
         columns={[
           Columns.repo,
           Columns.number,

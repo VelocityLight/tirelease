@@ -48,3 +48,12 @@ export function flatten(info) {
     ...issue,
   };
 }
+
+export function nextHour() {
+  const dt = new Date();
+  dt.setHours(dt.getHours() + 1);
+  dt.setMinutes(0);
+  dt.setSeconds(0);
+  dt.setMilliseconds(0);
+  return dt;
+}

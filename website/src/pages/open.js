@@ -7,18 +7,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
-import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
-import {
-  severity,
-  state,
-  type,
-  openIn24h,
-  openSince,
-  NOT,
-  AND,
-} from "../components/issues/filter/index";
+import { nextHour } from "../utils";
 
 const Table = ({ tab }) => {
   const versionQuery = useQuery(["version", "maintained"], fetchVersion);
@@ -37,29 +28,37 @@ const Table = ({ tab }) => {
     );
   }
   const filters = [
-    type("bug"),
-    AND([NOT(severity("moderate")), NOT(severity("minor"))]),
-    state("open"),
+    "type_label=type/bug",
+    "state=open",
+    "severity_labels=severity/major",
+    "severity_labels=severity/critical",
+    // 'severity_labels="[\\"severity/major\\", \\"severity/critical\\"]"',
   ];
   const pickColumns = [];
   for (const version of versionQuery.data) {
     pickColumns.push(Columns.getAffectionOnVersion(version));
   }
+  const dt = nextHour();
   switch (tab) {
     case 0:
-      filters.push(openIn24h());
+      filters.push(`created_at=${(dt.getTime() - 60 * 60 * 1000 * 24) / 1000}`);
       break;
     case 1:
-      filters.push(openSince(new Date().getTime() - 60 * 60 * 1000 * 24 * 7));
+      filters.push(
+        `created_at=${(dt.getTime() - 60 * 60 * 1000 * 24 * 7) / 1000}`
+      );
       break;
     case 2:
-      filters.push(openSince(new Date().getTime() - 60 * 60 * 1000 * 24 * 30));
+      filters.push(
+        `created_at=${(dt.getTime() - 60 * 60 * 1000 * 24 * 30) / 1000}`
+      );
       break;
     case 3:
       break;
     default:
       break;
   }
+  console.log("filters", filters);
   return (
     <IssueGrid
       columns={[
@@ -95,7 +94,7 @@ function RecentOpen() {
                 <Tab label={v}></Tab>
               ))}
             </Tabs>
-            <Table></Table>
+            <Table tab={tab}></Table>
           </AccordionDetails>
         </Accordion>
       </Container>

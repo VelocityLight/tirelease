@@ -59,18 +59,17 @@ export function IssueGrid({
   }
 
   const rows = [
-    ...issueQuery.data?.data
-      .map((item) => {
-        return { ...item, id: item.Issue.issue_id };
-      })
-      .filter((item) => {
-        for (const filter of filters) {
-          if (!filter(item)) {
-            return false;
-          }
-        }
-        return true;
-      }),
+    ...issueQuery.data?.data.map((item) => {
+      return { ...item, id: item.Issue.issue_id };
+    }),
+    // .filter((item) => {
+    //   for (const filter of filters) {
+    //     if (!filter(item)) {
+    //       return false;
+    //     }
+    //   }
+    //   return true;
+    // }),
   ];
   return (
     <>

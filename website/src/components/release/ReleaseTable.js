@@ -9,17 +9,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useQuery } from "react-query";
 import { url } from "../../utils";
-import { IssueGrid } from "../issues/IssueGrid";
 import Columns from "../issues/GridColumns";
-import { OR } from "../issues/filter";
-import { affectUnknown, affectYes, pick } from "../issues/filter/index";
 import { useParams } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
 
 function ReleaseCandidates({ version }) {
   const { isLoading, error, data } = useQuery(`release-${version}`, () => {
-    return fetch(url(`issue/cherrypick/${version}`))
-      .then((res) => {
-        const data = res.json();
+    return fetch(url(`issue/cherrypick/${version}?page=0&per_page=1000`))
+      .then(async (res) => {
+        const data = await res.json();
         return data;
       })
       .catch((e) => {
@@ -33,29 +31,30 @@ function ReleaseCandidates({ version }) {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-  const filters = [
-    OR([affectUnknown(version), affectYes(version)]),
-    pick(version, "unknown"),
-  ];
-  console.log("version", data);
-  if (data.data === undefined) {
+
+  console.log("version data", data);
+  if (data?.data === undefined) {
     return <p>data is wrong, maybe your version is incorrect</p>;
   }
-  const rows = data.data.version_triage_infos.map(
-    (item) => item.issue_relation_info
-  );
-  console.log("version", rows);
+  const rows = data.data.version_triage_infos.map((item) => {
+    return {
+      id: item.issue_relation_info.Issue.issue_id,
+      ...item.issue_relation_info,
+    };
+  });
+  console.log("version rows", rows);
   return (
-    <IssueGrid
-      data={rows}
-      columns={[
-        ...Columns.issueBasicInfo,
-        Columns.getAffectionOnVersion(version),
-        Columns.getPROnVersion(version),
-        Columns.getPickOnVersion(version),
-      ]}
-      filters={filters}
-    ></IssueGrid>
+    <div style={{ height: 600, width: "100%" }}>
+      <DataGrid
+        rows={rows}
+        columns={[
+          ...Columns.issueBasicInfo,
+          Columns.getAffectionOnVersion(version),
+          Columns.getPROnVersion(version),
+          Columns.getPickOnVersion(version),
+        ]}
+      ></DataGrid>
+    </div>
   );
 }
 

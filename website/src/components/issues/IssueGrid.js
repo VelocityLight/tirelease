@@ -4,12 +4,15 @@ import TriageDialog from "./TriageDialog";
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { fetchIssue } from "./fetcher/fetchIssue";
+import { Button, Stack } from "@mui/material";
+import { FilterDialog } from "./filter/FilterDialog";
 
 export function IssueGrid({
   filters = [],
   columns = [Columns.number, Columns.title],
 }) {
   const queryClient = useQueryClient();
+  const [filterDialog, setFilterDialog] = useState(false);
   const [rowCount, setRowCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(0);
@@ -35,12 +38,12 @@ export function IssueGrid({
       );
     }
   });
-  const [triage, setTriage] = useState(false);
+  const [triageData, setTriageData] = useState(undefined);
   const onClose = () => {
-    setTriage(false);
+    setTriageData(undefined);
   };
-  const openTriageDialog = () => {
-    setTriage(true);
+  const openTriageDialog = (data) => {
+    setTriageData(data);
   };
 
   if (issueQuery.isLoading) {
@@ -62,24 +65,27 @@ export function IssueGrid({
     ...issueQuery.data?.data.map((item) => {
       return { ...item, id: item.Issue.issue_id };
     }),
-    // .filter((item) => {
-    //   for (const filter of filters) {
-    //     if (!filter(item)) {
-    //       return false;
-    //     }
-    //   }
-    //   return true;
-    // }),
   ];
   return (
-    <>
+    <Stack spacing={1}>
+      <Stack direction={"row"} justifyContent={"flex-end"} spacing={2}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setFilterDialog(true);
+          }}
+        >
+          Filter
+        </Button>
+      </Stack>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           density="compact"
           columns={columns}
           rows={rows}
           onRowClick={(e) => {
-            // openTriageDialog();
+            console.log(e);
+            openTriageDialog(e);
           }}
           components={{ Toolbar: GridToolbar }}
           paginationMode={"server"}
@@ -94,8 +100,19 @@ export function IssueGrid({
             setRowsPerPage(pageSize);
           }}
         ></DataGrid>
-        <TriageDialog onClose={onClose} open={triage}></TriageDialog>
+        <TriageDialog
+          onClose={onClose}
+          open={triageData !== undefined}
+          row={triageData?.row}
+          columns={triageData?.columns}
+        ></TriageDialog>
+        <FilterDialog
+          open={filterDialog}
+          onClose={() => {
+            setFilterDialog(false);
+          }}
+        ></FilterDialog>
       </div>
-    </>
+    </Stack>
   );
 }

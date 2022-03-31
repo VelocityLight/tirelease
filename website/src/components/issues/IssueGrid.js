@@ -4,12 +4,15 @@ import TriageDialog from "./TriageDialog";
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { fetchIssue } from "./fetcher/fetchIssue";
+import { Button, Stack } from "@mui/material";
+import { FilterDialog } from "./filter/FilterDialog";
 
 export function IssueGrid({
   filters = [],
   columns = [Columns.number, Columns.title],
 }) {
   const queryClient = useQueryClient();
+  const [filterDialog, setFilterDialog] = useState(false);
   const [rowCount, setRowCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(0);
@@ -64,7 +67,17 @@ export function IssueGrid({
     }),
   ];
   return (
-    <>
+    <Stack spacing={1}>
+      <Stack direction={"row"} justifyContent={"flex-end"} spacing={2}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setFilterDialog(true);
+          }}
+        >
+          Filter
+        </Button>
+      </Stack>
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           density="compact"
@@ -93,7 +106,13 @@ export function IssueGrid({
           row={triageData?.row}
           columns={triageData?.columns}
         ></TriageDialog>
+        <FilterDialog
+          open={filterDialog}
+          onClose={() => {
+            setFilterDialog(false);
+          }}
+        ></FilterDialog>
       </div>
-    </>
+    </Stack>
   );
 }

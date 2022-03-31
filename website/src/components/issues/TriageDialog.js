@@ -1,42 +1,10 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import { Table, TableBody, TableCell, TableRow } from "@mui/material";
 
-const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
-};
-
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-};
+import { Stack, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import TiDialogTitle from "../common/TiDialogTitle";
 
 export default function TriageDialog({ row, columns, open, onClose }) {
   return (
@@ -49,29 +17,33 @@ export default function TriageDialog({ row, columns, open, onClose }) {
         fullWidth
         scroll="paper"
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={onClose}>
+        <TiDialogTitle id="customized-dialog-title" onClose={onClose}>
           Issue info
-        </BootstrapDialogTitle>
-        <Table>
-          <TableBody>
-            {columns?.map((column) => {
-              return (
-                <TableRow>
-                  <TableCell>{column.headerName}</TableCell>
-                  <TableCell>
-                    {(() => {
-                      if (column.renderCell) {
-                        return column.renderCell({ row });
-                      }
-                      return column.valueGetter({ row });
-                    })()}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-        <DialogContent dividers></DialogContent>
+        </TiDialogTitle>
+        <Stack padding={2}>
+          <Table>
+            <TableBody>
+              {columns?.map((column) => {
+                return (
+                  <TableRow
+                    key={column.field}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>{column.headerName}</TableCell>
+                    <TableCell>
+                      {(() => {
+                        if (column.renderCell) {
+                          return column.renderCell({ row });
+                        }
+                        return column.valueGetter({ row });
+                      })()}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Stack>
         <DialogActions>
           <Button autoFocus onClick={onClose}>
             Close

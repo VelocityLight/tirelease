@@ -1,3 +1,6 @@
+import { Dialog } from "@mui/material";
+import TiDialogTitle from "../../common/TiDialogTitle";
+
 class Filter {
   getQuery() {}
   render() {}
@@ -15,4 +18,10 @@ class SeverityFilter extends Filter {
   constructor() {}
 }
 
-export function FilterDialog({ open, onClose, filters }) {}
+export function FilterDialog({ open, onClose, filters }) {
+  return (
+    <Dialog onClose={onClose} open={open} maxWidth="md" fullWidth>
+      <TiDialogTitle onClose={onClose}>Filter Panel</TiDialogTitle>
+    </Dialog>
+  );
+}

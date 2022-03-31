@@ -41,16 +41,19 @@ func SelectVersionTriageInfos(c *gin.Context) {
 		c.Error(err)
 		return
 	}
+	if versionTriageInfoQuery.Version != "" {
+		versionTriageInfoQuery.VersionName = versionTriageInfoQuery.Version
+	}
 
 	// Action
-	versionTriageInfos, err := service.SelectVersionTriageInfo(&versionTriageInfoQuery)
+	versionTriageInfos, response, err := service.SelectVersionTriageInfo(&versionTriageInfoQuery)
 	if nil != err {
 		c.Error(err)
 		return
 	}
 
 	// Response
-	c.JSON(http.StatusOK, gin.H{"data": versionTriageInfos})
+	c.JSON(http.StatusOK, gin.H{"data": versionTriageInfos, "response": response})
 }
 
 func SelectVersionTriageResult(c *gin.Context) {

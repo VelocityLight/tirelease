@@ -21,7 +21,7 @@ func TestCreateOrUpdateVersionTriageInfo(t *testing.T) {
 		CreateTime:   time.Now(),
 		UpdateTime:   time.Now(),
 		VersionName:  "5.4.0",
-		IssueID:      git.TestIssueNodeID,
+		IssueID:      git.TestIssueNodeID2,
 		TriageResult: entity.VersionTriageResultAccept,
 	}
 	info, err := CreateOrUpdateVersionTriageInfo(versionTriage)
@@ -35,10 +35,13 @@ func TestSelectVersionTriageInfo(t *testing.T) {
 	database.Connect(generateConfig())
 
 	query := &dto.VersionTriageInfoQuery{
-		Version: "5.4.1",
+		VersionTriageOption: entity.VersionTriageOption{
+			VersionName: "5.1.1",
+		},
 	}
 
-	info, err := SelectVersionTriageInfo(query)
+	info, response, err := SelectVersionTriageInfo(query)
 	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, response.TotalCount > 0)
 	assert.Equal(t, true, info != nil)
 }

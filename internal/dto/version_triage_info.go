@@ -6,10 +6,9 @@ import (
 
 // VersionTriage Query Struct
 type VersionTriageInfoQuery struct {
-	ID           int64                      `json:"id" form:"id" uri:"id"`
-	Version      string                     `json:"version,omitempty" form:"version" uri:"version"`
-	IssueID      string                     `json:"issue_id,omitempty" form:"issue_id" uri:"issue_id"`
-	TriageResult entity.VersionTriageResult `json:"triage_result,omitempty" form:"triage_result" uri:"triage_result"`
+	entity.VersionTriageOption
+
+	Version string `json:"version,omitempty" form:"version" uri:"version"`
 }
 
 // VersionTriage ReturnBack Struct

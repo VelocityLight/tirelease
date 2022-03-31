@@ -8,13 +8,13 @@ import (
 // ================================================================ Struct
 type ListOption struct {
 	// offset
-	Page    int64 `json:"page,omitempty" form:"page"`
-	PerPage int64 `json:"per_page,omitempty" form:"per_page"`
-	Offset  int64 `json:"offset,omitempty" form:"offset"`
+	Page    int64 `json:"page,omitempty" form:"page" uri:"page"`
+	PerPage int64 `json:"per_page,omitempty" form:"per_page" uri:"per_page"`
+	Offset  int64 `json:"offset,omitempty" form:"offset" uri:"offset"`
 
 	// order by
-	OrderBy string `json:"order_by,omitempty" form:"order_by"`
-	Order   string `json:"order,omitempty" form:"order"`
+	OrderBy string `json:"order_by,omitempty" form:"order_by" uri:"order_by"`
+	Order   string `json:"order,omitempty" form:"order" uri:"order"`
 }
 
 type ListResponse struct {
@@ -41,6 +41,7 @@ func (option *ListOption) CalcOffset() {
 
 func (response *ListResponse) CalcTotalPage() {
 	if response.PerPage == 0 {
+		response.TotalPage = 1
 		return
 	}
 	response.TotalPage = response.TotalCount / response.PerPage

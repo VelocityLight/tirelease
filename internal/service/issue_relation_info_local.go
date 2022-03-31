@@ -25,12 +25,12 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 	if nil != err {
 		return nil, nil, err
 	}
-	listResponse := &entity.ListResponse{
+	response := &entity.ListResponse{
 		TotalCount: count,
 		Page:       option.IssueOption.Page,
 		PerPage:    option.IssueOption.PerPage,
 	}
-	listResponse.CalcTotalPage()
+	response.CalcTotalPage()
 
 	// compose
 	issueRelationInfos := make([]dto.IssueRelationInfo, 0)
@@ -100,7 +100,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		issueRelationInfos = append(issueRelationInfos, *issueRelationInfo)
 	}
 
-	return &issueRelationInfos, listResponse, nil
+	return &issueRelationInfos, response, nil
 }
 
 func SelectIssueRelationInfoUnique(option *dto.IssueRelationInfoQuery) (*dto.IssueRelationInfo, error) {

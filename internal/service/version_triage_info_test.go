@@ -2,7 +2,6 @@ package service
 
 import (
 	"testing"
-	"time"
 
 	"tirelease/commons/database"
 	"tirelease/commons/git"
@@ -18,11 +17,9 @@ func TestCreateOrUpdateVersionTriageInfo(t *testing.T) {
 	database.Connect(generateConfig())
 
 	versionTriage := &entity.VersionTriage{
-		CreateTime:   time.Now(),
-		UpdateTime:   time.Now(),
-		VersionName:  "5.4.0",
+		VersionName:  "6.0",
 		IssueID:      git.TestIssueNodeID2,
-		TriageResult: entity.VersionTriageResultAccept,
+		TriageResult: entity.VersionTriageResultUnKnown,
 	}
 	info, err := CreateOrUpdateVersionTriageInfo(versionTriage)
 

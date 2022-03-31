@@ -1,3 +1,5 @@
+import { FilterDialog } from "./FilterDialog";
+
 export function repo(name) {
   return (item) => item.Issue.repo === name;
 }

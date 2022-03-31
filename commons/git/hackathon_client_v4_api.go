@@ -9,7 +9,18 @@ import (
 )
 
 // ============================================================================ Others
-func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []string, from time.Time, to time.Time, batchLimit int, totalLimit int) (issues []IssueField, err error) {
+type RemoteIssueRangeRequest struct {
+	Owner      string
+	Name       string
+	Labels     []string
+	From       time.Time
+	To         time.Time
+	BatchLimit int
+	TotalLimit int
+	Order      string
+}
+
+func (client *GithubInfoV4) GetIssuesByTimeRangeV4(request *RemoteIssueRangeRequest) (issues []IssueField, err error) {
 	// var query struct {
 	// 	Repository struct {
 	// 		Issues struct {
@@ -27,33 +38,34 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 					Cursor githubv4.String
 					Node   IssueField
 				}
-			} `graphql:"issues(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: DESC}, filterBy: {since: $since})"`
+			} `graphql:"issues(first: $limit, after: $cursor, orderBy: {field: UPDATED_AT, direction: $order}, filterBy: {since: $since})"`
 		} `graphql:"repository(name: $name, owner: $owner)"`
 	}
 
 	cursor := (*githubv4.String)(nil)
 	total := 0
-	ghLabels := make([]githubv4.String, 0, len(labels))
-	if len(labels) > 0 {
-		for i := range labels {
-			ghLabels = append(ghLabels, githubv4.String(labels[i]))
+	ghLabels := make([]githubv4.String, 0, len(request.Labels))
+	if len(request.Labels) > 0 {
+		for i := range request.Labels {
+			ghLabels = append(ghLabels, githubv4.String(request.Labels[i]))
 		}
 	}
 
-	since := from.Add(-1 * time.Minute).Format(time.RFC3339)
+	since := request.From.Add(-1 * time.Minute).Format(time.RFC3339)
 	log.Printf("fetching since %s", since)
 
-	for totalLimit != 0 {
-		limit := batchLimit
-		if totalLimit > 0 && totalLimit < limit {
-			limit = totalLimit
+	for request.TotalLimit != 0 {
+		limit := request.BatchLimit
+		if request.TotalLimit > 0 && request.TotalLimit < limit {
+			limit = request.TotalLimit
 		}
 		param := map[string]interface{}{
-			"name":   githubv4.String(name),
-			"owner":  githubv4.String(owner),
+			"name":   githubv4.String(request.Name),
+			"owner":  githubv4.String(request.Owner),
 			"limit":  githubv4.Int(limit),
 			"cursor": cursor,
-			"since":  githubv4.DateTime{Time: from.Add(-1 * time.Minute)},
+			"since":  githubv4.DateTime{Time: request.From.Add(-1 * time.Minute)},
+			"order":  githubv4.OrderDirection(request.Order),
 		}
 		if len(ghLabels) > 0 {
 			param["labels"] = ghLabels
@@ -77,9 +89,9 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 			cursor = &lastIssue.Cursor
 			lastUpdated := lastIssue.Node.UpdatedAt.Time
 			total += cnt
-			totalLimit -= cnt
-			log.Println(cnt, "fetced", owner, name, labels, lastUpdated)
-			if lastUpdated.After(to) {
+			request.TotalLimit -= cnt
+			log.Println(cnt, "fetced", request.Owner, request.Name, request.Labels, lastUpdated)
+			if lastUpdated.After(request.To) {
 				break
 			}
 		}
@@ -88,11 +100,11 @@ func (client *GithubInfoV4) GetIssuesByTimeRangeV4(owner, name string, labels []
 		}
 	}
 
-	log.Printf("fetched %d issues from %s/%s\n", total, owner, name)
+	log.Printf("fetched %d issues from %s/%s\n", total, request.Owner, request.Name)
 	return
 }
 
-func (client *GithubInfoV4) GetPullRequestsFromV4(owner, name string, from time.Time, batchLimit int, totalLimit int) (prs []PullRequestField, err error) {
+func (client *GithubInfoV4) GetPullRequestsFromV4(request *RemoteIssueRangeRequest) (prs []PullRequestField, err error) {
 	var query struct {
 		Repository struct {
 			PullRequests struct {
@@ -107,17 +119,17 @@ func (client *GithubInfoV4) GetPullRequestsFromV4(owner, name string, from time.
 	cursor := (*githubv4.String)(nil)
 	total := 0
 
-	since := from.Add(-1 * time.Minute)
+	since := request.From.Add(-1 * time.Minute)
 	log.Printf("fetching since %s", since)
 
-	for totalLimit != 0 {
-		limit := batchLimit
-		if totalLimit > 0 && totalLimit < limit {
-			limit = totalLimit
+	for request.TotalLimit != 0 {
+		limit := request.BatchLimit
+		if request.TotalLimit > 0 && request.TotalLimit < limit {
+			limit = request.TotalLimit
 		}
 		param := map[string]interface{}{
-			"name":   githubv4.String(name),
-			"owner":  githubv4.String(owner),
+			"name":   githubv4.String(request.Name),
+			"owner":  githubv4.String(request.Owner),
 			"limit":  githubv4.Int(limit),
 			"cursor": cursor,
 		}
@@ -140,8 +152,8 @@ func (client *GithubInfoV4) GetPullRequestsFromV4(owner, name string, from time.
 			cursor = &lastIssue.Cursor
 			lastUpdated := lastIssue.Node.UpdatedAt.Time
 			total += cnt
-			totalLimit -= cnt
-			log.Println(cnt, "fetced", owner, name, lastUpdated)
+			request.TotalLimit -= cnt
+			log.Println(cnt, "fetced", request.Owner, request.Name, lastUpdated)
 			if since.After(lastUpdated) {
 				break
 			}
@@ -151,6 +163,6 @@ func (client *GithubInfoV4) GetPullRequestsFromV4(owner, name string, from time.
 		}
 	}
 
-	log.Printf("fetched %d pull requests from %s/%s\n", total, owner, name)
+	log.Printf("fetched %d pull requests from %s/%s\n", total, request.Owner, request.Name)
 	return
 }

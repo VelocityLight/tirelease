@@ -37,31 +37,30 @@ const VersionTabs = () => {
   }
   const affectColumns = [];
   const currentVersions = versionQuery.data;
-  if (tab === 0) {
-    affectColumns.push(...currentVersions.map(Columns.getAffectionOnVersion));
-  } else {
-    affectColumns.push(Columns.getAffectionOnVersion(currentVersions[tab - 1]));
-  }
+  // if (tab === 0) {
+  //   affectColumns.push(...currentVersions.map(Columns.getAffectionOnVersion));
+  // } else {
+  affectColumns.push(Columns.getAffectionOnVersion(currentVersions[tab]));
+  // }
 
   const filters = [
-    // "type_label=type/bug",
-    // "state=open",
     "severity_labels=severity/major",
     "severity_labels=severity/critical",
-    // OR([severity("critical"), severity("major")]),
   ];
   // if (tab === 0) {
   //   filters.push(
-  //     OR(currentVersions.map((version) => affectState(version, "unknown")))
+  //     ...currentVersions.map(
+  //       (version) => `affect_version=${version}&affect_result=UnKnown`
+  //     )
   //   );
   // } else {
-  //   filters.push(affectState(currentVersions[tab - 1], "unknown"));
+  filters.push(`affect_version=${currentVersions[tab]}&affect_result=UnKnown`);
   // }
 
   return (
     <>
       <Tabs value={tab} onChange={handleChange} aria-label="basic tabs example">
-        <Tab label="All" />
+        {/* <Tab label="All" /> */}
         {currentVersions.map((v) => (
           <Tab label={v}></Tab>
         ))}

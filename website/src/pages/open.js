@@ -41,16 +41,18 @@ const Table = ({ tab }) => {
   const dt = nextHour();
   switch (tab) {
     case 0:
-      filters.push(`created_at=${(dt.getTime() - 60 * 60 * 1000 * 24) / 1000}`);
+      filters.push(
+        `created_at_stamp=${(dt.getTime() - 60 * 60 * 1000 * 24) / 1000}`
+      );
       break;
     case 1:
       filters.push(
-        `created_at=${(dt.getTime() - 60 * 60 * 1000 * 24 * 7) / 1000}`
+        `created_at_stamp=${(dt.getTime() - 60 * 60 * 1000 * 24 * 7) / 1000}`
       );
       break;
     case 2:
       filters.push(
-        `created_at=${(dt.getTime() - 60 * 60 * 1000 * 24 * 30) / 1000}`
+        `created_at_stamp=${(dt.getTime() - 60 * 60 * 1000 * 24 * 30) / 1000}`
       );
       break;
     case 3:

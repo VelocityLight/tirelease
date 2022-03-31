@@ -27,12 +27,27 @@ func CreateVersionTriage(versionTriage *entity.VersionTriage) error {
 }
 
 func SelectVersionTriage(option *entity.VersionTriageOption) (*[]entity.VersionTriage, error) {
+	sql := "select * from version_triage where 1=1"
+	sql += VersionTriageWhere(option) + VersionTriageOrderBy(option) + VersionTriageLimit(option)
+
 	// 查询
 	var versionTriages []entity.VersionTriage
-	if err := database.DBConn.DB.Where(option).Find(&versionTriages).Error; err != nil {
+	if err := database.DBConn.RawWrapper(sql, option).Find(&versionTriages).Error; err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("find version triage: %+v failed", option))
 	}
 	return &versionTriages, nil
+}
+
+func CountVersionTriage(option *entity.VersionTriageOption) (int64, error) {
+	sql := "select count(*) from version_triage where 1=1"
+	sql += VersionTriageWhere(option)
+
+	// 查询
+	var count int64
+	if err := database.DBConn.RawWrapper(sql, option).Count(&count).Error; err != nil {
+		return 0, errors.Wrap(err, fmt.Sprintf("count version triage: %+v failed", option))
+	}
+	return count, nil
 }
 
 func UpdateVersionTriage(versionTriage *entity.VersionTriage) error {
@@ -60,4 +75,47 @@ func CreateOrUpdateVersionTriage(versionTriage *entity.VersionTriage) error {
 		return errors.Wrap(err, fmt.Sprintf("create or update version triage: %+v failed", versionTriage))
 	}
 	return nil
+}
+
+func VersionTriageWhere(option *entity.VersionTriageOption) string {
+	sql := ""
+
+	if option.ID != 0 {
+		sql += " and version_triage.id = @ID"
+	}
+	if option.IssueID != "" {
+		sql += " and version_triage.issue_id = @IssueID"
+	}
+	if option.VersionName != "" {
+		sql += " and version_triage.version_name = @VersionName"
+	}
+	if option.TriageResult != "" {
+		sql += " and version_triage.triage_result = @TriageResult"
+	}
+
+	return sql
+}
+
+func VersionTriageOrderBy(option *entity.VersionTriageOption) string {
+	sql := ""
+
+	if option.OrderBy != "" {
+		sql += " order by " + option.OrderBy
+	}
+	if option.Order != "" {
+		sql += " " + option.Order
+	}
+
+	return sql
+}
+
+func VersionTriageLimit(option *entity.VersionTriageOption) string {
+	sql := ""
+
+	if option.Page != 0 && option.PerPage != 0 {
+		option.ListOption.CalcOffset()
+		sql += " limit @Offset,@PerPage"
+	}
+
+	return sql
 }

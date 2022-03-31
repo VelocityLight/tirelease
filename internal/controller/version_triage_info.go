@@ -37,20 +37,23 @@ func CreateOrUpdateVersionTriage(c *gin.Context) {
 func SelectVersionTriageInfos(c *gin.Context) {
 	// Params
 	versionTriageInfoQuery := dto.VersionTriageInfoQuery{}
-	if err := c.ShouldBindUri(&versionTriageInfoQuery); err != nil {
+	if err := c.ShouldBindWith(&versionTriageInfoQuery, binding.JSON); err != nil {
 		c.Error(err)
 		return
 	}
+	if versionTriageInfoQuery.Version != "" {
+		versionTriageInfoQuery.VersionName = versionTriageInfoQuery.Version
+	}
 
 	// Action
-	versionTriageInfos, err := service.SelectVersionTriageInfo(&versionTriageInfoQuery)
+	versionTriageInfos, response, err := service.SelectVersionTriageInfo(&versionTriageInfoQuery)
 	if nil != err {
 		c.Error(err)
 		return
 	}
 
 	// Response
-	c.JSON(http.StatusOK, gin.H{"data": versionTriageInfos})
+	c.JSON(http.StatusOK, gin.H{"data": versionTriageInfos, "response": response})
 }
 
 func SelectVersionTriageResult(c *gin.Context) {

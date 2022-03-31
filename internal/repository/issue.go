@@ -30,7 +30,7 @@ func SelectIssue(option *entity.IssueOption) (*[]entity.Issue, error) {
 }
 
 func CountIssue(option *entity.IssueOption) (int64, error) {
-	sql := "select count(*) from issue where 1=1" + IssueWhere(option) + IssueOrderBy(option) + IssueLimit(option)
+	sql := "select count(*) from issue where 1=1" + IssueWhere(option)
 
 	var count int64
 	if err := database.DBConn.RawWrapper(sql, option).Count(&count).Error; err != nil {

@@ -9,9 +9,8 @@ import { Button } from "@mui/material";
 
 export default function Version() {
   const { isLoading, error, data } = useQuery("versions", () => {
-    return fetch(url("version")).then((res) => {
-      console.log(res);
-      return res.json();
+    return fetch(url("version")).then(async (res) => {
+      return await res.json();
     });
   });
 

@@ -23,7 +23,18 @@ const number = {
   headerName: "Number",
   valueGetter: (params) => params.row.Issue.number,
   renderCell: (params) => (
-    <a href={params.row.Issue.html_url}>{params.row.Issue.number}</a>
+    <a
+      href={params.row.Issue.html_url}
+      _target="blank"
+      rel="noopener noreferrer"
+      onClick={(e) => {
+        window.open(params.row.Issue.html_url);
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    >
+      {params.row.Issue.number}
+    </a>
   ),
 };
 

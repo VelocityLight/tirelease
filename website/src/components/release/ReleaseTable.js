@@ -43,15 +43,16 @@ function ReleaseCandidates({ version }) {
     };
   });
   console.log("version rows", rows);
+  const minorVersion = version.split(".").slice(0, 2).join(".");
   return (
     <div style={{ height: 600, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={[
           ...Columns.issueBasicInfo,
-          Columns.getAffectionOnVersion(version),
-          Columns.getPROnVersion(version),
-          Columns.getPickOnVersion(version),
+          Columns.getAffectionOnVersion(minorVersion),
+          Columns.getPROnVersion(minorVersion),
+          Columns.getPickOnVersion(minorVersion),
         ]}
       ></DataGrid>
     </div>

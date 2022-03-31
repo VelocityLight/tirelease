@@ -61,7 +61,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	}
 
 	// remote operation
-	if len(*issueRelationInfo.PullRequests) > 0 {
+	if issueRelationInfo != nil && issueRelationInfo.PullRequests != nil && len(*issueRelationInfo.PullRequests) > 0 {
 		for i := range *issueRelationInfo.PullRequests {
 			pr := (*issueRelationInfo.PullRequests)[i]
 			if !isFrozen && isAccept {
@@ -205,7 +205,7 @@ func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVe
 }
 
 func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) entity.VersionTriageMergeStatus {
-	if len(*issueRelationInfo.PullRequests) == 0 {
+	if issueRelationInfo.PullRequests == nil || len(*issueRelationInfo.PullRequests) == 0 {
 		return entity.VersionTriageMergeStatusPr
 	}
 	allMerge := true

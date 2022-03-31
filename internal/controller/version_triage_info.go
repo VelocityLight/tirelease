@@ -37,7 +37,7 @@ func CreateOrUpdateVersionTriage(c *gin.Context) {
 func SelectVersionTriageInfos(c *gin.Context) {
 	// Params
 	versionTriageInfoQuery := dto.VersionTriageInfoQuery{}
-	if err := c.ShouldBindWith(&versionTriageInfoQuery, binding.JSON); err != nil {
+	if err := c.ShouldBindUri(&versionTriageInfoQuery); err != nil {
 		c.Error(err)
 		return
 	}

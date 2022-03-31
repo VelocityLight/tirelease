@@ -40,6 +40,8 @@ function ReleaseCandidates({ version }) {
     return {
       id: item.issue_relation_info.Issue.issue_id,
       ...item.issue_relation_info,
+      version_triage: item.version_triage,
+      version_triage_merge_status: item.version_triage_merge_status,
     };
   });
   console.log("version rows", rows);
@@ -50,6 +52,7 @@ function ReleaseCandidates({ version }) {
         rows={rows}
         columns={[
           ...Columns.issueBasicInfo,
+          Columns.triageStatus,
           Columns.getAffectionOnVersion(minorVersion),
           Columns.getPROnVersion(minorVersion),
           Columns.getPickOnVersion(minorVersion),

@@ -108,6 +108,12 @@ const pr = {
   renderCell: renderPullRequest("master"),
 };
 
+const triageStatus = {
+  field: "triage_status",
+  headerName: "Triage Status",
+  valueGetter: (params) => params.row.version_triage_merge_status,
+};
+
 function getAffectionOnVersion(version) {
   return {
     field: "affect_" + version,
@@ -148,6 +154,7 @@ const Columns = {
   assignee,
   severity,
   pr,
+  triageStatus,
   getAffectionOnVersion,
   getPROnVersion,
   getPickOnVersion,

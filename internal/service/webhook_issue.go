@@ -1,6 +1,7 @@
 package service
 
 import (
+	"log"
 	"time"
 
 	"tirelease/commons/git"
@@ -18,6 +19,7 @@ type RefreshIssueParams struct {
 	Total           int                      `json:"total"`
 	IsHistory       bool                     `json:"is_history"`
 	ReleaseVersions *[]entity.ReleaseVersion `json:"release_versions"`
+	Order           string                   `json:"order"`
 }
 
 func CronRefreshIssuesV4(params *RefreshIssueParams) error {
@@ -28,12 +30,19 @@ func CronRefreshIssuesV4(params *RefreshIssueParams) error {
 
 	// multi-batch refresh
 	for _, repo := range *params.Repos {
-		issues, err := git.ClientV4.GetIssuesByTimeRangeV4(
-			repo.Owner, repo.Repo, nil,
-			time.Now().Add(time.Duration(params.BeforeHours)*time.Hour), time.Now(),
-			params.Batch, params.Total)
+		request := &git.RemoteIssueRangeRequest{
+			Owner:      repo.Owner,
+			Name:       repo.Repo,
+			Labels:     nil,
+			From:       time.Now().Add(time.Duration(params.BeforeHours) * time.Hour),
+			To:         time.Now(),
+			BatchLimit: params.Batch,
+			TotalLimit: params.Total,
+			Order:      params.Order,
+		}
+		issues, err := git.ClientV4.GetIssuesByTimeRangeV4(request)
 		if err != nil {
-			return err
+			log.Fatal(err)
 		}
 
 		for i := range issues {
@@ -85,7 +94,7 @@ func WebhookRefreshIssueV4(issue *github.Issue) error {
 // Service Function
 func RefreshIssueLabel(label string, option *entity.IssueOption) error {
 	// select issues
-	issues, err := repository.SelectIssueRaw(option)
+	issues, err := repository.SelectIssue(option)
 	if err != nil {
 		return err
 	}

@@ -24,6 +24,7 @@ func IssueCron() {
 		Total:           500,
 		IsHistory:       true,
 		ReleaseVersions: releaseVersions,
+		Order:           "DESC",
 	}
 	cron.Create("0 0 */1 * * ?", func() { service.CronRefreshIssuesV4(params) })
 }

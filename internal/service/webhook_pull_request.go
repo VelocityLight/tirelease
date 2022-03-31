@@ -26,10 +26,14 @@ func CronRefreshPullRequestV4(params *RefreshPullRequestParams) error {
 
 	// multi-batch refresh
 	for _, repo := range *params.Repos {
-		prs, err := git.ClientV4.GetPullRequestsFromV4(
-			repo.Owner, repo.Repo,
-			time.Now().Add(time.Duration(params.BeforeHours)*time.Hour),
-			params.Batch, params.Total)
+		request := &git.RemoteIssueRangeRequest{
+			Owner:      repo.Owner,
+			Name:       repo.Repo,
+			From:       time.Now().Add(time.Duration(params.BeforeHours) * time.Hour),
+			BatchLimit: params.Batch,
+			TotalLimit: params.Total,
+		}
+		prs, err := git.ClientV4.GetPullRequestsFromV4(request)
 		if err != nil {
 			return err
 		}

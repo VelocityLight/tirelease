@@ -90,31 +90,6 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 		}
 	}
 
-	// status
-	var status entity.VersionTriageMergeStatus
-	if len(*issueRelationInfo.PullRequests) == 0 {
-		status = entity.VersionTriageMergeStatusPr
-	} else {
-		allMerge := true
-		for _, pr := range *issueRelationInfo.PullRequests {
-			if !pr.CherryPickApproved {
-				status = entity.VersionTriageMergeStatusApprove
-				break
-			} else if !pr.AlreadyReviewed {
-				status = entity.VersionTriageMergeStatusReview
-				break
-			} else if !pr.Merged {
-				allMerge = false
-				break
-			}
-		}
-		if allMerge {
-			status = entity.VersionTriageMergeStatusMerged
-		} else {
-			status = entity.VersionTriageMergeStatusCITesting
-		}
-	}
-
 	// return
 	return &dto.VersionTriageInfo{
 		ReleaseVersion: releaseVersion,
@@ -122,7 +97,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 		IsAccept:       isAccept,
 
 		VersionTriage:            versionTriage,
-		VersionTriageMergeStatus: status,
+		VersionTriageMergeStatus: ComposeVersionTriageMergeStatus(issueRelationInfo),
 
 		IssueRelationInfo: issueRelationInfo,
 	}, nil
@@ -168,6 +143,7 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 		versionTriageInfo.VersionTriage = &versionTriage
 		versionTriageInfo.IssueRelationInfo = issueRelationInfo
 		versionTriageInfo.ReleaseVersion = releaseVersion
+		versionTriageInfo.VersionTriageMergeStatus = ComposeVersionTriageMergeStatus(issueRelationInfo)
 		versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
 	}
 
@@ -222,6 +198,27 @@ func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVe
 		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already released or cancelled: %+v failed", releaseVersion))
 	}
 	return releaseVersion, nil
+}
+
+func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) entity.VersionTriageMergeStatus {
+	if len(*issueRelationInfo.PullRequests) == 0 {
+		return entity.VersionTriageMergeStatusPr
+	}
+	allMerge := true
+	for _, pr := range *issueRelationInfo.PullRequests {
+		if !pr.CherryPickApproved {
+			return entity.VersionTriageMergeStatusApprove
+		} else if !pr.AlreadyReviewed {
+			return entity.VersionTriageMergeStatusReview
+		} else if !pr.Merged {
+			allMerge = false
+		}
+	}
+	if allMerge {
+		return entity.VersionTriageMergeStatusMerged
+	} else {
+		return entity.VersionTriageMergeStatusCITesting
+	}
 }
 
 // Export history data (Only database operation, no remote operation)

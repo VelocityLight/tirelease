@@ -33,7 +33,7 @@ function ReleaseCandidates({ version }) {
   }
 
   console.log("version data", data);
-  if (data.data === undefined) {
+  if (data?.data === undefined) {
     return <p>data is wrong, maybe your version is incorrect</p>;
   }
   const rows = data.data.version_triage_infos.map((item) => {

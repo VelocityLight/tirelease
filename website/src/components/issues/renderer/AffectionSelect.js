@@ -36,7 +36,7 @@ export default function AffectionSelect({
       ) : (
         <>
           {mutation.isError ? (
-            <div>An error occurred: {mutation.error.message}</div>
+            <div>An error occurred: {JSON.stringify(mutation.error)}</div>
           ) : null}
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
             <Select

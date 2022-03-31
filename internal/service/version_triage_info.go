@@ -205,7 +205,7 @@ func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVe
 }
 
 func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) entity.VersionTriageMergeStatus {
-	if len(*issueRelationInfo.PullRequests) == 0 {
+	if issueRelationInfo.PullRequests == nil || len(*issueRelationInfo.PullRequests) == 0 {
 		return entity.VersionTriageMergeStatusPr
 	}
 	allMerge := true

@@ -61,7 +61,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 	}
 
 	// remote operation
-	if len(*issueRelationInfo.PullRequests) > 0 {
+	if issueRelationInfo != nil && issueRelationInfo.PullRequests != nil && len(*issueRelationInfo.PullRequests) > 0 {
 		for i := range *issueRelationInfo.PullRequests {
 			pr := (*issueRelationInfo.PullRequests)[i]
 			if !isFrozen && isAccept {

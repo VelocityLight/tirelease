@@ -187,15 +187,15 @@ func InheritVersionTriage(fromVersion string, toVersion string) error {
 }
 
 func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
-	if option == nil || option.Name == "" {
+	if option == nil {
 		return nil, errors.New(fmt.Sprintf("CheckReleaseVersion params invalid: %+v failed", option))
 	}
 	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
 	if err != nil {
 		return nil, err
 	}
-	if releaseVersion.Status == entity.ReleaseVersionStatusReleased || releaseVersion.Status == entity.ReleaseVersionStatusCancelled {
-		return nil, errors.Wrap(err, fmt.Sprintf("find release version is already released or cancelled: %+v failed", releaseVersion))
+	if releaseVersion.Status != entity.ReleaseVersionStatusUpcoming {
+		return nil, errors.Wrap(err, fmt.Sprintf("find lastest version is not upcoming: %+v failed", releaseVersion))
 	}
 	return releaseVersion, nil
 }

@@ -3,7 +3,7 @@ import AffectionSelect from "./AffectionSelect";
 
 export function getAffection(version) {
   return (params) => {
-    const affects = params.row.IssueAffects?.filter(
+    const affects = params.row.issue_affects?.filter(
       (affects) => affects.affect_version === version
     )[0];
     if (affects === undefined) {
@@ -21,7 +21,7 @@ export function renderAffection(version) {
     }
     return (
       <AffectionSelect
-        id={params.row.Issue.issue_id}
+        id={params.row.issue.issue_id}
         version={version}
         affection={affection}
       ></AffectionSelect>

@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material";
 export function getLabelValue(filter, mapper) {
   return (params) => {
-    const filtered = params.row.Issue.labels.filter(filter);
+    const filtered = params.row.issue.labels.filter(filter);
     return filtered
       .map((label) => label.name)
       .map(mapper)
@@ -11,7 +11,7 @@ export function getLabelValue(filter, mapper) {
 
 export function renderLabel(filter, mapper) {
   return (params) => {
-    const filtered = params.row.Issue.labels.filter(filter);
+    const filtered = params.row.issue.labels.filter(filter);
     return filtered.map((label) => (
       //   <Chip label={mapper(label.name)} color={"#" + label.color}></Chip>
       <Chip

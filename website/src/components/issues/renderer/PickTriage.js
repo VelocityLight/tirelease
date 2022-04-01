@@ -8,7 +8,7 @@ export function getPickTriageValue(version) {
     if (affection === "N/A" || affection === "no") {
       return "N/A";
     }
-    const pick = params.row.VersionTriages?.filter((t) =>
+    const pick = params.row.version_triages?.filter((t) =>
       t.version_name.startsWith(version)
     )[0];
     if (pick === undefined) {
@@ -24,7 +24,7 @@ export function renderPickTriage(version) {
     if (affection === "N/A" || affection === "no") {
       return <>not affect</>;
     }
-    let pick = params.row.VersionTriages?.filter((t) =>
+    let pick = params.row.version_triages?.filter((t) =>
       t.version_name.startsWith(version)
     )[0];
     if (pick === undefined && params.row.version_triage !== undefined) {
@@ -37,7 +37,7 @@ export function renderPickTriage(version) {
     return (
       <>
         <PickSelect
-          id={params.row.Issue.issue_id}
+          id={params.row.issue.issue_id}
           version={version}
           patch={patch}
           pick={value}

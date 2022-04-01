@@ -38,7 +38,7 @@ function ReleaseCandidates({ version }) {
   }
   const rows = data.data.version_triage_infos.map((item) => {
     return {
-      id: item.issue_relation_info.Issue.issue_id,
+      id: item.issue_relation_info.issue.issue_id,
       ...item.issue_relation_info,
       version_triage: item.version_triage,
       version_triage_merge_status: item.version_triage_merge_status,

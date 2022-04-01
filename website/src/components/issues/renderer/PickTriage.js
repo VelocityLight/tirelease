@@ -24,10 +24,15 @@ export function renderPickTriage(version) {
     if (affection === "N/A" || affection === "no") {
       return <>not affect</>;
     }
-    const pick = params.row.VersionTriages?.filter((t) =>
+    let pick = params.row.VersionTriages?.filter((t) =>
       t.version_name.startsWith(version)
     )[0];
-    const value = pick === undefined ? "unknown" : pick.triage_result;
+    if (pick === undefined && params.row.version_triage !== undefined) {
+      pick = params.row.version_triage;
+    }
+    console.log(pick);
+    const value =
+      pick === undefined ? "unknown" : pick.triage_result?.toLocaleLowerCase();
     const patch = pick === undefined ? "unknown" : pick.version_name;
     return (
       <>

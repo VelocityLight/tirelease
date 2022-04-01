@@ -21,10 +21,18 @@ export function renderPullRequest(branch) {
     if (pr === undefined) {
       return <>Not Found</>;
     }
-    const merged = pr.state === "merged";
+    console.log(pr);
+    const iconType =
+      pr.state === "closed" ? (pr.merged ? "merged" : "pr_closed") : pr.state;
+    const iconColor = {
+      pr_closed: "#cf222e",
+      merged: "#8250df",
+      open: "#2da44e",
+    }[iconType];
+
     return (
       <Chip
-        icon={<GithubIcon type={merged ? "merged" : "pull"} fill="white" />}
+        icon={<GithubIcon type={iconType} fill="white" />}
         label={"#" + pr.number}
         onClick={() => {
           window.open(pr.html_url);
@@ -32,7 +40,7 @@ export function renderPullRequest(branch) {
         size="small"
         style={{
           color: "white",
-          backgroundColor: merged ? "#8250df" : "#2da44e",
+          backgroundColor: iconColor,
         }}
       ></Chip>
     );

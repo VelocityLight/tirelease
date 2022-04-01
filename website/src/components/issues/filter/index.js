@@ -1,11 +1,11 @@
 import { FilterDialog } from "./FilterDialog";
 
 export function repo(name) {
-  return (item) => item.Issue.repo === name;
+  return (item) => item.issue.repo === name;
 }
 
 export function state(status) {
-  return (item) => item.Issue.state === status;
+  return (item) => item.issue.state === status;
 }
 
 export function stateOpen() {
@@ -14,19 +14,19 @@ export function stateOpen() {
 
 export function severity(level) {
   return (item) =>
-    item.Issue.labels.filter((label) => label.name === `severity/${level}`)
+    item.issue.labels.filter((label) => label.name === `severity/${level}`)
       .length !== 0;
 }
 
 export function type(issueType) {
   return (item) =>
-    item.Issue.labels.filter((label) => label.name === `type/${issueType}`)
+    item.issue.labels.filter((label) => label.name === `type/${issueType}`)
       .length !== 0;
 }
 
 export function affectState(version, state) {
   return (item) => {
-    const affect = item.IssueAffects?.filter(
+    const affect = item.issue_affects?.filter(
       (affects) => affects.affect_version === version
     )[0];
     if (affect === undefined) {
@@ -48,7 +48,7 @@ export function affectUnknown(version) {
 
 export function PR(branch, has) {
   return (item) => {
-    const pr = item.PullRequests?.filter((pr) => pr.base_branch === branch)[0];
+    const pr = item.pull_requests?.filter((pr) => pr.base_branch === branch)[0];
     return (pr === undefined) !== has;
   };
 }
@@ -63,7 +63,7 @@ export function noPR(branch) {
 
 export function pick(version, state) {
   return (item) => {
-    const pick = item.VersionTriages?.filter((t) =>
+    const pick = item.version_triages?.filter((t) =>
       t.version_name.startsWith(version)
     )[0];
     if (pick === undefined && state === "unknown") {
@@ -103,7 +103,7 @@ export function closedByPRDuring(from, to) {
   const f = new Date(from);
   const t = new Date(to);
   return (item) => {
-    const pr = item.PullRequests?.filter(
+    const pr = item.pull_requests?.filter(
       (pr) => pr.base_branch === "master"
     )[0];
     if (pr === undefined || pr.merged_at === undefined) {
@@ -126,7 +126,7 @@ export function openDuring(from, to) {
   const f = new Date(from);
   const t = new Date(to);
   return (item) => {
-    const createdAt = new Date(item.Issue.created_at);
+    const createdAt = new Date(item.issue.created_at);
     return createdAt - f >= 0 && t - createdAt > 0;
   };
 }

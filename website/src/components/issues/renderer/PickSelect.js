@@ -53,7 +53,11 @@ export default function PickSelect({
               <MenuItem value="unknown">
                 <em>unknown</em>
               </MenuItem>
-              <MenuItem value={"approve"}>approve</MenuItem>
+              <MenuItem value={"accept"}>
+                <div style={{ color: "green", fontWeight: "bold" }}>
+                  approved
+                </div>
+              </MenuItem>
               <MenuItem value={"later"}>later</MenuItem>
               <MenuItem value={"won't fix"}>won't fix</MenuItem>
               <MenuItem value={"fixed"} disabled={true}>

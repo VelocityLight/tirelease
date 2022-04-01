@@ -9,31 +9,31 @@ const id = {
   field: "id",
   headerName: "Id",
   hide: true,
-  valueGetter: (params) => params.row.Issue.issue_id,
+  valueGetter: (params) => params.row.issue.issue_id,
 };
 
 const repo = {
   field: "repo",
   headerName: "Repo",
-  valueGetter: (params) => params.row.Issue.repo,
+  valueGetter: (params) => params.row.issue.repo,
 };
 
 const number = {
   field: "number",
   headerName: "Number",
-  valueGetter: (params) => params.row.Issue.number,
+  valueGetter: (params) => params.row.issue.number,
   renderCell: (params) => (
     <a
-      href={params.row.Issue.html_url}
+      href={params.row.issue.html_url}
       _target="blank"
       rel="noopener noreferrer"
       onClick={(e) => {
-        window.open(params.row.Issue.html_url);
+        window.open(params.row.issue.html_url);
         e.preventDefault();
         e.stopPropagation();
       }}
     >
-      {params.row.Issue.number}
+      {params.row.issue.number}
     </a>
   ),
 };
@@ -42,7 +42,7 @@ const title = {
   field: "title",
   headerName: "Title",
   width: 480,
-  valueGetter: (params) => params.row.Issue.title,
+  valueGetter: (params) => params.row.issue.title,
 };
 
 const type = {
@@ -76,7 +76,7 @@ const severity = {
 const state = {
   field: "state",
   headerName: "State",
-  valueGetter: (params) => params.row.Issue.state,
+  valueGetter: (params) => params.row.issue.state,
   renderCell: renderIssueState,
 };
 
@@ -84,7 +84,7 @@ const assignee = {
   field: "assignee",
   headerName: "Assignee",
   valueGetter: (params) =>
-    params.row.Issue.assignee.map((assignee) => assignee.login).join(","),
+    params.row.issue.assignee.map((assignee) => assignee.login).join(","),
   renderCell: renderAssignee,
 };
 
@@ -106,6 +106,18 @@ const pr = {
   headerName: "PR",
   valueGetter: getPullRequest("master"),
   renderCell: renderPullRequest("master"),
+};
+
+const triageStatus = {
+  field: "triage_status",
+  headerName: "Triage Status",
+  valueGetter: (params) => params.row.version_triage_merge_status,
+};
+
+const releaseBlock = {
+  field: "release_block",
+  headerName: "Release Blocked",
+  valueGetter: (params) => params.row.version_triage.block_version_release,
 };
 
 function getAffectionOnVersion(version) {
@@ -148,6 +160,8 @@ const Columns = {
   assignee,
   severity,
   pr,
+  triageStatus,
+  releaseBlock,
   getAffectionOnVersion,
   getPROnVersion,
   getPickOnVersion,

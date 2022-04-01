@@ -2,7 +2,7 @@ import { Chip } from "@mui/material";
 import { GithubIcon } from "../../icons/github";
 
 export function renderIssueState(params) {
-  const state = params.row.Issue.state;
+  const state = params.row.issue.state;
   const open = state === "open";
   return (
     <Chip

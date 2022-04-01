@@ -63,7 +63,7 @@ export function IssueGrid({
 
   const rows = [
     ...issueQuery.data?.data.map((item) => {
-      return { ...item, id: item.Issue.issue_id };
+      return { ...item, id: item.issue.issue_id };
     }),
   ];
   return (

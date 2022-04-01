@@ -48,7 +48,7 @@ export default function PickSelect({
               value={affects}
               onChange={handleChange}
               label="Affection"
-              disabled={pick.startsWith("fixed")}
+              disabled={pick.startsWith("released")}
             >
               <MenuItem value="unknown">
                 <em>unknown</em>
@@ -60,8 +60,9 @@ export default function PickSelect({
               </MenuItem>
               <MenuItem value={"later"}>later</MenuItem>
               <MenuItem value={"won't fix"}>won't fix</MenuItem>
-              <MenuItem value={"fixed"} disabled={true}>
-                fixed in {patch}
+              <MenuItem value={"accept(frozen)"}>approved (frozen)</MenuItem>
+              <MenuItem value={"released"} disabled={true}>
+                released in {patch}
               </MenuItem>
             </Select>
           </FormControl>

@@ -128,11 +128,19 @@ const VersionTableColumns = [
     sortable: true,
     minWidth: 160,
     valueGetter: (params) => params.row.plan_release_time,
-    renderCell: (params) => (
-      <div>
-        {dayjs(params.row.plan_release_time).format("YYYY-MM-DD HH:mm:ss")}
-      </div>
-    ),
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.plan_release_time !== undefined && (
+            <div>
+              {dayjs(params.row.plan_release_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              )}
+            </div>
+          )}
+        </>
+      );
+    },
   },
   {
     field: "actual_release_time",
@@ -144,6 +152,20 @@ const VersionTableColumns = [
     filterable: false,
     sortable: true,
     minWidth: 160,
+    valueGetter: (params) => params.row.actual_release_time,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.actual_release_time !== undefined && (
+            <div>
+              {dayjs(params.row.actual_release_time).format(
+                "YYYY-MM-DD HH:mm:ss"
+              )}
+            </div>
+          )}
+        </>
+      );
+    },
   },
   {
     field: "description",

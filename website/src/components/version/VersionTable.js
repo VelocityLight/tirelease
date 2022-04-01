@@ -5,7 +5,6 @@ import VersionTableColumns from "./VersionTableColumns";
 import { VersionUpdate } from "./VersionUpdate";
 
 export const VersionTable = ({ data }) => {
-  console.log(data);
   const [update, setUpdate] = React.useState(false);
   const [rowData, setRowData] = React.useState(null);
   return (

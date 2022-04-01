@@ -114,6 +114,12 @@ const triageStatus = {
   valueGetter: (params) => params.row.version_triage_merge_status,
 };
 
+const releaseBlock = {
+  field: "release_block",
+  headerName: "Release Blocked",
+  valueGetter: (params) => params.row.version_triage.block_version_release,
+};
+
 function getAffectionOnVersion(version) {
   return {
     field: "affect_" + version,
@@ -155,6 +161,7 @@ const Columns = {
   severity,
   pr,
   triageStatus,
+  releaseBlock,
   getAffectionOnVersion,
   getPROnVersion,
   getPickOnVersion,

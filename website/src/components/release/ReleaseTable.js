@@ -10,7 +10,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useQuery } from "react-query";
 import { url } from "../../utils";
 import Columns from "../issues/GridColumns";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 
 function ReleaseCandidates({ version }) {
@@ -53,6 +53,7 @@ function ReleaseCandidates({ version }) {
         columns={[
           ...Columns.issueBasicInfo,
           Columns.triageStatus,
+          Columns.releaseBlock,
           Columns.getAffectionOnVersion(minorVersion),
           Columns.getPROnVersion(minorVersion),
           Columns.getPickOnVersion(minorVersion),
@@ -63,11 +64,10 @@ function ReleaseCandidates({ version }) {
 }
 
 const ReleaseTable = () => {
+  const navigate = useNavigate();
   const params = useParams();
   console.log(params.version);
-  const [version, setVersion] = useState(
-    params.version === undefined ? "none" : params.version
-  );
+  const version = params.version === undefined ? "none" : params.version;
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -85,7 +85,7 @@ const ReleaseTable = () => {
           <VersionSelector
             versionProp={version}
             onChange={(v) => {
-              setVersion(v);
+              navigate(`/home/triage/${v}`, { replace: true });
             }}
           />
           <Button

@@ -14,7 +14,7 @@ export function getPickTriageValue(version) {
     if (pick === undefined) {
       return "unknown";
     }
-    return pick.triage_result.toLocaleLowerCase();
+    return pick.triage_result?.toLocaleLowerCase();
   };
 }
 

@@ -37,8 +37,6 @@ func CreateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
 }
 
 func UpdateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
-	releaseVersion.Name = ComposeVersionName(releaseVersion)
-	releaseVersion.Type = ComposeVersionType(releaseVersion)
 	err := repository.UpdateReleaseVersion(releaseVersion)
 	if nil != err {
 		return err

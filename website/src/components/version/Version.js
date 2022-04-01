@@ -15,7 +15,7 @@ export default function Version() {
   });
 
   if (data) {
-    console.log("data", data);
+    console.log("version", data);
   }
 
   const [createVersion, setCreateVersion] = useState(false);

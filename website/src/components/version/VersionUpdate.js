@@ -151,19 +151,22 @@ export const VersionUpdate = ({ open, onClose, row }) => {
         <Button onClick={onClose}>Close</Button>
         <Button
           onClick={() => {
-            create.mutate({
+            const payload = {
               id: row.id,
               name: `${major}.${minor}.${patch}${
                 addition === "" ? "" : "-" + addition
               }`,
-              //   major,
-              //   minor,
-              //   patch,
-              //   addition,
               description,
               owner,
-              plan_release_time: eta.toISOString(),
-            });
+            };
+            let etaDate = undefined;
+            try {
+              etaDate = eta.toISOString();
+            } catch (e) {}
+            if (etaDate) {
+              payload.plan_release_time = etaDate;
+            }
+            create.mutate(payload);
           }}
           variant="contained"
         >

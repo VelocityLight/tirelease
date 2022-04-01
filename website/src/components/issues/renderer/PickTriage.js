@@ -42,7 +42,6 @@ export function renderPickTriage(version) {
           patch={patch}
           pick={value}
         ></PickSelect>
-        <Button>Add Note</Button>
       </>
     );
   };

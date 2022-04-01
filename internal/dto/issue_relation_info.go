@@ -23,11 +23,11 @@ type IssueRelationInfoQuery struct {
 
 // IssueRelationInfo ReturnBack Struct
 type IssueRelationInfo struct {
-	Issue            *entity.Issue
-	IssueAffects     *[]entity.IssueAffect
-	IssuePrRelations *[]entity.IssuePrRelation
-	PullRequests     *[]entity.PullRequest
-	VersionTriages   *[]entity.VersionTriage
+	Issue            *entity.Issue             `json:"issue"`
+	IssueAffects     *[]entity.IssueAffect     `json:"issue_affects"`
+	IssuePrRelations *[]entity.IssuePrRelation `json:"issue_pr_relations"`
+	PullRequests     *[]entity.PullRequest     `json:"pull_requests"`
+	VersionTriages   *[]entity.VersionTriage   `json:"version_triages"`
 }
 
 // Join IssueRelationInfo

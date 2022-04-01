@@ -96,6 +96,16 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 			issueRelationInfo.PullRequests = pullRequests
 		}
 
+		// version_triage
+		versionTriageOption := &entity.VersionTriageOption{
+			IssueID: issue.IssueID,
+		}
+		versionTriages, err := repository.SelectVersionTriage(versionTriageOption)
+		if nil != err {
+			return nil, nil, err
+		}
+		issueRelationInfo.VersionTriages = versionTriages
+
 		// return
 		issueRelationInfos = append(issueRelationInfos, *issueRelationInfo)
 	}

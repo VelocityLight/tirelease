@@ -20,6 +20,7 @@ import axios from "axios";
 import Typography from "@mui/material/Typography";
 
 export const VersionUpdate = ({ open, onClose, row }) => {
+  console.log("version update", row);
   const queryClient = useQueryClient();
   const [description, setDescription] = React.useState(row.description);
   const [owner, setOwner] = React.useState(row.owner);
@@ -152,6 +153,7 @@ export const VersionUpdate = ({ open, onClose, row }) => {
         <Button
           onClick={() => {
             const payload = {
+              ...row,
               id: row.id,
               name: `${major}.${minor}.${patch}${
                 addition === "" ? "" : "-" + addition

@@ -53,7 +53,7 @@ export default function PickSelect({
               <MenuItem value="unknown">
                 <em>unknown</em>
               </MenuItem>
-              <MenuItem value={"accept"}>
+              <MenuItem value={"aprove"}>
                 <div style={{ color: "green", fontWeight: "bold" }}>
                   approved
                 </div>

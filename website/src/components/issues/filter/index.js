@@ -126,8 +126,8 @@ export function openDuring(from, to) {
   const f = new Date(from);
   const t = new Date(to);
   return (item) => {
-    const createdAt = new Date(item.issue.created_at);
-    return createdAt - f >= 0 && t - createdAt > 0;
+    const createTime = new Date(item.issue.create_time);
+    return createTime - f >= 0 && t - createTime > 0;
   };
 }
 

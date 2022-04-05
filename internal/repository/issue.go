@@ -142,14 +142,14 @@ func IssueWhere(option *entity.IssueOption) string {
 	if option.TypeLabel != "" {
 		sql += " and issue.type_label = @TypeLabel"
 	}
-	if !option.CreatedAt.IsZero() {
-		sql += " and issue.created_at > @CreatedAt"
+	if !option.CreateTime.IsZero() {
+		sql += " and issue.create_time > @CreateTime"
 	}
-	if !option.UpdatedAt.IsZero() {
-		sql += " and issue.updated_at > @UpdatedAt"
+	if !option.UpdateTime.IsZero() {
+		sql += " and issue.update_time > @UpdateTime"
 	}
-	if !option.ClosedAt.IsZero() {
-		sql += " and issue.closed_at > @ClosedAt"
+	if !option.CloseTime.IsZero() {
+		sql += " and issue.closed_time > @CloseTime"
 	}
 	if option.IssueIDs != nil && len(option.IssueIDs) > 0 {
 		sql += " and issue.issue_id in @IssueIDs"
@@ -174,7 +174,7 @@ func IssueOrderBy(option *entity.IssueOption) string {
 		sql += " " + option.Order
 	}
 	if option.OrderBy == "" && option.Order == "" {
-		sql += " order by issue.updated_at desc"
+		sql += " order by issue.update_time desc"
 	}
 
 	return sql

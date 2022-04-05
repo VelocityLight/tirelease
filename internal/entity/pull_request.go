@@ -25,7 +25,7 @@ type PullRequest struct {
 	CreateTime time.Time  `json:"create_time,omitempty"`
 	UpdateTime time.Time  `json:"update_time,omitempty"`
 	CloseTime  *time.Time `json:"close_time,omitempty"`
-	MergeTime  *time.Time `json:"merged_at,omitempty"`
+	MergeTime  *time.Time `json:"merge_time,omitempty"`
 
 	Merged             bool    `json:"merged,omitempty"`
 	MergeableState     *string `json:"mergeable_state,omitempty"`
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	close_time TIMESTAMP COMMENT '关闭时间',
 	create_time TIMESTAMP COMMENT '创建时间',
 	update_time TIMESTAMP COMMENT '更新时间',
-	merged_time TIMESTAMP COMMENT '合入时间',
+	merge_time TIMESTAMP COMMENT '合入时间',
 
 	merged BOOLEAN COMMENT '是否已合入',
 	mergeable_state VARCHAR(32) COMMENT '可合入状态',

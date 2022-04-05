@@ -149,7 +149,7 @@ func IssueWhere(option *entity.IssueOption) string {
 		sql += " and issue.update_time > @UpdateTime"
 	}
 	if !option.CloseTime.IsZero() {
-		sql += " and issue.closed_time > @CloseTime"
+		sql += " and issue.close_time > @CloseTime"
 	}
 	if option.IssueIDs != nil && len(option.IssueIDs) > 0 {
 		sql += " and issue.issue_id in @IssueIDs"

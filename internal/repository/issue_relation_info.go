@@ -58,6 +58,7 @@ func ComposeIssueRelationInfoByJoin(option *dto.IssueRelationInfoQuery, isLimit 
 		sql += "where issue_affect.issue_id is not null "
 	}
 	sql += "group by issue.issue_id "
+	sql += IssueOrderBy(&option.IssueOption)
 	if isAffectFilter && isLimit {
 		sql += IssueLimit(&option.IssueOption)
 	}

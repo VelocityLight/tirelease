@@ -28,6 +28,13 @@ const CIColumnsGrid = [
         headerAlign: 'left',
         type: 'number',
         align: 'left',
+        valueGetter: function(params) {
+            // for download
+            return params.row.affected_prs;
+        },
+        renderCell: function(params){
+            return <CIRecentRuns data={params.row.recent_runs} text={params.row.affected_prs} />
+        },
         editable: false,
         filterable: false,
         pinnable: true,
@@ -170,7 +177,7 @@ const CIColumnsGrid = [
             return JSON.stringify(params.row.recent_runs, null, 4);
         },
         renderCell: function(params){
-            return <CIRecentRuns data={params.row.recent_runs} />
+            return <CIRecentRuns data={params.row.recent_runs} text="History" />
         },
         sortable: false,
         align: 'left',

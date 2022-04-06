@@ -40,16 +40,13 @@ func ComposeIssueRelationInfoByJoin(option *dto.IssueRelationInfoQuery, isLimit 
 		AffectVersion: option.AffectVersion,
 		AffectResult:  option.AffectResult,
 	}
-	isAffectFilter := option.AffectVersion != "" || option.AffectResult != ""
+	isAffectFilter := (option.AffectVersion != "" || option.AffectResult != "")
 
 	sql := ""
 	sql += " ( "
-	sql += "select * from issue where 1=1 " + IssueWhere(&option.IssueOption)
-	if !isAffectFilter {
-		sql += IssueOrderBy(&option.IssueOption)
-		if isLimit {
-			sql += IssueLimit(&option.IssueOption)
-		}
+	sql += "select * from issue where 1=1 " + IssueWhere(&option.IssueOption) + IssueOrderBy(&option.IssueOption)
+	if !isAffectFilter && isLimit {
+		sql += IssueLimit(&option.IssueOption)
 	}
 	sql += " ) as issue "
 	sql += "left join "
@@ -61,11 +58,8 @@ func ComposeIssueRelationInfoByJoin(option *dto.IssueRelationInfoQuery, isLimit 
 		sql += "where issue_affect.issue_id is not null "
 	}
 	sql += "group by issue.issue_id "
-	if isAffectFilter {
-		sql += IssueOrderBy(&option.IssueOption)
-		if isLimit {
-			sql += IssueLimit(&option.IssueOption)
-		}
+	if isAffectFilter && isLimit {
+		sql += IssueLimit(&option.IssueOption)
 	}
 
 	return sql

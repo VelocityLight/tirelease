@@ -256,13 +256,13 @@ func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions
 			if releaseVersion.Major != major || releaseVersion.Minor != minor || releaseVersion.ReleaseBranch != releaseBranch {
 				continue
 			}
-			if releaseVersion.ActualReleaseTime.After(*(pr.MergedAt)) {
+			if releaseVersion.ActualReleaseTime.After(*(pr.MergeTime)) {
 				versionTriage := &entity.VersionTriage{
 					IssueID:      info.Issue.IssueID,
 					VersionName:  releaseVersion.Name,
 					TriageResult: entity.VersionTriageResultReleased,
-					CreateTime:   *(pr.MergedAt),
-					UpdateTime:   *(pr.MergedAt),
+					CreateTime:   *(pr.MergeTime),
+					UpdateTime:   *(pr.MergeTime),
 				}
 				if err := repository.CreateOrUpdateVersionTriage(versionTriage); err != nil {
 					return err
@@ -272,8 +272,8 @@ func ExportHistoryVersionTriageInfo(info *dto.IssueRelationInfo, releaseVersions
 					IssueID:       info.Issue.IssueID,
 					AffectVersion: branchVersion,
 					AffectResult:  entity.AffectResultResultYes,
-					CreateTime:    *(pr.MergedAt),
-					UpdateTime:    *(pr.MergedAt),
+					CreateTime:    *(pr.MergeTime),
+					UpdateTime:    *(pr.MergeTime),
 				}
 				if err := repository.CreateOrUpdateIssueAffect(issueAffect); err != nil {
 					return err

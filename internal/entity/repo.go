@@ -7,9 +7,9 @@ import (
 // Struct of Issue
 type Repo struct {
 	// DataBase Column
-	ID        int64     `json:"id,omitempty"`
-	CreatedAt time.Time `json:"created_at,omitempty"`
-	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	ID         int64     `json:"id,omitempty"`
+	CreateTime time.Time `json:"create_time,omitempty"`
+	UpdateTime time.Time `json:"update_time,omitempty"`
 
 	Owner       string  `json:"owner,omitempty"`
 	Repo        string  `json:"repo,omitempty"`
@@ -35,8 +35,8 @@ func (Repo) TableName() string {
 
 CREATE TABLE IF NOT EXISTS repo (
 	id INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	created_at TIMESTAMP COMMENT '创建时间',
-	updated_at TIMESTAMP COMMENT '更新时间',
+	create_time TIMESTAMP COMMENT '创建时间',
+	update_time TIMESTAMP COMMENT '更新时间',
 
 	owner VARCHAR(255) COMMENT '仓库所有者',
 	repo VARCHAR(255) COMMENT '仓库名称',

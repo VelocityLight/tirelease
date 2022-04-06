@@ -131,8 +131,8 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 		pr := Pr{}
 		for j := range cherryPickToPrs {
 			cpr := cherryPickToPrs[j]
-			if cpr.MergedAt == nil {
-				cpr.MergedAt = &time.Time{}
+			if cpr.MergeTime == nil {
+				cpr.MergeTime = &time.Time{}
 			}
 			if strings.HasSuffix(cpr.BaseBranch, issueAffect.AffectVersion) {
 				pr = Pr{
@@ -143,7 +143,7 @@ func ListAffected(issueID string, closedPrID string, minorPatchVersionMap map[st
 					Url:         cpr.HTMLURL,
 					State:       cpr.State,
 					MergeTarget: cpr.BaseBranch,
-					MergedAt:    *cpr.MergedAt,
+					MergedAt:    *cpr.MergeTime,
 				}
 			}
 		}

@@ -106,10 +106,10 @@ export function closedByPRDuring(from, to) {
     const pr = item.pull_requests?.filter(
       (pr) => pr.base_branch === "master"
     )[0];
-    if (pr === undefined || pr.merged_at === undefined) {
+    if (pr === undefined || pr.merge_time === undefined) {
       return false;
     }
-    const mergedAt = new Date(pr.merged_at);
+    const mergedAt = new Date(pr.merge_time);
     return mergedAt - f >= 0 && t - mergedAt > 0;
   };
 }
@@ -126,8 +126,8 @@ export function openDuring(from, to) {
   const f = new Date(from);
   const t = new Date(to);
   return (item) => {
-    const createdAt = new Date(item.issue.created_at);
-    return createdAt - f >= 0 && t - createdAt > 0;
+    const createTime = new Date(item.issue.create_time);
+    return createTime - f >= 0 && t - createTime > 0;
   };
 }
 

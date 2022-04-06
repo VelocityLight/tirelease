@@ -22,10 +22,10 @@ type PullRequest struct {
 	HTMLURL       string `json:"html_url,omitempty"`
 	BaseBranch    string `json:"base_branch,omitempty"`
 
-	CreatedAt time.Time  `json:"created_at,omitempty"`
-	UpdatedAt time.Time  `json:"updated_at,omitempty"`
-	ClosedAt  *time.Time `json:"closed_at,omitempty"`
-	MergedAt  *time.Time `json:"merged_at,omitempty"`
+	CreateTime time.Time  `json:"create_time,omitempty"`
+	UpdateTime time.Time  `json:"update_time,omitempty"`
+	CloseTime  *time.Time `json:"close_time,omitempty"`
+	MergeTime  *time.Time `json:"merge_time,omitempty"`
 
 	Merged             bool    `json:"merged,omitempty"`
 	MergeableState     *string `json:"mergeable_state,omitempty"`
@@ -118,10 +118,10 @@ func ComposePullRequestFromV3(pullRequest *github.PullRequest) *PullRequest {
 		HTMLURL:       *pullRequest.HTMLURL,
 		BaseBranch:    *pullRequest.Base.Ref,
 
-		CreatedAt: *pullRequest.CreatedAt,
-		UpdatedAt: *pullRequest.UpdatedAt,
-		ClosedAt:  pullRequest.ClosedAt,
-		MergedAt:  pullRequest.MergedAt,
+		CreateTime: *pullRequest.CreatedAt,
+		UpdateTime: *pullRequest.UpdatedAt,
+		CloseTime:  pullRequest.ClosedAt,
+		MergeTime:  pullRequest.MergedAt,
 
 		Merged:             *pullRequest.Merged,
 		MergeableState:     &mergeableState,
@@ -185,8 +185,8 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		HTMLURL:       string(pullRequestField.Url),
 		BaseBranch:    string(pullRequestField.BaseRefName),
 
-		CreatedAt: pullRequestField.CreatedAt.Time,
-		UpdatedAt: pullRequestField.UpdatedAt.Time,
+		CreateTime: pullRequestField.CreatedAt.Time,
+		UpdateTime: pullRequestField.UpdatedAt.Time,
 
 		Merged:             bool(pullRequestField.Merged),
 		MergeableState:     &mergeableState,
@@ -198,10 +198,10 @@ func ComposePullRequestFromV4(pullRequestField *git.PullRequestField) *PullReque
 		RequestedReviewers: requestedReviewers,
 	}
 	if pullRequestField.ClosedAt != nil {
-		pr.ClosedAt = &pullRequestField.ClosedAt.Time
+		pr.CloseTime = &pullRequestField.ClosedAt.Time
 	}
 	if pullRequestField.MergedAt != nil {
-		pr.MergedAt = &pullRequestField.MergedAt.Time
+		pr.MergeTime = &pullRequestField.MergedAt.Time
 	}
 	return pr
 }
@@ -227,10 +227,10 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	html_url VARCHAR(1024) COMMENT '链接',
 	base_branch VARCHAR(255) COMMENT '目标分支',
 
-	closed_at TIMESTAMP COMMENT '关闭时间',
-	created_at TIMESTAMP COMMENT '创建时间',
-	updated_at TIMESTAMP COMMENT '更新时间',
-	merged_at TIMESTAMP COMMENT '合入时间',
+	close_time TIMESTAMP COMMENT '关闭时间',
+	create_time TIMESTAMP COMMENT '创建时间',
+	update_time TIMESTAMP COMMENT '更新时间',
+	merge_time TIMESTAMP COMMENT '合入时间',
 
 	merged BOOLEAN COMMENT '是否已合入',
 	mergeable_state VARCHAR(32) COMMENT '可合入状态',
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS pull_request (
 	UNIQUE KEY uk_prid (pull_request_id),
 	INDEX idx_state (state),
 	INDEX idx_owner_repo (owner, repo),
-	INDEX idx_createdat (created_at),
+	INDEX idx_createtime (create_time),
 	INDEX idx_sourceprid (source_pull_request_id)
 )
 ENGINE = INNODB DEFAULT CHARSET = utf8 COMMENT 'pull_request信息表';

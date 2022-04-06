@@ -41,12 +41,12 @@ type IssueRelationInfoByJoin struct {
 
 func (query *IssueRelationInfoQuery) ParamFill() {
 	if query.CreatedAtStamp != 0 {
-		query.CreatedAt = time.Unix(query.CreatedAtStamp, 0)
+		query.CreateTime = time.Unix(query.CreatedAtStamp, 0)
 	}
 	if query.UpdatedAtStamp != 0 {
-		query.UpdatedAt = time.Unix(query.UpdatedAtStamp, 0)
+		query.UpdateTime = time.Unix(query.UpdatedAtStamp, 0)
 	}
 	if query.ClosedAtStamp != 0 {
-		query.ClosedAt = time.Unix(query.ClosedAtStamp, 0)
+		query.CloseTime = time.Unix(query.ClosedAtStamp, 0)
 	}
 }

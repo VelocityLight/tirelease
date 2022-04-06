@@ -24,7 +24,7 @@ export default function PickSelect({
       version_name: version,
       triage_result: {
         unknown: "UnKnown",
-        approve: "Accept",
+        accept: "Accept",
         later: "Later",
         "won't fix": "Won't Fix",
       }[event.target.value],
@@ -53,7 +53,7 @@ export default function PickSelect({
               <MenuItem value="unknown">
                 <em>unknown</em>
               </MenuItem>
-              <MenuItem value={"aprove"}>
+              <MenuItem value={"accept"}>
                 <div style={{ color: "green", fontWeight: "bold" }}>
                   approved
                 </div>

@@ -106,10 +106,10 @@ export function closedByPRDuring(from, to) {
     const pr = item.pull_requests?.filter(
       (pr) => pr.base_branch === "master"
     )[0];
-    if (pr === undefined || pr.merged_at === undefined) {
+    if (pr === undefined || pr.merge_time === undefined) {
       return false;
     }
-    const mergedAt = new Date(pr.merged_at);
+    const mergedAt = new Date(pr.merge_time);
     return mergedAt - f >= 0 && t - mergedAt > 0;
   };
 }

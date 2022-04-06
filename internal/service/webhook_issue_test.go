@@ -80,3 +80,20 @@ func TestCronRefreshIssuesV42(t *testing.T) {
 
 // tidb： 2021-07-02 02:49:13  / 2021-10-28 12:46:50 / 2021-11-17 06:59:24 / 2022-01-18 04:17:53
 // tiflow: 2022-03-09
+
+func TestRefreshIssueField(t *testing.T) {
+	// init
+	git.Connect(git.TestToken)
+	git.ConnectV4(git.TestToken)
+	database.Connect(generateConfig())
+
+	// detail
+	option := &entity.IssueOption{
+		ListOption: entity.ListOption{
+			OrderBy: "id",
+			Order:   "ASC",
+		},
+	}
+	err := RefreshIssueField(option)
+	assert.Equal(t, true, err == nil)
+}

@@ -16,6 +16,10 @@ export function IssueGrid({
   const [rowCount, setRowCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(0);
+  // stale while revalidate
+  // js spread operator
+  // const a = [1, 2, 3];
+  // [0, ...a, 4] == [0, 1, 2, 3, 4];
   const issueQuery = useQuery(
     ["issue", ...filters, rowsPerPage, currentPage],
     () => fetchIssue({ filters, page: currentPage, perPage: rowsPerPage }),

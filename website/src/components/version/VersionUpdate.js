@@ -24,6 +24,7 @@ export const VersionUpdate = ({ open, onClose, row }) => {
   const queryClient = useQueryClient();
   const [description, setDescription] = React.useState(row.description);
   const [owner, setOwner] = React.useState(row.owner);
+  const [status, setStatus] = React.useState(row.status);
   const [eta, setETA] = React.useState(new Date(row.plan_release_time));
 
   const [major, minor, patch] = row.name.split(".");
@@ -108,6 +109,25 @@ export const VersionUpdate = ({ open, onClose, row }) => {
               ></TextField>
             </FormControl>
           </Stack>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <Select
+              id="demo-simple-select-standard"
+              value={status}
+              onChange={(e) => {
+                setStatus(e.target.value);
+              }}
+            >
+              <MenuItem value={"upcoming"}>
+                <div style={{ color: "green", fontWeight: "bold" }}>
+                  upcoming
+                </div>
+              </MenuItem>
+              <MenuItem value={"planned"}>planned</MenuItem>
+              <MenuItem value={"frozen"}>frozen</MenuItem>
+              <MenuItem value={"released"}>released</MenuItem>
+              <MenuItem value={"cancelled"}>cancelled</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl>
             <InputLabel htmlFor="my-input">Description</InputLabel>
             <Input
@@ -160,6 +180,7 @@ export const VersionUpdate = ({ open, onClose, row }) => {
               }`,
               description,
               owner,
+              status,
             };
             let etaDate = undefined;
             try {

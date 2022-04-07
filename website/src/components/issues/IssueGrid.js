@@ -15,7 +15,7 @@ export function IssueGrid({
   const [filterDialog, setFilterDialog] = useState(false);
   const [rowCount, setRowCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   // stale while revalidate
   // js spread operator
   // const a = [1, 2, 3];

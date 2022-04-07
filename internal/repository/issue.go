@@ -174,7 +174,7 @@ func IssueOrderBy(option *entity.IssueOption) string {
 		sql += " " + option.Order
 	}
 	if option.OrderBy == "" && option.Order == "" {
-		sql += " order by issue.update_time desc"
+		sql += " order by issue.update_time desc, issue.id desc"
 	}
 
 	return sql

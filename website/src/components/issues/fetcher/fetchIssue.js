@@ -1,6 +1,6 @@
 import { url } from "../../../utils";
 
-export function fetchIssue({ page = 0, perPage = 100, filters = [] }) {
+export function fetchIssue({ page = 1, perPage = 100, filters = [] }) {
   return fetch(
     url(
       `issue?page=${page}&per_page=${perPage}${filters

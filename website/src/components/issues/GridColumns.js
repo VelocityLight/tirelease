@@ -120,6 +120,12 @@ const releaseBlock = {
   valueGetter: (params) => params.row.version_triage.block_version_release,
 };
 
+const comment = {
+  field: "comment",
+  headerName: "Comment",
+  valueGetter: (params) => params.row.version_triage.comment,
+};
+
 function getAffectionOnVersion(version) {
   return {
     field: "affect_" + version,
@@ -161,6 +167,7 @@ const Columns = {
   severity,
   pr,
   triageStatus,
+  comment,
   releaseBlock,
   getAffectionOnVersion,
   getPROnVersion,

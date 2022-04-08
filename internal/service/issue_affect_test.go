@@ -21,6 +21,7 @@ func TestComposeIssueAffectWithIssueID(t *testing.T) {
 }
 
 func TestCreateOrUpdateIssueAffect(t *testing.T) {
+	t.Skip()
 	// init
 	git.Connect(git.TestToken)
 	git.ConnectV4(git.TestToken)

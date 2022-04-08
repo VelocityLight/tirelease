@@ -12,6 +12,7 @@ import (
 )
 
 func TestCreateOrUpdateVersionTriageInfo(t *testing.T) {
+	t.Skip()
 	git.Connect(git.TestToken)
 	git.ConnectV4(git.TestToken)
 	database.Connect(generateConfig())
@@ -36,7 +37,6 @@ func TestSelectVersionTriageInfo(t *testing.T) {
 			VersionName: "5.1.1",
 		},
 	}
-
 	info, response, err := SelectVersionTriageInfo(query)
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, response.TotalCount > 0)

@@ -22,7 +22,7 @@ function ReleaseCandidates({ version }) {
   const openVersionTriageDialog = (data) => {
     setVersionTriageData(data);
   };
-  
+
   const { isLoading, error, data } = useQuery(`release-${version}`, () => {
     return fetch(url(`issue/cherrypick/${version}?page=1&per_page=1000`))
       .then(async (res) => {
@@ -132,12 +132,12 @@ const ReleaseTable = () => {
                 this release are triaged and settled.
               </DialogContentText>
             </DialogContent>
-            <DialogActions>
+            {/* <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Button onClick={handleClose} autoFocus>
                 Release
               </Button>
-            </DialogActions>
+            </DialogActions> */}
           </Dialog>
         </Stack>
         {version !== "none" && (

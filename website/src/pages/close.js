@@ -96,7 +96,7 @@ function PickTriage() {
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
         <Accordion defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMore />}>
-            Cherrypick Triage
+            Recent Closed(Filter By Severity Of Major/Critical)
           </AccordionSummary>
           <AccordionDetails>
             <Tabs value={tab} onChange={handleChange}>

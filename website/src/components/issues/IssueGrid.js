@@ -72,7 +72,7 @@ export function IssueGrid({
   ];
   return (
     <Stack spacing={1}>
-      <Stack direction={"row"} justifyContent={"flex-end"} spacing={2}>
+      {/* <Stack direction={"row"} justifyContent={"flex-end"} spacing={2}>
         <Button
           variant="contained"
           onClick={() => {
@@ -81,7 +81,7 @@ export function IssueGrid({
         >
           Filter
         </Button>
-      </Stack>
+      </Stack> */}
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           density="compact"

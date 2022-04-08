@@ -15,8 +15,8 @@ const MyRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AllIssues />} />
-        <Route path="/home" element={<AllIssues />} />
+        <Route path="/" element={<VersionPage />} />
+        <Route path="/home" element={<VersionPage />} />
         <Route path="/home/all" element={<AllIssues />} />
         <Route path="/home/open" element={<RecentOpen />} />
         <Route path="/home/affection" element={<AffectTriage />} />

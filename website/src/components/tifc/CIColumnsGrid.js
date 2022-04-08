@@ -139,7 +139,7 @@ const CIColumnsGrid = [
         renderCell: function(params) {
             // for page show
             return <p>
-                PRID: {params.row.may_introduced_by.pull_request} <br/>
+                PRID: <a href={params.row.may_introduced_by.pr_link}>{params.row.may_introduced_by.pull_request}</a> <br/>
                 CommitID: {params.row.may_introduced_by.commit_id} <br/>
                 Author: {params.row.may_introduced_by.author} 
             </p>;

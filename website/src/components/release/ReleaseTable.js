@@ -12,10 +12,19 @@ import { url } from "../../utils";
 import Columns from "../issues/GridColumns";
 import { useParams, useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
+import TriageDialog from "../issues/TriageDialog";
 
 function ReleaseCandidates({ version }) {
+  const [versionTriageData, setVersionTriageData] = useState(undefined);
+  const onClose = () => {
+    setVersionTriageData(undefined);
+  };
+  const openVersionTriageDialog = (data) => {
+    setVersionTriageData(data);
+  };
+  
   const { isLoading, error, data } = useQuery(`release-${version}`, () => {
-    return fetch(url(`issue/cherrypick/${version}?page=0&per_page=1000`))
+    return fetch(url(`issue/cherrypick/${version}?page=1&per_page=1000`))
       .then(async (res) => {
         const data = await res.json();
         return data;
@@ -46,6 +55,7 @@ function ReleaseCandidates({ version }) {
   });
   console.log("version rows", rows);
   const minorVersion = version.split(".").slice(0, 2).join(".");
+
   return (
     <div style={{ height: 600, width: "100%" }}>
       <DataGrid
@@ -57,8 +67,19 @@ function ReleaseCandidates({ version }) {
           Columns.getAffectionOnVersion(minorVersion),
           Columns.getPROnVersion(minorVersion),
           Columns.getPickOnVersion(minorVersion),
+          Columns.comment,
         ]}
+        onRowClick={(e) => {
+          console.log(e);
+          openVersionTriageDialog(e);
+        }}
       ></DataGrid>
+      <TriageDialog
+          onClose={onClose}
+          open={versionTriageData !== undefined}
+          row={versionTriageData?.row}
+          columns={versionTriageData?.columns}
+        ></TriageDialog>
     </div>
   );
 }

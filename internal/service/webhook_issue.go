@@ -111,3 +111,36 @@ func RefreshIssueLabel(label string, option *entity.IssueOption) error {
 	}
 	return nil
 }
+
+func RefreshIssueField(option *entity.IssueOption) error {
+	// select issues
+	issues, err := repository.SelectIssue(option)
+	if err != nil {
+		return err
+	}
+	if len(*issues) == 0 {
+		return nil
+	}
+
+	// refresh info
+	for _, issue := range *issues {
+		issueID := issue.IssueID
+		issueFieldWithoutTimelineItems, err := git.ClientV4.GetIssueWithoutTimelineByID(issueID)
+		if err != nil {
+			return err
+		}
+		if issueFieldWithoutTimelineItems == nil {
+			continue
+		}
+
+		issueField := git.IssueField{
+			IssueFieldWithoutTimelineItems: *issueFieldWithoutTimelineItems,
+		}
+		err = repository.CreateOrUpdateIssue(entity.ComposeIssueFromV4(&issueField))
+		if err != nil {
+			return err
+		}
+		log.Printf("id: %d OK", issue.ID)
+	}
+	return nil
+}

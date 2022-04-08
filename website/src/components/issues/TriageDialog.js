@@ -7,15 +7,18 @@ import { Stack, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import TiDialogTitle from "../common/TiDialogTitle";
 
 export default function TriageDialog({ row, columns, open, onClose }) {
+  const [scroll, setScroll] = React.useState('paper');
+  const [maxWidth, setMaxWidth] = React.useState('md');
+
   return (
     <div>
       <Dialog
         onClose={onClose}
         open={open}
         sx={{ overflow: "visible" }}
-        maxWidth={"md"}
-        fullWidth
-        scroll="paper"
+        scroll={scroll}
+        fullWidth={true}
+        maxWidth={maxWidth}
       >
         <TiDialogTitle id="customized-dialog-title" onClose={onClose}>
           Issue info

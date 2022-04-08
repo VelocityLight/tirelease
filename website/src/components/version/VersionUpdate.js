@@ -48,7 +48,11 @@ export const VersionUpdate = ({ open, onClose, row }) => {
     }
   );
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+    <Dialog 
+      open={open} 
+      onClose={onClose} 
+      maxWidth="md" 
+      fullWidth>
       <DialogTitle>Update Version</DialogTitle>
       <DialogContent>
         <Stack direction="column" spacing={4}>
@@ -138,9 +142,9 @@ export const VersionUpdate = ({ open, onClose, row }) => {
               }}
               value={description}
             />
-            <FormHelperText id="my-helper-text">
+            {/* <FormHelperText id="my-helper-text">
               description about the version
-            </FormHelperText>
+            </FormHelperText> */}
           </FormControl>
           <FormControl>
             <InputLabel htmlFor="my-input">Owner</InputLabel>
@@ -152,9 +156,9 @@ export const VersionUpdate = ({ open, onClose, row }) => {
               }}
               value={owner}
             />
-            <FormHelperText id="my-helper-text">
+            {/* <FormHelperText id="my-helper-text">
               owner of the version
-            </FormHelperText>
+            </FormHelperText> */}
           </FormControl>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker

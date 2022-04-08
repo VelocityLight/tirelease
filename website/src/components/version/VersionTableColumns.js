@@ -6,8 +6,7 @@ function TriageButton({ version }) {
   const navigate = useNavigate();
   return (
     <Button
-      variant="contained"
-      color="secondary"
+      variant="outlined"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -39,7 +38,7 @@ const VersionTableColumns = [
     editable: false,
     filterable: true,
     sortable: true,
-    width: 80,
+    width: 120,
     minWidth: 40,
   },
   {
@@ -95,7 +94,7 @@ const VersionTableColumns = [
     editable: true,
     filterable: true,
     sortable: false,
-    minWidth: 120,
+    minWidth: 80,
   },
   {
     field: "repos",
@@ -176,13 +175,14 @@ const VersionTableColumns = [
     editable: true,
     filterable: false,
     sortable: false,
-    minWidth: 260,
+    minWidth: 160,
   },
   {
     field: "triage",
     headerName: "Triage",
     headerAlign: "left",
     hide: false,
+    minWidth: 260,
     renderCell: (params) => {
       return <TriageButton version={params.row.name}></TriageButton>;
     },

@@ -109,7 +109,7 @@ const ReleaseTable = () => {
               navigate(`/home/triage/${v}`, { replace: true });
             }}
           />
-          <Button
+          {/* <Button
             variant="outlined"
             onClick={handleClickOpen}
             disabled={version === "none"}
@@ -132,13 +132,13 @@ const ReleaseTable = () => {
                 this release are triaged and settled.
               </DialogContentText>
             </DialogContent>
-            {/* <DialogActions>
+            <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Button onClick={handleClose} autoFocus>
                 Release
               </Button>
-            </DialogActions> */}
-          </Dialog>
+            </DialogActions>
+          </Dialog> */}
         </Stack>
         {version !== "none" && (
           <ReleaseCandidates version={version}></ReleaseCandidates>

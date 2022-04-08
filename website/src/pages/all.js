@@ -55,7 +55,7 @@ const AllIssues = () => {
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
         <Accordion defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            All Issues(No Filter, Show List Of Last One Year)
+            All Issues(No filter, show list of last one year)
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{ width: "100%" }}>

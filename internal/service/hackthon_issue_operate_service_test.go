@@ -13,6 +13,7 @@ import (
 )
 
 func TestIssueAffectOperate(t *testing.T) {
+	t.Skip()
 	// Init
 	var config = generateConfig()
 	database.Connect(config)
@@ -40,6 +41,7 @@ func TestIssueAffectOperate(t *testing.T) {
 }
 
 func TestIssueAffectOperateWeb(t *testing.T) {
+	t.Skip()
 	// Init
 	var config = generateConfig()
 	database.Connect(config)

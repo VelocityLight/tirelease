@@ -231,10 +231,10 @@ export const VersionAdd = ({ open, onClose, versions }) => {
               name: `${major}.${minor}.${patch}${
                 addition === "" ? "" : "-" + addition
               }`,
-              //   major,
-              //   minor,
-              //   patch,
-              //   addition,
+              major,
+              minor,
+              patch,
+              addition,
               description,
               owner,
               plan_release_time: eta.toISOString(),

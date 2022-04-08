@@ -88,7 +88,7 @@ function RecentOpen() {
       <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
         <Accordion defaultExpanded={true}>
           <AccordionSummary expandIcon={<ExpandMore />}>
-            Recent Open
+            Recent Opened(Filter by severity of major/critical)
           </AccordionSummary>
           <AccordionDetails>
             <Tabs value={tab} onChange={handleChange}>

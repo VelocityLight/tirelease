@@ -96,7 +96,7 @@ const CIColumnsGrid = [
         },
         renderCell: function(params) {
             return <p>
-                PRID: {params.row.first_seen.pull_request} <br/>
+                PRID: <a target="_blank" href={params.row.first_seen.pr_link}>{params.row.first_seen.pull_request}</a> <br/>
                 CommitID: {params.row.first_seen.commit_id} <br/>
                 Author: {params.row.first_seen.author} 
             </p>;
@@ -117,7 +117,7 @@ const CIColumnsGrid = [
         },
         renderCell: function(params) {
             return <p>
-                PRID: {params.row.last_seen.pull_request} <br/>
+                PRID: <a target="_blank" href={params.row.last_seen.pr_link}>{params.row.last_seen.pull_request}</a> <br/>
                 CommitID: {params.row.last_seen.commit_id} <br/>
                 Author: {params.row.last_seen.author} 
             </p>;
@@ -139,7 +139,7 @@ const CIColumnsGrid = [
         renderCell: function(params) {
             // for page show
             return <p>
-                PRID: {params.row.may_introduced_by.pull_request} <br/>
+                PRID: <a target="_blank" href={params.row.may_introduced_by.pr_link}>{params.row.may_introduced_by.pull_request}</a> <br/>
                 CommitID: {params.row.may_introduced_by.commit_id} <br/>
                 Author: {params.row.may_introduced_by.author} 
             </p>;

@@ -5,35 +5,35 @@ import (
 
 	"tirelease/commons/database"
 	"tirelease/commons/git"
-	"tirelease/internal/entity"
+	// "tirelease/internal/entity"
 	// "tirelease/internal/repository"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCronRefreshIssuesV4(t *testing.T) {
-	// init
-	git.Connect(git.TestToken)
-	git.ConnectV4(git.TestToken)
-	database.Connect(generateConfig())
-	repo := &entity.Repo{
-		Owner: git.TestOwner2,
-		Repo:  git.TestRepo2,
-	}
-	repos := []entity.Repo{*repo}
-	params := &RefreshIssueParams{
-		Repos:       &repos,
-		BeforeHours: -25,
-		Batch:       20,
-		Total:       500,
-		IsHistory:   false,
-		Order:       "DESC",
-	}
+// func TestCronRefreshIssuesV4(t *testing.T) {
+// 	// init
+// 	git.Connect(git.TestToken)
+// 	git.ConnectV4(git.TestToken)
+// 	database.Connect(generateConfig())
+// 	repo := &entity.Repo{
+// 		Owner: git.TestOwner2,
+// 		Repo:  git.TestRepo2,
+// 	}
+// 	repos := []entity.Repo{*repo}
+// 	params := &RefreshIssueParams{
+// 		Repos:       &repos,
+// 		BeforeHours: -25,
+// 		Batch:       20,
+// 		Total:       500,
+// 		IsHistory:   false,
+// 		Order:       "DESC",
+// 	}
 
-	// detail
-	err := CronRefreshIssuesV4(params)
-	assert.Equal(t, true, err == nil)
-}
+// 	// detail
+// 	err := CronRefreshIssuesV4(params)
+// 	assert.Equal(t, true, err == nil)
+// }
 
 func TestWebhookRefreshIssueV4(t *testing.T) {
 	// init
@@ -77,9 +77,6 @@ func TestWebhookRefreshIssueV4(t *testing.T) {
 // 	err = CronRefreshIssuesV4(params)
 // 	assert.Equal(t, true, err == nil)
 // }
-
-// tidb： 2021-07-02 02:49:13  / 2021-10-28 12:46:50 / 2021-11-17 06:59:24 / 2022-01-18 04:17:53
-// tiflow: 2022-03-09
 
 // func TestRefreshIssueField(t *testing.T) {
 // 	// init

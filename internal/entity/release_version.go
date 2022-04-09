@@ -75,6 +75,10 @@ type ReleaseVersionOption struct {
 	Addition string               `json:"addition,omitempty"`
 	Type     ReleaseVersionType   `json:"type,omitempty" form:"type"`
 	Status   ReleaseVersionStatus `json:"status,omitempty" form:"status"`
+
+	StatusList []ReleaseVersionStatus `json:"status_list,omitempty" form:"status_list"`
+
+	ListOption
 }
 
 // DB-Table

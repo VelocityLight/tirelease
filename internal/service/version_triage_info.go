@@ -34,7 +34,6 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 
 	// create or update
 	var isFrozen bool = releaseVersion.Status == entity.ReleaseVersionStatusFrozen
-	var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
 	var isAccept bool = versionTriage.TriageResult == entity.VersionTriageResultAccept
 	if isFrozen && isAccept {
 		versionTriage.TriageResult = entity.VersionTriageResultAcceptFrozen
@@ -60,8 +59,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 				if err != nil {
 					return nil, err
 				}
-			}
-			if !isAccept && !isRelease {
+			} else {
 				err := RemoveLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
 				if err != nil {
 					return nil, err
@@ -183,7 +181,7 @@ func FindReleaseVersion(versionTriage *entity.VersionTriage) (*entity.ReleaseVer
 	if shortType == entity.ReleaseVersionShortTypeMinor {
 		option.Major = major
 		option.Minor = minor
-		option.Status = entity.ReleaseVersionStatusUpcoming
+		option.StatusList = []entity.ReleaseVersionStatus{entity.ReleaseVersionStatusUpcoming, entity.ReleaseVersionStatusFrozen}
 	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
 		option.Major = major
 		option.Minor = minor
@@ -200,9 +198,9 @@ func FindReleaseVersion(versionTriage *entity.VersionTriage) (*entity.ReleaseVer
 	if err != nil {
 		return nil, err
 	}
-	if releaseVersion.Status != entity.ReleaseVersionStatusUpcoming {
-		return nil, errors.Wrap(err, fmt.Sprintf("find lastest version is not upcoming: %+v failed", releaseVersion))
-	}
+	// if releaseVersion.Status != entity.ReleaseVersionStatusUpcoming {
+	// 	return nil, errors.Wrap(err, fmt.Sprintf("find lastest version is not upcoming: %+v failed", releaseVersion))
+	// }
 	return releaseVersion, nil
 }
 

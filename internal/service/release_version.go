@@ -88,10 +88,12 @@ func SelectReleaseVersionMaintained() (*[]string, error) {
 }
 
 func CreateNextVersionIfNotExist(preVersion *entity.ReleaseVersion) (*entity.ReleaseVersion, error) {
+	major, minor, patch, _ := ComposeVersionAtom(preVersion.Name)
+
 	option := &entity.ReleaseVersionOption{
-		Major: preVersion.Major,
-		Minor: preVersion.Minor,
-		Patch: preVersion.Patch + 1,
+		Major: major,
+		Minor: minor,
+		Patch: patch + 1,
 	}
 	version, err := repository.SelectReleaseVersionLatest(option)
 	if nil == err && nil != version {
@@ -99,9 +101,9 @@ func CreateNextVersionIfNotExist(preVersion *entity.ReleaseVersion) (*entity.Rel
 	}
 	if nil == version {
 		version = &entity.ReleaseVersion{
-			Major: preVersion.Major,
-			Minor: preVersion.Minor,
-			Patch: preVersion.Patch + 1,
+			Major: major,
+			Minor: minor,
+			Patch: patch + 1,
 		}
 		err = CreateReleaseVersion(version)
 		if nil != err {

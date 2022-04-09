@@ -45,9 +45,8 @@ export default function AffectionSelect({
               onChange={handleChange}
               label="Affection"
             >
-              <MenuItem value="unknown">
-                <em>unknown</em>
-              </MenuItem>
+              <MenuItem value={"N/A"} disabled={true}>-</MenuItem>
+              <MenuItem value={"unknown"}>unknown</MenuItem>
               <MenuItem value={"no"}>no</MenuItem>
               <MenuItem value={"yes"}>yes</MenuItem>
             </Select>

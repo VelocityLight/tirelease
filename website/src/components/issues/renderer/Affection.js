@@ -16,9 +16,6 @@ export function getAffection(version) {
 export function renderAffection(version) {
   return (params) => {
     const affection = getAffection(version)(params);
-    if (affection === "N/A") {
-      return <>N/A</>;
-    }
     return (
       <AffectionSelect
         id={params.row.issue.issue_id}

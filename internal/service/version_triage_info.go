@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"strings"
 
 	"tirelease/commons/git"
@@ -14,7 +13,7 @@ import (
 
 func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.VersionTriageInfo, error) {
 	// find version
-	releaseVersion, err := FindReleaseVersion(versionTriage)
+	releaseVersion, err := SelectReleaseVersionActive(versionTriage.VersionName)
 	if err != nil {
 		return nil, err
 	}
@@ -171,37 +170,6 @@ func InheritVersionTriage(fromVersion string, toVersion string) error {
 	}
 
 	return nil
-}
-
-func FindReleaseVersion(versionTriage *entity.VersionTriage) (*entity.ReleaseVersion, error) {
-	// release_version option
-	shortType := ComposeVersionShortType(versionTriage.VersionName)
-	major, minor, patch, _ := ComposeVersionAtom(versionTriage.VersionName)
-	option := &entity.ReleaseVersionOption{}
-	if shortType == entity.ReleaseVersionShortTypeMinor {
-		option.Major = major
-		option.Minor = minor
-		option.StatusList = []entity.ReleaseVersionStatus{entity.ReleaseVersionStatusUpcoming, entity.ReleaseVersionStatusFrozen}
-	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
-		option.Major = major
-		option.Minor = minor
-		option.Patch = patch
-	} else {
-		return nil, errors.New(fmt.Sprintf("CreateOrUpdateVersionTriageInfo params invalid: %+v failed", versionTriage))
-	}
-
-	// find version
-	if option == nil {
-		return nil, errors.New(fmt.Sprintf("CheckReleaseVersion params invalid: %+v failed", option))
-	}
-	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
-	if err != nil {
-		return nil, err
-	}
-	// if releaseVersion.Status != entity.ReleaseVersionStatusUpcoming {
-	// 	return nil, errors.Wrap(err, fmt.Sprintf("find lastest version is not upcoming: %+v failed", releaseVersion))
-	// }
-	return releaseVersion, nil
 }
 
 func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) entity.VersionTriageMergeStatus {

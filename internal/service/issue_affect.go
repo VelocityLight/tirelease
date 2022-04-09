@@ -73,16 +73,6 @@ func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 	// operate cherry-pick record: select latest version & insert cherry-pick
 	if issueAffect.AffectResult == entity.AffectResultResultYes {
 		major, minor, _, _ := ComposeVersionAtom(issueAffect.AffectVersion)
-		// releaseVersionOption := &entity.ReleaseVersionOption{
-		// 	Major:  major,
-		// 	Minor:  minor,
-		// 	Status: entity.ReleaseVersionStatusUpcoming,
-		// 	// Type:                     entity.ReleaseVersionTypePatch,
-		// }
-		// releaseVersion, err := repository.SelectReleaseVersionLatest(releaseVersionOption)
-		// if err != nil {
-		// 	return err
-		// }
 		versionTriage := &entity.VersionTriage{
 			IssueID:      issueAffect.IssueID,
 			VersionName:  ComposeVersionMinorName(&entity.ReleaseVersion{Major: major, Minor: minor}),

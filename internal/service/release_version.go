@@ -10,6 +10,7 @@ import (
 	"tirelease/internal/repository"
 
 	"github.com/deckarep/golang-set"
+	"github.com/pkg/errors"
 )
 
 func CreateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
@@ -85,6 +86,31 @@ func SelectReleaseVersionMaintained() (*[]string, error) {
 		res = append(res, v.(string))
 	}
 	return &res, nil
+}
+
+func SelectReleaseVersionActive(name string) (*entity.ReleaseVersion, error) {
+	// release_version option
+	shortType := ComposeVersionShortType(name)
+	major, minor, patch, _ := ComposeVersionAtom(name)
+	option := &entity.ReleaseVersionOption{}
+	if shortType == entity.ReleaseVersionShortTypeMinor {
+		option.Major = major
+		option.Minor = minor
+		option.StatusList = []entity.ReleaseVersionStatus{entity.ReleaseVersionStatusUpcoming, entity.ReleaseVersionStatusFrozen}
+	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
+		option.Major = major
+		option.Minor = minor
+		option.Patch = patch
+	} else {
+		return nil, errors.New(fmt.Sprintf("SelectReleaseVersionActive params invalid: %+v failed", name))
+	}
+
+	// find version
+	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
+	if err != nil {
+		return nil, err
+	}
+	return releaseVersion, nil
 }
 
 func CreateNextVersionIfNotExist(preVersion *entity.ReleaseVersion) (*entity.ReleaseVersion, error) {

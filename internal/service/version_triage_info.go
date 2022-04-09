@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strings"
 
-	// "tirelease/commons/git"
 	"tirelease/commons/git"
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
@@ -14,22 +13,8 @@ import (
 )
 
 func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.VersionTriageInfo, error) {
-	// check
-	shortType := ComposeVersionShortType(versionTriage.VersionName)
-	major, minor, patch, _ := ComposeVersionAtom(versionTriage.VersionName)
-	releaseVersionOption := &entity.ReleaseVersionOption{}
-	if shortType == entity.ReleaseVersionShortTypeMinor {
-		releaseVersionOption.Major = major
-		releaseVersionOption.Minor = minor
-		releaseVersionOption.Status = entity.ReleaseVersionStatusUpcoming
-	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
-		releaseVersionOption.Major = major
-		releaseVersionOption.Minor = minor
-		releaseVersionOption.Patch = patch
-	} else {
-		return nil, errors.New(fmt.Sprintf("CreateOrUpdateVersionTriageInfo params invalid: %+v failed", versionTriage))
-	}
-	releaseVersion, err := CheckReleaseVersion(releaseVersionOption)
+	// find version
+	releaseVersion, err := FindReleaseVersion(versionTriage)
 	if err != nil {
 		return nil, err
 	}
@@ -49,6 +34,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 
 	// create or update
 	var isFrozen bool = releaseVersion.Status == entity.ReleaseVersionStatusFrozen
+	var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
 	var isAccept bool = versionTriage.TriageResult == entity.VersionTriageResultAccept
 	if isFrozen && isAccept {
 		versionTriage.TriageResult = entity.VersionTriageResultAcceptFrozen
@@ -75,7 +61,6 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 					return nil, err
 				}
 			}
-			var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
 			if !isAccept && !isRelease {
 				err := RemoveLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
 				if err != nil {
@@ -190,7 +175,24 @@ func InheritVersionTriage(fromVersion string, toVersion string) error {
 	return nil
 }
 
-func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
+func FindReleaseVersion(versionTriage *entity.VersionTriage) (*entity.ReleaseVersion, error) {
+	// release_version option
+	shortType := ComposeVersionShortType(versionTriage.VersionName)
+	major, minor, patch, _ := ComposeVersionAtom(versionTriage.VersionName)
+	option := &entity.ReleaseVersionOption{}
+	if shortType == entity.ReleaseVersionShortTypeMinor {
+		option.Major = major
+		option.Minor = minor
+		option.Status = entity.ReleaseVersionStatusUpcoming
+	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
+		option.Major = major
+		option.Minor = minor
+		option.Patch = patch
+	} else {
+		return nil, errors.New(fmt.Sprintf("CreateOrUpdateVersionTriageInfo params invalid: %+v failed", versionTriage))
+	}
+
+	// find version
 	if option == nil {
 		return nil, errors.New(fmt.Sprintf("CheckReleaseVersion params invalid: %+v failed", option))
 	}

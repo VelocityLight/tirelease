@@ -46,22 +46,17 @@ func UpdateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
 		return nil
 	}
 	if releaseVersion.Status == entity.ReleaseVersionStatusReleased {
-		// 版本发布操作
-		option := &entity.ReleaseVersionOption{
-			Major: releaseVersion.Major,
-			Minor: releaseVersion.Minor,
-			Patch: releaseVersion.Patch + 1,
-		}
-		lastVersion, err := repository.SelectReleaseVersionLatest(option)
-		if nil != err || nil == lastVersion {
+		// 版本发布——自动创建下一版本并继承当前未完成的任务
+		nextVersion, err := CreateNextVersionIfNotExist(releaseVersion)
+		if nil != err || nil == nextVersion {
 			return nil
 		}
-		lastVersion.Status = entity.ReleaseVersionStatusUpcoming
-		err = repository.UpdateReleaseVersion(lastVersion)
+		nextVersion.Status = entity.ReleaseVersionStatusUpcoming
+		err = repository.UpdateReleaseVersion(nextVersion)
 		if nil != err {
 			return err
 		}
-		err = InheritVersionTriage(releaseVersion.Name, lastVersion.Name)
+		err = InheritVersionTriage(releaseVersion.Name, nextVersion.Name)
 		if nil != err {
 			return err
 		}
@@ -90,6 +85,30 @@ func SelectReleaseVersionMaintained() (*[]string, error) {
 		res = append(res, v.(string))
 	}
 	return &res, nil
+}
+
+func CreateNextVersionIfNotExist(preVersion *entity.ReleaseVersion) (*entity.ReleaseVersion, error) {
+	option := &entity.ReleaseVersionOption{
+		Major: preVersion.Major,
+		Minor: preVersion.Minor,
+		Patch: preVersion.Patch + 1,
+	}
+	version, err := repository.SelectReleaseVersionLatest(option)
+	if nil == err && nil != version {
+		return version, nil
+	}
+	if nil == version {
+		version = &entity.ReleaseVersion{
+			Major: preVersion.Major,
+			Minor: preVersion.Minor,
+			Patch: preVersion.Patch + 1,
+		}
+		err = CreateReleaseVersion(version)
+		if nil != err {
+			return nil, err
+		}
+	}
+	return version, nil
 }
 
 // ====================================================

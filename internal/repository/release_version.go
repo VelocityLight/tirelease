@@ -33,6 +33,10 @@ func UpdateReleaseVersion(version *entity.ReleaseVersion) error {
 	if version.UpdateTime.IsZero() {
 		version.UpdateTime = time.Now()
 	}
+	if version.Status == entity.ReleaseVersionStatusReleased {
+		releaseTime := time.Now()
+		version.ActualReleaseTime = &releaseTime
+	}
 	serializeReleaseVersion(version)
 
 	// 更新

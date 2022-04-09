@@ -71,18 +71,18 @@ func OperateIssueAffectResult(issueAffect *entity.IssueAffect) error {
 	}
 
 	// operate cherry-pick record: select latest version & insert cherry-pick
-	if issueAffect.AffectResult == entity.AffectResultResultYes {
-		major, minor, _, _ := ComposeVersionAtom(issueAffect.AffectVersion)
-		versionTriage := &entity.VersionTriage{
-			IssueID:      issueAffect.IssueID,
-			VersionName:  ComposeVersionMinorName(&entity.ReleaseVersion{Major: major, Minor: minor}),
-			TriageResult: entity.VersionTriageResultUnKnown,
-		}
-		_, err := CreateOrUpdateVersionTriageInfo(versionTriage)
-		if err != nil {
-			return err
-		}
-	}
+	// if issueAffect.AffectResult == entity.AffectResultResultYes {
+	// 	major, minor, _, _ := ComposeVersionAtom(issueAffect.AffectVersion)
+	// 	versionTriage := &entity.VersionTriage{
+	// 		IssueID:      issueAffect.IssueID,
+	// 		VersionName:  ComposeVersionMinorName(&entity.ReleaseVersion{Major: major, Minor: minor}),
+	// 		TriageResult: entity.VersionTriageResultUnKnown,
+	// 	}
+	// 	_, err := CreateOrUpdateVersionTriageInfo(versionTriage)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// }
 
 	return nil
 }

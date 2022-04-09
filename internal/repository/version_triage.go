@@ -92,6 +92,9 @@ func VersionTriageWhere(option *entity.VersionTriageOption) string {
 	if option.TriageResult != "" {
 		sql += " and version_triage.triage_result = @TriageResult"
 	}
+	if option.VersionNameList != nil && len(option.VersionNameList) > 0 {
+		sql += " and version_triage.version_name in @VersionNameList"
+	}
 
 	return sql
 }

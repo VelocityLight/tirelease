@@ -150,7 +150,11 @@ func ComposeVersionName(version *entity.ReleaseVersion) string {
 }
 
 func ComposeVersionMinorName(version *entity.ReleaseVersion) string {
-	return fmt.Sprintf("%d.%d", version.Major, version.Minor)
+	return ComposeVersionMinorNameByNumber(version.Major, version.Minor)
+}
+
+func ComposeVersionMinorNameByNumber(major, minor int) string {
+	return fmt.Sprintf("%d.%d", major, minor)
 }
 
 func ComposeVersionBranch(version *entity.ReleaseVersion) string {

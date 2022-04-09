@@ -34,7 +34,7 @@ func CreateOrUpdateVersionTriage(c *gin.Context) {
 	c.JSON(statusCode, gin.H{"status": "ok", "data": versionTriageInfo})
 }
 
-func SelectVersionTriageInfos(c *gin.Context) {
+func SelectVersionTriageInfo(c *gin.Context) {
 	// Params
 	versionTriageInfoQuery := dto.VersionTriageInfoQuery{}
 	if err := c.ShouldBindUri(&versionTriageInfoQuery); err != nil {

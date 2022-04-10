@@ -34,8 +34,9 @@ func TestSelectVersionTriageInfo(t *testing.T) {
 
 	query := &dto.VersionTriageInfoQuery{
 		VersionTriageOption: entity.VersionTriageOption{
-			VersionName: "5.1.1",
+			VersionName: "5.2.2",
 		},
+		Version: "5.2.2",
 	}
 	info, response, err := SelectVersionTriageInfo(query)
 	assert.Equal(t, true, err == nil)

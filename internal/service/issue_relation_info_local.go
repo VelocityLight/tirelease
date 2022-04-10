@@ -94,7 +94,7 @@ func SelectIssueRelationInfo(option *dto.IssueRelationInfoQuery) (*[]dto.IssueRe
 		pullRequestOption := &entity.PullRequestOption{
 			PullRequestIDs: pullRequestIDs,
 		}
-		if pullRequestOption.BaseBranch != "" {
+		if option.BaseBranch != "" {
 			pullRequestOption.BaseBranch = option.BaseBranch
 		}
 		pullRequestAlls, err := repository.SelectPullRequest(pullRequestOption)

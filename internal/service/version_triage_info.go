@@ -111,26 +111,63 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	}
 
 	// detail
-	versionTriageInfos := make([]dto.VersionTriageInfo, 0)
+	issueIDs := make([]string, 0)
 	for i := range versionTriages {
 		versionTriage := versionTriages[i]
-		issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
+		issueIDs = append(issueIDs, versionTriage.IssueID)
+	}
+	versionTriageInfos := make([]dto.VersionTriageInfo, 0)
+	if len(issueIDs) > 0 {
+		infoOption := &dto.IssueRelationInfoQuery{
 			IssueOption: entity.IssueOption{
-				IssueID: versionTriage.IssueID,
+				IssueIDs: issueIDs,
 			},
 			BaseBranch: releaseVersion.ReleaseBranch,
-		})
+		}
+		issueRelationInfos, _, err := SelectIssueRelationInfo(infoOption)
 		if err != nil {
 			return nil, nil, err
 		}
 
-		versionTriageInfo := dto.VersionTriageInfo{}
-		versionTriageInfo.VersionTriage = &versionTriage
-		versionTriageInfo.IssueRelationInfo = issueRelationInfo
-		versionTriageInfo.ReleaseVersion = releaseVersion
-		versionTriageInfo.VersionTriageMergeStatus = ComposeVersionTriageMergeStatus(issueRelationInfo)
-		versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
+		for i := range versionTriages {
+			versionTriage := versionTriages[i]
+			versionTriageInfo := dto.VersionTriageInfo{}
+			versionTriageInfo.VersionTriage = &versionTriage
+			versionTriageInfo.ReleaseVersion = releaseVersion
+
+			for j := range *issueRelationInfos {
+				issueRelationInfo := (*issueRelationInfos)[j]
+				if issueRelationInfo.Issue.IssueID == versionTriage.IssueID {
+					versionTriageInfo.IssueRelationInfo = &issueRelationInfo
+					versionTriageInfo.VersionTriageMergeStatus = ComposeVersionTriageMergeStatus(&issueRelationInfo)
+					break
+				}
+			}
+
+			versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
+		}
 	}
+
+	// versionTriageInfos := make([]dto.VersionTriageInfo, 0)
+	// for i := range versionTriages {
+	// 	versionTriage := versionTriages[i]
+	// 	issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
+	// 		IssueOption: entity.IssueOption{
+	// 			IssueID: versionTriage.IssueID,
+	// 		},
+	// 		BaseBranch: releaseVersion.ReleaseBranch,
+	// 	})
+	// 	if err != nil {
+	// 		return nil, nil, err
+	// 	}
+
+	// 	versionTriageInfo := dto.VersionTriageInfo{}
+	// 	versionTriageInfo.VersionTriage = &versionTriage
+	// 	versionTriageInfo.IssueRelationInfo = issueRelationInfo
+	// 	versionTriageInfo.ReleaseVersion = releaseVersion
+	// 	versionTriageInfo.VersionTriageMergeStatus = ComposeVersionTriageMergeStatus(issueRelationInfo)
+	// 	versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
+	// }
 
 	// return
 	wrap := &dto.VersionTriageInfoWrap{

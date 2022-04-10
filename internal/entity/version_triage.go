@@ -57,6 +57,7 @@ type VersionTriageOption struct {
 	IssueID      string              `json:"issue_id,omitempty" form:"issue_id" uri:"issue_id"`
 	TriageResult VersionTriageResult `json:"triage_result,omitempty" form:"triage_result" uri:"triage_result"`
 
+	IssueIDs        []string `json:"issue_ids,omitempty" form:"issue_ids" uri:"issue_ids"`
 	VersionNameList []string `json:"version_name_list,omitempty" form:"version_name_list" uri:"version_name_list"`
 
 	ListOption

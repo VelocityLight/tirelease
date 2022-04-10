@@ -50,8 +50,8 @@ export default function PickSelect({
               label="Affection"
               disabled={pick.startsWith("released")}
             >
-              <MenuItem value="N/A" disabled={true}>-</MenuItem>
-              <MenuItem value="unknown">unknown</MenuItem>
+              <MenuItem value={"N/A"} disabled={true}>-</MenuItem>
+              <MenuItem value={"unknown"}>unknown</MenuItem>
               <MenuItem value={"accept"}>
                 <div style={{ color: "green", fontWeight: "bold" }}>
                   approved

@@ -21,6 +21,7 @@ const repo = {
 const number = {
   field: "number",
   headerName: "Number",
+  type: 'number',
   valueGetter: (params) => params.row.issue.number,
   renderCell: (params) => (
     <a
@@ -172,7 +173,7 @@ const Columns = {
   getAffectionOnVersion,
   getPROnVersion,
   getPickOnVersion,
-  issueBasicInfo: [id, repo, number, title],
+  issueBasicInfo: [id, repo, number, title, severity],
 };
 
 export default Columns;

@@ -50,9 +50,8 @@ export default function PickSelect({
               label="Affection"
               disabled={pick.startsWith("released")}
             >
-              <MenuItem value="unknown">
-                <em>unknown</em>
-              </MenuItem>
+              <MenuItem value={"N/A"} disabled={true}>-</MenuItem>
+              <MenuItem value={"unknown"}>unknown</MenuItem>
               <MenuItem value={"accept"}>
                 <div style={{ color: "green", fontWeight: "bold" }}>
                   approved
@@ -60,7 +59,7 @@ export default function PickSelect({
               </MenuItem>
               <MenuItem value={"later"}>later</MenuItem>
               <MenuItem value={"won't fix"}>won't fix</MenuItem>
-              <MenuItem value={"accept(frozen)"}>approved (frozen)</MenuItem>
+              <MenuItem value={"accept(frozen)"} disabled={true}>approved (frozen)</MenuItem>
               <MenuItem value={"released"} disabled={true}>
                 released in {patch}
               </MenuItem>

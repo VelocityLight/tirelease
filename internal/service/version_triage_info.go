@@ -1,10 +1,8 @@
 package service
 
 import (
-	"fmt"
 	"strings"
 
-	// "tirelease/commons/git"
 	"tirelease/commons/git"
 	"tirelease/internal/dto"
 	"tirelease/internal/entity"
@@ -14,22 +12,8 @@ import (
 )
 
 func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.VersionTriageInfo, error) {
-	// check
-	shortType := ComposeVersionShortType(versionTriage.VersionName)
-	major, minor, patch, _ := ComposeVersionAtom(versionTriage.VersionName)
-	releaseVersionOption := &entity.ReleaseVersionOption{}
-	if shortType == entity.ReleaseVersionShortTypeMinor {
-		releaseVersionOption.Major = major
-		releaseVersionOption.Minor = minor
-		releaseVersionOption.Status = entity.ReleaseVersionStatusUpcoming
-	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
-		releaseVersionOption.Major = major
-		releaseVersionOption.Minor = minor
-		releaseVersionOption.Patch = patch
-	} else {
-		return nil, errors.New(fmt.Sprintf("CreateOrUpdateVersionTriageInfo params invalid: %+v failed", versionTriage))
-	}
-	releaseVersion, err := CheckReleaseVersion(releaseVersionOption)
+	// find version
+	releaseVersion, err := SelectReleaseVersionActive(versionTriage.VersionName)
 	if err != nil {
 		return nil, err
 	}
@@ -74,9 +58,7 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 				if err != nil {
 					return nil, err
 				}
-			}
-			var isRelease bool = releaseVersion.Status == entity.ReleaseVersionStatusReleased
-			if !isAccept && !isRelease {
+			} else {
 				err := RemoveLabelByPullRequestID(pr.PullRequestID, git.CherryPickLabel)
 				if err != nil {
 					return nil, err
@@ -104,17 +86,8 @@ func CreateOrUpdateVersionTriageInfo(versionTriage *entity.VersionTriage) (*dto.
 }
 
 func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTriageInfoWrap, *entity.ListResponse, error) {
-	// Select
-	versionTriages, err := repository.SelectVersionTriage(&query.VersionTriageOption)
-	if err != nil {
-		return nil, nil, err
-	}
 
-	count, err := repository.CountVersionTriage(&query.VersionTriageOption)
-	if nil != err {
-		return nil, nil, err
-	}
-
+	// dependency
 	releaseVersion, err := repository.SelectReleaseVersionLatest(&entity.ReleaseVersionOption{
 		Name: query.Version,
 	})
@@ -122,36 +95,88 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 		return nil, nil, err
 	}
 
-	// Compose
+	// compose
+	var versionTriages []entity.VersionTriage
+	if releaseVersion.Status == entity.ReleaseVersionStatusUpcoming {
+		versionTriages, err = ComposeVersionTriageUpcomingList(query.Version)
+		if err != nil {
+			return nil, nil, err
+		}
+	} else {
+		versionTriagesPoint, err := repository.SelectVersionTriage(&query.VersionTriageOption)
+		if err != nil {
+			return nil, nil, err
+		}
+		versionTriages = *versionTriagesPoint
+	}
+
+	// detail
+	issueIDs := make([]string, 0)
+	for i := range versionTriages {
+		versionTriage := versionTriages[i]
+		issueIDs = append(issueIDs, versionTriage.IssueID)
+	}
 	versionTriageInfos := make([]dto.VersionTriageInfo, 0)
-	for i := range *versionTriages {
-		versionTriage := (*versionTriages)[i]
-		issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
+	if len(issueIDs) > 0 {
+		infoOption := &dto.IssueRelationInfoQuery{
 			IssueOption: entity.IssueOption{
-				IssueID: versionTriage.IssueID,
+				IssueIDs: issueIDs,
 			},
 			BaseBranch: releaseVersion.ReleaseBranch,
-		})
+		}
+		issueRelationInfos, _, err := SelectIssueRelationInfo(infoOption)
 		if err != nil {
 			return nil, nil, err
 		}
 
-		versionTriageInfo := dto.VersionTriageInfo{}
-		versionTriageInfo.VersionTriage = &versionTriage
-		versionTriageInfo.IssueRelationInfo = issueRelationInfo
-		versionTriageInfo.ReleaseVersion = releaseVersion
-		versionTriageInfo.VersionTriageMergeStatus = ComposeVersionTriageMergeStatus(issueRelationInfo)
-		versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
+		for i := range versionTriages {
+			versionTriage := versionTriages[i]
+			versionTriageInfo := dto.VersionTriageInfo{}
+			versionTriageInfo.VersionTriage = &versionTriage
+			versionTriageInfo.ReleaseVersion = releaseVersion
+
+			for j := range *issueRelationInfos {
+				issueRelationInfo := (*issueRelationInfos)[j]
+				if issueRelationInfo.Issue.IssueID == versionTriage.IssueID {
+					versionTriageInfo.IssueRelationInfo = &issueRelationInfo
+					versionTriageInfo.VersionTriageMergeStatus = ComposeVersionTriageMergeStatus(&issueRelationInfo)
+					break
+				}
+			}
+
+			versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
+		}
 	}
 
+	// versionTriageInfos := make([]dto.VersionTriageInfo, 0)
+	// for i := range versionTriages {
+	// 	versionTriage := versionTriages[i]
+	// 	issueRelationInfo, err := SelectIssueRelationInfoUnique(&dto.IssueRelationInfoQuery{
+	// 		IssueOption: entity.IssueOption{
+	// 			IssueID: versionTriage.IssueID,
+	// 		},
+	// 		BaseBranch: releaseVersion.ReleaseBranch,
+	// 	})
+	// 	if err != nil {
+	// 		return nil, nil, err
+	// 	}
+
+	// 	versionTriageInfo := dto.VersionTriageInfo{}
+	// 	versionTriageInfo.VersionTriage = &versionTriage
+	// 	versionTriageInfo.IssueRelationInfo = issueRelationInfo
+	// 	versionTriageInfo.ReleaseVersion = releaseVersion
+	// 	versionTriageInfo.VersionTriageMergeStatus = ComposeVersionTriageMergeStatus(issueRelationInfo)
+	// 	versionTriageInfos = append(versionTriageInfos, versionTriageInfo)
+	// }
+
+	// return
 	wrap := &dto.VersionTriageInfoWrap{
 		ReleaseVersion:     releaseVersion,
 		VersionTriageInfos: &versionTriageInfos,
 	}
 	response := &entity.ListResponse{
-		TotalCount: count,
-		Page:       query.VersionTriageOption.Page,
-		PerPage:    query.VersionTriageOption.PerPage,
+		Page:    query.VersionTriageOption.Page,
+		PerPage: query.VersionTriageOption.PerPage,
 	}
 	response.CalcTotalPage()
 	return wrap, response, nil
@@ -190,20 +215,6 @@ func InheritVersionTriage(fromVersion string, toVersion string) error {
 	return nil
 }
 
-func CheckReleaseVersion(option *entity.ReleaseVersionOption) (*entity.ReleaseVersion, error) {
-	if option == nil {
-		return nil, errors.New(fmt.Sprintf("CheckReleaseVersion params invalid: %+v failed", option))
-	}
-	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
-	if err != nil {
-		return nil, err
-	}
-	if releaseVersion.Status != entity.ReleaseVersionStatusUpcoming {
-		return nil, errors.Wrap(err, fmt.Sprintf("find lastest version is not upcoming: %+v failed", releaseVersion))
-	}
-	return releaseVersion, nil
-}
-
 func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) entity.VersionTriageMergeStatus {
 	if issueRelationInfo.PullRequests == nil || len(*issueRelationInfo.PullRequests) == 0 {
 		return entity.VersionTriageMergeStatusPr
@@ -223,6 +234,71 @@ func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) e
 	} else {
 		return entity.VersionTriageMergeStatusCITesting
 	}
+}
+
+func ComposeVersionTriageUpcomingList(version string) ([]entity.VersionTriage, error) {
+	// select all issue which may affect this minor version
+	major, minor, _, _ := ComposeVersionAtom(version)
+	minorVersion := ComposeVersionMinorNameByNumber(major, minor)
+	affectOption := &entity.IssueAffectOption{
+		AffectVersion: minorVersion,
+		AffectResult:  entity.AffectResultResultYes,
+	}
+	issueAffects, err := repository.SelectIssueAffect(affectOption)
+	if err != nil {
+		return nil, err
+	}
+
+	// select all triaged list under this minor version
+	versionOption := &entity.ReleaseVersionOption{
+		Major: major,
+		Minor: minor,
+	}
+	releaseVersions, err := repository.SelectReleaseVersion(versionOption)
+	if err != nil {
+		return nil, err
+	}
+	versions := make([]string, 0)
+	for i := range *releaseVersions {
+		versions = append(versions, (*releaseVersions)[i].Name)
+	}
+
+	versionTriageOption := &entity.VersionTriageOption{
+		VersionNameList: versions,
+	}
+	versionTriageData, err := repository.SelectVersionTriage(versionTriageOption)
+	if err != nil {
+		return nil, err
+	}
+
+	// compose: version_triage = affected - triaged
+	versionTriages := make([]entity.VersionTriage, 0)
+	for i := range *issueAffects {
+		issueAffect := (*issueAffects)[i]
+		find := false
+		for j := range *versionTriageData {
+			versionTriage := (*versionTriageData)[j]
+			if issueAffect.IssueID != versionTriage.IssueID {
+				continue
+			}
+			find = true
+
+			if versionTriage.TriageResult == entity.VersionTriageResultReleased ||
+				versionTriage.TriageResult == entity.VersionTriageResultWontFix {
+				continue
+			}
+			versionTriages = append(versionTriages, versionTriage)
+		}
+		if !find {
+			versionTriage := entity.VersionTriage{
+				IssueID:      issueAffect.IssueID,
+				VersionName:  version,
+				TriageResult: entity.VersionTriageResultUnKnown,
+			}
+			versionTriages = append(versionTriages, versionTriage)
+		}
+	}
+	return versionTriages, nil
 }
 
 // Export history data (Only database operation, no remote operation)

@@ -10,6 +10,7 @@ import (
 	"tirelease/internal/repository"
 
 	"github.com/deckarep/golang-set"
+	"github.com/pkg/errors"
 )
 
 func CreateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
@@ -46,22 +47,17 @@ func UpdateReleaseVersion(releaseVersion *entity.ReleaseVersion) error {
 		return nil
 	}
 	if releaseVersion.Status == entity.ReleaseVersionStatusReleased {
-		// 版本发布操作
-		option := &entity.ReleaseVersionOption{
-			Major: releaseVersion.Major,
-			Minor: releaseVersion.Minor,
-			Patch: releaseVersion.Patch + 1,
-		}
-		lastVersion, err := repository.SelectReleaseVersionLatest(option)
-		if nil != err || nil == lastVersion {
+		// 版本发布——自动创建下一版本并继承当前未完成的任务
+		nextVersion, err := CreateNextVersionIfNotExist(releaseVersion)
+		if nil != err || nil == nextVersion {
 			return nil
 		}
-		lastVersion.Status = entity.ReleaseVersionStatusUpcoming
-		err = repository.UpdateReleaseVersion(lastVersion)
+		nextVersion.Status = entity.ReleaseVersionStatusUpcoming
+		err = repository.UpdateReleaseVersion(nextVersion)
 		if nil != err {
 			return err
 		}
-		err = InheritVersionTriage(releaseVersion.Name, lastVersion.Name)
+		err = InheritVersionTriage(releaseVersion.Name, nextVersion.Name)
 		if nil != err {
 			return err
 		}
@@ -92,6 +88,57 @@ func SelectReleaseVersionMaintained() (*[]string, error) {
 	return &res, nil
 }
 
+func SelectReleaseVersionActive(name string) (*entity.ReleaseVersion, error) {
+	// release_version option
+	shortType := ComposeVersionShortType(name)
+	major, minor, patch, _ := ComposeVersionAtom(name)
+	option := &entity.ReleaseVersionOption{}
+	if shortType == entity.ReleaseVersionShortTypeMinor {
+		option.Major = major
+		option.Minor = minor
+		option.StatusList = []entity.ReleaseVersionStatus{entity.ReleaseVersionStatusUpcoming, entity.ReleaseVersionStatusFrozen}
+	} else if shortType == entity.ReleaseVersionShortTypePatch || shortType == entity.ReleaseVersionShortTypeHotfix {
+		option.Major = major
+		option.Minor = minor
+		option.Patch = patch
+	} else {
+		return nil, errors.New(fmt.Sprintf("SelectReleaseVersionActive params invalid: %+v failed", name))
+	}
+
+	// find version
+	releaseVersion, err := repository.SelectReleaseVersionLatest(option)
+	if err != nil {
+		return nil, err
+	}
+	return releaseVersion, nil
+}
+
+func CreateNextVersionIfNotExist(preVersion *entity.ReleaseVersion) (*entity.ReleaseVersion, error) {
+	major, minor, patch, _ := ComposeVersionAtom(preVersion.Name)
+
+	option := &entity.ReleaseVersionOption{
+		Major: major,
+		Minor: minor,
+		Patch: patch + 1,
+	}
+	version, err := repository.SelectReleaseVersionLatest(option)
+	if nil == err && nil != version {
+		return version, nil
+	}
+	if nil == version {
+		version = &entity.ReleaseVersion{
+			Major: major,
+			Minor: minor,
+			Patch: patch + 1,
+		}
+		err = CreateReleaseVersion(version)
+		if nil != err {
+			return nil, err
+		}
+	}
+	return version, nil
+}
+
 // ====================================================
 // ==================================================== Compose Function
 func ComposeVersionName(version *entity.ReleaseVersion) string {
@@ -103,7 +150,11 @@ func ComposeVersionName(version *entity.ReleaseVersion) string {
 }
 
 func ComposeVersionMinorName(version *entity.ReleaseVersion) string {
-	return fmt.Sprintf("%d.%d", version.Major, version.Minor)
+	return ComposeVersionMinorNameByNumber(version.Major, version.Minor)
+}
+
+func ComposeVersionMinorNameByNumber(major, minor int) string {
+	return fmt.Sprintf("%d.%d", major, minor)
 }
 
 func ComposeVersionBranch(version *entity.ReleaseVersion) string {

@@ -21,6 +21,7 @@ const repo = {
 const number = {
   field: "number",
   headerName: "Number",
+  type: 'number',
   valueGetter: (params) => params.row.issue.number,
   renderCell: (params) => (
     <a

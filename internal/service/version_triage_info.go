@@ -284,8 +284,11 @@ func ComposeVersionTriageUpcomingList(version string) ([]entity.VersionTriage, e
 			find = true
 
 			if versionTriage.TriageResult == entity.VersionTriageResultReleased ||
-				versionTriage.TriageResult == entity.VersionTriageResultWontFix {
-				continue
+				versionTriage.TriageResult == entity.VersionTriageResultWontFix ||
+				versionTriage.TriageResult == entity.VersionTriageResultLater {
+				if version != versionTriage.VersionName {
+					continue
+				}
 			}
 			versionTriages = append(versionTriages, versionTriage)
 		}

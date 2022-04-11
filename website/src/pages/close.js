@@ -104,7 +104,9 @@ function PickTriage() {
                 <Tab label={v}></Tab>
               ))}
             </Tabs>
-            <Table tab={tab}></Table>
+            {tabs.map((_, i) => {
+              return <>{i === tab && <Table tab={tab}></Table>}</>;
+            })}
           </AccordionDetails>
         </Accordion>
       </Container>

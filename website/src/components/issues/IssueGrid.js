@@ -22,16 +22,7 @@ export function IssueGrid({
   const filterStrings = selectedFilters
     .map(stringify)
     .filter((f) => f.length > 0);
-  if (
-    filterStrings.join("&") !==
-    filters
-      .map(stringify)
-      .filter((f) => f.length > 0)
-      .join("&")
-  ) {
-    setSelectedFilters(filters);
-    console.log("rerender");
-  }
+
   console.log(filterStrings);
   const issueQuery = useQuery(
     ["issue", ...filterStrings, rowsPerPage, currentPage],

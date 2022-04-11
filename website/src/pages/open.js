@@ -92,10 +92,12 @@ function RecentOpen() {
           <AccordionDetails>
             <Tabs value={tab} onChange={handleChange}>
               {tabs.map((v) => (
-                <Tab label={v}></Tab>
+                <Tab key={v} label={v}></Tab>
               ))}
             </Tabs>
-            <Table tab={tab}></Table>
+            {tabs.map((_, i) => {
+              return <>{i === tab && <Table tab={tab}></Table>}</>;
+            })}
           </AccordionDetails>
         </Accordion>
       </Container>

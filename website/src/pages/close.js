@@ -79,7 +79,7 @@ const Table = ({ tab }) => {
         Columns.pr,
         ...pickColumns,
       ]}
-      filters={filters}
+      filtersProp={filters}
     ></IssueGrid>
   );
 };
@@ -104,9 +104,10 @@ function PickTriage() {
                 <Tab label={v}></Tab>
               ))}
             </Tabs>
-            {tabs.map((_, i) => {
-              return <>{i === tab && <Table tab={tab}></Table>}</>;
-            })}
+            {/* {tabs.map((_, i) => {
+              return <>{i === tab && <Table key={i} tab={tab}></Table>}</>;
+            })} */}
+            <Table tab={tab}></Table>
           </AccordionDetails>
         </Accordion>
       </Container>

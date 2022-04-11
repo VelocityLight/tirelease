@@ -50,7 +50,7 @@ function Table() {
   return (
     <IssueGrid
       columns={columns}
-      filters={[
+      filtersProp={[
         // copy data
         {
           ...Filters.repo,

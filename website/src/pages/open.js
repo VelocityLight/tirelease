@@ -71,7 +71,7 @@ const Table = ({ tab }) => {
         Columns.state,
         ...pickColumns,
       ]}
-      filters={filters}
+      filtersProp={filters}
     ></IssueGrid>
   );
 };
@@ -96,7 +96,7 @@ function RecentOpen() {
               ))}
             </Tabs>
             {tabs.map((_, i) => {
-              return <>{i === tab && <Table tab={tab}></Table>}</>;
+              return <>{i === tab && <Table key={i} tab={tab}></Table>}</>;
             })}
           </AccordionDetails>
         </Accordion>

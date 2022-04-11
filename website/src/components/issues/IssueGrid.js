@@ -8,7 +8,7 @@ import { Button, Stack } from "@mui/material";
 import { FilterDialog, stringify } from "./filter/FilterDialog";
 
 export function IssueGrid({
-  filters = [],
+  filtersProp = [],
   customFilter = false,
   columns = [Columns.number, Columns.title],
 }) {
@@ -17,18 +17,18 @@ export function IssueGrid({
   const [rowCount, setRowCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedFilters, setSelectedFilters] = useState(filters);
+  const [selectedFilters, setSelectedFilters] = useState(filtersProp);
 
-  const filterStrings = selectedFilters
-    .map(stringify)
-    .filter((f) => f.length > 0);
+  const filters = customFilter ? selectedFilters : filtersProp;
+
+  const filterStrings = filters.map(stringify).filter((f) => f.length > 0);
 
   console.log(filterStrings);
   const issueQuery = useQuery(
     ["issue", ...filterStrings, rowsPerPage, currentPage],
     () =>
       fetchIssue({
-        filters: selectedFilters,
+        filters,
         page: currentPage,
         perPage: rowsPerPage,
       }),
@@ -47,7 +47,7 @@ export function IssueGrid({
         ["issue", ...filterStrings, rowsPerPage, currentPage + 1],
         () =>
           fetchIssue({
-            filter: selectedFilters,
+            filters,
             page: currentPage + 1,
             perPage: rowsPerPage,
           })

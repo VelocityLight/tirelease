@@ -75,7 +75,7 @@ const VersionTabs = () => {
           Columns.severity,
           ...affectColumns,
         ]}
-        filters={filters}
+        filtersProp={filters}
       ></IssueGrid>
     </>
   );

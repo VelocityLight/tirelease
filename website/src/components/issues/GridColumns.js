@@ -4,6 +4,9 @@ import { getAffection, renderAffection } from "./renderer/Affection";
 import { getPullRequest, renderPullRequest } from "./renderer/PullRequest";
 import { getLabelValue, renderLabel } from "./renderer/Label";
 import { getPickTriageValue, renderPickTriage } from "./renderer/PickTriage";
+import { Button, Dialog, Stack, Typography } from "@mui/material";
+import { useState } from "react";
+import { renderComment } from "./renderer/Comment";
 
 const id = {
   field: "id",
@@ -21,7 +24,7 @@ const repo = {
 const number = {
   field: "number",
   headerName: "Number",
-  type: 'number',
+  type: "number",
   valueGetter: (params) => params.row.issue.number,
   renderCell: (params) => (
     <a
@@ -124,7 +127,9 @@ const releaseBlock = {
 const comment = {
   field: "comment",
   headerName: "Comment",
+  width: 480,
   valueGetter: (params) => params.row.version_triage.comment,
+  renderCell: renderComment,
 };
 
 function getAffectionOnVersion(version) {

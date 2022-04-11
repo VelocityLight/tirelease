@@ -5,10 +5,17 @@ import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { fetchIssue } from "./fetcher/fetchIssue";
 import { Button, Stack } from "@mui/material";
-import { FilterDialog } from "./filter/FilterDialog";
+import {
+  FilterDialog,
+  Filters,
+  IssueNumberFilter,
+  IssueSeverityFilter,
+  IssueStateFilter,
+} from "./filter/FilterDialog";
 
 export function IssueGrid({
   filters = [],
+  customFilter = false,
   columns = [Columns.number, Columns.title],
 }) {
   const queryClient = useQueryClient();
@@ -16,16 +23,21 @@ export function IssueGrid({
   const [rowCount, setRowCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
-  // stale while revalidate
-  // js spread operator
-  // const a = [1, 2, 3];
-  // [0, ...a, 4] == [0, 1, 2, 3, 4];
+  const [selectedFilters, setSelectedFilters] = useState(filters);
+  const filterStrings = selectedFilters
+    .map((f) => f.stringify(f))
+    .filter((f) => f.length > 0);
+  console.log(filterStrings);
   const issueQuery = useQuery(
-    ["issue", ...filters, rowsPerPage, currentPage],
-    () => fetchIssue({ filters, page: currentPage, perPage: rowsPerPage }),
+    ["issue", ...filterStrings, rowsPerPage, currentPage],
+    () =>
+      fetchIssue({
+        filters: selectedFilters,
+        page: currentPage,
+        perPage: rowsPerPage,
+      }),
     {
       onSuccess: (data) => {
-        console.log("setRowCount", rowCount, data.response.total_count);
         setRowCount(data.response.total_count);
       },
       keepPreviousData: true,
@@ -36,9 +48,13 @@ export function IssueGrid({
   useEffect(() => {
     if (issueQuery.data?.response.total_page > currentPage) {
       queryClient.prefetchQuery(
-        ["issue", ...filters, rowsPerPage, currentPage + 1],
+        ["issue", ...filterStrings, rowsPerPage, currentPage + 1],
         () =>
-          fetchIssue({ filters, page: currentPage + 1, perPage: rowsPerPage })
+          fetchIssue({
+            filter: selectedFilters,
+            page: currentPage + 1,
+            perPage: rowsPerPage,
+          })
       );
     }
   });
@@ -72,23 +88,24 @@ export function IssueGrid({
   ];
   return (
     <Stack spacing={1}>
-      {/* <Stack direction={"row"} justifyContent={"flex-end"} spacing={2}>
-        <Button
-          variant="contained"
-          onClick={() => {
-            setFilterDialog(true);
-          }}
-        >
-          Filter
-        </Button>
-      </Stack> */}
+      {customFilter && (
+        <Stack direction={"row"} justifyContent={"flex-end"} spacing={2}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setFilterDialog(true);
+            }}
+          >
+            Filter
+          </Button>
+        </Stack>
+      )}
       <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           density="compact"
           columns={columns}
           rows={rows}
           onRowClick={(e) => {
-            console.log(e);
             openTriageDialog(e);
           }}
           components={{ Toolbar: GridToolbar }}
@@ -97,7 +114,6 @@ export function IssueGrid({
           page={currentPage}
           pageSize={rowsPerPage}
           onPageChange={(page, details) => {
-            console.log(page, details);
             setCurrentPage(page);
           }}
           onPageSizeChange={(pageSize, details) => {
@@ -110,12 +126,21 @@ export function IssueGrid({
           row={triageData?.row}
           columns={triageData?.columns}
         ></TriageDialog>
-        <FilterDialog
-          open={filterDialog}
-          onClose={() => {
-            setFilterDialog(false);
-          }}
-        ></FilterDialog>
+        {customFilter && (
+          <FilterDialog
+            open={filterDialog}
+            filters={selectedFilters}
+            onUpdate={(filters) => {
+              console.log(filters);
+              setSelectedFilters(selectedFilters.map((f) => filters[f.name]));
+              // setSelectedFilters(filters);
+              setFilterDialog(false);
+            }}
+            onClose={() => {
+              setFilterDialog(false);
+            }}
+          ></FilterDialog>
+        )}
       </div>
     </Stack>
   );

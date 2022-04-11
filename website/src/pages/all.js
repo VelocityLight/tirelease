@@ -11,6 +11,7 @@ import { IssueGrid } from "../components/issues/IssueGrid";
 import Columns from "../components/issues/GridColumns";
 import { fetchVersion } from "../components/issues/fetcher/fetchVersion";
 import { fetchIssue } from "../components/issues/fetcher/fetchIssue";
+import { Filters } from "../components/issues/filter/FilterDialog";
 
 function Table() {
   const versionQuery = useQuery(["version", "maintained"], fetchVersion);
@@ -46,7 +47,46 @@ function Table() {
       Columns.getPickOnVersion(version)
     );
   }
-  return <IssueGrid columns={columns} filters={[]}></IssueGrid>;
+  return (
+    <IssueGrid
+      columns={columns}
+      filters={[
+        // copy data
+        {
+          ...Filters.repo,
+          data: JSON.parse(JSON.stringify(Filters.repo.data)),
+        },
+        {
+          ...Filters.number,
+          data: JSON.parse(JSON.stringify(Filters.number.data)),
+        },
+        {
+          ...Filters.title,
+          data: JSON.parse(JSON.stringify(Filters.title.data)),
+        },
+        {
+          ...Filters.state,
+          data: JSON.parse(JSON.stringify(Filters.state.data)),
+        },
+        {
+          ...Filters.type,
+          data: JSON.parse(JSON.stringify(Filters.type.data)),
+        },
+        {
+          ...Filters.severity,
+          data: JSON.parse(JSON.stringify(Filters.severity.data)),
+        },
+        {
+          ...Filters.affect,
+          data: {
+            ...JSON.parse(JSON.stringify(Filters.affect.data)),
+            versions: versionQuery.data,
+          },
+        },
+      ]}
+      customFilter={true}
+    ></IssueGrid>
+  );
 }
 
 const AllIssues = () => {

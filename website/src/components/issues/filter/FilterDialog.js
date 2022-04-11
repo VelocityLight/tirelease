@@ -11,6 +11,9 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { fetchVersion } from "../fetcher/fetchVersion";
 
+export const stringify = (filter) =>
+  (filter.stringify || ((filter) => filter))(filter);
+
 const number = {
   name: "Issue Number",
   data: {

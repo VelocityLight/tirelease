@@ -102,6 +102,11 @@ func routeRestAPI(router *gin.Engine) {
 		releaseVersion.PATCH("", controller.UpdateReleaseVersion)
 	}
 
+	versionTriage := router.Group("/version_triage")
+	{
+		versionTriage.PATCH("", controller.UpdateVersionTriage)
+	}
+
 	repo := router.Group("repo")
 	{
 		repo.GET("", controller.SelectRepo)

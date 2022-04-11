@@ -21,7 +21,6 @@ export function renderPullRequest(branch) {
     if (pr === undefined) {
       return <>Not Found</>;
     }
-    console.log(pr);
     const iconType =
       pr.state === "closed" ? (pr.merged ? "merged" : "pr_closed") : pr.state;
     const iconColor = {

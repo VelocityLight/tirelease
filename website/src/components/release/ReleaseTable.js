@@ -33,7 +33,6 @@ function ReleaseCandidates({ version }) {
         console.log(e);
       });
   });
-  console.log(isLoading, error, data);
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -41,7 +40,6 @@ function ReleaseCandidates({ version }) {
     return <p>Error: {error.message}</p>;
   }
 
-  console.log("version data", data);
   if (data?.data === undefined) {
     return <p>data is wrong, maybe your version is incorrect</p>;
   }
@@ -53,7 +51,6 @@ function ReleaseCandidates({ version }) {
       version_triage_merge_status: item.version_triage_merge_status,
     };
   });
-  console.log("version rows", rows);
   const minorVersion = version.split(".").slice(0, 2).join(".");
 
   return (
@@ -75,11 +72,11 @@ function ReleaseCandidates({ version }) {
         }}
       ></DataGrid>
       <TriageDialog
-          onClose={onClose}
-          open={versionTriageData !== undefined}
-          row={versionTriageData?.row}
-          columns={versionTriageData?.columns}
-        ></TriageDialog>
+        onClose={onClose}
+        open={versionTriageData !== undefined}
+        row={versionTriageData?.row}
+        columns={versionTriageData?.columns}
+      ></TriageDialog>
     </div>
   );
 }
@@ -87,7 +84,6 @@ function ReleaseCandidates({ version }) {
 const ReleaseTable = () => {
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params.version);
   const version = params.version === undefined ? "none" : params.version;
   const [open, setOpen] = useState(false);
 

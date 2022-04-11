@@ -173,7 +173,7 @@ const Columns = {
   getAffectionOnVersion,
   getPROnVersion,
   getPickOnVersion,
-  issueBasicInfo: [id, repo, number, title, severity],
+  issueBasicInfo: [id, repo, number, title, severity, labels],
 };
 
 export default Columns;

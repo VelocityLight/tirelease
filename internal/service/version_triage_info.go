@@ -182,6 +182,17 @@ func SelectVersionTriageInfo(query *dto.VersionTriageInfoQuery) (*dto.VersionTri
 	return wrap, response, nil
 }
 
+func UpdateVersionTriage(versionTriage *entity.VersionTriage) error {
+	if versionTriage.ID == 0 {
+		return errors.New("versionTriage.ID is 0")
+	}
+	err := repository.UpdateVersionTriage(versionTriage)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func InheritVersionTriage(fromVersion string, toVersion string) error {
 	// Select
 	versionTriageOption := &entity.VersionTriageOption{

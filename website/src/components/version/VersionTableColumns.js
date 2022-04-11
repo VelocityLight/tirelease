@@ -143,7 +143,7 @@ const VersionTableColumns = [
   },
   {
     field: "actual_release_time",
-    headerName: "Released on",
+    headerName: "Released Time",
     headerAlign: "left",
     hide: false,
     align: "left",
@@ -165,6 +165,17 @@ const VersionTableColumns = [
         </>
       );
     },
+  },
+  {
+    field: "release_branch",
+    headerName: "Release Branch",
+    headerAlign: "left",
+    hide: false,
+    align: "left",
+    editable: true,
+    filterable: true,
+    sortable: false,
+    minWidth: 160,
   },
   {
     field: "description",

@@ -85,7 +85,7 @@ const assignee = {
   field: "assignee",
   headerName: "Assignee",
   valueGetter: (params) =>
-    params.row.issue.assignee.map((assignee) => assignee.login).join(","),
+    params.row.issue.assignees.map((assignees) => assignees.login).join(","),
   renderCell: renderAssignee,
 };
 
@@ -173,7 +173,7 @@ const Columns = {
   getAffectionOnVersion,
   getPROnVersion,
   getPickOnVersion,
-  issueBasicInfo: [id, repo, number, title, severity],
+  issueBasicInfo: [id, repo, number, title, severity, labels, assignee],
 };
 
 export default Columns;

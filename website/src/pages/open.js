@@ -32,7 +32,6 @@ const Table = ({ tab }) => {
     "state=open",
     "severity_labels=severity/major",
     "severity_labels=severity/critical",
-    // 'severity_labels="[\\"severity/major\\", \\"severity/critical\\"]"',
   ];
   const pickColumns = [];
   for (const version of versionQuery.data) {
@@ -60,7 +59,7 @@ const Table = ({ tab }) => {
     default:
       break;
   }
-  console.log("filters", filters);
+  console.log("filters", tab, filters);
   return (
     <IssueGrid
       columns={[

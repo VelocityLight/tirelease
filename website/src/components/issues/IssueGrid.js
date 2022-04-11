@@ -5,13 +5,7 @@ import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { fetchIssue } from "./fetcher/fetchIssue";
 import { Button, Stack } from "@mui/material";
-import {
-  FilterDialog,
-  Filters,
-  IssueNumberFilter,
-  IssueSeverityFilter,
-  IssueStateFilter,
-} from "./filter/FilterDialog";
+import { FilterDialog, stringify } from "./filter/FilterDialog";
 
 export function IssueGrid({
   filters = [],
@@ -24,9 +18,20 @@ export function IssueGrid({
   const [rowsPerPage, setRowsPerPage] = useState(100);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilters, setSelectedFilters] = useState(filters);
+
   const filterStrings = selectedFilters
-    .map((f) => f.stringify(f))
+    .map(stringify)
     .filter((f) => f.length > 0);
+  if (
+    filterStrings.join("&") !==
+    filters
+      .map(stringify)
+      .filter((f) => f.length > 0)
+      .join("&")
+  ) {
+    setSelectedFilters(filters);
+    console.log("rerender");
+  }
   console.log(filterStrings);
   const issueQuery = useQuery(
     ["issue", ...filterStrings, rowsPerPage, currentPage],

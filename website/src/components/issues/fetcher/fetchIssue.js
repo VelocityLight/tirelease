@@ -1,10 +1,10 @@
 import { url } from "../../../utils";
+import { stringify } from "../filter/FilterDialog";
 
 export function fetchIssue({ page = 1, perPage = 100, filters = [] }) {
   const queryString = `${filters
     .map((filter) => {
-      const transform = filter.stringify || ((filter) => filter);
-      const param = transform(filter);
+      const param = stringify(filter);
       if (param.length > 0) {
         return "&" + param;
       }

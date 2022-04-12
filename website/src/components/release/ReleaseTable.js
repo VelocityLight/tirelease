@@ -54,7 +54,7 @@ function ReleaseCandidates({ version }) {
   const minorVersion = version.split(".").slice(0, 2).join(".");
 
   return (
-    <div style={{ height: 600, width: "100%" }}>
+    <div style={{ height: 650, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={[

@@ -9,11 +9,6 @@ function Comment({ row }) {
   const client = useQueryClient();
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState(row.version_triage.comment);
-  console.log("row", row);
-  let disable = false;
-  if (row.version_triage === undefined || row.version_triage.id === 0) {
-    disable = true;
-  }
 
   const mutation = useMutation(async (comment) => {
     await axios.patch(url("version_triage"), {
@@ -21,6 +16,14 @@ function Comment({ row }) {
       comment,
     });
   });
+  let disable = false;
+  if (
+    row.version_triage === undefined ||
+    row.version_triage.id === 0 ||
+    row.version_triage.id === undefined
+  ) {
+    return <>please triage before adding note</>;
+  }
   return (
     <>
       <Stack

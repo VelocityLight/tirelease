@@ -51,12 +51,16 @@ function Comment({ row }) {
         }}
       >
         <TiDialogTitle>Add Comment</TiDialogTitle>
-        <TextField
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-          value={comment}
-        ></TextField>
+        <Stack m={2}>
+          <TextField
+            autoFocus
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+            value={comment}
+          ></TextField>
+        </Stack>
+
         <Button
           onClick={() => {
             console.log("good", comment);

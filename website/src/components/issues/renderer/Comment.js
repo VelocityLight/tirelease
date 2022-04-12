@@ -1,18 +1,40 @@
 import { useState } from "react";
-import { Stack, Typography, Button, Dialog } from "@mui/material";
+import { Stack, Typography, Button, Dialog, TextField } from "@mui/material";
 import TiDialogTitle from "../../common/TiDialogTitle";
+import { useMutation, useQueryClient } from "react-query";
+import axios from "axios";
+import { url } from "../../../utils";
 
 function Comment({ row }) {
+  const client = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [comment, setComment] = useState(row.version_triage.comment);
+  console.log("row", row);
+  let disable = false;
+  if (row.version_triage === undefined || row.version_triage.id === 0) {
+    disable = true;
+  }
+
+  const mutation = useMutation(async (comment) => {
+    await axios.patch(url("version_triage"), {
+      ...row.version_triage,
+      comment,
+    });
+  });
   return (
     <>
-      <Stack direction={"row"} justifyContent={"space-between"}>
+      <Stack
+        direction={"row"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+        gap={"8"}
+      >
         <Button
-          variant="contained"
           onClick={(e) => {
             setOpen(true);
             e.stopPropagation();
           }}
+          disabled={disable}
         >
           ADD
         </Button>
@@ -20,11 +42,29 @@ function Comment({ row }) {
       </Stack>
       <Dialog
         open={open}
+        fullWidth
         onClose={() => {
           setOpen(false);
         }}
       >
         <TiDialogTitle>Add Comment</TiDialogTitle>
+        <TextField
+          onChange={(e) => {
+            setComment(e.target.value);
+          }}
+          value={comment}
+        ></TextField>
+        <Button
+          onClick={() => {
+            console.log("good", comment);
+            mutation.mutate(comment);
+            client.invalidateQueries(`release-${row.version_triage.version}`);
+            row.version_triage.comment = comment;
+            setOpen(false);
+          }}
+        >
+          add
+        </Button>
       </Dialog>
     </>
   );

@@ -19,16 +19,16 @@ export function IssueGrid({
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilters, setSelectedFilters] = useState(filters);
 
-  const filterStrings = selectedFilters
-    .map(stringify)
-    .filter((f) => f.length > 0);
+  const filtersInUse = customFilter ? selectedFilters : filters;
+
+  const filterStrings = filtersInUse.map(stringify).filter((f) => f.length > 0);
 
   console.log(filterStrings);
   const issueQuery = useQuery(
     ["issue", ...filterStrings, rowsPerPage, currentPage],
     () =>
       fetchIssue({
-        filters: selectedFilters,
+        filters: filtersInUse,
         page: currentPage,
         perPage: rowsPerPage,
       }),
@@ -47,7 +47,7 @@ export function IssueGrid({
         ["issue", ...filterStrings, rowsPerPage, currentPage + 1],
         () =>
           fetchIssue({
-            filter: selectedFilters,
+            filters: filtersInUse,
             page: currentPage + 1,
             perPage: rowsPerPage,
           })

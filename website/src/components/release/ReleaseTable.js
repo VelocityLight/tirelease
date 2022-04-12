@@ -11,7 +11,7 @@ import { useQuery } from "react-query";
 import { url } from "../../utils";
 import Columns from "../issues/GridColumns";
 import { useParams, useNavigate } from "react-router-dom";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import TriageDialog from "../issues/TriageDialog";
 
 function ReleaseCandidates({ version }) {
@@ -69,6 +69,9 @@ function ReleaseCandidates({ version }) {
         onRowClick={(e) => {
           console.log(e);
           openVersionTriageDialog(e);
+        }}
+        components={{
+          Toolbar: GridToolbar,
         }}
       ></DataGrid>
       <TriageDialog

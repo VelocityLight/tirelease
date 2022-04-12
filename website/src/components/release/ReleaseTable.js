@@ -43,6 +43,7 @@ function ReleaseCandidates({ version }) {
   if (data?.data === undefined) {
     return <p>data is wrong, maybe your version is incorrect</p>;
   }
+  console.log("release data", data);
   const rows = data.data.version_triage_infos.map((item) => {
     return {
       id: item.issue_relation_info.issue.issue_id,

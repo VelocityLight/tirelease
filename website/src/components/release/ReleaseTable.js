@@ -65,6 +65,7 @@ function ReleaseCandidates({ version }) {
           Columns.getAffectionOnVersion(minorVersion),
           Columns.getPROnVersion(minorVersion),
           Columns.getPickOnVersion(minorVersion),
+          Columns.changed,
           Columns.comment,
         ]}
         onRowClick={(e) => {

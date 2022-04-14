@@ -7,6 +7,7 @@ import { getPickTriageValue, renderPickTriage } from "./renderer/PickTriage";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { renderComment } from "./renderer/Comment";
+import { renderChanged } from "./renderer/changed";
 
 const id = {
   field: "id",
@@ -132,6 +133,14 @@ const comment = {
   renderCell: renderComment,
 };
 
+const changed = {
+  field: "changed",
+  width: 240,
+  headerName: "Changed Item",
+  valueGetter: (params) => params.row.version_triage.changed_item,
+  renderCell: renderChanged,
+};
+
 function getAffectionOnVersion(version) {
   return {
     field: "affect_" + version,
@@ -174,6 +183,7 @@ const Columns = {
   pr,
   triageStatus,
   comment,
+  changed,
   releaseBlock,
   getAffectionOnVersion,
   getPROnVersion,

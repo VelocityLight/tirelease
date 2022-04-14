@@ -310,11 +310,12 @@ export function FilterDialog({ open, onClose, onUpdate, filters }) {
       <DialogActions>
         <Button
           autoFocus
+          variant="contained"
           onClick={() => {
             onUpdate(filterState);
           }}
         >
-          Update
+          Search
         </Button>
       </DialogActions>
     </Dialog>

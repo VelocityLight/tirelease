@@ -44,8 +44,8 @@ const VersionTabs = () => {
   // }
 
   const filters = [
-    "severity_labels=severity/major",
-    "severity_labels=severity/critical",
+    // "severity_labels=severity/major",
+    // "severity_labels=severity/critical",
   ];
   // if (tab === 0) {
   //   filters.push(

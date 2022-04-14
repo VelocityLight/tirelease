@@ -91,3 +91,57 @@ func WebhookRefreshPullRequestV3(pr *github.PullRequest) error {
 
 	return nil
 }
+
+func WebHookRefreshPullRequestRefIssue(pr *github.PullRequest) error {
+	// params
+	if pr == nil {
+		return nil
+	}
+	pullRequestID := *(pr.NodeID)
+	if pullRequestID == "" {
+		return nil
+	}
+
+	// handler
+	prWithTimeline, err := git.ClientV4.GetPullRequestByID(pullRequestID)
+	if err != nil {
+		return err
+	}
+	edges := prWithTimeline.TimelineItems.Edges
+	if nil == edges || len(edges) == 0 {
+		return nil
+	}
+	for i := range edges {
+		edge := edges[i]
+		if nil == &edge.Node || nil == &edge.Node.CrossReferencedEvent ||
+			nil == &edge.Node.CrossReferencedEvent.Source || nil == &edge.Node.CrossReferencedEvent.Source.PullRequest {
+			continue
+		}
+		if git.CrossReferencedEvent != edge.Node.Typename {
+			continue
+		}
+		pr := edge.Node.CrossReferencedEvent.Source.PullRequest
+		if nil == pr.ID {
+			continue
+		}
+
+		// find pr relation issue and refresh
+		option := &entity.IssuePrRelationOption{
+			PullRequestID: pr.ID.(string),
+		}
+		issuePrRelations, err := repository.SelectIssuePrRelation(option)
+		if err != nil {
+			return err
+		}
+		if nil == issuePrRelations || len(*issuePrRelations) == 0 {
+			continue
+		}
+		for _, issuePrRelation := range *issuePrRelations {
+			err := WebhookRefreshIssueV4ByIssueID(issuePrRelation.IssueID)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}

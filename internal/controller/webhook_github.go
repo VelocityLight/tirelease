@@ -49,6 +49,13 @@ func GithubWebhookHandler(c *gin.Context) {
 			c.Error(err)
 			return
 		}
+		if *(event.Action) == "created" && *(event.PullRequest.Base.Ref) != "master" && *(event.PullRequest.Base.Ref) != "main" {
+			err := service.WebHookRefreshPullRequestRefIssue(event.PullRequest)
+			if err != nil {
+				c.Error(err)
+				return
+			}
+		}
 
 	default:
 		c.JSON(http.StatusAccepted, gin.H{"status": "accepted but not supported"})

@@ -123,10 +123,10 @@ type PullRequestTimelineItems struct {
 					PullRequest PullRequestFieldWithoutTimelineItems `graphql:"... on PullRequest"`
 				}
 			} `graphql:"... on CrossReferencedEvent"`
-			IssueComment struct {
-				Author UserField
-				Body   githubv4.String
-			} `graphql:"... on IssueComment"`
+			// IssueComment struct {
+			// 	Author UserField
+			// 	Body   githubv4.String
+			// } `graphql:"... on IssueComment"`
 		}
 	}
 }

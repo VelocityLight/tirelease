@@ -17,6 +17,7 @@ type VersionTriage struct {
 	BlockVersionRelease BlockVersionReleaseResult `json:"block_version_release,omitempty"`
 	DueTime             *time.Time                `json:"due_time,omitempty"`
 	Comment             string                    `json:"comment,omitempty"`
+	ChangedItem         VersionTriageChangedItem  `json:"changed_item,omitempty"`
 }
 
 // Enum type
@@ -48,6 +49,16 @@ const (
 	VersionTriageMergeStatusReview    = VersionTriageMergeStatus("need review")
 	VersionTriageMergeStatusCITesting = VersionTriageMergeStatus("ci testing")
 	VersionTriageMergeStatusMerged    = VersionTriageMergeStatus("finished")
+)
+
+type VersionTriageChangedItem string
+
+const (
+	VersionTriageChangedItemUserExperience = VersionTriageChangedItem("user_experience")
+	VersionTriageChangedItemCompatibility  = VersionTriageChangedItem("compatibility")
+	VersionTriageChangedItemBehavior       = VersionTriageChangedItem("behavior")
+	VersionTriageChangedItemNone           = VersionTriageChangedItem("none")
+	VersionTriageChangedItemUnKnown        = VersionTriageChangedItem("unknown")
 )
 
 // List Option
@@ -83,6 +94,7 @@ CREATE TABLE IF NOT EXISTS version_triage (
 	block_version_release VARCHAR(32) COMMENT '阻塞发版',
 	due_time TIMESTAMP COMMENT '延期时间',
 	comment VARCHAR(1024) COMMENT '评论',
+	changed_item VARCHAR(128) COMMENT '变更项',
 
 	PRIMARY KEY (id),
 	UNIQUE KEY uk_versionname_issueid (version_name, issue_id),

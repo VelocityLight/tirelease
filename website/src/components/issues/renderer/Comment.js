@@ -17,13 +17,13 @@ function Comment({ row }) {
     });
   });
   let disable = false;
-  if (
-    row.version_triage === undefined ||
-    row.version_triage.id === 0 ||
-    row.version_triage.id === undefined
-  ) {
-    return <>please triage before adding note</>;
-  }
+  // if (
+  //   row.version_triage === undefined ||
+  //   row.version_triage.id === 0 ||
+  //   row.version_triage.id === undefined
+  // ) {
+  //   return <>please triage before adding note</>;
+  // }
   return (
     <>
       <Stack
@@ -63,7 +63,7 @@ function Comment({ row }) {
 
         <Button
           onClick={() => {
-            console.log("good", comment);
+            // console.log("good", comment);
             mutation.mutate(comment);
             client.invalidateQueries(`release-${row.version_triage.version}`);
             row.version_triage.comment = comment;

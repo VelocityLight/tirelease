@@ -7,7 +7,7 @@ import { getPickTriageValue, renderPickTriage } from "./renderer/PickTriage";
 import { Button, Dialog, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { renderComment } from "./renderer/Comment";
-import { renderChanged } from "./renderer/changed";
+import { renderChanged } from "./renderer/ChangedItem";
 
 const id = {
   field: "id",

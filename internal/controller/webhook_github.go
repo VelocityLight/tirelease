@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"strings"
 	"net/http"
 
 	"tirelease/commons/git"
@@ -49,7 +50,8 @@ func GithubWebhookHandler(c *gin.Context) {
 			c.Error(err)
 			return
 		}
-		if *(event.Action) == "created" && *(event.PullRequest.Base.Ref) != "master" && *(event.PullRequest.Base.Ref) != "main" {
+		baseBranch := event.PullRequest.Base.Ref
+		if *(event.Action) == "created" && baseBranch != nil && strings.HasPrefix(*baseBranch, git.ReleaseBranchPrefix) {
 			err := service.WebHookRefreshPullRequestRefIssue(event.PullRequest)
 			if err != nil {
 				c.Error(err)

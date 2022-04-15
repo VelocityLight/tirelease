@@ -7,6 +7,7 @@ import (
 	"tirelease/commons/git"
 	"tirelease/internal/entity"
 
+	"github.com/google/go-github/v41/github"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -77,5 +78,19 @@ func TestCronRefreshPullRequestV42(t *testing.T) {
 
 	// detail
 	err := CronRefreshPullRequestV4(params)
+	assert.Equal(t, true, err == nil)
+}
+
+func TestWebHookRefreshPullRequestRefIssue(t *testing.T) {
+	t.Skip()
+	// init
+	git.Connect(git.TestToken)
+	git.ConnectV4(git.TestToken)
+	database.Connect(generateConfig())
+
+	pr := &github.PullRequest{
+		NodeID: &git.TestPullRequestNodeID3,
+	}
+	err := WebHookRefreshPullRequestRefIssue(pr)
 	assert.Equal(t, true, err == nil)
 }

@@ -9,21 +9,19 @@ import { url } from "../../../utils";
 export default function AffectionSelect({
   id,
   version = "master",
-  affection = "unknown",
+  affection = "UnKnown",
   onChange = () => {},
 }) {
   const mutation = useMutation((newAffect) => {
     return axios.patch(url(`issue/${id}/affect/${version}`), newAffect);
   });
-  const [affects, setAffects] = React.useState(affection || "unknown");
+  const [affects, setAffects] = React.useState(affection || "UnKnown");
 
   const handleChange = (event) => {
     mutation.mutate({
       issue_id: id,
       affect_version: version,
-      affect_result: { unknown: "UnKnown", yes: "Yes", no: "No" }[
-        event.target.value
-      ],
+      affect_result: event.target.value,
     });
     onChange(event.target.value);
     setAffects(event.target.value);
@@ -45,10 +43,10 @@ export default function AffectionSelect({
               onChange={handleChange}
               label="Affection"
             >
-              <MenuItem value={"N/A"} disabled={true}>-</MenuItem>
-              <MenuItem value={"unknown"}>unknown</MenuItem>
-              <MenuItem value={"no"}>no</MenuItem>
-              <MenuItem value={"yes"}>yes</MenuItem>
+              <MenuItem value={"-"} disabled={true}>-</MenuItem>
+              <MenuItem value={"UnKnown"}>UnKnown</MenuItem>
+              <MenuItem value={"No"}>No</MenuItem>
+              <MenuItem value={"Yes"}>Yes</MenuItem>
             </Select>
           </FormControl>
         </>

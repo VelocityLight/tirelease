@@ -56,18 +56,18 @@ export default function Affects(
   const [expand, setExpand] = useState(expandProp);
   const [affects, setAffects] = useState(
     onlyVersion
-      ? affectsProp.filter((item) => item.Version.toLowerCase() === onlyVersion)
+      ? affectsProp.filter((item) => item.Version === onlyVersion)
       : affectsProp
   );
 
   const unknown = affects
-    .filter(({ Affect }) => Affect.toLowerCase() === "unknown")
+    .filter(({ Affect }) => Affect === "UnKnown")
     .map(({ Version }) => Version);
   const affected = affects
-    .filter(({ Affect }) => Affect.toLowerCase() === "yes")
+    .filter(({ Affect }) => Affect === "Yes")
     .map(({ Version }) => Version);
   const notAffected = affects
-    .filter(({ Affect }) => Affect.toLowerCase() === "no")
+    .filter(({ Affect }) => Affect === "No")
     .map(({ Version }) => Version);
   return (
     <div>
@@ -128,7 +128,7 @@ export default function Affects(
             <TableBody>
               {affects
                 .filter((item) => {
-                  if (showNotAffect && item.Affect.toLowerCase() === "no") {
+                  if (showNotAffect && item.Affect === "No") {
                     return false;
                   }
                   return true;
@@ -152,12 +152,12 @@ export default function Affects(
                                   <Chip
                                     label={item.Version}
                                     color={
-                                      item.Affect.toLowerCase() !== "no"
+                                      item.Affect !== "No"
                                         ? "error"
                                         : "success"
                                     }
                                     variant={
-                                      item.Affect.toLowerCase() !== "yes"
+                                      item.Affect !== "Yes"
                                         ? "outlined"
                                         : "filled"
                                     }
@@ -170,7 +170,7 @@ export default function Affects(
                                   <AffectsSelector
                                     id={id}
                                     version={item.Version}
-                                    affectsProp={item.Affect.toLowerCase()}
+                                    affectsProp={item.Affect}
                                     onChange={(targetValue) => {
                                       setAffects([
                                         ...affects.map(
@@ -221,7 +221,7 @@ export default function Affects(
                                                   version,
                                                   Release: {
                                                     ...Release,
-                                                    TriageStatus: triageStatus,
+                                                  TriageStatus: triageStatus,
                                                   },
                                                   ...rest,
                                                 };

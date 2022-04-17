@@ -7,9 +7,9 @@ export function getAffection(version) {
       (affects) => affects.affect_version === version
     )[0];
     if (affects === undefined) {
-      return "N/A";
+      return "-";
     }
-    return { Yes: "yes", No: "no", UnKnown: "unknown" }[affects.affect_result];
+    return affects.affect_result;
   };
 }
 

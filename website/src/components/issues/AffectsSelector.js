@@ -10,21 +10,19 @@ import { url } from "../../utils";
 export default function AffectsSelector({
   id,
   version = "master",
-  affectsProp = "unknown",
+  affectsProp = "UnKnown",
   onChange = () => {},
 }) {
   const mutation = useMutation((newAffect) => {
     return axios.post(url(`issue/${id}/affect/${version}`), newAffect);
   });
-  const [affects, setAffects] = React.useState(affectsProp || "unknown");
+  const [affects, setAffects] = React.useState(affectsProp || "UnKnown");
 
   const handleChange = (event) => {
     mutation.mutate({
       issue_id: id,
       affect_version: version,
-      affect_result: { unknown: "UnKnown", yes: "Yes", no: "No" }[
-        event.target.value
-      ],
+      affect_result: event.target.value,
     });
     onChange(event.target.value);
     setAffects(event.target.value);
@@ -47,12 +45,12 @@ export default function AffectsSelector({
               value={affects}
               onChange={handleChange}
             >
-              <FormControlLabel value="yes" control={<Radio />} label="yes" />
-              <FormControlLabel value="no" control={<Radio />} label="no" />
+              <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="No" control={<Radio />} label="No" />
               <FormControlLabel
-                value="unknown"
+                value="UnKnown"
                 control={<Radio />}
-                label="unknown"
+                label="UnKnown"
               />
             </RadioGroup>
           </FormControl>

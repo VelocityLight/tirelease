@@ -33,17 +33,17 @@ export function affectState(version, state) {
       return false;
     }
     return (
-      affect.affect_result.toLocaleLowerCase() === state.toLocaleLowerCase()
+      affect.affect_result === state
     );
   };
 }
 
 export function affectYes(version) {
-  return affectState(version, "yes");
+  return affectState(version, "Yes");
 }
 
 export function affectUnknown(version) {
-  return affectState(version, "unknown");
+  return affectState(version, "UnKnown");
 }
 
 export function PR(branch, has) {
@@ -66,10 +66,10 @@ export function pick(version, state) {
     const pick = item.version_triages?.filter((t) =>
       t.version_name.startsWith(version)
     )[0];
-    if (pick === undefined && state === "unknown") {
+    if (pick === undefined && state === "UnKnown") {
       return true;
     }
-    return pick.triage_result.toLocaleLowerCase() === state.toLocaleLowerCase();
+    return pick.triage_result === state;
   };
 }
 

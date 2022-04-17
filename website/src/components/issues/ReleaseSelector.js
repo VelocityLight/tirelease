@@ -6,13 +6,13 @@ import { FormHelperText } from "@mui/material";
 
 const getStyle = (status) => {
   switch (status) {
-    case "accept":
+    case "Accept":
       return { color: "green", fontWeight: "bold" };
-    case "won't-fix":
+    case "Won't Fix":
       return { color: "red", fontWeight: "bold" };
-    case "released":
+    case "Released":
       return { color: "green", fontWeight: "" };
-    case "later":
+    case "Later":
       return { color: "orange", fontWeight: "bold" };
     default:
       return {};
@@ -29,7 +29,7 @@ const ReleaseSelector = ({ releaseProp, onChange }) => {
     onChange(event.target.value);
   };
 
-  const items = ["accept", "won't-fix", "later", "released"];
+  const items = ["Accept", "Won't Fix", "Later", "Released"];
 
   return (
     <>
@@ -46,9 +46,6 @@ const ReleaseSelector = ({ releaseProp, onChange }) => {
           inputProps={{ "aria-label": "Without label" }}
           sx={getStyle(release)}
         >
-          <MenuItem value="unknown">
-            <em>unkown</em>
-          </MenuItem>
           {items.map((item) => (
             <MenuItem value={item}>{item}</MenuItem>
           ))}

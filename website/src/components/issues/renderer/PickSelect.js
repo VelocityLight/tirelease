@@ -10,7 +10,7 @@ export default function PickSelect({
   id,
   version = "master",
   patch = "master",
-  pick = "unknown",
+  pick = "UnKnown",
   onChange = () => {},
 }) {
   const mutation = useMutation((newAffect) => {
@@ -22,12 +22,7 @@ export default function PickSelect({
     mutation.mutate({
       issue_id: id,
       version_name: version,
-      triage_result: {
-        unknown: "UnKnown",
-        accept: "Accept",
-        later: "Later",
-        "won't fix": "Won't Fix",
-      }[event.target.value],
+      triage_result: event.target.value,
     });
     onChange(event.target.value);
     setAffects(event.target.value);
@@ -48,20 +43,20 @@ export default function PickSelect({
               value={affects}
               onChange={handleChange}
               label="Affection"
-              disabled={pick.startsWith("released")}
+              disabled={pick.startsWith("Released")}
             >
-              <MenuItem value={"N/A"} disabled={true}>-</MenuItem>
-              <MenuItem value={"unknown"}>unknown</MenuItem>
-              <MenuItem value={"accept"}>
+              <MenuItem value={"-"} disabled={true}>-</MenuItem>
+              <MenuItem value={"UnKnown"}>UnKnown</MenuItem>
+              <MenuItem value={"Accept"}>
                 <div style={{ color: "green", fontWeight: "bold" }}>
-                  approved
+                  Accept
                 </div>
               </MenuItem>
-              <MenuItem value={"later"}>later</MenuItem>
-              <MenuItem value={"won't fix"}>won't fix</MenuItem>
-              <MenuItem value={"accept(frozen)"} disabled={true}>approved (frozen)</MenuItem>
-              <MenuItem value={"released"} disabled={true}>
-                released in {patch}
+              <MenuItem value={"Later"}>Later</MenuItem>
+              <MenuItem value={"Won't Fix"}>Won't Fix</MenuItem>
+              <MenuItem value={"Accept(Frozen)"} disabled={true}>Accept(Frozen)</MenuItem>
+              <MenuItem value={"Released"} disabled={true}>
+                Released in {patch}
               </MenuItem>
             </Select>
           </FormControl>

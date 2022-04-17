@@ -1,60 +1,59 @@
 package service
 
 import (
-	"testing"
-	"time"
+	// "testing"
+	// "time"
 
 	"tirelease/commons/configs"
-	"tirelease/commons/database"
-	"tirelease/internal/entity"
-	"tirelease/internal/repository"
-
-	"github.com/stretchr/testify/assert"
+	// "tirelease/commons/database"
+	// "tirelease/internal/entity"
+	// "tirelease/internal/repository"
+	// "github.com/stretchr/testify/assert"
 )
 
-func TestIssueAffectOperate(t *testing.T) {
-	t.Skip()
-	// Init
-	var config = generateConfig()
-	database.Connect(config)
+// func TestIssueAffectOperate(t *testing.T) {
+// 	t.Skip()
+// 	// Init
+// 	var config = generateConfig()
+// 	database.Connect(config)
 
-	// Init-Data
-	var issueAffect = &entity.IssueAffect{
-		CreateTime: time.Now(),
-		UpdateTime: time.Now(),
+// 	// Init-Data
+// 	var issueAffect = &entity.IssueAffect{
+// 		CreateTime: time.Now(),
+// 		UpdateTime: time.Now(),
 
-		AffectVersion: "5.5.2",
-		IssueID:       "100",
-		AffectResult:  entity.AffectResultResultUnKnown,
-	}
-	err := repository.CreateOrUpdateIssueAffect(issueAffect)
-	assert.Equal(t, true, err == nil)
+// 		AffectVersion: "5.5.2",
+// 		IssueID:       "100",
+// 		AffectResult:  entity.AffectResultResultUnKnown,
+// 	}
+// 	err := repository.CreateOrUpdateIssueAffect(issueAffect)
+// 	assert.Equal(t, true, err == nil)
 
-	// Update
-	var updateOption = &entity.IssueAffectUpdateOption{
-		IssueID:       "100",
-		AffectVersion: "5.5.2",
-		AffectResult:  entity.AffectResultResultYes,
-	}
-	err = IssueAffectOperate(updateOption)
-	assert.Equal(t, true, err == nil)
-}
+// 	// Update
+// 	var updateOption = &entity.IssueAffectUpdateOption{
+// 		IssueID:       "100",
+// 		AffectVersion: "5.5.2",
+// 		AffectResult:  entity.AffectResultResultYes,
+// 	}
+// 	err = IssueAffectOperate(updateOption)
+// 	assert.Equal(t, true, err == nil)
+// }
 
-func TestIssueAffectOperateWeb(t *testing.T) {
-	t.Skip()
-	// Init
-	var config = generateConfig()
-	database.Connect(config)
+// func TestIssueAffectOperateWeb(t *testing.T) {
+// 	t.Skip()
+// 	// Init
+// 	var config = generateConfig()
+// 	database.Connect(config)
 
-	// Update
-	var updateOption = &entity.IssueAffectUpdateOption{
-		IssueID:       "I_kwDOAoCpQc5BYBWZ",
-		AffectVersion: "5.3",
-		AffectResult:  entity.AffectResultResultYes,
-	}
-	err := IssueAffectOperate(updateOption)
-	assert.Equal(t, true, err == nil)
-}
+// 	// Update
+// 	var updateOption = &entity.IssueAffectUpdateOption{
+// 		IssueID:       "I_kwDOAoCpQc5BYBWZ",
+// 		AffectVersion: "5.3",
+// 		AffectResult:  entity.AffectResultResultYes,
+// 	}
+// 	err := IssueAffectOperate(updateOption)
+// 	assert.Equal(t, true, err == nil)
+// }
 
 func generateConfig() *configs.ConfigYaml {
 	var config = &configs.ConfigYaml{}

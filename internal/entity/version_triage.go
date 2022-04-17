@@ -58,7 +58,6 @@ const (
 	VersionTriageChangedItemCompatibility  = VersionTriageChangedItem("compatibility")
 	VersionTriageChangedItemBehavior       = VersionTriageChangedItem("behavior")
 	VersionTriageChangedItemNone           = VersionTriageChangedItem("none")
-	VersionTriageChangedItemUnKnown        = VersionTriageChangedItem("unknown")
 )
 
 // List Option

@@ -91,3 +91,48 @@ func WebhookRefreshPullRequestV3(pr *github.PullRequest) error {
 
 	return nil
 }
+
+func WebHookRefreshPullRequestRefIssue(pr *github.PullRequest) error {
+	// params
+	if pr == nil {
+		return nil
+	}
+	pullRequestID := *(pr.NodeID)
+	if pullRequestID == "" {
+		return nil
+	}
+
+	// find close or ref issue numbers
+	prV4, err := git.ClientV4.GetPullRequestByID(pullRequestID)
+	if err != nil {
+		return err
+	}
+	issueNumbers, err := GetPullRequestRefIssuesByRegexFromV4(prV4)
+	if err != nil {
+		return err
+	}
+
+	// refresh cross-referenced issue
+	if len(issueNumbers) > 0 {
+		for _, issueNumber := range issueNumbers {
+			issueOption := &entity.IssueOption{
+				Number: issueNumber,
+			}
+			issues, err := repository.SelectIssue(issueOption)
+			if err != nil {
+				return err
+			}
+			if len(*issues) == 0 {
+				continue
+			}
+
+			for _, issue := range *issues {
+				err := WebhookRefreshIssueV4ByIssueID(issue.IssueID)
+				if err != nil {
+					return err
+				}
+			}
+		}
+	}
+	return nil
+}

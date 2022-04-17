@@ -76,6 +76,18 @@ func WebhookRefreshIssueV4(issue *github.Issue) error {
 	issueID := *issue.NodeID
 
 	// handler
+	err := WebhookRefreshIssueV4ByIssueID(issueID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func WebhookRefreshIssueV4ByIssueID(issueID string) error {
+	if issueID == "" {
+		return nil
+	}
 	issueRelationInfo, err := GetIssueRelationInfoByIssueIDV4(issueID)
 	if err != nil {
 		return err
@@ -87,7 +99,6 @@ func WebhookRefreshIssueV4(issue *github.Issue) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 

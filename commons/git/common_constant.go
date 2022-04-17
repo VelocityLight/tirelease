@@ -2,6 +2,7 @@ package git
 
 // ============================================================= Constants
 var CrossReferencedEvent = "CrossReferencedEvent"
+var IssueComment = "IssueComment"
 var CherryPickLabel = "cherry-pick-approved"
 var NotCheryyPickLabel = "do-not-merge/cherry-pick-not-approved"
 var LGT2Label = "status/LGT2"

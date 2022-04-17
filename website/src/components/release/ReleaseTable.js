@@ -75,6 +75,8 @@ function ReleaseCandidates({ version }) {
         components={{
           Toolbar: GridToolbar,
         }}
+        showCellRightBorder = {true}
+        showColumnRightBorder = {false}
       ></DataGrid>
       <TriageDialog
         onClose={onClose}

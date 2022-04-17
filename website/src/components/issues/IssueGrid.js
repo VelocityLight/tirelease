@@ -115,6 +115,8 @@ export function IssueGrid({
           onPageSizeChange={(pageSize, details) => {
             setRowsPerPage(pageSize);
           }}
+          showCellRightBorder = {true}
+          showColumnRightBorder = {false}
         ></DataGrid>
         <TriageDialog
           onClose={onClose}

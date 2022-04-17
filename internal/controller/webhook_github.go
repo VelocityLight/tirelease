@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"tirelease/commons/git"
 	"tirelease/internal/service"
@@ -48,6 +49,14 @@ func GithubWebhookHandler(c *gin.Context) {
 		if err != nil {
 			c.Error(err)
 			return
+		}
+		baseBranch := event.PullRequest.Base.Ref
+		if baseBranch != nil && strings.HasPrefix(*baseBranch, git.ReleaseBranchPrefix) {
+			err := service.WebHookRefreshPullRequestRefIssue(event.PullRequest)
+			if err != nil {
+				c.Error(err)
+				return
+			}
 		}
 
 	default:

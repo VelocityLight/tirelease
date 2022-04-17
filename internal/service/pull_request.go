@@ -103,15 +103,10 @@ func RegexReferenceNumbers(text string) ([]int, error) {
 
 	// issue number regex
 	issueStrs := make([]string, 0)
-	re := regexp.MustCompile(`close: #(\d+)`)
-	match := re.FindStringSubmatch(text)
-	if match != nil {
-		issueStrs = append(issueStrs, match...)
-	}
-	re = regexp.MustCompile(`ref: #(\d+)`)
-	match = re.FindStringSubmatch(text)
-	if match != nil {
-		issueStrs = append(issueStrs, match...)
+	re := regexp.MustCompile(`[#][0-9]+`)
+	for _, match := range re.FindAllString(text, -1) {
+		re2 := regexp.MustCompile(`[0-9]+`)
+		issueStrs = append(issueStrs, re2.FindAllString(match, -1)...)
 	}
 
 	// compose issue number list

@@ -30,3 +30,15 @@ func TestGetPullRequestRefIssuesByRegexFromV4(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 	assert.Equal(t, true, len(issueNumbers) > 0)
 }
+
+func TestRegexReferenceNumbers(t *testing.T) {
+	s := "close #1"
+	issueNumbers, err := RegexReferenceNumbers(s)
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, len(issueNumbers) == 1)
+
+	s = "close #10, #100, #1000"
+	issueNumbers, err = RegexReferenceNumbers(s)
+	assert.Equal(t, true, err == nil)
+	assert.Equal(t, true, len(issueNumbers) == 3)
+}

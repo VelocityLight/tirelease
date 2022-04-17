@@ -43,6 +43,16 @@ func GithubWebhookHandler(c *gin.Context) {
 				return
 			}
 		}
+		if git.IsPullRequest(*url) {
+			pr := &github.PullRequest{
+				NodeID: &git.TestPullRequestNodeID3,
+			}
+			err := service.WebHookRefreshPullRequestRefIssue(pr)
+			if err != nil {
+				c.Error(err)
+				return
+			}
+		}
 
 	case *github.PullRequestEvent:
 		err := service.WebhookRefreshPullRequestV3(event.PullRequest)

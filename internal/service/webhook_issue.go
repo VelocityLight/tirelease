@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"tirelease/commons/git"
+	"tirelease/internal/dto"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 
@@ -152,6 +153,30 @@ func RefreshIssueField(option *entity.IssueOption) error {
 			return err
 		}
 		log.Printf("id: %d OK", issue.ID)
+	}
+	return nil
+}
+
+func ExportHistoryVersionTriageWithDatabase(option *dto.IssueRelationInfoQuery) error {
+	infos, _, err := SelectIssueRelationInfo(option)
+	if err != nil {
+		return err
+	}
+	releaseVersions, err := repository.SelectReleaseVersion(&entity.ReleaseVersionOption{})
+	if err != nil {
+		return err
+	}
+
+	for i := range *infos {
+		info := (*infos)[i]
+		if info.PullRequests == nil || len(*info.PullRequests) == 0 {
+			continue
+		}
+
+		err := ExportHistoryVersionTriageInfo(&info, releaseVersions)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }

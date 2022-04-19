@@ -236,7 +236,12 @@ func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) e
 		return entity.VersionTriageMergeStatusPr
 	}
 	allMerge := true
+	closeNums := 0
 	for _, pr := range *issueRelationInfo.PullRequests {
+		if pr.State == "closed" {
+			closeNums++
+			continue
+		}
 		if !pr.CherryPickApproved {
 			return entity.VersionTriageMergeStatusApprove
 		} else if !pr.AlreadyReviewed {
@@ -244,6 +249,9 @@ func ComposeVersionTriageMergeStatus(issueRelationInfo *dto.IssueRelationInfo) e
 		} else if !pr.Merged {
 			allMerge = false
 		}
+	}
+	if closeNums == len(*issueRelationInfo.PullRequests) {
+		return entity.VersionTriageMergeStatusPr
 	}
 	if allMerge {
 		return entity.VersionTriageMergeStatusMerged

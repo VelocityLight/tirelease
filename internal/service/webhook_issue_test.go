@@ -2,9 +2,11 @@ package service
 
 import (
 	"testing"
+	"time"
 
 	"tirelease/commons/database"
 	"tirelease/commons/git"
+	"tirelease/internal/dto"
 	"tirelease/internal/entity"
 	"tirelease/internal/repository"
 
@@ -95,5 +97,20 @@ func TestRefreshIssueField(t *testing.T) {
 		},
 	}
 	err := RefreshIssueField(option)
+	assert.Equal(t, true, err == nil)
+}
+
+func TestExportHistoryVersionTriageWithDatabase(t *testing.T) {
+	t.Skip()
+	database.Connect(generateConfig())
+
+	option := &dto.IssueRelationInfoQuery{
+		IssueOption: entity.IssueOption{
+			UpdateTime: time.Now().Add(-time.Hour * 24 * 90),
+		},
+		BaseBranch: "release-6.0",
+	}
+
+	err := ExportHistoryVersionTriageWithDatabase(option)
 	assert.Equal(t, true, err == nil)
 }

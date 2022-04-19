@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strings"
 	"time"
 
 	"tirelease/commons/git"
@@ -89,6 +90,8 @@ func WebhookRefreshPullRequestV3(pr *github.PullRequest) error {
 		return err
 	}
 
+	// handler approve later
+
 	return nil
 }
 
@@ -106,6 +109,10 @@ func WebHookRefreshPullRequestRefIssue(pr *github.PullRequest) error {
 	prV4, err := git.ClientV4.GetPullRequestByID(pullRequestID)
 	if err != nil {
 		return err
+	}
+	baseBranch := prV4.BaseRefName
+	if baseBranch == "" || !strings.HasPrefix(string(baseBranch), git.ReleaseBranchPrefix) {
+		return nil
 	}
 	issueNumbers, err := GetPullRequestRefIssuesByRegexFromV4(prV4)
 	if err != nil {

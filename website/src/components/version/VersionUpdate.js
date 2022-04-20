@@ -122,13 +122,13 @@ export const VersionUpdate = ({ open, onClose, row }) => {
               }}
             >
               <MenuItem value={"upcoming"}>
-                <div style={{ color: "green", fontWeight: "bold" }}>
+                {/* <div style={{ color: "green", fontWeight: "bold" }}> */}
                   upcoming
-                </div>
+                {/* </div> */}
               </MenuItem>
               <MenuItem value={"planned"}>planned</MenuItem>
               <MenuItem value={"frozen"}>frozen</MenuItem>
-              <MenuItem value={"released"}>released</MenuItem>
+              <MenuItem value={"released"} disabled={true}>released</MenuItem>
               <MenuItem value={"cancelled"}>cancelled</MenuItem>
             </Select>
           </FormControl>

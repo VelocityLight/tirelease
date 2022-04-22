@@ -83,7 +83,7 @@ func TestCronRefreshIssuesV42(t *testing.T) {
 }
 
 func TestCronRefreshIssuesV42ByPointRepo(t *testing.T) {
-	t.Skip()
+	// t.Skip()
 	// init
 	git.Connect(git.TestToken)
 	git.ConnectV4(git.TestToken)
@@ -94,13 +94,9 @@ func TestCronRefreshIssuesV42ByPointRepo(t *testing.T) {
 	}
 	repo1 := &entity.Repo{
 		Owner: "pingcap",
-		Repo:  "ng-monitoring",
+		Repo:  "monitoring",
 	}
-	repo2 := &entity.Repo{
-		Owner: "pingcap",
-		Repo:  "enterprise-plugin",
-	}
-	repos := []entity.Repo{*repo1, *repo2}
+	repos := []entity.Repo{*repo1}
 
 	params := &RefreshIssueParams{
 		Repos:           &repos,

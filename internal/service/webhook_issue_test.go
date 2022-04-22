@@ -82,6 +82,41 @@ func TestCronRefreshIssuesV42(t *testing.T) {
 	assert.Equal(t, true, err == nil)
 }
 
+func TestCronRefreshIssuesV42ByPointRepo(t *testing.T) {
+	t.Skip()
+	// init
+	git.Connect(git.TestToken)
+	git.ConnectV4(git.TestToken)
+	database.Connect(generateConfig())
+	releaseVersions, err := repository.SelectReleaseVersion(&entity.ReleaseVersionOption{})
+	if err != nil {
+		return
+	}
+	repo1 := &entity.Repo{
+		Owner: "pingcap",
+		Repo:  "ng-monitoring",
+	}
+	repo2 := &entity.Repo{
+		Owner: "pingcap",
+		Repo:  "enterprise-plugin",
+	}
+	repos := []entity.Repo{*repo1, *repo2}
+
+	params := &RefreshIssueParams{
+		Repos:           &repos,
+		BeforeHours:     -8760,
+		Batch:           50,
+		Total:           3000,
+		IsHistory:       true,
+		ReleaseVersions: releaseVersions,
+		Order:           "DESC",
+	}
+
+	// detail
+	err = CronRefreshIssuesV4(params)
+	assert.Equal(t, true, err == nil)
+}
+
 func TestRefreshIssueField(t *testing.T) {
 	t.Skip()
 	// init

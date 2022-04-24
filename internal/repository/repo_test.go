@@ -47,4 +47,8 @@ INSERT INTO repo (create_time, update_time, owner, repo, full_name, html_url, de
 INSERT INTO repo (create_time, update_time, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'tikv','pd','tikv/pd', 'https://github.com/tikv/pd', 'pd源码库');
 INSERT INTO repo (create_time, update_time, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'tikv','importer','tikv/importer', 'https://github.com/tikv/importer', 'importer源码库');
 
+INSERT INTO repo (create_time, update_time, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','ng-monitoring','pingcap/ng-monitoring', 'https://github.com/pingcap/ng-monitoring', 'ng-monitoring源码库');
+INSERT INTO repo (create_time, update_time, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','enterprise-plugin','pingcap/enterprise-plugin', 'https://github.com/pingcap/enterprise-plugin', 'enterprise-plugin源码库');
+INSERT INTO repo (create_time, update_time, owner, repo, full_name, html_url, description) VALUES (Now(),Now(),'pingcap','monitoring','pingcap/monitoring', 'https://github.com/pingcap/monitoring', 'monitoring源码库');
+
 **/
